@@ -1,9 +1,8 @@
 public class ListSong {
 
     private String filename;
-
     public ListSong() {
-        this.filename = "src/main/java/audio/scenery/";
+        this.filename = "C:\\Users\\Daniel\\Documents\\000 -projeto v3\\Adventure-of-Treasures\\src\\main\\java\\audio\\scenery\\";
     }
 
     public String listSong(String nameScenery) {

@@ -3,7 +3,8 @@ public class ListSoundEffects {
     private String filename;
 
     public ListSoundEffects() {
-        this.filename = "src/main/java/audio/effects/";
+        this.filename = "C:\\Users\\Daniel\\Documents\\000 -projeto v3\\Adventure-of-Treasures\\src\\main\\java\\audio\\effects\\";
+
     }
 
     public String commandSoundEffects(String command) {

@@ -3,7 +3,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class InterfaceInventory {
 
@@ -16,6 +15,7 @@ public class InterfaceInventory {
     private final ArrayList<Item> item;
     private final Player player;
     private final SoundEffects soundEffects;
+    private final String filename = "src\\main\\java\\inventario\\";
 
     public InterfaceInventory(InterfaceGame interfaceGame, Player player, SoundEffects soundEffects) {
         this.interfaceGame = interfaceGame;
@@ -23,7 +23,7 @@ public class InterfaceInventory {
         this.player.setInventoty();
         this.soundEffects = soundEffects;
         panelMain = new JPanel();
-        labelSideEast = new JLabel(new ImageIcon(Objects.requireNonNull(getClass().getResource("inventario/icons.png"))));
+        labelSideEast = new JLabel(new ImageIcon(filename+"icons.png"));
         buttonItens = new JButton[4][6];
         infoLabel = new JLabel[4];
         buttonActions = new JButton[6];
@@ -46,7 +46,7 @@ public class InterfaceInventory {
 
     private void setNorthInterface() {
         JLabel label = new JLabel();
-        label.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("inventario/top.png"))));
+        label.setIcon(new ImageIcon(filename+"top.png"));
         label.setBounds(300, 0, 100, 100);
         panelMain.add(label, BorderLayout.NORTH);
     }
@@ -62,7 +62,7 @@ public class InterfaceInventory {
     private void setWestInterface() {
         JLabel label = new JLabel();
         label.setLayout(new BorderLayout(8, 8));
-        label.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("inventario/player.png"))));
+        label.setIcon(new ImageIcon(filename+"player.png"));
         label.setBounds(0, 100, 100, 100);
         panelMain.add(label, BorderLayout.WEST);
     }
@@ -132,7 +132,7 @@ public class InterfaceInventory {
 
     private void setButtonsActions() {
         buttonActions[0] = new JButton();
-        buttonActions[0].setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("inventario/usar.png"))));
+        buttonActions[0].setIcon(new ImageIcon(filename+"usar.png"));
         buttonActions[0].setBounds(15, 320, 70, 30);
         buttonActions[0].setActionCommand("usar");
         buttonActions[0].addActionListener(this::setConfirm);
@@ -140,7 +140,7 @@ public class InterfaceInventory {
         labelSideEast.add(buttonActions[0]);
 
         buttonActions[1] = new JButton();
-        buttonActions[1].setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("inventario/equipar.png"))));
+        buttonActions[1].setIcon(new ImageIcon(filename+"equipar.png"));
         buttonActions[1].setBounds(92, 320, 70, 30);
         buttonActions[1].setActionCommand("equipar");
         buttonActions[1].addActionListener(this::setConfirm);
@@ -148,7 +148,7 @@ public class InterfaceInventory {
         labelSideEast.add(buttonActions[1]);
 
         buttonActions[2] = new JButton();
-        buttonActions[2].setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("inventario/combinar.png"))));
+        buttonActions[2].setIcon(new ImageIcon(filename+"combinar.png"));
         buttonActions[2].setBounds(170, 320, 70, 30);
         buttonActions[2].setActionCommand("combinar");
         buttonActions[2].addActionListener(this::setConfirm);
@@ -156,7 +156,7 @@ public class InterfaceInventory {
         labelSideEast.add(buttonActions[2]);
 
         buttonActions[3] = new JButton();
-        buttonActions[3].setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("inventario/remover.png"))));
+        buttonActions[3].setIcon(new ImageIcon(filename+"remover.png"));
         buttonActions[3].setBounds(250, 320, 70, 30);
         buttonActions[3].setActionCommand("remover");
         buttonActions[3].addActionListener(this::setConfirm);

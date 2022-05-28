@@ -142,7 +142,7 @@ public class Game {
     public void finish(){
         song.closePlay();
         soundEffects.play("finish");
-        System. exit(0);
+        System.exit(0);
     }
 
     public static void main(String[] args) {

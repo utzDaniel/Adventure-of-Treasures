@@ -169,6 +169,17 @@ public class Player {
         return !(item instanceof ItemNotRemove);
     }
 
+    public void removeItensCombine(int combine) {
+        for (int i = 0; i < item.size(); i++) {
+            if (item.get(i) instanceof ItemCombinable) {
+                if (((ItemCombinable) item.get(i)).getCombine() == combine) {
+                    removeItem(item.get(i));
+                    i = -1; //reset
+                }
+            }
+        }
+    }
+
     public ArrayList<Item> getItemVisible() {
         ArrayList<Item> listItensVisible = new ArrayList<>();
         for (Item item : this.item) {
@@ -187,17 +198,6 @@ public class Player {
             }
         }
         return listItensInvisible;
-    }
-
-    public void removeItensCombine(int combine) {
-        for (int i = 0; i < item.size(); i++) {
-            if (item.get(i) instanceof ItemCombinable) {
-                if (((ItemCombinable) item.get(i)).getCombine() == combine) {
-                    removeItem(item.get(i));
-                    i = -1; //reset
-                }
-            }
-        }
     }
 
     public void updadeInventory(Item item) {
