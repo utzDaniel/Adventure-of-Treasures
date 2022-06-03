@@ -1,76 +1,80 @@
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Combination {
 
     private final Player player;
+    private final ArrayList<ICombinable> itensCombinable;
 
     public Combination(Player player) {
         this.player = player;
+        this.itensCombinable = new ArrayList<>();
     }
 
+
+    public boolean execute(ArrayList<Item> itens) {
+        return validItemCombinable(itens) &&
+                validCombination(this.itensCombinable) &&
+                validAmountCombine(this.itensCombinable) &&
+                atualizarIventario(this.itensCombinable);
+    }
+
+    // Metodo deve ser retirado pois, ja deveria ter verificado se o item é do tipo ItemCombinable antes de chamar o metodo
     public boolean validItemCombinable(ArrayList<Item> itens) {
-        ArrayList<ItemCombinable> itensCombinable = new ArrayList<>();
         for (Item item : itens) {
-            if (item instanceof ItemCombinable) {
-                itensCombinable.add((ItemCombinable) item);
+            if (item instanceof ICombinable) {
+                this.itensCombinable.add((ICombinable) item);
             } else {
                 return false;
             }
         }
-        return validCombination(itensCombinable);
+        return true;
     }
 
-    private boolean validCombination(ArrayList<ItemCombinable> itensCombinable) {
+    //private
+    public boolean validCombination(ArrayList<ICombinable> itensCombinable) {
         for (int i = 1; i < itensCombinable.size(); i++) {
             if (itensCombinable.get(0).getCombine() != itensCombinable.get(i).getCombine()) {
                 return false;
             }
         }
-        return validAmountCombine(itensCombinable);
+        return true;
     }
 
-    private boolean validAmountCombine(ArrayList<ItemCombinable> itensCombinable) {
-        if (itensCombinable.size() == ItemCombinable.getAmountCombine(itensCombinable.get(0).getCombine())) {
-            return itensCombination(itensCombinable);
+    //alterar metodo para realizar um outro tipo de validacao, pois esta sendo validado pela quantidade
+    private boolean validAmountCombine(ArrayList<ICombinable> itensCombinable) {
+        return itensCombinable.size() == ListCombination.getAmountCombine(itensCombinable.get(0).getCombine());
+    }
+
+    public Item retornarItemDeCombinacao(ArrayList<ICombinable> itensCombinable) {
+        int index = itensCombinable.get(0).getCombine() - 1;
+        for (Item item : this.player.getItemInvisible()) {
+            if (item.getName().equals(ItemsCombination.values()[index].getLabel())) {
+                return item;
+            }
         }
-        return false;
+        return null;
     }
 
-    private boolean itensCombination(ArrayList<ItemCombinable> itensCombinable) {
-        Item itemVisible = null;
-        if (itensCombinable.get(0).getCombine() == 1) {
-            for (Item item : player.getItemInvisible()) {
-                if (item.getName().equals("mapa")) {
-                    CreateImageMapGame imageMapGame = new CreateImageMapGame();
-                    ((ItemNotRemove)item).getMapGame().setImagemIcon(imageMapGame.selectImage(item.getName()));
-                    itemVisible = item;
-                }
-            }
-        } else if (itensCombinable.get(0).getCombine() == 2) {
-            for (Item item : player.getItemInvisible()) {
-                if (item.getName().equals("escada")) {
-                    itemVisible = item;
-                }
-            }
-        } else if (itensCombinable.get(0).getCombine() == 3) {
-            for (Item item : player.getItemInvisible()) {
-                if (item.getName().equals("tocha")) {
-                    itemVisible = item;
-                }
-            }
-        } else {
+    //private
+    public boolean atualizarIventario(ArrayList<ICombinable> itensCombinable) {
+        Item itemVisible = retornarItemDeCombinacao(itensCombinable);
+        if (Objects.isNull(itemVisible)) {
             return false;
         }
-        if(itemVisible != null){
-            removeItensCombine(itensCombinable.get(0).getCombine());
-            itemViseble(itemVisible);
-            updadeCapacity(itemVisible);
+        //alterar  no proprio item ao criar
+        if (itemVisible.getName().equals("mapa")) {
+            CreateImageMapGame imageMapGame = new CreateImageMapGame();
+            ((ItemNotRemove) itemVisible).getMapGame().setImagemIcon(imageMapGame.selectImage(itemVisible.getName()));
         }
+        removeItensCombine(itensCombinable.get(0).getCombine());
+        itemViseble(itemVisible);
+        updadeCapacity(itemVisible);
         return true;
     }
 
     private void removeItensCombine(int combine) {
-        player.removeItensCombine(combine);
+        this.player.removeItensCombine(combine);
     }
 
     private void itemViseble(Item item) {
@@ -78,6 +82,22 @@ public class Combination {
     }
 
     private void updadeCapacity(Item item) {
-        player.updadeInventory(item);
+        this.player.updadeInventory(item);
+    }
+}
+
+enum ItemsCombination {
+    MAPA("mapa"),
+    ESCADA("escada"),
+    TOCHA("tocha");
+
+    private final String label;
+
+    ItemsCombination(String label) {
+        this.label = label;
+    }
+
+    public String getLabel() {
+        return label;
     }
 }

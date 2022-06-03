@@ -12,7 +12,7 @@ public class InterfaceInventory {
     private final JButton[][] buttonItens;
     private final JLabel[] infoLabel;
     private final JButton[] buttonActions;
-    private final ArrayList<Item> item;
+    private final ArrayList<Item> items;
     private final Player player;
     private final SoundEffects soundEffects;
     private final String filename = "src\\main\\java\\inventario\\";
@@ -27,7 +27,7 @@ public class InterfaceInventory {
         buttonItens = new JButton[4][6];
         infoLabel = new JLabel[4];
         buttonActions = new JButton[6];
-        item = new ArrayList<>();
+        items = new ArrayList<>();
         settingsFrame();
     }
 
@@ -186,19 +186,19 @@ public class InterfaceInventory {
         buttonActions[5].setVisible(false);
         Item item = player.getItemInventory(e.getActionCommand());
         if (!(item instanceof ItemCombinable)) {
-            this.item.clear();
-        }else if(this.item.size() == 1 && !(this.item.get(0) instanceof ItemCombinable)){
-            this.item.remove(0);
+            this.items.clear();
+        }else if(this.items.size() == 1 && !(this.items.get(0) instanceof ItemCombinable)){
+            this.items.remove(0);
         }
         boolean addItem = true;
-        for(Item itens: this.item){
+        for(Item itens: this.items){
             if (itens.getName().equals(item.getName())) {
                 addItem = false;
                 break;
             }
         }
         if(addItem){
-            this.item.add(item);
+            this.items.add(item);
         }
         if (item != null) {
             infoLabel[1].setText("Nome: " + item.getName());
@@ -242,9 +242,9 @@ public class InterfaceInventory {
             for (JButton[] buttonIten : buttonItens) {
                 for (JButton jButton : buttonIten) {
                     if (jButton != null) {
-                        if (item.size() == 1) {
+                        if (items.size() == 1) {
                             if (player.getItemInventory(jButton.getActionCommand()) instanceof ItemCombinable) {
-                                if (item.get(0).getName().equals(jButton.getActionCommand())) {
+                                if (items.get(0).getName().equals(jButton.getActionCommand())) {
                                     jButton.setBackground(new Color(29, 92, 37));
                                 }
                             } else {
@@ -252,7 +252,7 @@ public class InterfaceInventory {
                                 jButton.setBackground(new Color(194, 194, 194));
                             }
                         } else {
-                            if (item.get(item.size() - 1).getName().equals(jButton.getActionCommand())) {
+                            if (items.get(items.size() - 1).getName().equals(jButton.getActionCommand())) {
                                 jButton.setBackground(new Color(29, 92, 37));
                                 buttonActions[5].setActionCommand(e.getActionCommand());
                                 buttonActions[5].setVisible(true);
@@ -271,26 +271,26 @@ public class InterfaceInventory {
     private void setActionConfirm() {
         boolean success = false;
         switch (buttonActions[5].getActionCommand()) {
-            case "remover" -> success = player.removeItemInventory(item.get(0));
+            case "remover" -> success = player.removeItemInventory(items.get(0));
             case "usar" -> {
-                success = ((ItemUsable) item.get(0)).use(item.get(0), player);
+                success = ((ItemUsable) items.get(0)).use(items.get(0), player);
                 updateItensMapGame();
             }
             case "equipar" -> {
-                if (((ItemEquipable) item.get(0)).isEquipped()) {
-                    success = ((ItemEquipable) item.get(0)).unequip(item.get(0), player);
+                if (((ItemEquipable) items.get(0)).isEquipped()) {
+                    success = ((ItemEquipable) items.get(0)).unequip(items.get(0), player);
                 } else {
-                    success = ((ItemEquipable) item.get(0)).equip(item.get(0), player);
+                    success = ((ItemEquipable) items.get(0)).equip(items.get(0), player);
                 }
             }
-            case "combinar" -> success = ((ItemCombinable) item.get(0)).combination(item, player);
+            case "combinar" -> success = ((ItemCombinable) items.get(0)).combination(items, player);
         }
         if (success) {
             if (buttonActions[5].getActionCommand().equals("remover")) {
                 updateItensMapGame();
                 soundEffects.play(buttonActions[5].getActionCommand());
             } else {
-                soundEffects.play(buttonActions[5].getActionCommand(), item.get(0).getName());
+                soundEffects.play(buttonActions[5].getActionCommand(), items.get(0).getName());
             }
         } else {
             soundEffects.play("erro");
@@ -307,7 +307,7 @@ public class InterfaceInventory {
         infoLabel[3].setText("Descrição: ");
         removeItens();
         setCapacity();
-        item.clear();
+        items.clear();
         interfaceGame.getFrame().repaint();
     }
 
