@@ -1,4 +1,4 @@
-public class Equip {
+public final class Equip {
 
     private final Player player;
 
@@ -6,17 +6,12 @@ public class Equip {
         this.player = player;
     }
 
-
     public boolean validItemEquipable(Item item) {
-        if (item instanceof ItemEquipable) {
-            ItemEquipable itemEquipable = (ItemEquipable) item;
-            return equipItem(itemEquipable);
-        } else {
-            return false;
-        }
+        return item instanceof IEquipable && equipItem(item);
     }
 
-    public boolean equipItem(ItemEquipable itemEquipable) {
+    //item equipavel com room e outro sem, será que deve criar uma nova classe?
+    private boolean equipItem(Item itemEquipable) {
         if (itemEquipable.getName().equals("mochila")) {
             player.setMaxCapacity(5);
         } else if (itemEquipable.getName().equals("tocha")) {

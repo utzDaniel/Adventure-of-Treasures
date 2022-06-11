@@ -1,4 +1,4 @@
-public class Unequip {
+public final class Unequip {
 
     private final Player player;
 
@@ -7,14 +7,11 @@ public class Unequip {
     }
 
     public boolean validItemEquipable(Item item) {
-        if (item instanceof ItemEquipable itemEquipable) {
-            return unequipItem(itemEquipable);
-        } else {
-            return false;
-        }
+        return item instanceof IEquipable && unequipItem(item);
     }
 
-    public boolean unequipItem(ItemEquipable itemEquipable) {
+    //item equipavel com room e outro sem, será que deve criar uma nova classe?
+    private boolean unequipItem(Item itemEquipable) {
         if (itemEquipable.getName().equals("mochila") && player.getCapacity() <= (player.getMaxCapacity()-5)) {
             player.setMaxCapacity(-5);
         } else if (itemEquipable.getName().equals("tocha")) {

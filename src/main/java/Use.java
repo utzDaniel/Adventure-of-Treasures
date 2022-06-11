@@ -1,4 +1,4 @@
-public class Use {
+public final class Use {
 
     private final Player player;
 
@@ -6,56 +6,31 @@ public class Use {
         this.player = player;
     }
 
-    public boolean validItemUsable(Item item) {
-        if (item instanceof ItemUsable) {
-            ItemUsable itemUsable = (ItemUsable) item;
-            return validLocalItemUsable(itemUsable);
-        } else {
-            return false;
-        }
+    public boolean execute(Item item) {
+        return this.validItemUsable(item) &&
+                this.validLocalItemUsable((IUsable) item) &&
+                this.useItemUsable(item);
     }
 
-    private boolean validLocalItemUsable(ItemUsable itemUsable) {
-        if (itemUsable.getLocalUse().equals(player.getCurrentMap().getName())) {
-            return useItemUsable(itemUsable);
-        } else {
-            return false;
-        }
+    private boolean validItemUsable(Item item) {
+        return item instanceof IUsable;
     }
 
-    private boolean useItemUsable(ItemUsable itemUsable) {
-        if (itemUsable.getName().equals("pa") && player.getItemInventory("mapa") != null) {
-            for (Item item : player.getCurrentMap().getItemInvisible()) {
-                if (item.getName().equals("chave")) {
-                    CreateImageMapGame imageMapGame = new CreateImageMapGame();
-                    player.getCurrentMap().setImagemIcon(imageMapGame.selectImage(player.getCurrentMap().getName()));
-                    item.setVisible(true);
-                }
+    private boolean validLocalItemUsable(IUsable itemUsable) {
+        return itemUsable.getLocalUse().equals(player.getCurrentMap().getName());
+    }
+
+    private boolean useItemUsable(Item itemUsable) {
+        for (int i = 0; i < ItemsUsable.values().length; i++) {
+            if(itemUsable.getName().equals(ItemsUsable.values()[i].getLabel())){
+                if (!ItemsUsable.values()[i].use(player)) return false;
             }
-        } else if (itemUsable.getName().equals("chave")) {
-            Door openDoor = player.getCurrentMap().getDoorMap(player.getPositionPlayerX(), player.getPositionPlayerY());
-            if (openDoor != null) {
-                openDoor.setOpen(true);
-            } else {
-                return false;
-            }
-        } else if (itemUsable.getName().equals("escada")) {
-            Door openDoor = player.getCurrentMap().getDoorMap(player.getPositionPlayerX(), player.getPositionPlayerY());
-            if (openDoor != null) {
-                CreateImageMapGame imageMapGame = new CreateImageMapGame();
-                player.getCurrentMap().setImagemIcon(imageMapGame.selectImage(itemUsable.getName()));
-                openDoor.setOpen(true);
-            } else {
-                return false;
-            }
-        } else {
-            return false;
         }
         removeItemUsable(itemUsable);
         return true;
     }
 
-    private void removeItemUsable(ItemUsable itemUsable) {
+    private void removeItemUsable(Item itemUsable) {
         player.removeItem(itemUsable);
     }
 }

@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class ItemEquipable extends Item implements Equipable {
+public class ItemEquipable extends Item implements IEquipable {
 
     private boolean equipped;
     private Room room;
@@ -13,31 +13,19 @@ public class ItemEquipable extends Item implements Equipable {
 
     @Override
     public boolean equip(Item item, Player player) {
-        Equip equip = new Equip(player);
-        if (!isEquipped()) {
-            boolean isEquip = equip.validItemEquipable(item);
-            setEquipped(isEquip);
-            return isEquip;
-        }
-        return false;
+        if (isEquipped()) return false;
+        this.equipped = new Equip(player).validItemEquipable(item);
+        return this.equipped ;
     }
 
     @Override
     public boolean unequip(Item item, Player player) {
-        Unequip unequip = new Unequip(player);
-        if (isEquipped()) {
-            boolean isUnequip = unequip.validItemEquipable(item);
-            setEquipped(!isUnequip);
-            return isUnequip;
-        }
-        return false;
+        if (!isEquipped()) return false;
+        this.equipped = !new Unequip(player).validItemEquipable(item);
+        return !this.equipped;
     }
 
-
-    private void setEquipped(boolean equipped) {
-        this.equipped = equipped;
-    }
-
+    @Override
     public boolean isEquipped() {
         return this.equipped;
     }
