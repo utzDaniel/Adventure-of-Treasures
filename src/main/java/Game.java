@@ -1,3 +1,8 @@
+import model.*;
+import repository.CreateMapGame;
+import view.InterfaceGame;
+import view.InterfaceInventory;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 

@@ -1,5 +1,11 @@
+import model.Combination;
+import model.Item;
+import model.ItemCombinable;
+import model.Player;
 import org.junit.Before;
 import org.junit.Test;
+import repository.CreateMapGame;
+
 import java.util.ArrayList;
 
 import static junit.framework.TestCase.*;
