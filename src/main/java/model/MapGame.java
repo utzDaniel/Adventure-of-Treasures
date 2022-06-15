@@ -1,30 +1,15 @@
 package model;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
-
-
-/**
- * @author Daniel dos Anjos
- * @version 2021-03-30
- */
+import java.util.*;
 
 public abstract class MapGame {
     protected final String name;
     protected ImageIcon imagemIcon;
     protected int[][] limits;
-    protected final HashMap<Door, MapGame> exitsDoors;
-    private final ArrayList<Item> item;
+    protected final Map<Door, MapGame> exitsDoors;
+    private final List<Item> item;
 
-    /**
-     * Create a room described "description". Initially, it has
-     * no exits. "description" is something like "a kitchen" or
-     * "an open court yard".
-     * <p>
-     * .
-     */
     public MapGame(String name, ImageIcon imagemIcon) {
         this.name = name;
         this.imagemIcon = imagemIcon;
@@ -71,7 +56,8 @@ public abstract class MapGame {
     public void removeItem(Item itens) {
         int numero = 1;
         for (Item item : this.item) {
-            if (!itens.equals(item) && item.getPositionItemX() == itens.getPositionItemX() && item.getPositionItemY() == itens.getPositionItemY()) {
+            if (!itens.equals(item) && item.getPositionItemX() == itens.getPositionItemX() &&
+                    item.getPositionItemY() == itens.getPositionItemY()) {
                 numero = 2;
                 break;
             }
@@ -124,8 +110,8 @@ public abstract class MapGame {
         limits[limitsY][limitsX] = 2;
     }
 
-    public ArrayList<Item> getItemVisible() {
-        ArrayList<Item> listItensVisible = new ArrayList<>();
+    public List<Item> getItemVisible() {
+        List<Item> listItensVisible = new ArrayList<>();
         for (Item item : this.item) {
             if (item.isVisible()) {
                 listItensVisible.add(item);
@@ -134,8 +120,8 @@ public abstract class MapGame {
         return listItensVisible;
     }
 
-    public ArrayList<Item> getItemInvisible() {
-        ArrayList<Item> listItensInvisible = new ArrayList<>();
+    public List<Item> getItemInvisible() {
+        List<Item> listItensInvisible = new ArrayList<>();
         for (Item itemRomm : this.item) {
             if (!itemRomm.isVisible()) {
                 listItensInvisible.add(itemRomm);

@@ -8,13 +8,14 @@ import model.SoundEffects;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class InterfaceGame {
 
     private final JFrame frame;
     private final JLabel mapGameJLabel;
     private final JLabel playerJLabel;
-    private final ArrayList<JLabel> itensJLabel;
+    private final List<JLabel> itensJLabel;
     private final Song song;
     private final SoundEffects soundEffects;
 

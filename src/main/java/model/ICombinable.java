@@ -1,10 +1,10 @@
 package model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface ICombinable {
 
-    default boolean combination(ArrayList<Item> itensCombination, Player player){
+    default boolean combination(List<Item> itensCombination, Player player){
         return new Combination(player).execute(itensCombination);
     }
 

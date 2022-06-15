@@ -69,7 +69,7 @@ public class Game {
                 } else if (e.getKeyCode() == 98) {
                     take();
                 } else if (e.getKeyCode() == 99) {
-                    if(!player.isInventoty()){
+                    if(!player.getInventory().isInventory()){
                         new InterfaceInventory(interfaceGame, player, soundEffects);
                     }
                 }

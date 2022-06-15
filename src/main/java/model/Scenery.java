@@ -2,21 +2,11 @@ package model;
 
 import javax.swing.*;
 import java.util.HashMap;
-
-/**
- * Class model.Room - a room in an adventure game.
- * <p>
- * A "model.Room" represents one location in the scenery of the game. It is
- * connected to other rooms via exits. For each existing exit, the room
- * stores a reference to the neighboring room.
- *
- * @author Daniel dos Anjos
- * @version 2021-03-30
- */
+import java.util.Map;
 
 public class Scenery extends MapGame {
 
-    private final HashMap<String, Scenery> exits;
+    private final Map<String, Scenery> exits;
 
     public Scenery(String name, ImageIcon imagemIcon) {
         super(name,imagemIcon);

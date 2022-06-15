@@ -2,6 +2,8 @@ package model;
 
 import repository.ListSong;
 
+import java.util.Objects;
+
 public class Song extends MusicPlayer {
 
     @Override
@@ -13,8 +15,8 @@ public class Song extends MusicPlayer {
     }
 
     private boolean nextPlay(String newFilename) {
-        if(newFilename != null){
-            if(super.getFilename() == null || !super.getFilename().equals(newFilename)){
+        if(Objects.nonNull(newFilename)){
+            if(Objects.isNull(super.getFilename()) || !super.getFilename().equals(newFilename)){
                 super.setFilename(newFilename);
                 return true;
             }

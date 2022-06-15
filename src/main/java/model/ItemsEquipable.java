@@ -5,15 +5,15 @@ public enum ItemsEquipable {
     MOCHILA("mochila") {
         @Override
         public boolean equip(Player player) {
-            player.setMaxCapacity(5);
+            player.getInventory().setMaxCapacity(5);
             return true;
         }
 
         @Override
         public boolean unequip(Player player) {
-            if (!(player.getCapacity() <= (player.getMaxCapacity() - 5)))
+            if (!(player.getInventory().getCapacity() <= (player.getInventory().getMaxCapacity() - 5)))
                 return false;
-            player.setMaxCapacity(-5);
+            player.getInventory().setMaxCapacity(-5);
             return true;
         }
     }, TOCHA("tocha") {

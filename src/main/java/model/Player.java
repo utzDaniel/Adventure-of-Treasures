@@ -2,17 +2,20 @@ package model;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Player {
     private int positionPlayerX;
     private int positionPlayerY;
     private String direction;
-    private final ArrayList<MovePlayer> movePlayer;
+    private final List<MovePlayer> movePlayer;
     private MapGame currentMapGame;
-    private final ArrayList<Item> item;
-    private int capacity;
-    private int maxCapacity;
-    private boolean isInventoty;
+    private final List<Item> item;
+    private final Inventory inventory;
+
+    public Inventory getInventory() {
+        return inventory;
+    }
 
     public Player() {
         SettingsPlayer settingsPlayer = new SettingsPlayer();
@@ -21,9 +24,7 @@ public class Player {
         movePlayer = new ArrayList<>(settingsPlayer.createMovePlayer());
         this.currentMapGame = null;
         item = new ArrayList<>();
-        capacity = 0;
-        maxCapacity = 10;
-        isInventoty = false;
+        this.inventory = new Inventory();
     }
 
     public int getPositionPlayerX() {
@@ -98,13 +99,6 @@ public class Player {
         playerJLabel.setLocation(this.positionPlayerX, this.positionPlayerY);
     }
 
-    public boolean isInventoty() {
-        return isInventoty;
-    }
-
-    public void setInventoty() {
-        this.isInventoty = !isInventoty;
-    }
 
     public void setCurrentMap(MapGame currentScenery) {
         this.currentMapGame = currentScenery;
@@ -114,33 +108,15 @@ public class Player {
         return this.currentMapGame;
     }
 
-    private void setCapacity(int weight) {
-        this.capacity += weight;
-    }
-
-    public void setMaxCapacity(int upgradeCapacity) {
-        this.maxCapacity += upgradeCapacity;
-    }
-
-    public int getCapacity() {
-        return this.capacity;
-    }
-
-    public int getMaxCapacity() {
-        return this.maxCapacity;
-    }
 
     public void setItem(Item itens) {
         this.item.add(itens);
     }
 
-    /**
-     * checks the player's ability to load more items
-     */
     public boolean validMaxCapacity(Item itens) {
-        if (itens.getWeight() + capacity <= maxCapacity) {
+        if (itens.getWeight() + inventory.getCapacity() <= inventory.getMaxCapacity()) {
             setItem(itens);
-            setCapacity(itens.getWeight());
+            inventory.setCapacity(itens.getWeight());
             currentMapGame.removeItem(itens);
             return true;
         } else {
@@ -160,13 +136,13 @@ public class Player {
     public void removeItem(Item itens) {
         int weight = itens.getWeight();
         item.remove(itens);
-        setCapacity(-weight);
+        inventory.setCapacity(-weight);
     }
 
     public boolean removeItemInventory(Item item) {
         if (!(item instanceof ItemNotRemove)) {
             removeItem(item);
-            currentMapGame.setItemRemove(item,positionPlayerX,positionPlayerY);
+            currentMapGame.setItemRemove(item, positionPlayerX, positionPlayerY);
         }
         return !(item instanceof ItemNotRemove);
     }
@@ -182,8 +158,8 @@ public class Player {
         }
     }
 
-    public ArrayList<Item> getItemVisible() {
-        ArrayList<Item> listItensVisible = new ArrayList<>();
+    public List<Item> getItemVisible() {
+        List<Item> listItensVisible = new ArrayList<>();
         for (Item item : this.item) {
             if (item.isVisible()) {
                 listItensVisible.add(item);
@@ -192,8 +168,8 @@ public class Player {
         return listItensVisible;
     }
 
-    public ArrayList<Item> getItemInvisible() {
-        ArrayList<Item> listItensInvisible = new ArrayList<>();
+    public List<Item> getItemInvisible() {
+        List<Item> listItensInvisible = new ArrayList<>();
         for (Item item : this.item) {
             if (!item.isVisible()) {
                 listItensInvisible.add(item);
@@ -203,6 +179,6 @@ public class Player {
     }
 
     public void updadeInventory(Item item) {
-        setCapacity(item.getWeight());
+        inventory.setCapacity(item.getWeight());
     }
 }

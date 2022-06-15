@@ -7,6 +7,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 public class InterfaceInventory {
 
@@ -16,15 +17,15 @@ public class InterfaceInventory {
     private final JButton[][] buttonItens;
     private final JLabel[] infoLabel;
     private final JButton[] buttonActions;
-    private final ArrayList<Item> items;
+    private final List<Item> items;
     private final Player player;
     private final SoundEffects soundEffects;
-    private final String filename = "src\\main\\java\\inventario\\";
+    private final String filename = "src\\main\\java\\repository\\inventario\\";
 
     public InterfaceInventory(InterfaceGame interfaceGame, Player player, SoundEffects soundEffects) {
         this.interfaceGame = interfaceGame;
         this.player = player;
-        this.player.setInventoty();
+        this.player.getInventory().setIsInventory();
         this.soundEffects = soundEffects;
         panelMain = new JPanel();
         labelSideEast = new JLabel(new ImageIcon(filename + "icons.png"));
@@ -85,7 +86,7 @@ public class InterfaceInventory {
         int positionY = 14;
         int positionX = 17;
         int cont = 0;
-        ArrayList<Item> itens = player.getItemVisible();
+        List<Item> itens = player.getItemVisible();
         for (int line = 0; line < buttonItens.length; line++) {
             for (int column = 0; column < buttonItens[line].length; column++) {
                 if (cont < itens.size()) {
@@ -113,7 +114,7 @@ public class InterfaceInventory {
 
     private void setInfoItens() {
         infoLabel[0] = new JLabel();
-        infoLabel[0].setText("Capacidade do inventario " + player.getCapacity() + "/" + player.getMaxCapacity());
+        infoLabel[0].setText("Capacidade do inventario " + player.getInventory().getCapacity() + "/" + player.getInventory().getMaxCapacity());
         infoLabel[0].setForeground(new Color(255, 255, 255));
         infoLabel[0].setBounds(150, 180, 300, 100);
         labelSideEast.add(infoLabel[0], 0);
@@ -329,7 +330,7 @@ public class InterfaceInventory {
     }
 
     private void setCapacity() {
-        infoLabel[0].setText("Capacidade do inventario " + player.getCapacity() + "/" + player.getMaxCapacity());
+        infoLabel[0].setText("Capacidade do inventario " + player.getInventory().getCapacity() + "/" + player.getInventory().getMaxCapacity());
     }
 
     private void updateItensMapGame() {
@@ -344,7 +345,7 @@ public class InterfaceInventory {
     private void quit() {
         interfaceGame.getFrame().remove(panelMain);
         interfaceGame.getFrame().repaint();
-        player.setInventoty();
+        player.getInventory().setIsInventory();
         this.interfaceGame.getFrame().requestFocus();
     }
 }

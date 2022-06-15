@@ -3,12 +3,13 @@ package model;
 import repository.CreateImageMapGame;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Combination {
 
     private final Player player;
-    private final ArrayList<ICombinable> itensCombinable;
+    private final List<ICombinable> itensCombinable;
 
     public Combination(Player player) {
         this.player = player;
@@ -16,7 +17,7 @@ public class Combination {
     }
 
 
-    public boolean execute(ArrayList<Item> itens) {
+    public boolean execute(List<Item> itens) {
         return validItemCombinable(itens) &&
                 validCombination(this.itensCombinable) &&
                 validAmountCombine(this.itensCombinable) &&
@@ -24,7 +25,7 @@ public class Combination {
     }
 
     // Metodo deve ser retirado pois, ja deveria ter verificado se o item é do tipo model.ItemCombinable antes de chamar o metodo
-    public boolean validItemCombinable(ArrayList<Item> itens) {
+    public boolean validItemCombinable(List<Item> itens) {
         for (Item item : itens) {
             if (item instanceof ICombinable) {
                 this.itensCombinable.add((ICombinable) item);
@@ -36,7 +37,7 @@ public class Combination {
     }
 
     //private
-    public boolean validCombination(ArrayList<ICombinable> itensCombinable) {
+    public boolean validCombination(List<ICombinable> itensCombinable) {
         for (int i = 1; i < itensCombinable.size(); i++) {
             if (itensCombinable.get(0).getCombine() != itensCombinable.get(i).getCombine()) {
                 return false;
@@ -46,11 +47,11 @@ public class Combination {
     }
 
     //alterar metodo para realizar um outro tipo de validacao, pois esta sendo validado pela quantidade
-    private boolean validAmountCombine(ArrayList<ICombinable> itensCombinable) {
+    private boolean validAmountCombine(List<ICombinable> itensCombinable) {
         return itensCombinable.size() == ListCombination.getAmountCombine(itensCombinable.get(0).getCombine());
     }
 
-    public Item retornarItemDeCombinacao(ArrayList<ICombinable> itensCombinable) {
+    public Item retornarItemDeCombinacao(List<ICombinable> itensCombinable) {
         int index = itensCombinable.get(0).getCombine() - 1;
         for (Item item : this.player.getItemInvisible()) {
             if (item.getName().equals(ItemsCombination.values()[index].getLabel())) {
@@ -61,7 +62,7 @@ public class Combination {
     }
 
     //private
-    public boolean atualizarIventario(ArrayList<ICombinable> itensCombinable) {
+    public boolean atualizarIventario(List<ICombinable> itensCombinable) {
         Item itemVisible = retornarItemDeCombinacao(itensCombinable);
         if (Objects.isNull(itemVisible)) {
             return false;
