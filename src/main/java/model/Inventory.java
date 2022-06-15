@@ -1,6 +1,6 @@
 package model;
 
-public class Inventory {
+public final class Inventory {
 
     private int capacity;
     private int maxCapacity;

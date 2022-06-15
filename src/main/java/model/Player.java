@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player {
+public final class Player {
     private int positionPlayerX;
     private int positionPlayerY;
     private String direction;
@@ -12,10 +12,6 @@ public class Player {
     private MapGame currentMapGame;
     private final List<Item> item;
     private final Inventory inventory;
-
-    public Inventory getInventory() {
-        return inventory;
-    }
 
     public Player() {
         SettingsPlayer settingsPlayer = new SettingsPlayer();
@@ -25,6 +21,10 @@ public class Player {
         this.currentMapGame = null;
         item = new ArrayList<>();
         this.inventory = new Inventory();
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 
     public int getPositionPlayerX() {
@@ -108,16 +108,18 @@ public class Player {
         return this.currentMapGame;
     }
 
+//remover e mandar para inventory
 
+    //private pois tem que realizar uma verificação
     public void setItem(Item itens) {
         this.item.add(itens);
     }
 
-    public boolean validMaxCapacity(Item itens) {
-        if (itens.getWeight() + inventory.getCapacity() <= inventory.getMaxCapacity()) {
-            setItem(itens);
-            inventory.setCapacity(itens.getWeight());
-            currentMapGame.removeItem(itens);
+    public boolean validMaxCapacity(Item item) {
+        if (item.getWeight() + inventory.getCapacity() <= inventory.getMaxCapacity()) {
+            setItem(item);
+            inventory.setCapacity(item.getWeight());
+            currentMapGame.removeItem(item);
             return true;
         } else {
             return false;
@@ -133,9 +135,10 @@ public class Player {
         return null;
     }
 
-    public void removeItem(Item itens) {
-        int weight = itens.getWeight();
-        item.remove(itens);
+    //private pois deve ter um tratamento para remover o item
+    public void removeItem(Item item) {
+        int weight = item.getWeight();
+        this.item.remove(item);
         inventory.setCapacity(-weight);
     }
 
@@ -147,15 +150,18 @@ public class Player {
         return !(item instanceof ItemNotRemove);
     }
 
-    public void removeItensCombine(int combine) {
+    public int removeItensCombine(int combine) {
+        int remove = 0;
         for (int i = 0; i < item.size(); i++) {
             if (item.get(i) instanceof ItemCombinable) {
                 if (((ItemCombinable) item.get(i)).getCombine() == combine) {
                     removeItem(item.get(i));
+                    remove++;
                     i = -1; //reset
                 }
             }
         }
+        return remove;
     }
 
     public List<Item> getItemVisible() {
