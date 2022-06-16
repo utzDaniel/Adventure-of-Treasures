@@ -1,7 +1,6 @@
 import model.*;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.theories.suppliers.TestedOn;
 import repository.CreateMapGame;
 
 import static org.junit.Assert.*;
@@ -18,14 +17,14 @@ public class PlayerTest {
         for(Item item :createMapGame.getItemInvisiblePlayer() ){
             player.setItem(item);
         }
-        player.setItem(new ItemEquipable("mochila", "utilizada para carregar mais coisas", 0,
+        player.takeItem(new ItemEquipable("mochila", "utilizada para carregar mais coisas", 0,
                 650,220,null));
 
     }
 
     @Test
     public void testarSetItem(){
-        player.setItem(new ItemUsable("pa", "ferramenta usada para cavar", 3, "praia",
+        player.takeItem(new ItemUsable("pa", "ferramenta usada para cavar", 3, "praia",
                 200,280,null));
         assertEquals(player.getItemVisible().size(),2);
     }
@@ -60,30 +59,48 @@ public class PlayerTest {
     public void removerItemPorItemDentroDoInventario(){
         Item item = new ItemUsable("pa", "ferramenta usada para cavar", 3, "praia",
                 200,280,null);
-        player.setItem(item);
+        player.takeItem(item);
         assertTrue(player.removeItemInventory(item));
     }
 
     @Test
     public void naoRemoverItemNotRemovePorItemDentroDoInventario(){
         Item item = new ItemNotRemove("tesouro", "tesouro lendário dos templários",null, 3,620,240,null);
-        player.setItem(item);
+        player.takeItem(item);
         assertFalse(player.removeItemInventory(item));
     }
 
     @Test
     public void removerItemPorCombinacaoDentroDoInventario(){
         Item item = new ItemCombinable("faca", "serve para cortar algo", 3, 3,420,130,null);
-        player.setItem(item);
-        player.setItem(item);
-        player.setItem(item);
-        assertEquals(player.removeItensCombine(((ICombinable) item).getCombine()),3);
+        player.takeItem(item);
+        player.takeItem(item);
+        player.takeItem(item);
+        assertEquals(player.getInventory().removeItensCombine(((ICombinable) item).getCombine()),3);
     }
 
     @Test
     public void removerItemPorCombinacaoDentroDoInventarioComCombinacaoInvalida(){
         Item item = new ItemCombinable("asa", "saasa", 3, 88,420,130,null);
-        assertEquals(player.removeItensCombine(((ICombinable) item).getCombine()),0);
+        assertEquals(player.getInventory().removeItensCombine(((ICombinable) item).getCombine()),0);
+    }
+
+    @Test
+    public void buscarListaDeItensVisivelNoInventario(){
+        assertEquals(player.getItemVisible().size(),1);
+    }
+
+    @Test
+    public void buscarListaDeItensNãoVisivelNoInventario(){
+        assertEquals(player.getItemInvisible().size(),3);
+    }
+
+    @Test
+    public void atualizarOTamanhoDoInventarioAoAdicionarItemNovo(){
+        Item item = new ItemCombinable("faca", "serve para cortar algo", 3, 3,420,130,null);
+        int tamanhoAnterio = player.getInventory().getCapacity();
+        player.getInventory().updadeInventory(item);
+        assertNotEquals(tamanhoAnterio, player.getInventory().getCapacity());
     }
 
 }

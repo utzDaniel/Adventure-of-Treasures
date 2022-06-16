@@ -10,7 +10,6 @@ public final class Player {
     private String direction;
     private final List<MovePlayer> movePlayer;
     private MapGame currentMapGame;
-    private final List<Item> item;
     private final Inventory inventory;
 
     public Player() {
@@ -19,7 +18,6 @@ public final class Player {
         this.positionPlayerY = settingsPlayer.positionInitialY();
         movePlayer = new ArrayList<>(settingsPlayer.createMovePlayer());
         this.currentMapGame = null;
-        item = new ArrayList<>();
         this.inventory = new Inventory();
     }
 
@@ -99,7 +97,6 @@ public final class Player {
         playerJLabel.setLocation(this.positionPlayerX, this.positionPlayerY);
     }
 
-
     public void setCurrentMap(MapGame currentScenery) {
         this.currentMapGame = currentScenery;
     }
@@ -108,83 +105,43 @@ public final class Player {
         return this.currentMapGame;
     }
 
-//remover e mandar para inventory
 
     //private pois tem que realizar uma verificação
-    public void setItem(Item itens) {
-        this.item.add(itens);
+    public void takeItem(Item item) {
+        this.inventory.setItem(item);
+    }
+
+    //alteração baixo acoplamento
+    public void setItem(Item item) {
+        this.inventory.getItem().add(item);
     }
 
     public boolean validMaxCapacity(Item item) {
-        if (item.getWeight() + inventory.getCapacity() <= inventory.getMaxCapacity()) {
-            setItem(item);
-            inventory.setCapacity(item.getWeight());
-            currentMapGame.removeItem(item);
-            return true;
-        } else {
-            return false;
-        }
+        if (!(inventory.validMaxCapacity(item))) return false;
+        currentMapGame.removeItem(item);
+        return true;
     }
 
     public Item getItemInventory(String nameItem) {
-        for (Item itemInventory : item) {
-            if (itemInventory.getName().equals(nameItem)) {
-                return itemInventory;
-            }
-        }
-        return null;
+        return inventory.getItemInventory(nameItem);
     }
 
-    //private pois deve ter um tratamento para remover o item
     public void removeItem(Item item) {
-        int weight = item.getWeight();
-        this.item.remove(item);
-        inventory.setCapacity(-weight);
+        inventory.removeItem(item);
     }
 
     public boolean removeItemInventory(Item item) {
-        if (!(item instanceof ItemNotRemove)) {
-            removeItem(item);
-            currentMapGame.setItemRemove(item, positionPlayerX, positionPlayerY);
-        }
-        return !(item instanceof ItemNotRemove);
-    }
-
-    public int removeItensCombine(int combine) {
-        int remove = 0;
-        for (int i = 0; i < item.size(); i++) {
-            if (item.get(i) instanceof ItemCombinable) {
-                if (((ItemCombinable) item.get(i)).getCombine() == combine) {
-                    removeItem(item.get(i));
-                    remove++;
-                    i = -1; //reset
-                }
-            }
-        }
-        return remove;
+        if(!(inventory.removeItemInventory(item))) return false;
+        currentMapGame.setItemRemove(item, positionPlayerX, positionPlayerY);
+        return true;
     }
 
     public List<Item> getItemVisible() {
-        List<Item> listItensVisible = new ArrayList<>();
-        for (Item item : this.item) {
-            if (item.isVisible()) {
-                listItensVisible.add(item);
-            }
-        }
-        return listItensVisible;
+        return inventory.getItemVisible();
     }
 
     public List<Item> getItemInvisible() {
-        List<Item> listItensInvisible = new ArrayList<>();
-        for (Item item : this.item) {
-            if (!item.isVisible()) {
-                listItensInvisible.add(item);
-            }
-        }
-        return listItensInvisible;
+        return inventory.getItemInvisible();
     }
 
-    public void updadeInventory(Item item) {
-        inventory.setCapacity(item.getWeight());
-    }
 }

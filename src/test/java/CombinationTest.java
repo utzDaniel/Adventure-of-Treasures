@@ -22,7 +22,7 @@ public class CombinationTest {
         CreateMapGame createMapGame = new CreateMapGame();
         player.setCurrentMap(createMapGame.getInitialScenery());
         for(Item item :createMapGame.getItemInvisiblePlayer() ){
-            player.setItem(item);
+            player.takeItem(item);
         }
         combination = new Combination(player);
         itemInvalido.add(new ItemCombinable("madeira", "cabo de madeira velho", 5, 3,410,200,null));

@@ -3,11 +3,12 @@ import model.ListCombination;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
+import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 
 public class ListCombinationTest {
-    private final ArrayList<ItemCombinable> itens = new ArrayList<>();
+    private final List<ItemCombinable> itens = new ArrayList<>();
 
     @Before
     public void crearCombination(){

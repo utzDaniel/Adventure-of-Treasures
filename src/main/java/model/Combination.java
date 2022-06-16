@@ -79,7 +79,7 @@ public class Combination {
     }
 
     private void removeItensCombine(int combine) {
-        this.player.removeItensCombine(combine);
+        this.player.getInventory().removeItensCombine(combine);
     }
 
     private void itemViseble(Item item) {
@@ -87,7 +87,7 @@ public class Combination {
     }
 
     private void updadeCapacity(Item item) {
-        this.player.updadeInventory(item);
+        this.player.getInventory().updadeInventory(item);
     }
 }
 
