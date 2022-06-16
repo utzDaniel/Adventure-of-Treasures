@@ -8,7 +8,7 @@ public enum ItemsUsable {
     PA("pa"){
         @Override
         public boolean use(Player player){
-            if (!(player.getItemInventory("mapa").isVisible()))
+            if (!(player.getInventory().getItemInventory("mapa").isVisible()))
                 return false;
             for (Item item : player.getCurrentMap().getItemInvisible()) {
                 if (item.getName().equals("chave")) {

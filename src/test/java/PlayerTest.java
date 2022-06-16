@@ -15,23 +15,23 @@ public class PlayerTest {
         player = new Player();
         player.setCurrentMap(createMapGame.getInitialScenery());
         for(Item item :createMapGame.getItemInvisiblePlayer() ){
-            player.setItem(item);
+            player.getInventory().setItemInvisible(item);
         }
-        player.takeItem(new ItemEquipable("mochila", "utilizada para carregar mais coisas", 0,
+        player.getInventory().setItem(new ItemEquipable("mochila", "utilizada para carregar mais coisas", 0,
                 650,220,null));
 
     }
 
     @Test
-    public void testarSetItem(){
+    public void testarPegarItem(){
         player.takeItem(new ItemUsable("pa", "ferramenta usada para cavar", 3, "praia",
                 200,280,null));
-        assertEquals(player.getItemVisible().size(),2);
+        assertEquals(player.getInventory().getItemVisible().size(),2);
     }
 
     @Test
     public void validarCapacidadeMaximaDoInventory(){
-        assertTrue(player.validMaxCapacity(new ItemUsable("pa", "ferramenta usada para cavar", 3,
+        assertTrue(player.takeItem(new ItemUsable("pa", "ferramenta usada para cavar", 3,
                 "praia",200,280,null)));
     }
 
@@ -39,20 +39,20 @@ public class PlayerTest {
     public void invalidarCapacidadeMaximaDoInventory(){
         Item item = new ItemUsable("pa", "ferramenta usada para cavar", 3, "praia",
                 200,280,null);
-        player.validMaxCapacity(item);
-        player.validMaxCapacity(item);
-        player.validMaxCapacity(item);
-        assertFalse(player.validMaxCapacity(item));
+        player.takeItem(item);
+        player.takeItem(item);
+        player.takeItem(item);
+        assertFalse(player.takeItem(item));
     }
 
     @Test
     public void buscarPeloNomeDoItem(){
-      assertNotNull(player.getItemInventory("mochila"));
+      assertNotNull(player.getInventory().getItemInventory("mochila"));
     }
 
     @Test
     public void nullBuscarPeloNomeDoItem(){
-        assertNull(player.getItemInventory("adas"));
+        assertNull(player.getInventory().getItemInventory("adas"));
     }
 
     @Test
@@ -60,14 +60,14 @@ public class PlayerTest {
         Item item = new ItemUsable("pa", "ferramenta usada para cavar", 3, "praia",
                 200,280,null);
         player.takeItem(item);
-        assertTrue(player.removeItemInventory(item));
+        assertTrue(player.dropItem(item));
     }
 
     @Test
     public void naoRemoverItemNotRemovePorItemDentroDoInventario(){
         Item item = new ItemNotRemove("tesouro", "tesouro lendário dos templários",null, 3,620,240,null);
         player.takeItem(item);
-        assertFalse(player.removeItemInventory(item));
+        assertFalse(player.dropItem(item));
     }
 
     @Test
@@ -87,12 +87,12 @@ public class PlayerTest {
 
     @Test
     public void buscarListaDeItensVisivelNoInventario(){
-        assertEquals(player.getItemVisible().size(),1);
+        assertEquals(player.getInventory().getItemVisible().size(),1);
     }
 
     @Test
     public void buscarListaDeItensNãoVisivelNoInventario(){
-        assertEquals(player.getItemInvisible().size(),3);
+        assertEquals(player.getInventory().getItemInvisible().size(),3);
     }
 
     @Test

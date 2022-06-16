@@ -25,7 +25,7 @@ public class InterfaceInventory {
     public InterfaceInventory(InterfaceGame interfaceGame, Player player, SoundEffects soundEffects) {
         this.interfaceGame = interfaceGame;
         this.player = player;
-        this.player.getInventory().setIsInventory();
+        this.player.getInventory().setOpenInventory();
         this.soundEffects = soundEffects;
         panelMain = new JPanel();
         labelSideEast = new JLabel(new ImageIcon(filename + "icons.png"));
@@ -86,7 +86,7 @@ public class InterfaceInventory {
         int positionY = 14;
         int positionX = 17;
         int cont = 0;
-        List<Item> itens = player.getItemVisible();
+        List<Item> itens = player.getInventory().getItemVisible();
         for (int line = 0; line < buttonItens.length; line++) {
             for (int column = 0; column < buttonItens[line].length; column++) {
                 if (cont < itens.size()) {
@@ -189,7 +189,7 @@ public class InterfaceInventory {
     private void setActions(ActionEvent e) {
         buttonActions[4].setVisible(false);
         buttonActions[5].setVisible(false);
-        Item item = player.getItemInventory(e.getActionCommand());
+        Item item = player.getInventory().getItemInventory(e.getActionCommand());
         if (!(item instanceof ItemCombinable)) {
             this.items.clear();
         } else if (this.items.size() == 1 && !(this.items.get(0) instanceof ItemCombinable)) {
@@ -248,7 +248,7 @@ public class InterfaceInventory {
                 for (JButton jButton : buttonIten) {
                     if (jButton != null) {
                         if (items.size() == 1) {
-                            if (player.getItemInventory(jButton.getActionCommand()) instanceof ItemCombinable) {
+                            if (player.getInventory().getItemInventory(jButton.getActionCommand()) instanceof ItemCombinable) {
                                 if (items.get(0).getName().equals(jButton.getActionCommand())) {
                                     jButton.setBackground(new Color(29, 92, 37));
                                 }
@@ -276,7 +276,7 @@ public class InterfaceInventory {
     private void setActionConfirm() {
         boolean success = false;
         switch (buttonActions[5].getActionCommand()) {
-            case "remover" -> success = player.removeItemInventory(items.get(0));
+            case "remover" -> success = player.dropItem(items.get(0));
             case "usar" -> {
                 success = ((ItemUsable) items.get(0)).use(items.get(0), player);
                 updateItensMapGame();
@@ -345,7 +345,7 @@ public class InterfaceInventory {
     private void quit() {
         interfaceGame.getFrame().remove(panelMain);
         interfaceGame.getFrame().repaint();
-        player.getInventory().setIsInventory();
+        player.getInventory().setOpenInventory();
         this.interfaceGame.getFrame().requestFocus();
     }
 }

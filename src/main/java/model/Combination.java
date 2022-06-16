@@ -53,7 +53,7 @@ public class Combination {
 
     public Item retornarItemDeCombinacao(List<ICombinable> itensCombinable) {
         int index = itensCombinable.get(0).getCombine() - 1;
-        for (Item item : this.player.getItemInvisible()) {
+        for (Item item : this.player.getInventory().getItemInvisible()) {
             if (item.getName().equals(ItemsCombination.values()[index].getLabel())) {
                 return item;
             }

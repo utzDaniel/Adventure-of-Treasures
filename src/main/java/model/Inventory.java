@@ -8,11 +8,7 @@ public final class Inventory {
     private int capacity;
     private int maxCapacity;
     private boolean isInventory;
-    private final List<Item> item;
-
-    public List<Item> getItem() {
-        return item;
-    }
+    private final List<Item> item;//alterar para HasMap
 
     public Inventory() {
         this.capacity = 0;
@@ -21,11 +17,11 @@ public final class Inventory {
         item = new ArrayList<>();
     }
 
-    public boolean isInventory() {
+    public boolean openInventory() {
         return isInventory;
     }
 
-    public void setIsInventory() {
+    public void setOpenInventory() {
         this.isInventory = !isInventory;
     }
 
@@ -44,20 +40,20 @@ public final class Inventory {
     public int getMaxCapacity() {
         return this.maxCapacity;
     }
+    
+    public void setItemInvisible(Item item) {
+        this.item.add(item);
+    }
 
     public boolean setItem(Item item) {
-        if(!(checkCapacity(item))) return false;
+        if (!(checkCapacity(item))) return false;
         this.item.add(item);
         this.setCapacity(item.getWeight());
         return true;
     }
 
-    private boolean checkCapacity(Item item){
+    private boolean checkCapacity(Item item) {
         return item.getWeight() + this.capacity <= this.maxCapacity;
-    }
-
-    public boolean validMaxCapacity(Item item) {
-        return setItem(item);
     }
 
     public Item getItemInventory(String nameItem) {
@@ -70,15 +66,11 @@ public final class Inventory {
     }
 
     //private pois deve ter um tratamento para remover o item
-    public void removeItem(Item item) {
+    public boolean removeItem(Item item) {
+        if (item instanceof ItemNotRemove) return false;
         int weight = item.getWeight();
         this.item.remove(item);
         this.setCapacity(-weight);
-    }
-
-    public boolean removeItemInventory(Item item) {
-        if ((item instanceof ItemNotRemove)) return false;
-        removeItem(item);
         return true;
     }
 

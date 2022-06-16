@@ -33,6 +33,6 @@ public final class Use {
     }
 
     private void removeItemUsable(Item itemUsable) {
-        player.removeItem(itemUsable);
+        player.getInventory().removeItem(itemUsable);
     }
 }

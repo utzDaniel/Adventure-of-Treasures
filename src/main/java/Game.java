@@ -27,7 +27,7 @@ public class Game {
         CreateMapGame createMapGame = new CreateMapGame();
         player.setCurrentMap(createMapGame.getInitialScenery());
         for(Item item :createMapGame.getItemInvisiblePlayer() ){
-            player.setItem(item);
+            player.getInventory().setItemInvisible(item);
         }
     }
 
@@ -42,25 +42,25 @@ public class Game {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == 38) {
                     if (player.getPositionPlayerY() > 0) {
-                        player.movePositionPlayer("norte", interfaceGame.getPlayerJLabel());
+                        player.walk("norte", interfaceGame.getPlayerJLabel());
                     } else {
                         nextScenery("norte");
                     }
                 } else if (e.getKeyCode() == 40) {
                     if (player.getPositionPlayerY() < interfaceGame.getMapGameJLabel().getHeight() - 50) {
-                        player.movePositionPlayer("sul", interfaceGame.getPlayerJLabel());
+                        player.walk("sul", interfaceGame.getPlayerJLabel());
                     } else {
                         nextScenery("sul");
                     }
                 } else if (e.getKeyCode() == 37) {
                     if (player.getPositionPlayerX() > 0) {
-                        player.movePositionPlayer("oeste", interfaceGame.getPlayerJLabel());
+                        player.walk("oeste", interfaceGame.getPlayerJLabel());
                     } else {
                         nextScenery("oeste");
                     }
                 } else if (e.getKeyCode() == 39) {
                     if (player.getPositionPlayerX() < interfaceGame.getMapGameJLabel().getWidth() - 30) {
-                        player.movePositionPlayer("leste", interfaceGame.getPlayerJLabel());
+                        player.walk("leste", interfaceGame.getPlayerJLabel());
                     } else {
                         nextScenery("leste");
                     }
@@ -69,7 +69,7 @@ public class Game {
                 } else if (e.getKeyCode() == 98) {
                     take();
                 } else if (e.getKeyCode() == 99) {
-                    if(!player.getInventory().isInventory()){
+                    if(!player.getInventory().openInventory()){
                         new InterfaceInventory(interfaceGame, player, soundEffects);
                     }
                 }
@@ -133,7 +133,7 @@ public class Game {
     private void take() {
         Item item = player.getItemMapGame();
         if (item != null) {
-            if(player.validMaxCapacity(item)){
+            if(player.takeItem(item)){
                 soundEffects.play("pegar");
                 updateItensMapGame();
             }

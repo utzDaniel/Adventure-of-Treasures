@@ -43,25 +43,25 @@ public final class Player {
         setLocation(playerJLabel);
     }
 
-    public String getDirection() {
-        return direction;
+    private String getDirection() {
+        return this.direction;
     }
 
-    public void setDirection(String direction) {
+    private void setDirection(String direction) {
         this.direction = direction;
     }
 
-    public void movePositionPlayer(String direction, JLabel playerJLabel) {
+    public void walk(String direction, JLabel playerJLabel) {
         int positionX = positionPlayerX;
         int positionY = positionPlayerY;
         for (MovePlayer player : movePlayer) {
-            if (player.getDirection().equals(direction)) {
+            if (this.direction.equals(direction)) {
                 if (player.isPositionX()) {
                     this.positionPlayerX += player.getStep();
                 } else {
                     this.positionPlayerY += player.getStep();
                 }
-                if (!currentMapGame.mapGameLimits(positionPlayerX, positionPlayerY)) {
+                if (!this.currentMapGame.mapGameLimits(this.positionPlayerX, this.positionPlayerY)) {
                     this.positionPlayerX = positionX;
                     this.positionPlayerY = positionY;
                 } else {
@@ -74,16 +74,16 @@ public final class Player {
     }
 
     public Item getItemMapGame() {
-        int positionX = positionPlayerX;
-        int positionY = positionPlayerY;
-        for (MovePlayer player : movePlayer) {
+        int positionX = this.positionPlayerX;
+        int positionY = this.positionPlayerY;
+        for (MovePlayer player : this.movePlayer) {
             if (player.getDirection().equals(getDirection())) {
                 if (player.isPositionX()) {
                     positionX += player.getStep();
                 } else {
                     positionY += player.getStep();
                 }
-                return currentMapGame.getItemMapGame(positionX, positionY);
+                return this.currentMapGame.getItemMapGame(positionX, positionY);
             }
         }
         return null;
@@ -105,43 +105,15 @@ public final class Player {
         return this.currentMapGame;
     }
 
-
-    //private pois tem que realizar uma verificação
-    public void takeItem(Item item) {
-        this.inventory.setItem(item);
-    }
-
-    //alteração baixo acoplamento
-    public void setItem(Item item) {
-        this.inventory.getItem().add(item);
-    }
-
-    public boolean validMaxCapacity(Item item) {
-        if (!(inventory.validMaxCapacity(item))) return false;
-        currentMapGame.removeItem(item);
+    public boolean takeItem(Item item) {
+        if (!this.inventory.setItem(item)) return false;
+        this.currentMapGame.removeItem(item);
         return true;
     }
 
-    public Item getItemInventory(String nameItem) {
-        return inventory.getItemInventory(nameItem);
-    }
-
-    public void removeItem(Item item) {
-        inventory.removeItem(item);
-    }
-
-    public boolean removeItemInventory(Item item) {
-        if(!(inventory.removeItemInventory(item))) return false;
-        currentMapGame.setItemRemove(item, positionPlayerX, positionPlayerY);
+    public boolean dropItem(Item item) {
+        if (!this.inventory.removeItem(item)) return false;
+        this.currentMapGame.setItemRemove(item, positionPlayerX, positionPlayerY);
         return true;
     }
-
-    public List<Item> getItemVisible() {
-        return inventory.getItemVisible();
-    }
-
-    public List<Item> getItemInvisible() {
-        return inventory.getItemInvisible();
-    }
-
 }
