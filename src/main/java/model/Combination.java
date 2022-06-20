@@ -46,15 +46,13 @@ public class Combination {
         return true;
     }
 
-    //alterar metodo para realizar um outro tipo de validacao, pois esta sendo validado pela quantidade
     private boolean validAmountCombine(List<ICombinable> itensCombinable) {
-        return itensCombinable.size() == ListCombination.getAmountCombine(itensCombinable.get(0).getCombine());
+        return itensCombinable.size() == ItemsCombination.getAmountCombination(itensCombinable.get(0).getCombine());
     }
 
     public Item retornarItemDeCombinacao(List<ICombinable> itensCombinable) {
-        int index = itensCombinable.get(0).getCombine() - 1;
         for (Item item : this.player.getInventory().getItemInvisible()) {
-            if (item.getName().equals(ItemsCombination.values()[index].getLabel())) {
+            if (item.getName().equals(Objects.requireNonNull(ItemsCombination.getItemCombined(itensCombinable.get(0).getCombine())).getLabel())) {
                 return item;
             }
         }
@@ -88,21 +86,5 @@ public class Combination {
 
     private void updadeCapacity(Item item) {
         this.player.getInventory().updadeInventory(item);
-    }
-}
-
-enum ItemsCombination {
-    MAPA("mapa"),
-    ESCADA("escada"),
-    TOCHA("tocha");
-
-    private final String label;
-
-    ItemsCombination(String label) {
-        this.label = label;
-    }
-
-    public String getLabel() {
-        return label;
     }
 }

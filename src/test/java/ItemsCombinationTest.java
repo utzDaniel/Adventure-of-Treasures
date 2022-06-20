@@ -1,5 +1,5 @@
 import model.ItemCombinable;
-import model.ListCombination;
+import model.ItemsCombination;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 
-public class ListCombinationTest {
+public class ItemsCombinationTest {
     private final List<ItemCombinable> itens = new ArrayList<>();
 
     @Before
@@ -24,11 +24,11 @@ public class ListCombinationTest {
     //3 - 2
     @Test
     public void retornarAQuantidadeDeCombinacaoDoItem(){
-        assertEquals(3, ListCombination.getAmountCombine(2));//2 e 3
+        assertEquals(3, ItemsCombination.getAmountCombination(2));//2 e 3
     }
 
     @Test
     public void retornarNegativoAQuantidadeDeCombinacaoDoItem(){
-        assertEquals(-1, ListCombination.getAmountCombine(4));//2 e 3
+        assertEquals(-1, ItemsCombination.getAmountCombination(4));//2 e 3
     }
 }

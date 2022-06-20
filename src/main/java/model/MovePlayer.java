@@ -25,7 +25,7 @@ public class MovePlayer {
     }
 
     public int getStep() {
-        return step;
+        return this.step;
     }
 
     public ImageIcon getImageIcon() {

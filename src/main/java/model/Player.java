@@ -22,11 +22,11 @@ public final class Player {
     }
 
     public Inventory getInventory() {
-        return inventory;
+        return this.inventory;
     }
 
     public int getPositionPlayerX() {
-        return positionPlayerX;
+        return this.positionPlayerX;
     }
 
     public void setPositionPlayerX(int positionPlayerX, JLabel playerJLabel) {
@@ -35,7 +35,7 @@ public final class Player {
     }
 
     public int getPositionPlayerY() {
-        return positionPlayerY;
+        return this.positionPlayerY;
     }
 
     public void setPositionPlayerY(int positionPlayerY, JLabel playerJLabel) {
@@ -73,6 +73,7 @@ public final class Player {
         }
     }
 
+    //colocar junto ao take
     public Item getItemMapGame() {
         int positionX = this.positionPlayerX;
         int positionY = this.positionPlayerY;
