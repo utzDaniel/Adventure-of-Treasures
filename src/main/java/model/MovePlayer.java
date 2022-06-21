@@ -1,35 +1,42 @@
 package model;
 
+import repository.CreateImagePlayer;
+
 import javax.swing.*;
 
-public class MovePlayer {
+public enum MovePlayer {
+
+    OESTE("oeste",-MovePlayer.STEP,0, new CreateImagePlayer().selectImage(Direction.OESTE.getLabel())),
+    NORTE("norte",0,-MovePlayer.STEP, new CreateImagePlayer().selectImage(Direction.NORTE.getLabel())),
+    LESTE("leste", MovePlayer.STEP,0, new CreateImagePlayer().selectImage(Direction.LESTE.getLabel())),
+    SUL("sul",0, MovePlayer.STEP, new CreateImagePlayer().selectImage(Direction.SUL.getLabel()));
 
     private final String direction;
-    private final boolean positionX;
-    private final int step;
+    private final int toMoveX;
+    private final int toMoveY;
     private final ImageIcon imageIcon;
+    private static final int STEP = 10;
 
-    public MovePlayer(String direction, boolean positionX, int step, ImageIcon imageIcon){
+    MovePlayer(String direction, int toMoveX, int toMoveY, ImageIcon imageIcon) {
         this.direction = direction;
-        this.positionX = positionX;
-        this.step = step;
+        this.toMoveX = toMoveX;
+        this.toMoveY = toMoveY;
         this.imageIcon = imageIcon;
     }
 
     public String getDirection() {
-        return direction;
+        return this.direction;
     }
 
-    public boolean isPositionX() {
-        return positionX;
+    public int getToMoveX() {
+        return this.toMoveX;
     }
 
-    public int getStep() {
-        return this.step;
+    public int getToMoveY() {
+        return this.toMoveY;
     }
 
     public ImageIcon getImageIcon() {
-        return imageIcon;
+        return this.imageIcon;
     }
-
 }

@@ -3,6 +3,8 @@ import org.junit.Before;
 import org.junit.Test;
 import repository.CreateMapGame;
 
+import javax.swing.*;
+
 import static org.junit.Assert.*;
 
 public class PlayerTest {
@@ -10,35 +12,36 @@ public class PlayerTest {
     private Player player;
 
     @Before
-    public void iniciacaoDoPlayerParaTeste(){
+    public void iniciacaoDoPlayerParaTeste() {
         CreateMapGame createMapGame = new CreateMapGame();
         player = new Player();
+        player.setDirection(Direction.SUL.getLabel());
         player.setCurrentMap(createMapGame.getInitialScenery());
-        for(Item item :createMapGame.getItemInvisiblePlayer() ){
+        for (Item item : createMapGame.getItemInvisiblePlayer()) {
             player.getInventory().setItemInvisible(item);
         }
         player.getInventory().setItem(new ItemEquipable("mochila", "utilizada para carregar mais coisas", 0,
-                650,220,null));
+                650, 220, null));
 
     }
 
     @Test
-    public void testarPegarItem(){
+    public void testarPegarItem() {
         player.takeItem(new ItemUsable("pa", "ferramenta usada para cavar", 3, "praia",
-                200,280,null));
-        assertEquals(player.getInventory().getItemVisible().size(),2);
+                200, 280, null));
+        assertEquals(player.getInventory().getItemVisible().size(), 2);
     }
 
     @Test
-    public void validarCapacidadeMaximaDoInventory(){
+    public void validarCapacidadeMaximaDoInventory() {
         assertTrue(player.takeItem(new ItemUsable("pa", "ferramenta usada para cavar", 3,
-                "praia",200,280,null)));
+                "praia", 200, 280, null)));
     }
 
     @Test
-    public void invalidarCapacidadeMaximaDoInventory(){
+    public void invalidarCapacidadeMaximaDoInventory() {
         Item item = new ItemUsable("pa", "ferramenta usada para cavar", 3, "praia",
-                200,280,null);
+                200, 280, null);
         player.takeItem(item);
         player.takeItem(item);
         player.takeItem(item);
@@ -46,61 +49,85 @@ public class PlayerTest {
     }
 
     @Test
-    public void buscarPeloNomeDoItem(){
-      assertNotNull(player.getInventory().getItemInventory("mochila"));
+    public void buscarPeloNomeDoItem() {
+        assertNotNull(player.getInventory().getItemInventory("mochila"));
     }
 
     @Test
-    public void nullBuscarPeloNomeDoItem(){
+    public void nullBuscarPeloNomeDoItem() {
         assertNull(player.getInventory().getItemInventory("adas"));
     }
 
     @Test
-    public void removerItemPorItemDentroDoInventario(){
+    public void removerItemPorItemDentroDoInventario() {
         Item item = new ItemUsable("pa", "ferramenta usada para cavar", 3, "praia",
-                200,280,null);
+                200, 280, null);
         player.takeItem(item);
         assertTrue(player.dropItem(item));
     }
 
     @Test
-    public void naoRemoverItemNotRemovePorItemDentroDoInventario(){
-        Item item = new ItemNotRemove("tesouro", "tesouro lendário dos templários",null, 3,620,240,null);
+    public void naoRemoverItemNotRemovePorItemDentroDoInventario() {
+        Item item = new ItemNotRemove("tesouro", "tesouro lendário dos templários", null, 3, 620, 240, null);
         player.takeItem(item);
         assertFalse(player.dropItem(item));
     }
 
     @Test
-    public void removerItemPorCombinacaoDentroDoInventario(){
-        Item item = new ItemCombinable("faca", "serve para cortar algo", 3, 3,420,130,null);
+    public void removerItemPorCombinacaoDentroDoInventario() {
+        Item item = new ItemCombinable("faca", "serve para cortar algo", 3, 3, 420, 130, null);
         player.takeItem(item);
         player.takeItem(item);
         player.takeItem(item);
-        assertEquals(player.getInventory().removeItensCombine(((ICombinable) item).getCombine()),3);
+        assertEquals(player.getInventory().removeItensCombine(((ICombinable) item).getCombine()), 3);
     }
 
     @Test
-    public void removerItemPorCombinacaoDentroDoInventarioComCombinacaoInvalida(){
-        Item item = new ItemCombinable("asa", "saasa", 3, 88,420,130,null);
-        assertEquals(player.getInventory().removeItensCombine(((ICombinable) item).getCombine()),0);
+    public void removerItemPorCombinacaoDentroDoInventarioComCombinacaoInvalida() {
+        Item item = new ItemCombinable("asa", "saasa", 3, 88, 420, 130, null);
+        assertEquals(player.getInventory().removeItensCombine(((ICombinable) item).getCombine()), 0);
     }
 
     @Test
-    public void buscarListaDeItensVisivelNoInventario(){
-        assertEquals(player.getInventory().getItemVisible().size(),1);
+    public void buscarListaDeItensVisivelNoInventario() {
+        assertEquals(player.getInventory().getItemVisible().size(), 1);
     }
 
     @Test
-    public void buscarListaDeItensNãoVisivelNoInventario(){
-        assertEquals(player.getInventory().getItemInvisible().size(),3);
+    public void buscarListaDeItensNãoVisivelNoInventario() {
+        assertEquals(player.getInventory().getItemInvisible().size(), 3);
     }
 
     @Test
-    public void atualizarOTamanhoDoInventarioAoAdicionarItemNovo(){
-        Item item = new ItemCombinable("faca", "serve para cortar algo", 3, 3,420,130,null);
+    public void atualizarOTamanhoDoInventarioAoAdicionarItemNovo() {
+        Item item = new ItemCombinable("faca", "serve para cortar algo", 3, 3, 420, 130, null);
         int tamanhoAnterio = player.getInventory().getCapacity();
         player.getInventory().updadeInventory(item);
         assertNotEquals(tamanhoAnterio, player.getInventory().getCapacity());
     }
 
+    @Test
+    public void andarPlayerParaLeste() {
+        int positionX = player.getPositionPlayerX();
+        player.walk(Direction.LESTE.getLabel(), new JLabel());
+        assertEquals(positionX+10, player.getPositionPlayerX());
+    }
+    @Test
+    public void andarPlayerParaOeste() {
+        int positionX = player.getPositionPlayerX();
+        player.walk(Direction.OESTE.getLabel(), new JLabel());
+        assertEquals(positionX-10, player.getPositionPlayerX());
+    }
+    @Test
+    public void andarPlayerParaSul() {
+        int positionY = player.getPositionPlayerY();
+        player.walk(Direction.SUL.getLabel(), new JLabel());
+        assertEquals(positionY+10, player.getPositionPlayerY());
+    }
+    @Test
+    public void andarPlayerParaNorte() {
+        int positionY = player.getPositionPlayerY();
+        player.walk(Direction.NORTE.getLabel(), new JLabel());
+        assertEquals(positionY-10, player.getPositionPlayerY());
+    }
 }

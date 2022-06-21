@@ -1,14 +1,11 @@
 package model;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public final class Player {
     private int positionPlayerX;
     private int positionPlayerY;
     private String direction;
-    private final List<MovePlayer> movePlayer;
     private MapGame currentMapGame;
     private final Inventory inventory;
 
@@ -16,7 +13,6 @@ public final class Player {
         SettingsPlayer settingsPlayer = new SettingsPlayer();
         this.positionPlayerX = settingsPlayer.positionInitialX();
         this.positionPlayerY = settingsPlayer.positionInitialY();
-        movePlayer = new ArrayList<>(settingsPlayer.createMovePlayer());
         this.currentMapGame = null;
         this.inventory = new Inventory();
     }
@@ -47,43 +43,37 @@ public final class Player {
         return this.direction;
     }
 
-    private void setDirection(String direction) {
+    public void setDirection(String direction) {
         this.direction = direction;
     }
 
-    public void walk(String direction, JLabel playerJLabel) {
-        int positionX = positionPlayerX;
-        int positionY = positionPlayerY;
-        for (MovePlayer player : movePlayer) {
-            if (this.direction.equals(direction)) {
-                if (player.isPositionX()) {
-                    this.positionPlayerX += player.getStep();
-                } else {
-                    this.positionPlayerY += player.getStep();
-                }
+    public boolean walk(String direction, JLabel playerJLabel) {
+        for (MovePlayer move : MovePlayer.values()) {
+            if(move.getDirection().equals(direction)){
+                this.positionPlayerX += move.getToMoveX();
+                this.positionPlayerY += move.getToMoveY();
                 if (!this.currentMapGame.mapGameLimits(this.positionPlayerX, this.positionPlayerY)) {
-                    this.positionPlayerX = positionX;
-                    this.positionPlayerY = positionY;
-                } else {
+                    this.positionPlayerX -= move.getToMoveX();
+                    this.positionPlayerY -= move.getToMoveY();
+                }else{
                     setLocation(playerJLabel);
                 }
                 setDirection(direction);
-                setIcon(player.getImageIcon(), playerJLabel);
+                setIcon(move.getImageIcon(), playerJLabel);
+                return true;
             }
         }
+        return false;
     }
 
-    //colocar junto ao take
+    //colocar junto ao take ou deixar privado
     public Item getItemMapGame() {
         int positionX = this.positionPlayerX;
         int positionY = this.positionPlayerY;
-        for (MovePlayer player : this.movePlayer) {
-            if (player.getDirection().equals(getDirection())) {
-                if (player.isPositionX()) {
-                    positionX += player.getStep();
-                } else {
-                    positionY += player.getStep();
-                }
+        for (MovePlayer move : MovePlayer.values()) {
+            if (move.getDirection().equals(getDirection())) {
+                positionX += move.getToMoveX();
+                positionY += move.getToMoveY();
                 return this.currentMapGame.getItemMapGame(positionX, positionY);
             }
         }
