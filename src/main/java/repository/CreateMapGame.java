@@ -88,7 +88,7 @@ public class CreateMapGame {
         limitsTopTemple(topTemple);
         limitsBoat(boat);
 
-        CreateItem createItem = new CreateItem();
+        RepositoryItem createItem = new RepositoryItem();
 
         boat.setItem(createItem.getItem("mochila"));
         lighthouse.setItem(createItem.getItem("pa"));

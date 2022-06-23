@@ -29,6 +29,7 @@ public class PlayerTest {
     public void testarPegarItem() {
         player.takeItem(new ItemUsable("pa", "ferramenta usada para cavar", 3, "praia",
                 200, 280, null));
+        player.getInventory().getItemVisible().forEach(item -> System.out.println(item.getName()));
         assertEquals(player.getInventory().getItemVisible().size(), 2);
     }
 

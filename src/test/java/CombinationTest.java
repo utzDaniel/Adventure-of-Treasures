@@ -57,6 +57,11 @@ public class CombinationTest {
     public void retornarOItemDeCombinacao(){
         assertNotNull(combination.retornarItemDeCombinacao(new ArrayList<>(itemValido)));
     }
+    @Test
+    public void NullretornarOItemDeCombinacao(){
+        System.out.println(combination.retornarItemDeCombinacao(new ArrayList<>(itemInvalido)).getName());
+        assertNull(null);
+    }
 
     @Test
     public void realizarACombinacaoEntreOsItens(){

@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Combination {
+public class Combination <T extends ICombinable> {
 
     private final Player player;
-    private final List<ICombinable> itensCombinable;
+    private final List<T> itensCombinable;
 
     public Combination(Player player) {
         this.player = player;
@@ -24,11 +24,12 @@ public class Combination {
                 atualizarIventario(this.itensCombinable);
     }
 
-    // Metodo deve ser retirado pois, ja deveria ter verificado se o item é do tipo model.ItemCombinable antes de chamar o metodo
+    // Metodo deve ser retirado pois, ja deveria ter verificado se o item é do tipo
+    // model.ItemCombinable antes de chamar o metodo
     public boolean validItemCombinable(List<Item> itens) {
         for (Item item : itens) {
             if (item instanceof ICombinable) {
-                this.itensCombinable.add((ICombinable) item);
+                this.itensCombinable.add((T) item);
             } else {
                 return false;
             }
@@ -37,7 +38,7 @@ public class Combination {
     }
 
     //private
-    public boolean validCombination(List<ICombinable> itensCombinable) {
+    public boolean validCombination(List<T> itensCombinable) {
         for (int i = 1; i < itensCombinable.size(); i++) {
             if (itensCombinable.get(0).getCombine() != itensCombinable.get(i).getCombine()) {
                 return false;
@@ -46,13 +47,15 @@ public class Combination {
         return true;
     }
 
-    private boolean validAmountCombine(List<ICombinable> itensCombinable) {
+    private boolean validAmountCombine(List<T> itensCombinable) {
         return itensCombinable.size() == ItemsCombination.getAmountCombination(itensCombinable.get(0).getCombine());
     }
 
-    public Item retornarItemDeCombinacao(List<ICombinable> itensCombinable) {
+    public Item retornarItemDeCombinacao(List<T> itensCombinable) {
+
         for (Item item : this.player.getInventory().getItemInvisible()) {
-            if (item.getName().equals(Objects.requireNonNull(ItemsCombination.getItemCombined(itensCombinable.get(0).getCombine())).getLabel())) {
+            if (item.getName().equals(Objects.requireNonNull(ItemsCombination
+                    .getItemCombined(itensCombinable.get(0).getCombine())).getLabel())) {
                 return item;
             }
         }
@@ -60,7 +63,7 @@ public class Combination {
     }
 
     //private
-    public boolean atualizarIventario(List<ICombinable> itensCombinable) {
+    public boolean atualizarIventario(List<T> itensCombinable) {
         Item itemVisible = retornarItemDeCombinacao(itensCombinable);
         if (Objects.isNull(itemVisible)) {
             return false;
@@ -76,6 +79,7 @@ public class Combination {
         return true;
     }
 
+    //altear pois esta tirando todos com a mesma combine
     private void removeItensCombine(int combine) {
         this.player.getInventory().removeItensCombine(combine);
     }

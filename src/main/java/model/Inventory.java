@@ -2,8 +2,9 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public final class Inventory {
+public final class Inventory{
 
     private int capacity;
     private int maxCapacity;
@@ -56,6 +57,7 @@ public final class Inventory {
         return item.getWeight() + this.capacity <= this.maxCapacity;
     }
 
+    //para usar Stream deve devolver um Objeto, por causa do null
     public Item getItemInventory(String nameItem) {
         for (Item itemInventory : item) {
             if (itemInventory.getName().equals(nameItem)) {
@@ -89,23 +91,15 @@ public final class Inventory {
     }
 
     public List<Item> getItemVisible() {
-        List<Item> listItensVisible = new ArrayList<>();
-        for (Item item : this.item) {
-            if (item.isVisible()) {
-                listItensVisible.add(item);
-            }
-        }
-        return listItensVisible;
+        return this.item.stream()
+                .filter(Item::isVisible)
+                .collect(Collectors.toList());
     }
 
     public List<Item> getItemInvisible() {
-        List<Item> listItensInvisible = new ArrayList<>();
-        for (Item item : this.item) {
-            if (!item.isVisible()) {
-                listItensInvisible.add(item);
-            }
-        }
-        return listItensInvisible;
+        return this.item.stream()
+                .filter(item -> !item.isVisible())
+                .collect(Collectors.toList());
     }
 
     public void updadeInventory(Item item) {
