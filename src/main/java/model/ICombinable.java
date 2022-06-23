@@ -1,5 +1,7 @@
 package model;
 
+import service.Combination;
+
 import java.util.List;
 
 public interface ICombinable {

@@ -77,10 +77,10 @@ public class PlayerTest {
     @Test
     public void removerItemPorCombinacaoDentroDoInventario() {
         Item item = new ItemCombinable("faca", "serve para cortar algo", 3, 3, 420, 130, null);
+        Item item1 = new ItemCombinable("madeira", "cabo de madeira velho", 5, 3,410,200,null);
         player.takeItem(item);
-        player.takeItem(item);
-        player.takeItem(item);
-        assertEquals(player.getInventory().removeItensCombine(((ICombinable) item).getCombine()), 3);
+        player.takeItem(item1);
+        assertEquals(player.getInventory().removeItensCombine(((ICombinable) item).getCombine()), 2);
     }
 
     @Test

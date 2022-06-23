@@ -1,6 +1,7 @@
 import model.*;
 import org.junit.Before;
 import org.junit.Test;
+import service.Use;
 
 import javax.swing.*;
 import java.util.ArrayList;

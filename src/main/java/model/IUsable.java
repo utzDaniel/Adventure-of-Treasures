@@ -1,5 +1,7 @@
 package model;
 
+import service.Use;
+
 public interface IUsable {
 
     default boolean use(Item item, Player player){

@@ -1,4 +1,9 @@
-package model;
+package service;
+
+import model.IEquipable;
+import model.Item;
+import model.ItemsEquipable;
+import model.Player;
 
 public final class Equip <T extends Item> {
 

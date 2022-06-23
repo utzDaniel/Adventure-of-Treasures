@@ -1,5 +1,8 @@
 package model;
 
+import service.DropItem;
+import service.TakeItem;
+
 import javax.swing.*;
 
 public final class Player {
@@ -97,14 +100,10 @@ public final class Player {
     }
 
     public boolean takeItem(Item item) {
-        if (!this.inventory.setItem(item)) return false;
-        this.currentMapGame.removeItem(item);
-        return true;
+        return new TakeItem(this, item).run();
     }
 
     public boolean dropItem(Item item) {
-        if (!this.inventory.removeItem(item)) return false;
-        this.currentMapGame.setItemRemove(item, positionPlayerX, positionPlayerY);
-        return true;
+        return new DropItem(this,item).run();
     }
 }

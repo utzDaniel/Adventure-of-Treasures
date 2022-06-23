@@ -1,4 +1,9 @@
-package model;
+package service;
+
+import model.IUsable;
+import model.Item;
+import model.ItemsUsable;
+import model.Player;
 
 public final class Use {
 

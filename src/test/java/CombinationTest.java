@@ -1,4 +1,4 @@
-import model.Combination;
+import service.Combination;
 import model.Item;
 import model.ItemCombinable;
 import model.Player;

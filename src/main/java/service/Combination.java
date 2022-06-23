@@ -1,5 +1,6 @@
-package model;
+package service;
 
+import model.*;
 import repository.CreateImageMapGame;
 
 import java.util.ArrayList;

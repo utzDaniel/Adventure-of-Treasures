@@ -1,5 +1,8 @@
 package model;
 
+import service.Equip;
+import service.Unequip;
+
 import javax.swing.*;
 
 public class ItemEquipable extends Item implements IEquipable {
