@@ -1,6 +1,6 @@
 package model;
 
-import service.AddItem;
+import service.AddItemInventory;
 import service.RemoveItem;
 
 import java.util.*;
@@ -41,7 +41,7 @@ public final class Inventory {
     }
 
     public void addItem(Item item) {
-        new AddItem(this, item).run();
+        new AddItemInventory(this, item).run();
     }
 
     public Item getItem(String nameItem) {

@@ -15,7 +15,7 @@ public enum MovePlayer {
     private final int toMoveX;
     private final int toMoveY;
     private final ImageIcon imageIcon;
-    private static final int STEP = 10;
+    public static final int STEP = 10;
 
     MovePlayer(String direction, int toMoveX, int toMoveY, ImageIcon imageIcon) {
         this.direction = direction;

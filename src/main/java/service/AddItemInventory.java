@@ -3,12 +3,12 @@ package service;
 import model.Inventory;
 import model.Item;
 
-public final class AddItem {
+public final class AddItemInventory {
 
     private final Inventory inventory;
     private final Item item;
 
-    public AddItem(Inventory inventory, Item item) {
+    public AddItemInventory(Inventory inventory, Item item) {
         this.inventory = inventory;
         this.item = item;
     }

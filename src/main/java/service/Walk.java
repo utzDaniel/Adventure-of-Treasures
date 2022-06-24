@@ -5,7 +5,7 @@ import model.Player;
 
 import javax.swing.*;
 
-public class Walk {
+public final class Walk {
 
     private final String direction;
     private final JLabel playerJLabel;

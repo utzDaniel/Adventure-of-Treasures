@@ -1,7 +1,6 @@
 package service;
 
 import model.Item;
-import model.MovePlayer;
 import model.Player;
 
 public final class TakeItem {
@@ -21,7 +20,7 @@ public final class TakeItem {
     }
 
     private boolean addItemInventory() {
-        return new AddItem(this.player.getInventory(), this.item).run();
+        return new AddItemInventory(this.player.getInventory(), this.item).run();
     }
 
     private void removeItemCurrentMap() {

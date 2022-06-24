@@ -4,9 +4,12 @@ import javax.swing.*;
 import java.util.*;
 
 public abstract class MapGame {
+
     protected final String name;
     protected ImageIcon imagemIcon;
     protected int[][] limits;
+
+    private final int STEP = MovePlayer.STEP;
     protected final Map<Door, MapGame> exitsDoors;
     private final List<Item> item;
 
@@ -34,28 +37,28 @@ public abstract class MapGame {
         this.limits = limits;
     }
 
+    public void setExitsDoors(Door door, MapGame neighbor) {
+        this.exitsDoors.put(door, neighbor);
+    }
+
+    public MapGame getMapDoor(Door door) {
+        return this.exitsDoors.get(door);
+    }
+
     public boolean mapGameLimits(int positionX, int positionY) {
-        positionX /= 10;
-        positionY /= 10;
+        positionX /= STEP;
+        positionY /= STEP;
         return limits[positionY][positionX] == 1;
     }
 
-    public Item lookItem(Player player) {
-        int positionX = player.getPositionPlayerX();
-        int positionY = player.getPositionPlayerY();
-        for (MovePlayer move : MovePlayer.values()) {
-            if (move.getDirection().equals(player.getDirection())) {
-                positionX += move.getToMoveX();
-                positionY += move.getToMoveY();
-                return this.getItemMapGame(positionX, positionY);
-            }
-        }
-        return null;
+    public void removeItem(Item item) {
+        this.item.remove(item);
+        limits[item.getPositionItemY() / STEP][item.getPositionItemX() / STEP] = 1;
     }
 
-    private Item getItemMapGame(int positionPlayerX, int positionPlayerY) {
-        int positionX = positionPlayerX / 10;
-        int positionY = positionPlayerY / 10;
+    public Item getItemMapGame(int positionPlayerX, int positionPlayerY) {
+        int positionX = positionPlayerX / STEP;
+        int positionY = positionPlayerY / STEP;
         if (limits[positionY][positionX] == 2) {
             for (Item itens : item) {
                 if (itens.positionItemX == positionPlayerX && itens.positionItemY == positionPlayerY) {
@@ -64,23 +67,6 @@ public abstract class MapGame {
             }
         }
         return null;
-    }
-
-    public void removeItem(Item itens) {
-        int numero = 1;
-        for (Item item : this.item) {
-            if (!itens.equals(item) && item.getPositionItemX() == itens.getPositionItemX() &&
-                    item.getPositionItemY() == itens.getPositionItemY()) {
-                numero = 2;
-                break;
-            }
-        }
-        limits[itens.getPositionItemY() / 10][itens.getPositionItemX() / 10] = numero;
-        this.item.remove(itens);
-    }
-
-    public void setExitsDoors(Door door, MapGame neighbor) {
-        this.exitsDoors.put(door, neighbor);
     }
 
     public Door getDoorMap(int positionPlayerX, int positionPlayerY) {
@@ -95,31 +81,27 @@ public abstract class MapGame {
         return null;
     }
 
-    public MapGame getMapDoor(Door door) {
-        return this.exitsDoors.get(door);
-    }
-
-    public void setItemRemove(Item item, int positionX, int positionY) {
-        if (mapGameLimits(positionX + 10, positionY)) {
-            item.setPositionItemX(positionX + 10);
+    public void addItem(Item item, int positionX, int positionY) {
+        if (mapGameLimits(positionX + STEP, positionY)) {
+            item.setPositionItemX(positionX + STEP);
             item.setPositionItemY(positionY);
-        } else if (mapGameLimits(positionX - 10, positionY)) {
-            item.setPositionItemX(positionX - 10);
+        } else if (mapGameLimits(positionX - STEP, positionY)) {
+            item.setPositionItemX(positionX - STEP);
             item.setPositionItemY(positionY);
-        } else if (mapGameLimits(positionX, positionY + 10)) {
+        } else if (mapGameLimits(positionX, positionY + STEP)) {
             item.setPositionItemX(positionX);
-            item.setPositionItemY(positionY + 10);
+            item.setPositionItemY(positionY + STEP);
         } else {
             item.setPositionItemX(positionX);
-            item.setPositionItemY(positionY - 10);
+            item.setPositionItemY(positionY - STEP);
         }
         setItem(item);
     }
 
     public void setItem(Item itens) {
         this.item.add(itens);
-        int limitsX = itens.getPositionItemX() / 10; //  int limitsX = itens.positionItemX / 10;
-        int limitsY = itens.getPositionItemY() / 10; // int limitsY = itens.positionItemY / 10;
+        int limitsX = itens.getPositionItemX() / STEP;
+        int limitsY = itens.getPositionItemY() / STEP;
         limits[limitsY][limitsX] = 2;
     }
 

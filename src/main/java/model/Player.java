@@ -1,6 +1,7 @@
 package model;
 
 import service.DropItem;
+import service.LookItem;
 import service.TakeItem;
 import service.Walk;
 
@@ -51,10 +52,6 @@ public final class Player {
         this.direction = direction;
     }
 
-    public void walk(String direction, JLabel playerJLabel) {
-        new Walk(direction,playerJLabel, this).run();
-    }
-
     public void setIcon(ImageIcon imageIcon, JLabel playerJLabel) {
         playerJLabel.setIcon(imageIcon);
     }
@@ -71,11 +68,19 @@ public final class Player {
         return this.currentMapGame;
     }
 
+    public void walk(String direction, JLabel playerJLabel) {
+        new Walk(direction, playerJLabel, this).run();
+    }
+
+    public Item lookItem() {
+        return new LookItem(this).run();
+    }
+
     public boolean takeItem(Item item) {
         return new TakeItem(this, item).run();
     }
 
     public boolean dropItem(Item item) {
-        return new DropItem(this,item).run();
+        return new DropItem(this, item).run();
     }
 }

@@ -131,7 +131,7 @@ public class Game {
     }
 
     private void take() {
-        Item item = this.player.getCurrentMap().lookItem(this.player);
+        Item item = this.player.lookItem();
         if (item != null) {
             if(player.takeItem(item)){
                 soundEffects.play("pegar");
