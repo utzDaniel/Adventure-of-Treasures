@@ -20,7 +20,7 @@ public class PlayerTest {
         for (Item item : createMapGame.getItemInvisiblePlayer()) {
             player.getInventory().setItemInvisible(item);
         }
-        player.getInventory().setItem(new ItemEquipable("mochila", "utilizada para carregar mais coisas", 0,
+        player.getInventory().addItem(new ItemEquipable("mochila", "utilizada para carregar mais coisas", 0,
                 650, 220, null));
 
     }
@@ -51,12 +51,12 @@ public class PlayerTest {
 
     @Test
     public void buscarPeloNomeDoItem() {
-        assertNotNull(player.getInventory().getItemInventory("mochila"));
+        assertNotNull(player.getInventory().getItem("mochila"));
     }
 
     @Test
     public void nullBuscarPeloNomeDoItem() {
-        assertNull(player.getInventory().getItemInventory("adas"));
+        assertNull(player.getInventory().getItem("adas"));
     }
 
     @Test
@@ -75,21 +75,6 @@ public class PlayerTest {
     }
 
     @Test
-    public void removerItemPorCombinacaoDentroDoInventario() {
-        Item item = new ItemCombinable("faca", "serve para cortar algo", 3, 3, 420, 130, null);
-        Item item1 = new ItemCombinable("madeira", "cabo de madeira velho", 5, 3,410,200,null);
-        player.takeItem(item);
-        player.takeItem(item1);
-        assertEquals(player.getInventory().removeItensCombine(((ICombinable) item).getCombine()), 2);
-    }
-
-    @Test
-    public void removerItemPorCombinacaoDentroDoInventarioComCombinacaoInvalida() {
-        Item item = new ItemCombinable("asa", "saasa", 3, 88, 420, 130, null);
-        assertEquals(player.getInventory().removeItensCombine(((ICombinable) item).getCombine()), 0);
-    }
-
-    @Test
     public void buscarListaDeItensVisivelNoInventario() {
         assertEquals(player.getInventory().getItemVisible().size(), 1);
     }
@@ -103,7 +88,7 @@ public class PlayerTest {
     public void atualizarOTamanhoDoInventarioAoAdicionarItemNovo() {
         Item item = new ItemCombinable("faca", "serve para cortar algo", 3, 3, 420, 130, null);
         int tamanhoAnterio = player.getInventory().getCapacity();
-        player.getInventory().updadeInventory(item);
+        player.getInventory().updadeCapacity(item.getWeight());
         assertNotEquals(tamanhoAnterio, player.getInventory().getCapacity());
     }
 

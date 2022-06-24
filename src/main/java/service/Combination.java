@@ -7,27 +7,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Combination <T extends ICombinable> {
+public final class Combination<T extends ICombinable> {
 
     private final Player player;
     private final List<T> itensCombinable;
+    private final List<Item> itens;
+    private Item newItem;
 
-    public Combination(Player player) {
+    public Combination(Player player, List<Item> itens) {
         this.player = player;
         this.itensCombinable = new ArrayList<>();
+        this.itens = itens;
+        newItem = null;
     }
 
-
-    public boolean execute(List<Item> itens) {
-        return validItemCombinable(itens) &&
-                validCombination(this.itensCombinable) &&
-                validAmountCombine(this.itensCombinable) &&
-                atualizarIventario(this.itensCombinable);
+    public boolean run() {
+        if (!(checkItensICombinable() && checkAllEqualsCombination() && checkEnoughAmountCombine())) return false;
+        newItem = getItemCombination();
+        if (Objects.isNull(newItem)) return false;
+        updateMap();
+        removeAllItemCombine();
+        setItemViseble();
+        updadeInventoryCapacity();
+        return true;
     }
 
-    // Metodo deve ser retirado pois, ja deveria ter verificado se o item é do tipo
-    // model.ItemCombinable antes de chamar o metodo
-    public boolean validItemCombinable(List<Item> itens) {
+    private boolean checkItensICombinable() {
         for (Item item : itens) {
             if (item instanceof ICombinable) {
                 this.itensCombinable.add((T) item);
@@ -38,8 +43,7 @@ public class Combination <T extends ICombinable> {
         return true;
     }
 
-    //private
-    public boolean validCombination(List<T> itensCombinable) {
+    private boolean checkAllEqualsCombination() {
         for (int i = 1; i < itensCombinable.size(); i++) {
             if (itensCombinable.get(0).getCombine() != itensCombinable.get(i).getCombine()) {
                 return false;
@@ -48,12 +52,11 @@ public class Combination <T extends ICombinable> {
         return true;
     }
 
-    private boolean validAmountCombine(List<T> itensCombinable) {
+    private boolean checkEnoughAmountCombine() {
         return itensCombinable.size() == ItemsCombination.getAmountCombination(itensCombinable.get(0).getCombine());
     }
 
-    public Item retornarItemDeCombinacao(List<T> itensCombinable) {
-
+    private Item getItemCombination() {
         for (Item item : this.player.getInventory().getItemInvisible()) {
             if (item.getName().equals(Objects.requireNonNull(ItemsCombination
                     .getItemCombined(itensCombinable.get(0).getCombine())).getLabel())) {
@@ -63,33 +66,24 @@ public class Combination <T extends ICombinable> {
         return null;
     }
 
-    //private
-    public boolean atualizarIventario(List<T> itensCombinable) {
-        Item itemVisible = retornarItemDeCombinacao(itensCombinable);
-        if (Objects.isNull(itemVisible)) {
-            return false;
-        }
-        //alterar  no proprio item ao criar
-        if (itemVisible.getName().equals("mapa")) {
+    private void updateMap() {
+        if (newItem.getName().equals("mapa")) {
             CreateImageMapGame imageMapGame = new CreateImageMapGame();
-            ((ItemNotRemove) itemVisible).getMapGame().setImagemIcon(imageMapGame.selectImage(itemVisible.getName()));
+            ((ItemNotRemove) newItem).getMapGame().setImagemIcon(imageMapGame.selectImage(newItem.getName()));
         }
-        removeItensCombine(itensCombinable.get(0).getCombine());
-        itemViseble(itemVisible);
-        updadeCapacity(itemVisible);
-        return true;
     }
 
-    //altear pois esta tirando todos com a mesma combine
-    private void removeItensCombine(int combine) {
-        this.player.getInventory().removeItensCombine(combine);
+    private void removeAllItemCombine() {
+        this.itensCombinable.forEach(itensCombinable ->
+                this.player.getInventory().removeItem((Item) itensCombinable));
+
     }
 
-    private void itemViseble(Item item) {
-        item.setVisible(true);
+    private void setItemViseble() {
+        this.newItem.setVisible(true);
     }
 
-    private void updadeCapacity(Item item) {
-        this.player.getInventory().updadeInventory(item);
+    private void updadeInventoryCapacity() {
+        this.player.getInventory().updadeCapacity(this.newItem.getWeight());
     }
 }

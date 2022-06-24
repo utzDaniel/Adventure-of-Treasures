@@ -3,7 +3,7 @@ package service;
 import model.Inventory;
 import model.Item;
 
-public class AddItem {
+public final class AddItem {
 
     private final Inventory inventory;
     private final Item item;
@@ -14,17 +14,23 @@ public class AddItem {
     }
 
     public boolean run() {
-        if (!checkCapacity()) return false;
-        this.inventory.addItem(this.item);
-        setCapacity(this.item.getWeight());
+        if (!checkInventoryCapacity()) return false;
+        addItem();
+        updateInventoryCapacity();
         return true;
     }
 
-    private boolean checkCapacity() {
+    private boolean checkInventoryCapacity() {
         return this.item.getWeight() + this.inventory.getCapacity() <= this.inventory.getMaxCapacity();
     }
 
-    private void setCapacity(int weight) {
-        this.inventory.setCapacity(weight);
+    private void addItem(){
+        this.inventory.getMapItem()
+                .put(this.item.getName(), item);
+
+    }
+
+    private void updateInventoryCapacity() {
+        this.inventory.updadeCapacity(this.item.getWeight());
     }
 }

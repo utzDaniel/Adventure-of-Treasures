@@ -37,14 +37,6 @@ public abstract class Item {
         return this.weight;
     }
 
-    public boolean isVisible() {
-        return this.visible;
-    }
-
-    public void setVisible(boolean visible) {
-        this.visible = visible;
-    }
-
     public int getPositionItemX() {
         return positionItemX;
     }
@@ -59,5 +51,13 @@ public abstract class Item {
 
     public void setPositionItemY(int positionItemY) {
         this.positionItemY = positionItemY;
+    }
+
+    public boolean isVisible() {
+        return this.visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 }

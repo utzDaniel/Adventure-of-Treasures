@@ -23,17 +23,17 @@ public enum ItemsCombination {
     }
 
     public static int getAmountCombination(int combine) {
-        for (int i = 0; i < ItemsCombination.values().length; i++) {
-            if (ItemsCombination.values()[i].combine == combine) {
-                return ItemsCombination.values()[i].amountCombination;
+        for (ItemsCombination value : ItemsCombination.values()) {
+            if (value.combine == combine) {
+                return value.amountCombination;
             }
         }
         return -1;
     }
     public static ItemsCombination getItemCombined(int combine) {
-        for (int i = 0; i < ItemsCombination.values().length; i++) {
-            if (ItemsCombination.values()[i].combine == combine) {
-                return ItemsCombination.values()[i];
+        for (ItemsCombination value : ItemsCombination.values()) {
+            if (value.combine == combine) {
+                return value;
             }
         }
         return null;

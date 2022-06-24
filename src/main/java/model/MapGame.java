@@ -40,7 +40,20 @@ public abstract class MapGame {
         return limits[positionY][positionX] == 1;
     }
 
-    public Item getItemMapGame(int positionPlayerX, int positionPlayerY) {
+    public Item lookItem(Player player) {
+        int positionX = player.getPositionPlayerX();
+        int positionY = player.getPositionPlayerY();
+        for (MovePlayer move : MovePlayer.values()) {
+            if (move.getDirection().equals(player.getDirection())) {
+                positionX += move.getToMoveX();
+                positionY += move.getToMoveY();
+                return this.getItemMapGame(positionX, positionY);
+            }
+        }
+        return null;
+    }
+
+    private Item getItemMapGame(int positionPlayerX, int positionPlayerY) {
         int positionX = positionPlayerX / 10;
         int positionY = positionPlayerY / 10;
         if (limits[positionY][positionX] == 2) {

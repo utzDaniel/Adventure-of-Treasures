@@ -5,39 +5,42 @@ import model.Item;
 import model.ItemsUsable;
 import model.Player;
 
-public final class Use {
+public final class Use <T extends IUsable> {
 
     private final Player player;
+    private final Item item;
 
-    public Use(Player player) {
+    public Use(Player player, Item item) {
         this.player = player;
+        this.item = item;
     }
 
-    public boolean execute(Item item) {
-        return this.validItemUsable(item) &&
-                this.validLocalItemUsable((IUsable) item) &&
-                this.useItemUsable(item);
-    }
-
-    private boolean validItemUsable(Item item) {
-        return item instanceof IUsable;
-    }
-
-    private boolean validLocalItemUsable(IUsable itemUsable) {
-        return itemUsable.getLocalUse().equals(player.getCurrentMap().getName());
-    }
-
-    private boolean useItemUsable(Item itemUsable) {
-        for (int i = 0; i < ItemsUsable.values().length; i++) {
-            if(itemUsable.getName().equals(ItemsUsable.values()[i].getLabel())){
-                if (!ItemsUsable.values()[i].use(player)) return false;
-            }
+    public boolean run() {
+        if(!(checkItensIUsable() && checkCurrentMap() && useItem())){
+            return false;
         }
-        removeItemUsable(itemUsable);
+        removeItem();
         return true;
     }
 
-    private void removeItemUsable(Item itemUsable) {
-        player.getInventory().removeItem(itemUsable);
+    private boolean checkItensIUsable() {
+        return this.item instanceof IUsable;
+    }
+
+    private boolean checkCurrentMap() {
+        return ((T) this.item).getLocalUse().equals(this.player.getCurrentMap().getName());
+    }
+
+    private boolean useItem() {
+        for (ItemsUsable value : ItemsUsable.values()) {
+            if(this.item.getName().equals(value.getLabel())){
+                return value.use(this.player);
+            }
+        }
+        return false;
+    }
+
+    private void removeItem() {
+        player.getInventory().removeItem(this.item);
     }
 }

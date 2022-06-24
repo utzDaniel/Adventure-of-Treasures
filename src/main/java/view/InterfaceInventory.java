@@ -189,7 +189,7 @@ public class InterfaceInventory {
     private void setActions(ActionEvent e) {
         buttonActions[4].setVisible(false);
         buttonActions[5].setVisible(false);
-        Item item = player.getInventory().getItemInventory(e.getActionCommand());
+        Item item = player.getInventory().getItem(e.getActionCommand());
         if (!(item instanceof ItemCombinable)) {
             this.items.clear();
         } else if (this.items.size() == 1 && !(this.items.get(0) instanceof ItemCombinable)) {
@@ -248,7 +248,7 @@ public class InterfaceInventory {
                 for (JButton jButton : buttonIten) {
                     if (jButton != null) {
                         if (items.size() == 1) {
-                            if (player.getInventory().getItemInventory(jButton.getActionCommand()) instanceof ItemCombinable) {
+                            if (player.getInventory().getItem(jButton.getActionCommand()) instanceof ItemCombinable) {
                                 if (items.get(0).getName().equals(jButton.getActionCommand())) {
                                     jButton.setBackground(new Color(29, 92, 37));
                                 }
