@@ -2,6 +2,7 @@ package model;
 
 import service.DropItem;
 import service.TakeItem;
+import service.Walk;
 
 import javax.swing.*;
 
@@ -42,7 +43,7 @@ public final class Player {
         setLocation(playerJLabel);
     }
 
-    private String getDirection() {
+    public String getDirection() {
         return this.direction;
     }
 
@@ -50,44 +51,15 @@ public final class Player {
         this.direction = direction;
     }
 
-    public boolean walk(String direction, JLabel playerJLabel) {
-        for (MovePlayer move : MovePlayer.values()) {
-            if(move.getDirection().equals(direction)){
-                this.positionPlayerX += move.getToMoveX();
-                this.positionPlayerY += move.getToMoveY();
-                if (!this.currentMapGame.mapGameLimits(this.positionPlayerX, this.positionPlayerY)) {
-                    this.positionPlayerX -= move.getToMoveX();
-                    this.positionPlayerY -= move.getToMoveY();
-                }else{
-                    setLocation(playerJLabel);
-                }
-                setDirection(direction);
-                setIcon(move.getImageIcon(), playerJLabel);
-                return true;
-            }
-        }
-        return false;
+    public void walk(String direction, JLabel playerJLabel) {
+        new Walk(direction,playerJLabel, this).run();
     }
 
-    //colocar junto ao take ou deixar privado
-    public Item getItemMapGame() {
-        int positionX = this.positionPlayerX;
-        int positionY = this.positionPlayerY;
-        for (MovePlayer move : MovePlayer.values()) {
-            if (move.getDirection().equals(getDirection())) {
-                positionX += move.getToMoveX();
-                positionY += move.getToMoveY();
-                return this.currentMapGame.getItemMapGame(positionX, positionY);
-            }
-        }
-        return null;
-    }
-
-    private void setIcon(ImageIcon imageIcon, JLabel playerJLabel) {
+    public void setIcon(ImageIcon imageIcon, JLabel playerJLabel) {
         playerJLabel.setIcon(imageIcon);
     }
 
-    private void setLocation(JLabel playerJLabel) {
+    public void setLocation(JLabel playerJLabel) {
         playerJLabel.setLocation(this.positionPlayerX, this.positionPlayerY);
     }
 

@@ -23,8 +23,7 @@ public class UseTest {
     }
 
     @Test
-    public void validarItemUsavel(){
-        //testar para chave
+    public void validarUsoDaChave(){
         Scenery village = new Scenery("vila", null);
         Door templeDoor = new Door(380, 530, 370, 150, false);
         Room temple = new Room("templo", null);
@@ -32,14 +31,27 @@ public class UseTest {
         player.setCurrentMap(village);
         player.setPositionPlayerX(370,new JLabel());
         player.setPositionPlayerY(150,new JLabel());
-        Use use = new Use(player);
-        assertTrue(use.execute(itens.get(0)));
+        Use use = new Use(player,itens.get(0));
+        assertTrue(use.run());
     }
 
     @Test
-    public void naoValidarItemUsavel(){
-        Use use = new Use(player);
-        assertFalse(use.execute(itens.get(2)));
+    public void validarItemNaoUsavel(){
+        Use use = new Use(player,itens.get(2));
+        assertFalse(use.run());
+    }
+
+    @Test
+    public void validarItemUsavelMasNoMapaErrado(){
+        Scenery village = new Scenery("vila", null);
+        Door templeDoor = new Door(380, 530, 370, 150, false);
+        Room temple = new Room("templo", null);
+        village.setExitsDoors(templeDoor, temple);
+        player.setCurrentMap(temple);
+        player.setPositionPlayerX(370,new JLabel());
+        player.setPositionPlayerY(150,new JLabel());
+        Use use = new Use(player,itens.get(0));
+        assertFalse(use.run());
     }
 
 }

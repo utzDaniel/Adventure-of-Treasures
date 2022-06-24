@@ -3,6 +3,7 @@ package model;
 import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Scenery extends MapGame {
 
@@ -14,10 +15,7 @@ public class Scenery extends MapGame {
     }
 
     public Scenery getExit(String direction) {
-        if (this.exits.get(direction) != null) {
-            return this.exits.get(direction);
-        }
-        return null;
+        return Objects.isNull(this.exits.get(direction)) ? null : this.exits.get(direction);
     }
 
     public void setExit(String direction, Scenery neighbor) {

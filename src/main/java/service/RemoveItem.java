@@ -4,7 +4,7 @@ import model.Inventory;
 import model.Item;
 import model.ItemNotRemove;
 
-public class RemoveItem {
+public final class RemoveItem {
 
     private final Inventory inventory;
     private final Item item;
@@ -15,9 +15,24 @@ public class RemoveItem {
     }
 
     public boolean run() {
-        if (item instanceof ItemNotRemove) return false;
-        this.inventory.removerItem(this.item);
-        this.inventory.setCapacity(-this.item.getWeight());
+        if (checkItemRemoved()) return false;
+        removeItem();
+        updateInventoryCapacity();
         return true;
+    }
+
+    private boolean checkItemRemoved(){
+        return item instanceof ItemNotRemove;
+    }
+
+    private void removeItem(){
+        this.inventory.getMapItem()
+                        .remove(this.item.getName());
+
+    }
+
+    private void updateInventoryCapacity(){
+        this.inventory.updadeCapacity(-this.item.getWeight());
+
     }
 }

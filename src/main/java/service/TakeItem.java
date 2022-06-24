@@ -1,9 +1,10 @@
 package service;
 
 import model.Item;
+import model.MovePlayer;
 import model.Player;
 
-public class TakeItem {
+public final class TakeItem {
 
     private final Player player;
     private final Item item;
@@ -14,9 +15,16 @@ public class TakeItem {
     }
 
     public boolean run() {
-        if (!new AddItem(this.player.getInventory(),this.item).run()) return false;
-        this.player.getCurrentMap().removeItem(this.item);
+        if (!addItemInventory()) return false;
+        removeItemCurrentMap();
         return true;
     }
 
+    private boolean addItemInventory() {
+        return new AddItem(this.player.getInventory(), this.item).run();
+    }
+
+    private void removeItemCurrentMap() {
+        this.player.getCurrentMap().removeItem(this.item);
+    }
 }

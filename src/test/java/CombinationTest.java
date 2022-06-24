@@ -1,3 +1,4 @@
+import model.ItemEquipable;
 import service.Combination;
 import model.Item;
 import model.ItemCombinable;
@@ -9,62 +10,53 @@ import repository.CreateMapGame;
 import java.util.ArrayList;
 
 import static junit.framework.TestCase.*;
+import static org.junit.Assert.assertTrue;
 
 public class CombinationTest {
 
-    private Combination combination;
-    private final ArrayList<ItemCombinable> itemValido = new ArrayList<>();
-    private final ArrayList<ItemCombinable> itemInvalido = new ArrayList<>();
+    private Player player;
+    private final ArrayList<Item> item = new ArrayList<>();
 
     @Before
-    public void crearCombination(){
-        Player player = new Player();
+    public void crearCombination() {
+        player = new Player();
         CreateMapGame createMapGame = new CreateMapGame();
         player.setCurrentMap(createMapGame.getInitialScenery());
-        for(Item item :createMapGame.getItemInvisiblePlayer() ){
-            player.getInventory().setItem(item);
+        for (Item item : createMapGame.getItemInvisiblePlayer()) {
+            player.getInventory().addItem(item);
         }
-        combination = new Combination(player);
-        itemInvalido.add(new ItemCombinable("madeira", "cabo de madeira velho", 5, 3,410,200,null));
-        itemValido.add(new ItemCombinable("madeiras", "madeira para construir algo", 5, 2,640,80,null));
-        itemInvalido.add(new ItemCombinable("faca", "serve para cortar algo", 3, 3,420,130,null));
-        itemValido.add(new ItemCombinable("martelo", "utilzado para construir algo", 4, 2,160,320,null));
-        itemInvalido.add(new ItemCombinable("papel", "papel escrito em lingua antiga", 2, 1,510,320,null));
-        itemValido.add(new ItemCombinable("pregos", "utilzado para construir algo", 3, 2,460,400,null));
+
     }
 
     @Test
-    public void itensValidos(){
-        assertTrue(combination.validItemCombinable(new ArrayList<>(itemValido)));
+    public void ItensValidoParaCombinacao() {
+        item.add(new ItemCombinable("martelo", "utilzado para construir algo", 4, 2, 160, 320, null));
+        item.add(new ItemCombinable("pregos", "utilzado para construir algo", 3, 2, 460, 400, null));
+        item.add(new ItemCombinable("madeiras", "madeira para construir algo", 5, 2, 640, 80, null));
+        assertTrue(new Combination(player, item).run());
     }
 
     @Test
-    public void itensInvalidos(){
-        assertTrue(combination.validItemCombinable(new ArrayList<>(itemInvalido)));
+    public void AllItemAleatorios() {
+        item.add(new ItemCombinable("faca", "serve para cortar algo", 3, 3, 420, 130, null));
+        item.add(new ItemCombinable("papel", "papel escrito em lingua antiga", 2, 1, 510, 320, null));
+        item.add(new ItemEquipable("mochila", "utilizada para carregar mais coisas", 0, 650, 220, null));
+        assertFalse(new Combination(player, item).run());
     }
 
     @Test
-    public void validarSeTodosOsItensSaoCombinadosEntreEles(){
-        assertTrue(combination.validCombination(new ArrayList<>(itemValido)));
+    public void AllItemCombinableMasComCombinacaoDiferente() {
+        item.add(new ItemCombinable("madeiras", "madeira para construir algo", 5, 2, 640, 80, null));
+        item.add(new ItemCombinable("madeira", "cabo de madeira velho", 5, 3, 410, 200, null));
+        assertFalse(new Combination(player, item).run());
     }
 
     @Test
-    public void NAOvalidarSeTodosOsItensSaoCombinadosEntreEles(){
-        assertFalse(combination.validCombination(new ArrayList<>(itemInvalido)));
+    public void AllItemCombinableComCombinacaoIguaisMasFaltandoAlgumItem() {
+        item.add(new ItemCombinable("madeiras", "madeira para construir algo", 5, 2, 640, 80, null));
+        item.add(new ItemCombinable("pregos", "utilzado para construir algo", 3, 2, 460, 400, null));
+        assertFalse(new Combination(player, item).run());
     }
 
-    @Test
-    public void retornarOItemDeCombinacao(){
-        assertNotNull(combination.retornarItemDeCombinacao(new ArrayList<>(itemValido)));
-    }
-    @Test
-    public void NullretornarOItemDeCombinacao(){
-        System.out.println(combination.retornarItemDeCombinacao(new ArrayList<>(itemInvalido)).getName());
-        assertNull(null);
-    }
 
-    @Test
-    public void realizarACombinacaoEntreOsItens(){
-        assertTrue(combination.atualizarIventario(new ArrayList<>(itemValido)));
-    }
 }

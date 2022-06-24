@@ -19,14 +19,14 @@ public class ItemEquipable extends Item implements IEquipable {
     @Override
     public boolean equip(Item item, Player player) {
         if (isEquipped()) return false;
-        this.equipped = new Equip(player).validItemEquipable(item);
+        this.equipped = new Equip(player,item).run();
         return this.equipped ;
     }
 
     @Override
     public boolean unequip(Item item, Player player) {
         if (!isEquipped()) return false;
-        this.equipped = !new Unequip(player).validItemEquipable(item);
+        this.equipped = !new Unequip(player, item).run();
         return !this.equipped;
     }
 

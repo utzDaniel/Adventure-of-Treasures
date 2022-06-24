@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 
 public class UnequipTest {
     private final ArrayList<Item> itens = new ArrayList<>();
-    private final Unequip unequip = new Unequip(new Player());
+
     @Before
     public void inicial(){
         itens.add(new ItemEquipable("mochila", "utilizada para carregar mais coisas", 0,650,220,null));
@@ -20,11 +20,11 @@ public class UnequipTest {
 
     @Test
     public void validarItemEquipable(){
-        assertTrue(unequip.validItemEquipable(itens.get(0)));
+        assertTrue(new Unequip(new Player(),itens.get(0)).run());
     }
 
     @Test
     public void naoValidarItemEquipable(){
-        assertFalse(unequip.validItemEquipable(itens.get(1)));
+        assertFalse(new Unequip(new Player(),itens.get(1)).run());
     }
 }
