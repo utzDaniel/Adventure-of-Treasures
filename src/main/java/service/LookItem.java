@@ -1,5 +1,6 @@
 package service;
 
+import model.Coordinate;
 import model.Item;
 import model.MovePlayer;
 import model.Player;
@@ -8,31 +9,37 @@ public final class LookItem {
 
     private final Player player;
     private MovePlayer move;
+    private Coordinate coordinate;
 
 
     public LookItem(Player player) {
         this.player = player;
+        this.coordinate = new Coordinate(0,0);
     }
 
     public Item run(){
-        this.move = lookToDirection();
-        return getItemCurrentMap();
+        lookToDirection();
+        setCoordinate();
+        return getItemMapGame();
 
     }
 
-    private MovePlayer lookToDirection(){
+    private void lookToDirection(){
         for (MovePlayer move : MovePlayer.values()) {
             if(move.getDirection().equals(this.player.getDirection())){
-                return move;
+                this.move = move;
             }
         }
-        return null;
     }
 
-    private Item getItemCurrentMap(){
+    private void setCoordinate(){
         int newPositionX = this.player.getPositionPlayerX() + this.move.getToMoveX();
         int newPositionY = this.player.getPositionPlayerY() + this.move.getToMoveY();
-        return this.player.getCurrentMap().getItemMapGame(newPositionX, newPositionY);
+        this.coordinate.setEixoX(newPositionX);
+        this.coordinate.setEixoY(newPositionY);
     }
 
+    private Item getItemMapGame() {
+        return this.player.getCurrentMap().getItem(this.coordinate);
+    }
 }

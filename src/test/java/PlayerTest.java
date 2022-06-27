@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 public class PlayerTest {
 
     private Player player;
+    private JLabel jLabel = new JLabel();
 
     @Before
     public void iniciacaoDoPlayerParaTeste() {
@@ -29,7 +30,6 @@ public class PlayerTest {
     public void testarPegarItem() {
         player.takeItem(new ItemUsable("pa", "ferramenta usada para cavar", 3, "praia",
                 200, 280, null));
-        player.getInventory().getItemVisible().forEach(item -> System.out.println(item.getName()));
         assertEquals(player.getInventory().getItemVisible().size(), 2);
     }
 
@@ -116,4 +116,26 @@ public class PlayerTest {
         player.walk(Direction.NORTE.getLabel(), new JLabel());
         assertEquals(positionY-10, player.getPositionPlayerY());
     }
+
+
+    @Test
+    public void testarSePossuiItemNaFrenteDoPlayerNOTNULL(){
+        Scenery nextScenery = ((Scenery) player.getCurrentMap()).getExit("oeste");
+        player.setCurrentMap(nextScenery);
+        player.setDirection(Direction.OESTE.getLabel());
+        player.setPositionPlayerX(210,jLabel);
+        player.setPositionPlayerY(280,jLabel);
+        assertNotNull(player.lookItem());
+    }
+
+    @Test
+    public void testarSePossuiItemNaFrenteDoPlayerNULL(){
+        Scenery nextScenery = ((Scenery) player.getCurrentMap()).getExit("oeste");
+        player.setCurrentMap(nextScenery);
+        player.setDirection(Direction.OESTE.getLabel());
+        player.setPositionPlayerX(210,jLabel);
+        player.setPositionPlayerY(270,jLabel);
+        assertNull(player.lookItem());
+    }
+
 }

@@ -1,5 +1,7 @@
 package model;
 
+import service.AddItemMapGame;
+
 import javax.swing.*;
 import java.util.*;
 
@@ -8,17 +10,15 @@ public abstract class MapGame {
     protected final String name;
     protected ImageIcon imagemIcon;
     protected int[][] limits;
-
-    private final int STEP = MovePlayer.STEP;
     protected final Map<Door, MapGame> exitsDoors;
-    private final List<Item> item;
+    protected final Map<Coordinate, Item> item;
 
     public MapGame(String name, ImageIcon imagemIcon) {
         this.name = name;
         this.imagemIcon = imagemIcon;
         limits = new int[78][56];
         exitsDoors = new HashMap<>();
-        item = new ArrayList<>();
+        item = new HashMap<>();
     }
 
     public ImageIcon getImagemIcon() {
@@ -45,28 +45,18 @@ public abstract class MapGame {
         return this.exitsDoors.get(door);
     }
 
-    public boolean mapGameLimits(int positionX, int positionY) {
-        positionX /= STEP;
-        positionY /= STEP;
-        return limits[positionY][positionX] == 1;
+    public boolean checkLimits(Coordinate coordinate) {
+        return limits[coordinate.getEixoY()][coordinate.getEixoX()] == 1;
+    }
+
+    public Item getItem(Coordinate coordinate) {
+        return this.item.get(coordinate);
     }
 
     public void removeItem(Item item) {
-        this.item.remove(item);
-        limits[item.getPositionItemY() / STEP][item.getPositionItemX() / STEP] = 1;
-    }
-
-    public Item getItemMapGame(int positionPlayerX, int positionPlayerY) {
-        int positionX = positionPlayerX / STEP;
-        int positionY = positionPlayerY / STEP;
-        if (limits[positionY][positionX] == 2) {
-            for (Item itens : item) {
-                if (itens.positionItemX == positionPlayerX && itens.positionItemY == positionPlayerY) {
-                    return itens;
-                }
-            }
-        }
-        return null;
+        Coordinate coordinate = new Coordinate(item.getPositionItemX(), item.getPositionItemY());
+        this.item.remove(coordinate);
+        this.limits[coordinate.getEixoY()][coordinate.getEixoX()] = 1;
     }
 
     public Door getDoorMap(int positionPlayerX, int positionPlayerY) {
@@ -81,33 +71,19 @@ public abstract class MapGame {
         return null;
     }
 
-    public void addItem(Item item, int positionX, int positionY) {
-        if (mapGameLimits(positionX + STEP, positionY)) {
-            item.setPositionItemX(positionX + STEP);
-            item.setPositionItemY(positionY);
-        } else if (mapGameLimits(positionX - STEP, positionY)) {
-            item.setPositionItemX(positionX - STEP);
-            item.setPositionItemY(positionY);
-        } else if (mapGameLimits(positionX, positionY + STEP)) {
-            item.setPositionItemX(positionX);
-            item.setPositionItemY(positionY + STEP);
-        } else {
-            item.setPositionItemX(positionX);
-            item.setPositionItemY(positionY - STEP);
-        }
-        setItem(item);
+    public void addItem(Item item, Player player) {
+        new AddItemMapGame(item, player).run();
     }
 
-    public void setItem(Item itens) {
-        this.item.add(itens);
-        int limitsX = itens.getPositionItemX() / STEP;
-        int limitsY = itens.getPositionItemY() / STEP;
-        limits[limitsY][limitsX] = 2;
+    public void setItem(Item item) {
+        Coordinate coordinate = new Coordinate(item.getPositionItemX(), item.getPositionItemY());
+        this.item.put(coordinate, item);
+        this.limits[coordinate.getEixoY()][coordinate.getEixoX()] = 2;
     }
 
     public List<Item> getItemVisible() {
         List<Item> listItensVisible = new ArrayList<>();
-        for (Item item : this.item) {
+        for (Item item : this.item.values()) {
             if (item.isVisible()) {
                 listItensVisible.add(item);
             }
@@ -117,7 +93,7 @@ public abstract class MapGame {
 
     public List<Item> getItemInvisible() {
         List<Item> listItensInvisible = new ArrayList<>();
-        for (Item itemRomm : this.item) {
+        for (Item itemRomm : this.item.values()) {
             if (!itemRomm.isVisible()) {
                 listItensInvisible.add(itemRomm);
             }

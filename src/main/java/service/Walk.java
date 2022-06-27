@@ -1,5 +1,6 @@
 package service;
 
+import model.Coordinate;
 import model.MovePlayer;
 import model.Player;
 
@@ -46,7 +47,7 @@ public final class Walk {
 
     private boolean checkCanWalk(){
         return this.player.getCurrentMap()
-                .mapGameLimits(this.player.getPositionPlayerX(), this.player.getPositionPlayerY());
+                .checkLimits( new Coordinate(this.player.getPositionPlayerX(),this.player.getPositionPlayerY()));
     }
 
     private void comeBack(){

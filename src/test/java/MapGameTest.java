@@ -1,3 +1,4 @@
+import model.Coordinate;
 import model.Item;
 import model.Player;
 import model.Scenery;
@@ -30,14 +31,16 @@ public class MapGameTest {
     public void testarSeOPlayerPodeMoverTRUE(){
         int positionX = 300;
         int positionY = 470;
-        assertTrue(player.getCurrentMap().mapGameLimits(positionX,positionY));
+        Coordinate coordinate = new Coordinate(positionX, positionY);
+        assertTrue(player.getCurrentMap().checkLimits(coordinate));
     }
 
     @Test
     public void testarSeOPlayerPodeMoverFALSE(){
         int positionX = 0;
         int positionY = 0;
-        assertFalse(player.getCurrentMap().mapGameLimits(positionX,positionY));
+        Coordinate coordinate = new Coordinate(positionX, positionY);
+        assertFalse(player.getCurrentMap().checkLimits(coordinate));
     }
 
     @Test
@@ -66,25 +69,6 @@ public class MapGameTest {
         Scenery nextScenery = ((Scenery) player.getCurrentMap()).getExit("leste");
         player.setCurrentMap(nextScenery);
         assertNotEquals(player.getCurrentMap().getItemInvisible().size(), 0);
-    }
-
-
-    @Test
-    public void testarSePossuiItemNaFrenteDoPlayerNOTNULL(){
-        Scenery nextScenery = ((Scenery) player.getCurrentMap()).getExit("oeste");
-        player.setCurrentMap(nextScenery);
-        player.setPositionPlayerX(200,jLabel);
-        player.setPositionPlayerY(280,jLabel);
-        assertNotNull(player.getCurrentMap().getItemMapGame(player.getPositionPlayerX(), player.getPositionPlayerY()));
-    }
-
-    @Test
-    public void testarSePossuiItemNaFrenteDoPlayerNULL(){
-        Scenery nextScenery = ((Scenery) player.getCurrentMap()).getExit("oeste");
-        player.setCurrentMap(nextScenery);
-        player.setPositionPlayerX(200,jLabel);
-        player.setPositionPlayerY(270,jLabel);
-        assertNull(player.getCurrentMap().getItemMapGame(player.getPositionPlayerX(), player.getPositionPlayerY()));
     }
 
 }
