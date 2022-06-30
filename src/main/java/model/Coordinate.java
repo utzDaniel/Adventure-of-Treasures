@@ -5,28 +5,28 @@ import java.util.Objects;
 public class Coordinate {
 
     private final int STEP = MovePlayer.STEP;
-    private int eixoX;
-    private int eixoY;
+    private int axisX;
+    private int axisY;
 
     public Coordinate(int eixoX, int eixoY) {
-        setEixoX(eixoX);
-        setEixoY(eixoY);
+        setAxisX(eixoX);
+        setAxisY(eixoY);
     }
 
-    public int getEixoX() {
-        return eixoX;
+    public int getAxisX() {
+        return axisX;
     }
 
-    public int getEixoY() {
-        return eixoY;
+    public int getAxisY() {
+        return axisY;
     }
 
-    public void setEixoX(int eixoX) {
-        this.eixoX = eixoX / STEP;
+    public void setAxisX(int axisX) {
+        this.axisX = axisX / STEP;
     }
 
-    public void setEixoY(int eixoY) {
-        this.eixoY = eixoY / STEP;
+    public void setAxisY(int axisY) {
+        this.axisY = axisY / STEP;
     }
 
     @Override
@@ -34,11 +34,11 @@ public class Coordinate {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Coordinate that = (Coordinate) o;
-        return eixoX == that.eixoX && eixoY == that.eixoY;
+        return axisX == that.axisX && axisY == that.axisY;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(eixoX, eixoY);
+        return Objects.hash(axisX, axisY);
     }
 }

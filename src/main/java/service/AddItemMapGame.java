@@ -28,8 +28,8 @@ public class AddItemMapGame {
 
     private boolean checkDirectionDropItem(){
         for (MovePlayer move : MovePlayer.values()) {
-            this.coordinate.setEixoX(this.player.getPositionPlayerX() + (move.getToMoveX() * this.multiply));
-            this.coordinate.setEixoY(this.player.getPositionPlayerY() + (move.getToMoveY() * this.multiply));
+            this.coordinate.setAxisX(this.player.getPositionPlayerX() + (move.getToMoveX() * this.multiply));
+            this.coordinate.setAxisY(this.player.getPositionPlayerY() + (move.getToMoveY() * this.multiply));
             if(checkCoordinateDropItem()) return true;
         }
         return false;
@@ -40,8 +40,8 @@ public class AddItemMapGame {
     }
 
     private void setItemNewCoordinate(){
-        this.item.setPositionItemX(this.coordinate.getEixoX()*10);// position X item * STEP = 10
-        this.item.setPositionItemY(this.coordinate.getEixoY()*10);// position Y item * STEP = 10
+        this.item.setPositionItemX(this.coordinate.getAxisX()*10);// position X item * STEP = 10
+        this.item.setPositionItemY(this.coordinate.getAxisY()*10);// position Y item * STEP = 10
     }
 
     private void addItem(){

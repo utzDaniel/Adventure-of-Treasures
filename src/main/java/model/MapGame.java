@@ -4,25 +4,27 @@ import service.AddItemMapGame;
 
 import javax.swing.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class MapGame {
 
     protected final String name;
     protected ImageIcon imagemIcon;
     protected int[][] limits;
-    protected final Map<Door, MapGame> exitsDoors;
+    protected final Map<Door, MapGame> exitsDoors;//Key mapa, Values List<Area> representar inicial X e final X,
+                                                  // inicial Y e final Y. Clase Area com uma Map espeficica
     protected final Map<Coordinate, Item> item;
 
     public MapGame(String name, ImageIcon imagemIcon) {
         this.name = name;
         this.imagemIcon = imagemIcon;
-        limits = new int[78][56];
-        exitsDoors = new HashMap<>();
-        item = new HashMap<>();
+        this.limits = new int[78][56];
+        this.exitsDoors = new HashMap<>();
+        this.item = new HashMap<>();
     }
 
     public ImageIcon getImagemIcon() {
-        return imagemIcon;
+        return this.imagemIcon;
     }
 
     public void setImagemIcon(ImageIcon imagemIcon) {
@@ -30,11 +32,15 @@ public abstract class MapGame {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setLimits(int[][] limits) {
         this.limits = limits;
+    }
+
+    public boolean checkLimits(Coordinate coordinate) {
+        return limits[coordinate.getAxisY()][coordinate.getAxisX()] == 1;
     }
 
     public void setExitsDoors(Door door, MapGame neighbor) {
@@ -43,20 +49,6 @@ public abstract class MapGame {
 
     public MapGame getMapDoor(Door door) {
         return this.exitsDoors.get(door);
-    }
-
-    public boolean checkLimits(Coordinate coordinate) {
-        return limits[coordinate.getEixoY()][coordinate.getEixoX()] == 1;
-    }
-
-    public Item getItem(Coordinate coordinate) {
-        return this.item.get(coordinate);
-    }
-
-    public void removeItem(Item item) {
-        Coordinate coordinate = new Coordinate(item.getPositionItemX(), item.getPositionItemY());
-        this.item.remove(coordinate);
-        this.limits[coordinate.getEixoY()][coordinate.getEixoX()] = 1;
     }
 
     public Door getDoorMap(int positionPlayerX, int positionPlayerY) {
@@ -71,6 +63,16 @@ public abstract class MapGame {
         return null;
     }
 
+    public Item getItem(Coordinate coordinate) {
+        return this.item.get(coordinate);
+    }
+
+    public void removeItem(Item item) {
+        Coordinate coordinate = new Coordinate(item.getPositionItemX(), item.getPositionItemY());
+        this.item.remove(coordinate);
+        this.limits[coordinate.getAxisY()][coordinate.getAxisX()] = 1;
+    }
+
     public void addItem(Item item, Player player) {
         new AddItemMapGame(item, player).run();
     }
@@ -78,27 +80,20 @@ public abstract class MapGame {
     public void setItem(Item item) {
         Coordinate coordinate = new Coordinate(item.getPositionItemX(), item.getPositionItemY());
         this.item.put(coordinate, item);
-        this.limits[coordinate.getEixoY()][coordinate.getEixoX()] = 2;
+        this.limits[coordinate.getAxisY()][coordinate.getAxisX()] = 2;
     }
 
     public List<Item> getItemVisible() {
-        List<Item> listItensVisible = new ArrayList<>();
-        for (Item item : this.item.values()) {
-            if (item.isVisible()) {
-                listItensVisible.add(item);
-            }
-        }
-        return listItensVisible;
+        List<Item> itens = new ArrayList<>(this.item.values());
+        return itens.stream()
+                .filter(Item::isVisible)
+                .collect(Collectors.toList());
     }
 
     public List<Item> getItemInvisible() {
-        List<Item> listItensInvisible = new ArrayList<>();
-        for (Item itemRomm : this.item.values()) {
-            if (!itemRomm.isVisible()) {
-                listItensInvisible.add(itemRomm);
-            }
-        }
-        return listItensInvisible;
+        List<Item> itens = new ArrayList<>(this.item.values());
+        return itens.stream()
+                .filter(item1 -> !item1.isVisible())
+                .collect(Collectors.toList());
     }
-
 }

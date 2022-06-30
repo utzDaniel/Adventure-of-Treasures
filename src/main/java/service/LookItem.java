@@ -35,8 +35,8 @@ public final class LookItem {
     private void setCoordinate(){
         int newPositionX = this.player.getPositionPlayerX() + this.move.getToMoveX();
         int newPositionY = this.player.getPositionPlayerY() + this.move.getToMoveY();
-        this.coordinate.setEixoX(newPositionX);
-        this.coordinate.setEixoY(newPositionY);
+        this.coordinate.setAxisX(newPositionX);
+        this.coordinate.setAxisY(newPositionY);
     }
 
     private Item getItemMapGame() {
