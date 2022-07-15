@@ -13,13 +13,13 @@ public final class DropItem {
         this.item = item;
     }
     public boolean run() {
-        if (!removeItemInventory()) return false;
+        removeItemInventory();
         addItemCurrentMap();
         return true;
     }
 
-    public boolean removeItemInventory(){
-        return new RemoveItem(this.player.getInventory(), this.item).run();
+    public void removeItemInventory(){
+        new RemoveItem(this.player.getInventory(), this.item).run();
     }
 
     private void addItemCurrentMap() {

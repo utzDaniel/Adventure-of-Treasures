@@ -3,35 +3,26 @@ package service;
 import model.*;
 import view.InterfaceGame;
 
+import java.util.Objects;
+
 public class NextScenery {
 
     private final Player player;
     private final InterfaceGame interfaceGame;
-    private final Song song;
 
-    public NextScenery(Player player, InterfaceGame interfaceGame, Song song) {
+    public NextScenery(Player player, InterfaceGame interfaceGame) {
         this.player = player;
         this.interfaceGame = interfaceGame;
-        this.song = song;
     }
 
-    public void run(String direction){
+    public boolean run(String direction) {
         Scenery nextScenery = ((Scenery) player.getCurrentMap()).getExit(direction);
-        if (nextScenery != null) {
-            player.setCurrentMap(nextScenery);
-            newPosition(direction);
-            interfaceGame.getMapGameJLabel().setIcon(nextScenery.getImagemIcon());
-            song.play(player.getCurrentMap().getName());
-        }
-        updateItensMapGame();
-    }
+        if (Objects.isNull(nextScenery)) return false;
+        player.setCurrentMap(nextScenery);
+        newPosition(direction);
+        interfaceGame.getMapGameJLabel().setIcon(nextScenery.getImagemIcon());
+        return true;
 
-    private void updateItensMapGame() {
-        interfaceGame.clearItensJLabel();
-        for (Item itens : player.getCurrentMap().getItemVisible()) {
-            interfaceGame.setItensJLabel(itens,1);
-        }
-        interfaceGame.getMapGameJLabel().repaint();
     }
 
     private void newPosition(String direction) {

@@ -1,3 +1,5 @@
+import exception.ItemUsableException;
+import exception.MoveException;
 import model.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +22,7 @@ public class UseTest {
         itens.add(new ItemUsable("chave", "utilizada para abir algo", 3, "vila",580,300,null));
         itens.add(new ItemUsable("escada", "utilizada para subir em algum lugar", 5, "templo",410,200,null));
         itens.add(new ItemEquipable("tocha", "utilizado para iluminar", 5,410,200,null));
+        itens.add(new ItemUsable("chav", "utilizada para abir algo", 3, "vila",580,300,null));
     }
 
     @Test
@@ -35,13 +38,25 @@ public class UseTest {
         assertTrue(use.run());
     }
 
-    @Test
-    public void validarItemNaoUsavel(){
-        Use use = new Use(player,itens.get(2));
-        assertFalse(use.run());
+    @Test (expected = ItemUsableException.class)
+    public void invalidarUsoDaChave(){
+        Scenery village = new Scenery("vila", null);
+        Door templeDoor = new Door(380, 530, 370, 150, false);
+        Room temple = new Room("templo", null);
+        village.setExitsDoors(templeDoor, temple);
+        player.setCurrentMap(village);
+        player.setPositionPlayerX(370,new JLabel());
+        player.setPositionPlayerY(150,new JLabel());
+        Use use = new Use(player,itens.get(3));
+        assertTrue(use.run());
     }
 
-    @Test
+    @Test(expected = ItemUsableException.class)
+    public void validarItemNaoUsavel(){
+        new Use(player,itens.get(2)).run();
+    }
+
+    @Test(expected = ItemUsableException.class)
     public void validarItemUsavelMasNoMapaErrado(){
         Scenery village = new Scenery("vila", null);
         Door templeDoor = new Door(380, 530, 370, 150, false);
@@ -50,8 +65,7 @@ public class UseTest {
         player.setCurrentMap(temple);
         player.setPositionPlayerX(370,new JLabel());
         player.setPositionPlayerY(150,new JLabel());
-        Use use = new Use(player,itens.get(0));
-        assertFalse(use.run());
+        new Use(player,itens.get(0)).run();
     }
 
 }

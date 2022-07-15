@@ -14,13 +14,13 @@ public final class TakeItem {
     }
 
     public boolean run() {
-        if (!addItemInventory()) return false;
+        addItemInventory();
         removeItemCurrentMap();
         return true;
     }
 
-    private boolean addItemInventory() {
-        return new AddItemInventory(this.player.getInventory(), this.item).run();
+    private void addItemInventory() {
+        new AddItemInventory(this.player.getInventory(), this.item).run();
     }
 
     private void removeItemCurrentMap() {

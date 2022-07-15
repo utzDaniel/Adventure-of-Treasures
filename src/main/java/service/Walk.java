@@ -1,5 +1,6 @@
 package service;
 
+import exception.MoveException;
 import model.Coordinate;
 import model.MovePlayer;
 import model.Player;
@@ -20,7 +21,7 @@ public final class Walk {
     }
 
     public boolean run (){
-        this.move = moveToDirection();
+        moveToDirection();
         move();
         if (checkCanWalk()) setLocation();
         else comeBack();
@@ -29,13 +30,14 @@ public final class Walk {
         return true;
     }
 
-    private MovePlayer moveToDirection(){
+    private void moveToDirection(){
         for (MovePlayer move : MovePlayer.values()) {
             if(move.getDirection().equals(this.direction)){
-                return move;
+                this.move = move;
+                return;
             }
         }
-        return null;
+        throw new MoveException("Direção invalida!");
     }
 
     private void move(){

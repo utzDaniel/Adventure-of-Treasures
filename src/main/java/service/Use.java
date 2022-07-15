@@ -1,11 +1,12 @@
 package service;
 
+import exception.ItemUsableException;
 import model.IUsable;
 import model.Item;
 import model.ItemsUsable;
 import model.Player;
 
-public final class Use <T extends IUsable> {
+public final class Use<T extends IUsable> {
 
     private final Player player;
     private final Item item;
@@ -16,28 +17,31 @@ public final class Use <T extends IUsable> {
     }
 
     public boolean run() {
-        if(!(checkItensIUsable() && checkCurrentMap() && useItem())){
-            return false;
-        }
+        checkItensIUsable();
+        checkCurrentMap();
+        useItem();
         removeItem();
         return true;
     }
 
-    private boolean checkItensIUsable() {
-        return this.item instanceof IUsable;
+    private void checkItensIUsable() {
+        if (!(this.item instanceof IUsable))
+            throw new ItemUsableException("Item não usavél!");
     }
 
-    private boolean checkCurrentMap() {
-        return ((T) this.item).getLocalUse().equals(this.player.getCurrentMap().getName());
+    private void checkCurrentMap() {
+        if (!(((T) this.item).getLocalUse().equals(this.player.getCurrentMap().getName())))
+            throw new ItemUsableException("Esse item não pode ser usado nesse mapa!");
     }
 
-    private boolean useItem() {
+    private void useItem() {
         for (ItemsUsable value : ItemsUsable.values()) {
-            if(this.item.getName().equals(value.getLabel())){
-                return value.use(this.player);
+            if (this.item.getName().equals(value.getLabel())) {
+                value.use(this.player);
+                return;
             }
         }
-        return false;
+        throw new ItemUsableException("Não foi possível usar esse item!");
     }
 
     private void removeItem() {

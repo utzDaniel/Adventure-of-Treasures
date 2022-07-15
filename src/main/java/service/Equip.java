@@ -1,5 +1,6 @@
 package service;
 
+import exception.ItemEquipableException;
 import model.IEquipable;
 import model.Item;
 import model.ItemsEquipable;
@@ -15,20 +16,24 @@ public final class Equip <T extends Item> {
         this.item = item;
     }
     public boolean run() {
-        return checkItemIEquipable() && equipItem();
+        checkItemIEquipable();
+        equipItem();
+        return true;
     }
 
-    private boolean checkItemIEquipable() {
-        return this.item instanceof IEquipable;
+    private void checkItemIEquipable() {
+        if(!(this.item instanceof IEquipable))
+        throw new ItemEquipableException("Item não é equipavél");
     }
 
     //item equipavel com room e outro sem, será que deve criar uma nova classe?
-    private boolean equipItem() {
+    private void equipItem() {
         for (ItemsEquipable equipable : ItemsEquipable.values()) {
             if (equipable.getLabel().equals(this.item.getName())) {
-                return equipable.equip(this.player);
+                equipable.equip(this.player);
+                return;
             }
         }
-        return false;
+        throw new ItemEquipableException("Item equipavél não encontrado");
     }
 }

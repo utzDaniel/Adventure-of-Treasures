@@ -1,5 +1,6 @@
 package service;
 
+import exception.InventoryException;
 import model.Inventory;
 import model.Item;
 import model.ItemNotRemove;
@@ -15,14 +16,15 @@ public final class RemoveItem {
     }
 
     public boolean run() {
-        if (checkItemRemoved()) return false;
+        checkItemRemoved();
         removeItem();
         updateInventoryCapacity();
         return true;
     }
 
-    private boolean checkItemRemoved(){
-        return item instanceof ItemNotRemove;
+    private void checkItemRemoved(){
+        if(item instanceof ItemNotRemove)
+            throw new InventoryException("Item não pode ser removido!");
     }
 
     private void removeItem(){

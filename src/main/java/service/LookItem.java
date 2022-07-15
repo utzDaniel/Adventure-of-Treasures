@@ -1,5 +1,6 @@
 package service;
 
+import exception.MoveException;
 import model.Coordinate;
 import model.Item;
 import model.MovePlayer;
@@ -28,8 +29,10 @@ public final class LookItem {
         for (MovePlayer move : MovePlayer.values()) {
             if(move.getDirection().equals(this.player.getDirection())){
                 this.move = move;
+                return;
             }
         }
+        throw new MoveException("Direção invalida!");
     }
 
     private void setCoordinate(){

@@ -1,3 +1,4 @@
+import exception.InventoryException;
 import model.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,10 +8,9 @@ import javax.swing.*;
 
 import static org.junit.Assert.*;
 
-public class PlayerTest {
+public class TakeItemTest {
 
     private Player player;
-    private JLabel jLabel = new JLabel();
 
     @Before
     public void iniciacaoDoPlayerParaTeste() {
@@ -39,33 +39,14 @@ public class PlayerTest {
                 "praia", 200, 280, null)));
     }
 
-
-    @Test
-    public void buscarPeloNomeDoItem() {
-        assertNotNull(player.getInventory().getItem("mochila"));
-    }
-
-    @Test
-    public void nullBuscarPeloNomeDoItem() {
-        assertNull(player.getInventory().getItem("adas"));
-    }
-
-    @Test
-    public void buscarListaDeItensVisivelNoInventario() {
-        assertEquals(player.getInventory().getItemVisible().size(), 1);
-    }
-
-    @Test
-    public void buscarListaDeItensNãoVisivelNoInventario() {
-        assertEquals(player.getInventory().getItemInvisible().size(), 3);
-    }
-
-    @Test
-    public void atualizarOTamanhoDoInventarioAoAdicionarItemNovo() {
-        Item item = new ItemCombinable("faca", "serve para cortar algo", 3, 3, 420, 130, null);
-        int tamanhoAnterio = player.getInventory().getCapacity();
-        player.getInventory().updadeCapacity(item.getWeight());
-        assertNotEquals(tamanhoAnterio, player.getInventory().getCapacity());
+    @Test(expected = InventoryException.class)
+    public void invalidarCapacidadeMaximaDoInventory() {
+        Item item = new ItemUsable("pa", "ferramenta usada para cavar", 3, "praia",
+                200, 280, null);
+        player.takeItem(item);
+        player.takeItem(item);
+        player.takeItem(item);
+        assertFalse(player.takeItem(item));
     }
 
 }

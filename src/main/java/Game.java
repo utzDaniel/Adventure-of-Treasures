@@ -1,7 +1,7 @@
 import model.*;
 import repository.CreateMapGame;
 import view.InterfaceGame;
-import view.Keyboard;
+import controller.Keyboard;
 
 public class Game {
 

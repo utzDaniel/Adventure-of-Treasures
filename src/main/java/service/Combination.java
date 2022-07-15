@@ -1,5 +1,6 @@
 package service;
 
+import exception.ItemCombinableException;
 import model.*;
 import repository.CreateImageMapGame;
 
@@ -22,9 +23,11 @@ public final class Combination<T extends ICombinable> {
     }
 
     public boolean run() {
-        if (!(checkItensICombinable() && checkAllEqualsCombination() && checkEnoughAmountCombine())) return false;
-        newItem = getItemCombination();
-        if (Objects.isNull(newItem)) return false;
+        checkItensICombinable();
+        checkAllEqualsCombination();
+        checkEnoughAmountCombine();
+        getItemCombination();
+        if (Objects.isNull(newItem)) throw new ItemCombinableException("Item não encontrado");
         updateMap();
         removeAllItemCombine();
         setItemViseble();
@@ -32,38 +35,31 @@ public final class Combination<T extends ICombinable> {
         return true;
     }
 
-    private boolean checkItensICombinable() {
+    private void checkItensICombinable() {
         for (Item item : itens) {
             if (item instanceof ICombinable) {
                 this.itensCombinable.add((T) item);
-            } else {
-                return false;
-            }
+            } else throw new ItemCombinableException("Itens não combináveis");
         }
-        return true;
     }
 
-    private boolean checkAllEqualsCombination() {
-        for (int i = 1; i < itensCombinable.size(); i++) {
-            if (itensCombinable.get(0).getCombine() != itensCombinable.get(i).getCombine()) {
-                return false;
-            }
-        }
-        return true;
+    private void checkAllEqualsCombination() {
+        for (int i = 1; i < itensCombinable.size(); i++)
+            if (itensCombinable.get(0).getCombine() != itensCombinable.get(i).getCombine())
+                throw new ItemCombinableException("Itens não são combináveis entre eles");
+
     }
 
-    private boolean checkEnoughAmountCombine() {
-        return itensCombinable.size() == ItemsCombination.getAmountCombination(itensCombinable.get(0).getCombine());
+    private void checkEnoughAmountCombine() {
+        if (!(itensCombinable.size() == ItemsCombination.getAmountCombination(itensCombinable.get(0).getCombine())))
+            throw new ItemCombinableException("Está faltando Itens para realizar a combinação!");
     }
 
-    private Item getItemCombination() {
-        for (Item item : this.player.getInventory().getItemInvisible()) {
+    private void getItemCombination() {
+        for (Item item : this.player.getInventory().getItemInvisible())
             if (item.getName().equals(Objects.requireNonNull(ItemsCombination
-                    .getItemCombined(itensCombinable.get(0).getCombine())).getLabel())) {
-                return item;
-            }
-        }
-        return null;
+                    .getItemCombined(itensCombinable.get(0).getCombine())).getLabel()))
+                newItem = item;
     }
 
     private void updateMap() {
