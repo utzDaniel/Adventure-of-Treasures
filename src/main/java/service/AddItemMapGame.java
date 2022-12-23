@@ -32,7 +32,7 @@ public class AddItemMapGame {
             this.coordinate.setAxisY(this.player.getPositionPlayerY() + (move.getToMoveY() * this.multiply));
             if(checkCoordinateDropItem()) return true;
         }
-        return false;
+        return false;//TODO criar uma exception
     }
 
     private boolean checkCoordinateDropItem(){

@@ -36,7 +36,7 @@ public enum ItemsCombination {
                 return value;
             }
         }
-        return null;
+        return null;//TODO criar uma exception
     }
 }
 

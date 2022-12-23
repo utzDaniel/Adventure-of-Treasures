@@ -23,7 +23,7 @@ public class CreateImageItem {
             case "pregos" -> new ImageIcon(filename+"pregos.png");
             case "tesouro" -> new ImageIcon(filename+"tesouro.png");
             case "tocha" -> new ImageIcon(filename+"tocha.png");
-            default -> null;
+            default -> null;//TODO criar uma exception
         };
     }
 }

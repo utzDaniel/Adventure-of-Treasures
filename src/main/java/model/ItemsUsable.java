@@ -1,5 +1,6 @@
 package model;
 
+import exception.ItemUsableException;
 import repository.CreateImageMapGame;
 
 import java.util.Objects;
@@ -9,22 +10,25 @@ public enum ItemsUsable {
         @Override
         public boolean use(Player player){
             if (!(player.getInventory().getItem("mapa").isVisible()))
-                return false;
+                throw new ItemUsableException("Não foi possível usar esse item, falta algo no inventario!");
             for (Item item : player.getCurrentMap().getItemInvisible()) {
                 if (item.getName().equals("chave")) {
                     player.getCurrentMap().setImagemIcon(
                             new CreateImageMapGame().selectImage(player.getCurrentMap().getName()));
                     item.setVisible(true);
-                    break;
+                    return true;
                 }
+                throw new ItemUsableException("Item invisivel não encontrado!");
             }
-            return true;
+            throw new ItemUsableException("O mapa não possui itens invisiveis!");
         }},
     CHAVE("chave") {
         @Override
         public boolean use(Player player) {
-            Door openDoor = player.getCurrentMap().getDoorMap(player.getPositionPlayerX(), player.getPositionPlayerY());
-            if (Objects.isNull(openDoor)) return false;
+            Door openDoor = player.getCurrentMap().getDoorMap(
+                    player.getPositionPlayerX(), player.getPositionPlayerY());
+            if (Objects.isNull(openDoor))
+                throw new ItemUsableException("Não foi possível usar esse item, neste local!");
             openDoor.setOpen(true);
             return true;
         }
@@ -33,7 +37,8 @@ public enum ItemsUsable {
         @Override
         public boolean use(Player player) {
             Door openDoor = player.getCurrentMap().getDoorMap(player.getPositionPlayerX(), player.getPositionPlayerY());
-            if (Objects.isNull(openDoor)) return false;
+            if (Objects.isNull(openDoor))
+                throw new ItemUsableException("Não foi possível usar esse item, neste local!");
             openDoor.setOpen(true);
             player.getCurrentMap().setImagemIcon(
                     new CreateImageMapGame().selectImage(ItemsUsable.ESCADA.label));

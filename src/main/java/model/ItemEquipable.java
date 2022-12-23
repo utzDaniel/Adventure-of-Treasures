@@ -8,12 +8,12 @@ import javax.swing.*;
 public class ItemEquipable extends Item implements IEquipable {
 
     private boolean equipped;
-    private Room room;
+//    private Room room;
 
     public ItemEquipable(String name, String description, int weight, int positionItemX, int positionItemY, ImageIcon imagemIcon) {
         super(name, description, weight, positionItemX, positionItemY, imagemIcon);
         this.equipped = false;
-        this.room = null;
+//        this.room = null;
     }
 
     @Override
@@ -35,11 +35,11 @@ public class ItemEquipable extends Item implements IEquipable {
         return this.equipped;
     }
 
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
-    public Room getRoom() {
-        return this.room;
-    }
+//    public void setRoom(Room room) {
+//        this.room = room;
+//    }
+//
+//    public Room getRoom() {
+//        return this.room;
+//    }
 }

@@ -11,7 +11,7 @@ public class CreateImagePlayer {
             case "norte" -> new ImageIcon(filename+"paradoParaCima.png");
             case "leste" -> new ImageIcon(filename+"paradoParaDireita.png");
             case "sul" -> new ImageIcon(filename+"paradoParaBaixo.png");
-            default -> null;
+            default -> null;//TODO criar uma exception
         };
     }
 }

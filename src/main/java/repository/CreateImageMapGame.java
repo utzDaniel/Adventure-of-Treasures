@@ -21,7 +21,7 @@ public class CreateImageMapGame {
             case "barco" -> new ImageIcon(filename+"barco.png");
             case "mapa" -> new ImageIcon(filename+"praiaM.png");
             case "escada" -> new ImageIcon(filename+"temploF.png");
-            default -> null;
+            default -> null;//TODO criar uma exception
         };
     }
 }
