@@ -1,0 +1,45 @@
+package view;
+
+import model.Song;
+import model.SoundEffects;
+
+import javax.swing.*;
+
+public class MenuBar {
+
+    private final JMenuBar menubar;
+    private final EventsMenuBar eventsFrame;
+
+    public MenuBar(JFrame frame, Song song, SoundEffects soundEffects){
+        this.menubar = new JMenuBar();
+        this.eventsFrame = new EventsMenuBar(frame, song, soundEffects);
+    }
+
+    public void createNavigation(String name){
+        JMenu menu = new JMenu(name);
+        menubar.add(menu);
+        createButton(menu, name);
+    }
+
+    private void createButton(JMenu menu, String name){
+        String nameItem = validName(name);
+        JMenuItem item = new JMenuItem(nameItem);
+        item.addActionListener(e -> createEvent(name));
+        menu.add(item);
+    }
+
+    private String validName(String name){
+        if(name.equals("Musica") || name.equals("Efeitos"))
+            return "On/Off";
+        else
+            return name;
+    }
+
+    private void createEvent(String name){
+        eventsFrame.event(name);
+    }
+
+    public JMenuBar getMenubar() {
+        return menubar;
+    }
+}

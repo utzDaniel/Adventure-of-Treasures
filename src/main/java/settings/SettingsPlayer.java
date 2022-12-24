@@ -14,6 +14,12 @@ public class SettingsPlayer {
     public int positionInitialY (){
         return 470;
     }
+    public int labelWidth (){
+        return 32;
+    }
+    public int labelHeight (){
+        return 47;
+    }
 
     public ImageIcon ImageInitial (){ return new CreateImagePlayer().selectImage(Direction.SUL.getLabel()); }
 
