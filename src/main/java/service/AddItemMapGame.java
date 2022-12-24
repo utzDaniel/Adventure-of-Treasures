@@ -1,6 +1,7 @@
 package service;
 
 import model.*;
+import model.enums.MovePlayer;
 
 public class AddItemMapGame {
 

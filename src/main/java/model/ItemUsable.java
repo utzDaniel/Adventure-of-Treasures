@@ -1,5 +1,7 @@
 package model;
 
+import model.interfaces.IUsable;
+
 import javax.swing.*;
 
 public class ItemUsable extends Item implements IUsable {

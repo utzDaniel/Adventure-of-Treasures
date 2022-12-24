@@ -1,5 +1,7 @@
-package model;
+package model.interfaces;
 
+import model.Item;
+import model.Player;
 import service.Use;
 
 public interface IUsable {

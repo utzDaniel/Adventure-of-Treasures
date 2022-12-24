@@ -1,6 +1,7 @@
 package model;
 
 import repository.ListSoundEffects;
+import settings.SettingsSoundEffects;
 
 public class SoundEffects extends MusicPlayer {
 

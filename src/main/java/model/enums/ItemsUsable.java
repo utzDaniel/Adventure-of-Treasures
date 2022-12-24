@@ -1,6 +1,9 @@
-package model;
+package model.enums;
 
 import exception.ItemUsableException;
+import model.Door;
+import model.Item;
+import model.Player;
 import repository.CreateImageMapGame;
 
 import java.util.Objects;

@@ -4,6 +4,7 @@ import service.DropItem;
 import service.LookItem;
 import service.TakeItem;
 import service.Walk;
+import settings.SettingsPlayer;
 
 import javax.swing.*;
 

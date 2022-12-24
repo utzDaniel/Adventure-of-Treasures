@@ -1,5 +1,6 @@
 import exception.MoveException;
 import model.*;
+import model.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
 import repository.CreateMapGame;

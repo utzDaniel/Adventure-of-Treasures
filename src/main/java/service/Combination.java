@@ -2,6 +2,8 @@ package service;
 
 import exception.ItemCombinableException;
 import model.*;
+import model.enums.ItemsCombination;
+import model.interfaces.ICombinable;
 import repository.CreateImageMapGame;
 
 import java.util.ArrayList;

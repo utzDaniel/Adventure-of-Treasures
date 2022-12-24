@@ -12,6 +12,7 @@ public class Scenery extends MapGame {
     public Scenery(String name, ImageIcon imagemIcon) {
         super(name,imagemIcon);
         exits = new HashMap<>();
+        if(this.name.equals("cais")) mapInicial = this;
     }
 
     public Scenery getExit(String direction) {

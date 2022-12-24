@@ -1,7 +1,7 @@
 package view;
 
 import model.Item;
-import model.SettingsPlayer;
+import settings.SettingsPlayer;
 import model.Song;
 import model.SoundEffects;
 

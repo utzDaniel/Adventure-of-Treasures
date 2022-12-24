@@ -1,5 +1,8 @@
 package model;
 
+import model.interfaces.ICombinable;
+import service.util.UtilCombinable;
+
 import javax.swing.*;
 
 public class ItemCombinable extends Item implements ICombinable {

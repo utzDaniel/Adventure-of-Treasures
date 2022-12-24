@@ -1,4 +1,7 @@
-package model;
+package model.enums;
+
+import exception.ItemEquipableException;
+import model.Player;
 
 public enum ItemsEquipable {
 
@@ -12,22 +15,22 @@ public enum ItemsEquipable {
         @Override
         public boolean unequip(Player player) {
             if (!(player.getInventory().getCapacity() <= (player.getInventory().getMaxCapacity() - 5)))
-                return false;
+                throw new ItemEquipableException("Remove itens da mochila, antes de tentar desequipar");
             player.getInventory().updadeMaxCapacity(-5);
             return true;
         }
     }, TOCHA("tocha") {
         @Override
         public boolean equip(Player player) {
-            Door openDoor = player.getCurrentMap().getDoorMap(90, 240);
-            openDoor.setOpen(true);
+            boolean openDoor = player.getCurrentMap().activate("tocha");
+            if(!openDoor) throw new ItemEquipableException("Erro ao abrir a door");
             return true;
         }
 
         @Override
         public boolean unequip(Player player) {
-            Door openDoor = player.getCurrentMap().getDoorMap(90, 240);
-            openDoor.setOpen(false);
+            boolean openDoor = player.getCurrentMap().activate("tocha");
+            if(!openDoor) throw new ItemEquipableException("Erro ao abrir a door");
             return true;
         }
     };

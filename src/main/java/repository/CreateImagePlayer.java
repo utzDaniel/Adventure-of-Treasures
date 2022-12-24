@@ -1,5 +1,7 @@
 package repository;
 
+import exception.CreateImageException;
+
 import javax.swing.*;
 
 public class CreateImagePlayer {
@@ -11,7 +13,8 @@ public class CreateImagePlayer {
             case "norte" -> new ImageIcon(filename+"paradoParaCima.png");
             case "leste" -> new ImageIcon(filename+"paradoParaDireita.png");
             case "sul" -> new ImageIcon(filename+"paradoParaBaixo.png");
-            default -> null;//TODO criar uma exception
+            default -> throw new CreateImageException("Imagem do player não encontrada");
         };
     }
 }
+

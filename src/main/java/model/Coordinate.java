@@ -1,5 +1,7 @@
 package model;
 
+import model.enums.MovePlayer;
+
 import java.util.Objects;
 
 public class Coordinate {

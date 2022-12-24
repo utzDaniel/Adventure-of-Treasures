@@ -3,7 +3,7 @@ package service;
 import exception.MoveException;
 import model.Coordinate;
 import model.Item;
-import model.MovePlayer;
+import model.enums.MovePlayer;
 import model.Player;
 
 public final class LookItem {

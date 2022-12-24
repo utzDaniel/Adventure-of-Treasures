@@ -1,13 +1,12 @@
 import exception.InventoryException;
 import model.*;
+import model.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
 import repository.CreateMapGame;
 import service.Take;
-import view.InterfaceGame;
 
 import javax.swing.*;
-import java.awt.event.KeyEvent;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

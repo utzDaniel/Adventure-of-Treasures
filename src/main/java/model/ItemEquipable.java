@@ -1,5 +1,6 @@
 package model;
 
+import model.interfaces.IEquipable;
 import service.Equip;
 import service.Unequip;
 

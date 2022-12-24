@@ -1,6 +1,6 @@
-package model;
+package settings;
 
-public class SettingsSoundEffects {
+public class SettingsSong {
 
     private static boolean onPlayer = true;
 
@@ -9,7 +9,7 @@ public class SettingsSoundEffects {
     }
 
     public static void setOnPlayer() {
-        SettingsSoundEffects.onPlayer = !isOnPlayer();
+        SettingsSong.onPlayer = !isOnPlayer();
     }
 
 }

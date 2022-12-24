@@ -1,4 +1,4 @@
-package model;
+package model.enums;
 
 public enum Direction {
     NORTE("norte",38),SUL("sul",40),

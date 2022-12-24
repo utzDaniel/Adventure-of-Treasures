@@ -1,5 +1,5 @@
 import model.ItemCombinable;
-import model.ItemsCombination;
+import model.enums.ItemsCombination;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;

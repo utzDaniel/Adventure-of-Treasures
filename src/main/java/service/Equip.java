@@ -1,9 +1,9 @@
 package service;
 
 import exception.ItemEquipableException;
-import model.IEquipable;
+import model.interfaces.IEquipable;
 import model.Item;
-import model.ItemsEquipable;
+import model.enums.ItemsEquipable;
 import model.Player;
 
 public final class Equip <T extends Item> {

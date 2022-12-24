@@ -1,9 +1,9 @@
 package service;
 
 import exception.ItemUsableException;
-import model.IUsable;
+import model.interfaces.IUsable;
 import model.Item;
-import model.ItemsUsable;
+import model.enums.ItemsUsable;
 import model.Player;
 
 public final class Use<T extends IUsable> {

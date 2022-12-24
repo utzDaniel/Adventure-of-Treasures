@@ -2,7 +2,7 @@ package service;
 
 import exception.MoveException;
 import model.Coordinate;
-import model.MovePlayer;
+import model.enums.MovePlayer;
 import model.Player;
 
 import javax.swing.*;

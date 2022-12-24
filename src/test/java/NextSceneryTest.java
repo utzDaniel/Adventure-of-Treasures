@@ -1,4 +1,4 @@
-import model.Direction;
+import model.enums.Direction;
 import model.MapGame;
 import model.Player;
 import org.junit.Before;

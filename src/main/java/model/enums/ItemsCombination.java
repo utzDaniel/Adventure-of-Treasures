@@ -1,4 +1,4 @@
-package model;
+package model.enums;
 
 public enum ItemsCombination {
     //espeficidar os itens necessario para combinar , uma vez que no futuro poderar ter
@@ -36,7 +36,7 @@ public enum ItemsCombination {
                 return value;
             }
         }
-        return null;//TODO criar uma exception
+        return null;//TODO criar uma exception ou usar Optional
     }
 }
 

@@ -1,11 +1,13 @@
 package repository;
 
+import exception.CreateImageException;
+
 import javax.swing.*;
 
 public class CreateImageMapGame {
 
     public ImageIcon selectImage(String name) {
-        String filename = "src\\main\\java\\repository\\cenario\\";
+        String filename = "src\\main\\java\\repository\\map\\cenario\\";
         return switch (name) {
             case "cais" -> new ImageIcon(filename+"cais.png");
             case "farol" -> new ImageIcon(filename+"farol.png");
@@ -21,7 +23,7 @@ public class CreateImageMapGame {
             case "barco" -> new ImageIcon(filename+"barco.png");
             case "mapa" -> new ImageIcon(filename+"praiaM.png");
             case "escada" -> new ImageIcon(filename+"temploF.png");
-            default -> null;//TODO criar uma exception
+            default -> throw new CreateImageException("Imagem do map não encontrada");
         };
     }
 }

@@ -1,5 +1,6 @@
 package model;
 
+import exception.MoveException;
 import service.AddItemMapGame;
 
 import javax.swing.*;
@@ -7,6 +8,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class MapGame {
+
+    protected static Scenery mapInicial;
 
     protected final String name;
     protected ImageIcon imagemIcon;
@@ -61,6 +64,23 @@ public abstract class MapGame {
             }
         }
         return null;
+    }
+
+    public boolean activate(String nameItem) {
+        boolean activate = false;
+        try {
+            if(nameItem.equals("tocha")){
+                MapGame village = MapGame.mapInicial.getExit("norte").getExit("norte");
+                Door templeDoor = village.getDoorMap(380,530);
+                MapGame templo = village.getMapDoor(templeDoor);
+                Door openDoor = templo.getDoorMap(90, 240);
+                openDoor.setOpen(!openDoor.isOpen());
+                activate = true;
+            }
+        }catch (Exception e){
+            throw new MoveException("Direção invalida!");
+        }
+        return activate;
     }
 
     public Item getItem(Coordinate coordinate) {

@@ -1,10 +1,9 @@
 import exception.InventoryException;
 import model.*;
+import model.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
 import repository.CreateMapGame;
-
-import javax.swing.*;
 
 import static org.junit.Assert.*;
 

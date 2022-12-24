@@ -1,10 +1,10 @@
-package model;
+package service.util;
 
 public final class UtilCombinable {
 
     private final int combine;
 
-    UtilCombinable (int combine) {
+    public UtilCombinable(int combine) {
         this.combine = combine;
     }
 

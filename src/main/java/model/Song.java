@@ -1,6 +1,7 @@
 package model;
 
 import repository.ListSong;
+import settings.SettingsSong;
 
 import java.util.Objects;
 

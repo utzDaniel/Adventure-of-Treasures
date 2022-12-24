@@ -1,9 +1,9 @@
 package service;
 
 import exception.ItemEquipableException;
-import model.IEquipable;
+import model.interfaces.IEquipable;
 import model.Item;
-import model.ItemsEquipable;
+import model.enums.ItemsEquipable;
 import model.Player;
 
 public final class Unequip<T extends Item> {
@@ -31,7 +31,7 @@ public final class Unequip<T extends Item> {
     private void unequipItem() {
         for (ItemsEquipable equipable : ItemsEquipable.values()) {
             if (equipable.getLabel().equals(this.item.getName())) {
-                equipable.equip(this.player);
+                equipable.unequip(this.player);
                 return;
             }
         }

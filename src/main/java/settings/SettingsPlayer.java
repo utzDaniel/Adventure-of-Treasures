@@ -1,5 +1,6 @@
-package model;
+package settings;
 
+import model.enums.Direction;
 import repository.CreateImagePlayer;
 
 import javax.swing.*;
