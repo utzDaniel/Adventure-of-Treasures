@@ -1,6 +1,7 @@
 package view;
 
 import model.*;
+import repository.CreateImageInventory;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -20,7 +21,8 @@ public class InterfaceInventory {
     private final List<Item> items;
     private final Player player;
     private final SoundEffects soundEffects;
-    private final String filename = "src\\main\\java\\repository\\inventario\\";
+
+    private final CreateImageInventory imageInventory;
 
     public InterfaceInventory(InterfaceGame interfaceGame, Player player, SoundEffects soundEffects) {
         this.interfaceGame = interfaceGame;
@@ -28,16 +30,17 @@ public class InterfaceInventory {
         this.player.getInventory().setOpenInventory();
         this.soundEffects = soundEffects;
         panelMain = new JPanel();
-        labelSideEast = new JLabel(new ImageIcon(filename + "icons.png"));
+        imageInventory = new CreateImageInventory();
+        labelSideEast = new JLabel(imageInventory.selectImage("icons"));
         buttonItens = new JButton[4][6];
         infoLabel = new JLabel[4];
         buttonActions = new JButton[6];
         items = new ArrayList<>();
-        settingsFrame();
+        settingsPanel();
     }
 
-    private void settingsFrame() {
-        panelMain.setBackground(new Color(65, 52, 52));
+    private void settingsPanel() {
+        panelMain.setBackground(Colors.BROWN_1);
         panelMain.setBorder(new EmptyBorder(8, 10, 10, 10));
         panelMain.setLayout(new BorderLayout(6, 6));
         setNorthInterface();
@@ -51,15 +54,15 @@ public class InterfaceInventory {
 
     private void setNorthInterface() {
         JLabel label = new JLabel();
-        label.setIcon(new ImageIcon(filename + "top.png"));
+        label.setIcon(imageInventory.selectImage("top"));
         label.setBounds(300, 0, 100, 100);
         panelMain.add(label, BorderLayout.NORTH);
     }
 
     private void setSouthInterface() {
         JButton button = new JButton("SAIR");
-        button.setBackground(new Color(155, 37, 22));
-        button.setForeground(new Color(253, 247, 224));
+        button.setBackground(Colors.RED);
+        button.setForeground(Colors.SILVER);
         button.addActionListener(e -> quit());
         panelMain.add(button, BorderLayout.SOUTH);
     }
@@ -67,7 +70,7 @@ public class InterfaceInventory {
     private void setWestInterface() {
         JLabel label = new JLabel();
         label.setLayout(new BorderLayout(8, 8));
-        label.setIcon(new ImageIcon(filename + "player.png"));
+        label.setIcon(imageInventory.selectImage("player"));
         label.setBounds(0, 100, 100, 100);
         panelMain.add(label, BorderLayout.WEST);
     }
@@ -93,7 +96,7 @@ public class InterfaceInventory {
                     buttonItens[line][column] = new JButton();
                     buttonItens[line][column].setActionCommand(itens.get(cont).getName());
                     buttonItens[line][column].setIcon(itens.get(cont).getImagemIcon());
-                    buttonItens[line][column].setBackground(new Color(83, 68, 61));
+                    buttonItens[line][column].setBackground(Colors.BROWN_2);
                     buttonItens[line][column].setBounds(positionX, positionY, 37, 38);
                     buttonItens[line][column].addActionListener(this::setActions);
                     labelSideEast.add(buttonItens[line][column]);
@@ -113,31 +116,14 @@ public class InterfaceInventory {
     }
 
     private void setInfoItens() {
-        infoLabel[0] = new JLabel();
-        infoLabel[0].setText("Capacidade do inventario " + player.getInventory().getCapacity() + "/" + player.getInventory().getMaxCapacity());
-        infoLabel[0].setForeground(new Color(255, 255, 255));
-        infoLabel[0].setBounds(150, 180, 300, 100);
-        labelSideEast.add(infoLabel[0], 0);
-        infoLabel[1] = new JLabel();
-        infoLabel[1].setText("Nome: ");
-        infoLabel[1].setForeground(new Color(255, 255, 255));
-        infoLabel[1].setBounds(17, 210, 100, 100);
-        labelSideEast.add(infoLabel[1], 0);
-        infoLabel[2] = new JLabel();
-        infoLabel[2].setText("Peso: ");
-        infoLabel[2].setForeground(new Color(255, 255, 255));
-        infoLabel[2].setBounds(17, 230, 100, 100);
-        labelSideEast.add(infoLabel[2], 0);
-        infoLabel[3] = new JLabel();
-        infoLabel[3].setText("Descrição: ");
-        infoLabel[3].setForeground(new Color(255, 255, 255));
-        infoLabel[3].setBounds(17, 250, 300, 100);
-        labelSideEast.add(infoLabel[3], 0);
+        int height = 100;
+        int somaY = 100;
+
     }
 
     private void setButtonsActions() {
         buttonActions[0] = new JButton();
-        buttonActions[0].setIcon(new ImageIcon(filename + "usar.png"));
+        buttonActions[0].setIcon(imageInventory.selectImage("usar"));
         buttonActions[0].setBounds(15, 320, 70, 30);
         buttonActions[0].setActionCommand("usar");
         buttonActions[0].addActionListener(this::setConfirm);
@@ -145,7 +131,7 @@ public class InterfaceInventory {
         labelSideEast.add(buttonActions[0]);
 
         buttonActions[1] = new JButton();
-        buttonActions[1].setIcon(new ImageIcon(filename + "equipar.png"));
+        buttonActions[1].setIcon(imageInventory.selectImage("equipar"));
         buttonActions[1].setBounds(92, 320, 70, 30);
         buttonActions[1].setActionCommand("equipar");
         buttonActions[1].addActionListener(this::setConfirm);
@@ -153,7 +139,7 @@ public class InterfaceInventory {
         labelSideEast.add(buttonActions[1]);
 
         buttonActions[2] = new JButton();
-        buttonActions[2].setIcon(new ImageIcon(filename + "combinar.png"));
+        buttonActions[2].setIcon(imageInventory.selectImage("combinar"));
         buttonActions[2].setBounds(170, 320, 70, 30);
         buttonActions[2].setActionCommand("combinar");
         buttonActions[2].addActionListener(this::setConfirm);
@@ -161,7 +147,7 @@ public class InterfaceInventory {
         labelSideEast.add(buttonActions[2]);
 
         buttonActions[3] = new JButton();
-        buttonActions[3].setIcon(new ImageIcon(filename + "remover.png"));
+        buttonActions[3].setIcon(imageInventory.selectImage("remover"));
         buttonActions[3].setBounds(250, 320, 70, 30);
         buttonActions[3].setActionCommand("remover");
         buttonActions[3].addActionListener(this::setConfirm);
@@ -170,16 +156,16 @@ public class InterfaceInventory {
 
         buttonActions[4] = new JButton("CANCELAR");
         buttonActions[4].setBounds(30, 360, 130, 30);
-        buttonActions[4].setBackground(new Color(155, 37, 22));
-        buttonActions[4].setForeground(new Color(255, 255, 255));
+        buttonActions[4].setBackground(Colors.RED);
+        buttonActions[4].setForeground(Colors.WHITE);
         buttonActions[4].addActionListener(e -> setActionCancel());
         buttonActions[4].setVisible(false);
         labelSideEast.add(buttonActions[4]);
 
         buttonActions[5] = new JButton("CONFIRMAR");
         buttonActions[5].setBounds(180, 360, 130, 30);
-        buttonActions[5].setBackground(new Color(29, 92, 37));
-        buttonActions[5].setForeground(new Color(255, 255, 255));
+        buttonActions[5].setBackground(Colors.GREEN);
+        buttonActions[5].setForeground(Colors.WHITE);
         buttonActions[5].addActionListener(e -> setActionConfirm());
         buttonActions[5].setVisible(false);
         labelSideEast.add(buttonActions[5]);
@@ -218,23 +204,23 @@ public class InterfaceInventory {
         for (int i = 0; i < buttonActions.length - 2; i++) {
             buttonActions[i].setVisible(true);
             buttonActions[i].setEnabled(false);
-            buttonActions[i].setBackground(new Color(194, 194, 194));
+            buttonActions[i].setBackground(Colors.GREY);
         }
         if (item instanceof ItemUsable) {
-            buttonActions[0].setBackground(new Color(76, 108, 179));
+            buttonActions[0].setBackground(Colors.BLUE);
             buttonActions[0].setEnabled(true);
         }
         if (item instanceof ItemEquipable) {
-            buttonActions[1].setBackground(new Color(76, 108, 179));
+            buttonActions[1].setBackground(Colors.BLUE);
             buttonActions[1].setEnabled(true);
             remove = ((ItemEquipable) item).isEquipped();
         }
         if (item instanceof ItemCombinable) {
-            buttonActions[2].setBackground(new Color(76, 108, 179));
+            buttonActions[2].setBackground(Colors.BLUE);
             buttonActions[2].setEnabled(true);
         }
         if (!(item instanceof ItemNotRemove) && !remove) {
-            buttonActions[3].setBackground(new Color(76, 108, 179));
+            buttonActions[3].setBackground(Colors.BLUE);
             buttonActions[3].setEnabled(true);
         }
     }
@@ -250,15 +236,15 @@ public class InterfaceInventory {
                         if (items.size() == 1) {
                             if (player.getInventory().getItem(jButton.getActionCommand()) instanceof ItemCombinable) {
                                 if (items.get(0).getName().equals(jButton.getActionCommand())) {
-                                    jButton.setBackground(new Color(29, 92, 37));
+                                    jButton.setBackground(Colors.GREEN);
                                 }
                             } else {
                                 jButton.setEnabled(false);
-                                jButton.setBackground(new Color(194, 194, 194));
+                                jButton.setBackground(Colors.GREY);
                             }
                         } else {
                             if (items.get(items.size() - 1).getName().equals(jButton.getActionCommand())) {
-                                jButton.setBackground(new Color(29, 92, 37));
+                                jButton.setBackground(Colors.GREEN);
                                 buttonActions[5].setActionCommand(e.getActionCommand());
                                 buttonActions[5].setVisible(true);
                                 break;
