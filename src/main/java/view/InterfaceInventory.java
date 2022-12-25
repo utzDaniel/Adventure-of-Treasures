@@ -116,8 +116,26 @@ public class InterfaceInventory {
     }
 
     private void setInfoItens() {
-        int height = 100;
-        int somaY = 100;
+        infoLabel[0] = new JLabel();
+        infoLabel[0].setText("Capacidade do inventario " + player.getInventory().getCapacity() + "/" + player.getInventory().getMaxCapacity());
+        infoLabel[0].setForeground(Colors.WHITE);
+        infoLabel[0].setBounds(150, 180, 300, 100);
+        labelSideEast.add(infoLabel[0], 0);
+        infoLabel[1] = new JLabel();
+        infoLabel[1].setText("Nome: ");
+        infoLabel[1].setForeground(Colors.WHITE);
+        infoLabel[1].setBounds(17, 210, 100, 100);
+        labelSideEast.add(infoLabel[1], 0);
+        infoLabel[2] = new JLabel();
+        infoLabel[2].setText("Peso: ");
+        infoLabel[2].setForeground(Colors.WHITE);
+        infoLabel[2].setBounds(17, 230, 100, 100);
+        labelSideEast.add(infoLabel[2], 0);
+        infoLabel[3] = new JLabel();
+        infoLabel[3].setText("Descrição: ");
+        infoLabel[3].setForeground(Colors.WHITE);
+        infoLabel[3].setBounds(17, 250, 300, 100);
+        labelSideEast.add(infoLabel[3], 0);
 
     }
 
