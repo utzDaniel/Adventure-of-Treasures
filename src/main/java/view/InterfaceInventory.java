@@ -116,76 +116,46 @@ public class InterfaceInventory {
     }
 
     private void setInfoItens() {
-        infoLabel[0] = new JLabel();
-        infoLabel[0].setText("Capacidade do inventario " + player.getInventory().getCapacity() + "/" + player.getInventory().getMaxCapacity());
-        infoLabel[0].setForeground(Colors.WHITE);
-        infoLabel[0].setBounds(150, 180, 300, 100);
-        labelSideEast.add(infoLabel[0], 0);
-        infoLabel[1] = new JLabel();
-        infoLabel[1].setText("Nome: ");
-        infoLabel[1].setForeground(Colors.WHITE);
-        infoLabel[1].setBounds(17, 210, 100, 100);
-        labelSideEast.add(infoLabel[1], 0);
-        infoLabel[2] = new JLabel();
-        infoLabel[2].setText("Peso: ");
-        infoLabel[2].setForeground(Colors.WHITE);
-        infoLabel[2].setBounds(17, 230, 100, 100);
-        labelSideEast.add(infoLabel[2], 0);
-        infoLabel[3] = new JLabel();
-        infoLabel[3].setText("Descrição: ");
-        infoLabel[3].setForeground(Colors.WHITE);
-        infoLabel[3].setBounds(17, 250, 300, 100);
-        labelSideEast.add(infoLabel[3], 0);
+        LabelInformation label = new LabelInformation();
 
+        infoLabel[0] = label.create("Capacidade do inventario " + player.getInventory().getCapacity() + "/" + player.getInventory().getMaxCapacity());
+        labelSideEast.add(infoLabel[0], 0);
+
+        infoLabel[1] = label.create("Nome: ");
+        labelSideEast.add(infoLabel[1], 0);
+
+        infoLabel[2] = label.create("Peso: ");
+        labelSideEast.add(infoLabel[2], 0);
+
+        infoLabel[3] = label.create("Descrição: ");
+        labelSideEast.add(infoLabel[3], 0);
     }
 
     private void setButtonsActions() {
-        buttonActions[0] = new JButton();
-        buttonActions[0].setIcon(imageInventory.selectImage("usar"));
-        buttonActions[0].setBounds(15, 320, 70, 30);
-        buttonActions[0].setActionCommand("usar");
+        ButtonAction buttonAction = new ButtonAction();
+
+        buttonActions[0] = buttonAction.create("usar");
         buttonActions[0].addActionListener(this::setConfirm);
-        buttonActions[0].setVisible(false);
         labelSideEast.add(buttonActions[0]);
 
-        buttonActions[1] = new JButton();
-        buttonActions[1].setIcon(imageInventory.selectImage("equipar"));
-        buttonActions[1].setBounds(92, 320, 70, 30);
-        buttonActions[1].setActionCommand("equipar");
+        buttonActions[1] = buttonAction.create("equipar");
         buttonActions[1].addActionListener(this::setConfirm);
-        buttonActions[1].setVisible(false);
         labelSideEast.add(buttonActions[1]);
 
-        buttonActions[2] = new JButton();
-        buttonActions[2].setIcon(imageInventory.selectImage("combinar"));
-        buttonActions[2].setBounds(170, 320, 70, 30);
-        buttonActions[2].setActionCommand("combinar");
+        buttonActions[2] = buttonAction.create("combinar");
         buttonActions[2].addActionListener(this::setConfirm);
-        buttonActions[2].setVisible(false);
         labelSideEast.add(buttonActions[2]);
 
-        buttonActions[3] = new JButton();
-        buttonActions[3].setIcon(imageInventory.selectImage("remover"));
-        buttonActions[3].setBounds(250, 320, 70, 30);
-        buttonActions[3].setActionCommand("remover");
+        buttonActions[3] = buttonAction.create("remover");
         buttonActions[3].addActionListener(this::setConfirm);
-        buttonActions[3].setVisible(false);
         labelSideEast.add(buttonActions[3]);
 
-        buttonActions[4] = new JButton("CANCELAR");
-        buttonActions[4].setBounds(30, 360, 130, 30);
-        buttonActions[4].setBackground(Colors.RED);
-        buttonActions[4].setForeground(Colors.WHITE);
+        buttonActions[4] = buttonAction.create("cancelar");
         buttonActions[4].addActionListener(e -> setActionCancel());
-        buttonActions[4].setVisible(false);
         labelSideEast.add(buttonActions[4]);
 
-        buttonActions[5] = new JButton("CONFIRMAR");
-        buttonActions[5].setBounds(180, 360, 130, 30);
-        buttonActions[5].setBackground(Colors.GREEN);
-        buttonActions[5].setForeground(Colors.WHITE);
+        buttonActions[5] = buttonAction.create("confirmar");
         buttonActions[5].addActionListener(e -> setActionConfirm());
-        buttonActions[5].setVisible(false);
         labelSideEast.add(buttonActions[5]);
 
     }
