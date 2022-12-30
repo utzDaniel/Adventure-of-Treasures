@@ -1,11 +1,8 @@
 package view;
 
 import model.*;
-import repository.CreateImageInventory;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,105 +10,49 @@ import java.util.List;
 public class InterfaceInventory {
 
     private final InterfaceGame interfaceGame;
-    private final JPanel panelMain;
     private final JLabel labelSideEast;
-    private final JButton[][] buttonItens;
     private final JLabel[] infoLabel;
     private final JButton[] buttonActions;
     private final List<Item> items;
     private final Player player;
     private final SoundEffects soundEffects;
-
-    private final CreateImageInventory imageInventory;
+    private final ButtonItem buttonItem;
 
     public InterfaceInventory(InterfaceGame interfaceGame, Player player, SoundEffects soundEffects) {
         this.interfaceGame = interfaceGame;
         this.player = player;
         this.player.getInventory().setOpenInventory();
         this.soundEffects = soundEffects;
-        panelMain = new JPanel();
-        imageInventory = new CreateImageInventory();
-        labelSideEast = new JLabel(imageInventory.selectImage("icons"));
-        buttonItens = new JButton[4][6];
+        labelSideEast = new JLabel();
         infoLabel = new JLabel[4];
         buttonActions = new JButton[6];
         items = new ArrayList<>();
-        settingsPanel();
+        buttonItem = new ButtonItem();
+        setPanel();
     }
 
-    private void settingsPanel() {
-        panelMain.setBackground(Colors.BROWN_1);
-        panelMain.setBorder(new EmptyBorder(8, 10, 10, 10));
-        panelMain.setLayout(new BorderLayout(6, 6));
-        setNorthInterface();
-        setSouthInterface();
-        setWestInterface();
-        setEastInterface();
-        interfaceGame.getFrame().add(panelMain, 0);
-        panelMain.setBounds(50, 50, 706, 500);//816 660
-        interfaceGame.getFrame().setVisible(true);
-    }
-
-    private void setNorthInterface() {
-        JLabel label = new JLabel();
-        label.setIcon(imageInventory.selectImage("top"));
-        label.setBounds(300, 0, 100, 100);
-        panelMain.add(label, BorderLayout.NORTH);
-    }
-
-    private void setSouthInterface() {
-        JButton button = new JButton("SAIR");
-        button.setBackground(Colors.RED);
-        button.setForeground(Colors.SILVER);
-        button.addActionListener(e -> quit());
-        panelMain.add(button, BorderLayout.SOUTH);
-    }
-
-    private void setWestInterface() {
-        JLabel label = new JLabel();
-        label.setLayout(new BorderLayout(8, 8));
-        label.setIcon(imageInventory.selectImage("player"));
-        label.setBounds(0, 100, 100, 100);
-        panelMain.add(label, BorderLayout.WEST);
-    }
-
-    private void setEastInterface() {
-        JPanel eastPanel = new JPanel();
-        eastPanel.setLayout(new BorderLayout(8, 8));
+    private void setPanel() {
+        PanelIventory panel = new PanelIventory(labelSideEast);
+        JPanel jPanel = panel.create();
+        panel.getButton().addActionListener(e -> quit(jPanel));
         setItens();
         setInfoItens();
         setButtonsActions();
-        eastPanel.add(labelSideEast, BorderLayout.NORTH);
-        panelMain.add(eastPanel, BorderLayout.EAST);
+        interfaceGame.getFrame().add(jPanel, 0);
+        interfaceGame.getFrame().setVisible(true);
+    }
+
+    private void removeItens() {
+        buttonItem.remove(labelSideEast);
+        setItens();
     }
 
     private void setItens() {
-        int positionY = 14;
-        int positionX = 17;
-        int cont = 0;
-        List<Item> itens = player.getInventory().getItemVisible();
-        for (int line = 0; line < buttonItens.length; line++) {
-            for (int column = 0; column < buttonItens[line].length; column++) {
-                if (cont < itens.size()) {
-                    buttonItens[line][column] = new JButton();
-                    buttonItens[line][column].setActionCommand(itens.get(cont).getName());
-                    buttonItens[line][column].setIcon(itens.get(cont).getImagemIcon());
-                    buttonItens[line][column].setBackground(Colors.BROWN_2);
-                    buttonItens[line][column].setBounds(positionX, positionY, 37, 38);
-                    buttonItens[line][column].addActionListener(this::setActions);
-                    labelSideEast.add(buttonItens[line][column]);
-                    positionX += 53;
-                    cont++;
-                } else {
-                    break;
-                }
-            }
-            if (line < 1) {
-                positionY += 55;
-            } else {
-                positionY += 51;
-            }
-            positionX = 17;
+        JButton button;
+        for (Item item : player.getInventory().getItemVisible()) {
+            button = buttonItem.create(item);
+            button.addActionListener(this::setActions);
+            labelSideEast.add(button);
         }
     }
 
@@ -218,26 +159,22 @@ public class InterfaceInventory {
         buttonActions[4].setActionCommand(e.getActionCommand());
         buttonActions[4].setVisible(true);
         if (e.getActionCommand().equals("combinar")) {
-            for (JButton[] buttonIten : buttonItens) {
-                for (JButton jButton : buttonIten) {
-                    if (jButton != null) {
-                        if (items.size() == 1) {
-                            if (player.getInventory().getItem(jButton.getActionCommand()) instanceof ItemCombinable) {
-                                if (items.get(0).getName().equals(jButton.getActionCommand())) {
-                                    jButton.setBackground(Colors.GREEN);
-                                }
-                            } else {
-                                jButton.setEnabled(false);
-                                jButton.setBackground(Colors.GREY);
-                            }
-                        } else {
-                            if (items.get(items.size() - 1).getName().equals(jButton.getActionCommand())) {
-                                jButton.setBackground(Colors.GREEN);
-                                buttonActions[5].setActionCommand(e.getActionCommand());
-                                buttonActions[5].setVisible(true);
-                                break;
-                            }
+            for (JButton jButton : buttonItem.getButtonItens()) {
+                if (items.size() == 1) {
+                    if (player.getInventory().getItem(jButton.getActionCommand()) instanceof ItemCombinable) {
+                        if (items.get(0).getName().equals(jButton.getActionCommand())) {
+                            jButton.setBackground(Colors.GREEN);
                         }
+                    } else {
+                        jButton.setEnabled(false);
+                        jButton.setBackground(Colors.GREY);
+                    }
+                } else {
+                    if (items.get(items.size() - 1).getName().equals(jButton.getActionCommand())) {
+                        jButton.setBackground(Colors.GREEN);
+                        buttonActions[5].setActionCommand(e.getActionCommand());
+                        buttonActions[5].setVisible(true);
+                        break;
                     }
                 }
             }
@@ -285,26 +222,9 @@ public class InterfaceInventory {
         infoLabel[2].setText("Peso: ");
         infoLabel[3].setText("Descrição: ");
         removeItens();
-        setCapacity();
+        infoLabel[0].setText("Capacidade do inventario " + player.getInventory().getCapacity() + "/" + player.getInventory().getMaxCapacity());
         items.clear();
         interfaceGame.getFrame().repaint();
-    }
-
-    private void removeItens() {
-        for (JButton[] buttonIten : buttonItens) {
-            for (JButton jButton : buttonIten) {
-                if (jButton != null) {
-                    labelSideEast.remove(jButton);
-                } else {
-                    break;
-                }
-            }
-        }
-        setItens();
-    }
-
-    private void setCapacity() {
-        infoLabel[0].setText("Capacidade do inventario " + player.getInventory().getCapacity() + "/" + player.getInventory().getMaxCapacity());
     }
 
     private void updateItensMapGame() {
@@ -316,8 +236,8 @@ public class InterfaceInventory {
         interfaceGame.getMapGameJLabel().setIcon(player.getCurrentMap().getImagemIcon());
     }
 
-    private void quit() {
-        interfaceGame.getFrame().remove(panelMain);
+    private void quit(JPanel panel) {
+        interfaceGame.getFrame().remove(panel);
         interfaceGame.getFrame().repaint();
         player.getInventory().setOpenInventory();
         this.interfaceGame.getFrame().requestFocus();

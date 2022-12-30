@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class LabelInformation {
 
-    private static int positionY;
+    private int positionY;
 
     public LabelInformation(){
         positionY = 190;
