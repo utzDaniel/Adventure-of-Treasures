@@ -9,8 +9,10 @@ import settings.SettingsMapGame;
 import settings.SettingsPlayer;
 
 import javax.swing.*;
+import java.io.ObjectStreamException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class InterfaceGame {
 
@@ -114,5 +116,12 @@ public class InterfaceGame {
 
     public SoundEffects getSoundEffects() {
         return soundEffects;
+    }
+
+    public void playEffects (String effect, String itemName){
+        if(Objects.isNull(itemName))
+            soundEffects.play(effect);
+        else
+            soundEffects.play(effect, itemName);
     }
 }

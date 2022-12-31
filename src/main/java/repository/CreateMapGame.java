@@ -89,7 +89,7 @@ public class CreateMapGame {
         limitsBoat(boat);
 
         RepositoryItem createItem = new RepositoryItem();
-
+        pier.setItem(createItem.getItem("livro"));//comentar
         boat.setItem(createItem.getItem("mochila"));
         lighthouse.setItem(createItem.getItem("pa"));
         lighthouseRoom.setItem(createItem.getItem("faca"));

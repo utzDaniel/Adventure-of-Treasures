@@ -75,7 +75,7 @@ public final class Inventory {
     }
 
     public void setOpenInventory() {
-        this.isInventory = !isInventory;
+        this.isInventory = !openInventory();
     }
 
 }

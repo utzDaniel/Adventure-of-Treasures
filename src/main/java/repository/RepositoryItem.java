@@ -29,7 +29,7 @@ public class RepositoryItem {
         item.put("papel", new ItemCombinable("papel", "papel escrito em lingua antiga", 2, 1, 510, 320, createImageItem.selectImage("papel")));//7
         item.put("pa", new ItemUsable("pa", "ferramenta usada para cavar", 3, "praia", 200, 280, createImageItem.selectImage("pa")));//8
         item.put("pregos", new ItemCombinable("pregos", "utilzado para construir algo", 3, 2, 460, 400, createImageItem.selectImage("pregos")));//9
-        item.put("livro", new ItemCombinable("livro", "livro antigo usado para decifrar escrita antiga", 1, 1, 490, 390, createImageItem.selectImage("livro")));//10
+        item.put("livro", new ItemCombinable("livro", "livro antigo usado para decifrar escrita antiga", 1, 1, 200, 200, createImageItem.selectImage("livro")));//10
         item.put("mochila", new ItemEquipable("mochila", "utilizada para carregar mais coisas", 0, 650, 220, createImageItem.selectImage("mochila")));//11
         item.put("mapa", new ItemNotRemove("mapa", "algo está enterrado na praia", null, 0, 410, 200, createImageItem.selectImage("mapa")));//12
         item.put("chave", new ItemUsable("chave", "utilizada para abir algo", 3, "vila", 580, 300, createImageItem.selectImage("chave")));//13

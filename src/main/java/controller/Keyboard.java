@@ -19,6 +19,7 @@ public class Keyboard {
     private final InterfaceGame interfaceGame;
     private final Player player;
     private final SoundEffects soundEffects;
+    private final InterfaceInventory inventory;
 
 
     public Keyboard(InterfaceGame interfaceGame, Player player, Song song, SoundEffects soundEffects) {
@@ -26,6 +27,7 @@ public class Keyboard {
         this.interfaceGame = interfaceGame;
         this.player = player;
         this.soundEffects = soundEffects;
+        inventory = new InterfaceInventory(interfaceGame, player);
     }
 
     public void run() {
@@ -71,8 +73,10 @@ public class Keyboard {
 
 
                 } else if (keyCode == 99) {
-                    if (!player.getInventory().openInventory()) {
-                        new InterfaceInventory(interfaceGame, player, soundEffects);
+                    if (player.getInventory().openInventory()) {
+                        inventory.quit();
+                    } else {
+                        inventory.open();
                     }
                 }
             }

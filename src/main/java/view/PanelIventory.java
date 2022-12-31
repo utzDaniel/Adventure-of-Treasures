@@ -20,7 +20,7 @@ public class PanelIventory {
         imageInventory = new CreateImageInventory();
     }
 
-    public JPanel create(){
+    public void create(){
         panelMain.setBackground(Colors.BROWN_1);
         panelMain.setBorder(new EmptyBorder(8, 10, 10, 10));
         panelMain.setLayout(new BorderLayout(6, 6));
@@ -30,7 +30,6 @@ public class PanelIventory {
         setWestPanel();
         setEastPanel();
         labelSideEast.setIcon(imageInventory.selectImage("icons"));
-        return panelMain;
     }
 
     private void setNorthPanel() {
@@ -65,4 +64,7 @@ public class PanelIventory {
         return button;
     }
 
+    public JPanel getPanel() {
+        return panelMain;
+    }
 }

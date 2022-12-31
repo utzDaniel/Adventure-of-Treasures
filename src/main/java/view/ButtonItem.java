@@ -9,7 +9,6 @@ public class ButtonItem {
     private int index;
     private int positionX;
     private int positionY;
-
     private final JButton[] buttonItens;
 
     public ButtonItem(){
@@ -17,16 +16,15 @@ public class ButtonItem {
         reset();
     }
 
-    public JButton create(Item item){
+    public void create(Item item){
         setButtonItens(item);
-        JButton button = buttonItens[index];
         update();
-        return button;
     }
 
     private void setButtonItens(Item item) {
         buttonItens[index] = new JButton();
         buttonItens[index].setActionCommand(item.getName());
+        buttonItens[index].setName(item.getName());
         buttonItens[index].setIcon(item.getImagemIcon());
         buttonItens[index].setBackground(Colors.BROWN_2);
         buttonItens[index].setBounds(positionX, positionY, 37, 38);
@@ -55,6 +53,12 @@ public class ButtonItem {
             buttonItens[i] = null;
         }
         reset();
+    }
+
+    public JButton getLast() {
+        if(index == 0)
+            return null;
+        return buttonItens[index-1];
     }
 
     public JButton[] getButtonItens() {
