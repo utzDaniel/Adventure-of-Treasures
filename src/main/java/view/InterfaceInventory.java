@@ -32,7 +32,6 @@ public class InterfaceInventory {
         labelInformation = new LabelInformation();
         buttonAction = new ButtonAction();
         setSettings();
-        System.out.println(interfaceGame.getFrame().getContentPane());
     }
 
     private void setSettings(){
@@ -151,9 +150,7 @@ public class InterfaceInventory {
 
     private void updateItensMapGame() {
         interfaceGame.clearJLabelItens();
-        for (Item itens : player.getCurrentMap().getItemVisible()) {
-            interfaceGame.setItensJLabel(itens, 2);
-        }
+        interfaceGame.setItensJLabel(player.getCurrentMap().getItemVisible(), 2);
         interfaceGame.getMapGameJLabel().repaint();
         interfaceGame.getMapGameJLabel().setIcon(player.getCurrentMap().getImagemIcon());
     }

@@ -124,9 +124,7 @@ public class Keyboard {
 
     private void updateItensMapGame() {
         interfaceGame.clearJLabelItens();
-        for (Item itens : player.getCurrentMap().getItemVisible()) {
-            interfaceGame.setItensJLabel(itens, 1);
-        }
+        interfaceGame.setItensJLabel(player.getCurrentMap().getItemVisible(), 1);
         interfaceGame.getMapGameJLabel().repaint();
     }
 

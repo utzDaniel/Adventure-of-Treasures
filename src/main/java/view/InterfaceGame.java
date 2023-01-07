@@ -10,7 +10,6 @@ import settings.SettingsPlayer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,7 +18,6 @@ public class InterfaceGame {
     private final JFrame frame;
     private final JLabel mapGameJLabel;
     private final JLabel playerJLabel;
-    private final List<JLabel> itensJLabel;
     private final Song song;
     private final SoundEffects soundEffects;
 
@@ -27,7 +25,6 @@ public class InterfaceGame {
         frame = new JFrame();
         playerJLabel = new JLabel();
         mapGameJLabel = new JLabel(imageMapGame);
-        itensJLabel = new ArrayList<>();
         song = new Song();
         soundEffects = new SoundEffects();
         settingsFrame();
@@ -71,6 +68,7 @@ public class InterfaceGame {
     private void createJLabelPlayer() {
         SettingsPlayer settingsPlayer = new SettingsPlayer();
         playerJLabel.setIcon(settingsPlayer.ImageInitial());
+        playerJLabel.setName("player");
         frame.getContentPane().add(playerJLabel);
         playerJLabel.setBounds(settingsPlayer.positionInitialX(), settingsPlayer.positionInitialY(),
                 settingsPlayer.labelWidth(), settingsPlayer.labelHeight());
@@ -79,34 +77,30 @@ public class InterfaceGame {
 
     private void createJLabelMapGame() {
         SettingsMapGame settingsMapGame = new SettingsMapGame();
-        mapGameJLabel.setText("mapa");
+        mapGameJLabel.setName("mapa");
         frame.getContentPane().add(mapGameJLabel);
         mapGameJLabel.setBounds(settingsMapGame.labelPositionX(), settingsMapGame.labelPositionY(),
                 settingsMapGame.labelWidth(), settingsMapGame.labelHeight());
     }
 
     public void clearJLabelItens() {
-        for (JLabel itens : itensJLabel)
-            frame.getContentPane().remove(itens);
-        itensJLabel.clear();
+        for(Component component : frame.getContentPane().getComponents()){
+            if(component instanceof JLabel && component.getName().equals("item")){
+                frame.getContentPane().remove(component);
+            }
+        }
     }
 
-    public void setItensJLabel(Item item, int index) {
+    public void setItensJLabel(List<Item> itens, int index) {
         SettingsItem settingsItem = new SettingsItem();
-        int ultimo = itensJLabel.size();
-
-        itensJLabel.add(
-                new JLabel(
-                        item.getImagemIcon()
-                )
-        );
-        frame.getContentPane().add(itensJLabel.get(ultimo), index);
-
-        itensJLabel.get(ultimo)
-                .setBounds(settingsItem.labelPositionX(item.getPositionItemX()),
-                        settingsItem.labelPositionY(item.getPositionItemY()),
-                        settingsItem.labelWidth(), settingsItem.labelHeight());
-
+        for (Item item : itens) {
+            JLabel label = new JLabel(item.getImagemIcon());
+            label.setName("item");
+            frame.getContentPane().add(label, index);
+            label.setBounds(settingsItem.labelPositionX(item.getPositionItemX()),
+                    settingsItem.labelPositionY(item.getPositionItemY()),
+                    settingsItem.labelWidth(), settingsItem.labelHeight());
+        }
     }
 
     public Song getSong() {

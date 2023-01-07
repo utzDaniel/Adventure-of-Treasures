@@ -14,8 +14,5 @@ public class SettingsItem {
     public int labelHeight (){
         return 100;
     }
-    public int indexFrame (){
-        return 2;
-    }
 
 }

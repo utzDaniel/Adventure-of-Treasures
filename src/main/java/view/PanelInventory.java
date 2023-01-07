@@ -22,6 +22,7 @@ public class PanelInventory {
 
     public void create(){
         panelMain.setBackground(Colors.BROWN_1);
+        panelMain.setName("painel");
         panelMain.setBorder(new EmptyBorder(8, 10, 10, 10));
         panelMain.setLayout(new BorderLayout(6, 6));
         panelMain.setBounds(50, 50, 706, 500);//816 660
