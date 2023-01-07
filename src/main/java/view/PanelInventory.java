@@ -6,14 +6,14 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class PanelIventory {
+public class PanelInventory {
 
     private final JPanel panelMain;
     private final CreateImageInventory imageInventory;
     private final JLabel labelSideEast;
     private final JButton button;
 
-    public PanelIventory(JLabel labelSideEast){
+    public PanelInventory(JLabel labelSideEast){
         this.labelSideEast = labelSideEast;
         button = new JButton("SAIR");
         panelMain = new JPanel();

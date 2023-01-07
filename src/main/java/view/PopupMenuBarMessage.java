@@ -1,17 +1,18 @@
 package view;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class PopupMenuBarMessage {
 
-    private final JFrame frame;
+    private final Container contentPane;
 
-    public PopupMenuBarMessage(JFrame frame){
-        this.frame = frame;
+    public PopupMenuBarMessage(Container contentPane) {
+        this.contentPane = contentPane;
     }
 
-    public void history(){
-        JOptionPane.showMessageDialog(frame,
+    public void history() {
+        JOptionPane.showMessageDialog(contentPane,
                 """
                         Bem-vindo ao Adventure of Treasures!
                                                 
@@ -26,8 +27,8 @@ public class PopupMenuBarMessage {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void command(){
-        JOptionPane.showMessageDialog(frame,
+    public void command() {
+        JOptionPane.showMessageDialog(contentPane,
                 """
                         ↑ - Mover para o Norte
                         ← - Mover para o Oeste
@@ -36,12 +37,12 @@ public class PopupMenuBarMessage {
                         1 - Abrir porta e Interagir com o Capitao do barco
                         2 - Pegar item
                         3 - Abrir inventario
-                        ""","Comandos",
+                        """, "Comandos",
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void help(){
-        JOptionPane.showMessageDialog(frame,
+    public void help() {
+        JOptionPane.showMessageDialog(contentPane,
                 """
                         Você está na Ilha Voraste
                         Seu objetivo é encontrar o tesouro templário,\s

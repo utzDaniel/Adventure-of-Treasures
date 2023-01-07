@@ -7,24 +7,11 @@ public class SettingsJFrame {
 
     private final String VERSION = "1.0";
     private final String TITULO = String.format("Adventure of Treasures - Version %s",VERSION);
-    private final int WIDTH = 816;
-    private final int HEIGHT = 660;
-    private int EixoX;
-    private int EixoY;
-
-    public SettingsJFrame() {
-        location();
-    }
-
-    private void location(){
-        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        int divisor = 2;
-        EixoX = (dimension.width - getWidth()) / divisor ;
-        EixoY = (dimension.height - getHeight()) / divisor;
-    }
+    private final int WIDTH = 810;
+    private final int HEIGHT = 662;
 
     public int closeOperation(){
-        return WindowConstants.EXIT_ON_CLOSE;
+        return JFrame.EXIT_ON_CLOSE;
     }
 
     public int getWidth() {
@@ -35,14 +22,6 @@ public class SettingsJFrame {
         return HEIGHT;
     }
 
-    public int getEixoX() {
-        return EixoX;
-    }
-
-    public int getEixoY() {
-        return EixoY;
-    }
-
     public boolean isVisible() {
         return true;
     }
@@ -51,11 +30,17 @@ public class SettingsJFrame {
         return null;
     }
 
+    //Deixar a tela no meio automatizamente
+    public Component getLocationRelativeTo() {
+        return null;
+    }
+
     public String getTitulo() {
         return TITULO;
     }
 
-    public String getVersion() {
-        return VERSION;
+    ////Disabilitar o maximizar e aumentar as lateral
+    public boolean getResizable() {
+        return false;
     }
 }

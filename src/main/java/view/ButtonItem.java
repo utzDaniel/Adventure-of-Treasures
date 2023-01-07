@@ -1,6 +1,8 @@
 package view;
 
 import model.Item;
+import model.ItemCombinable;
+import model.Player;
 
 import javax.swing.*;
 
@@ -9,6 +11,7 @@ public class ButtonItem {
     private int index;
     private int positionX;
     private int positionY;
+    private boolean isEnableIButtonItensNotCombinable;
     private final JButton[] buttonItens;
 
     public ButtonItem(){
@@ -18,6 +21,7 @@ public class ButtonItem {
 
     public void create(Item item){
         setButtonItens(item);
+        isEnableIButtonItensNotCombinable = false;
         update();
     }
 
@@ -65,5 +69,27 @@ public class ButtonItem {
         JButton[] buttons = new JButton[index];
         System.arraycopy(buttonItens, 0, buttons, 0, index);
         return buttons;
+    }
+
+    public void enableIButtonItensNotCombinable(Player player) {
+        if(!isEnableIButtonItensNotCombinable){
+            for (JButton jButton : getButtonItens()) {
+                Item item = player.getInventory().getItem(jButton.getName());
+                if (!(item instanceof ItemCombinable)) {
+                    jButton.setEnabled(false);
+                    jButton.setBackground(Colors.GREY);
+                }
+            }
+            isEnableIButtonItensNotCombinable = true;
+        }
+    }
+
+    public void selectButtonItem(Item item) {
+        for (JButton jButton : getButtonItens()) {
+            if (item.getName().equals(jButton.getName())) {
+                jButton.setBackground(Colors.GREEN);
+                break;
+            }
+        }
     }
 }

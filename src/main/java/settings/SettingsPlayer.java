@@ -10,7 +10,6 @@ public class SettingsPlayer {
     public int positionInitialX (){
         return 300;
     }
-
     public int positionInitialY (){
         return 470;
     }
@@ -20,7 +19,6 @@ public class SettingsPlayer {
     public int labelHeight (){
         return 47;
     }
-
     public ImageIcon ImageInitial (){ return new CreateImagePlayer().selectImage(Direction.SUL.getLabel()); }
 
 }

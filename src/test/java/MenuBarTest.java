@@ -1,14 +1,11 @@
-import exception.ButtonException;
+import exception.EventException;
 import model.*;
 import org.junit.Before;
 import org.junit.Test;
-import view.ButtonAction;
+import view.EventsMenuBar;
 import view.MenuBar;
-import view.PopupMenuBarMessage;
 
 import javax.swing.*;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -24,7 +21,7 @@ public class MenuBarTest {
 
     @Before
     public void create(){
-        menuBar = new MenuBar(frame, song, soundEffects);
+        menuBar = new MenuBar(frame.getContentPane(), song, soundEffects);
         for (String s : navigation) {
             menuBar.createNavigation(s);
         }
@@ -46,12 +43,18 @@ public class MenuBarTest {
     }
 
     @Test
-    public void validEventHistoria(){
-
-        System.out.println(((JMenuItem) menuBar.getMenubar().getSubElements()[0])
-                        .getPropertyChangeListeners("Musica").length
-        );
-//.getMouseListeners()[0]
+    public void validAllEvent(){
+        int size;
+        for (int i = 0; i < navigation.length; i++) {
+            size = ((JMenuItem) menuBar.getMenubar().getSubElements()[i])
+                    .getMouseListeners().length;
+            assertEquals(1, size);
+        }
     }
 
+    @Test (expected = EventException.class)
+    public void invalidAllEvent(){
+        EventsMenuBar eventsFrame = new EventsMenuBar(frame.getContentPane(), song, soundEffects);
+        eventsFrame.event("test");
+    }
 }

@@ -9,6 +9,7 @@ import settings.SettingsMapGame;
 import settings.SettingsPlayer;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -52,27 +53,25 @@ public class InterfaceGame {
         frame.setTitle(settingsJFrame.getTitulo());
         frame.setDefaultCloseOperation(settingsJFrame.closeOperation());
         frame.setSize(settingsJFrame.getWidth(), settingsJFrame.getHeight());
-        frame.setLocation(settingsJFrame.getEixoX(), settingsJFrame.getEixoY());
+        frame.setLocationRelativeTo(settingsJFrame.getLocationRelativeTo());
+        frame.setLayout(settingsJFrame.getLayout());
+        frame.setResizable(settingsJFrame.getResizable());
+        frame.getContentPane().setLayout(settingsJFrame.getLayout());
         createJMenuBar();
         frame.setVisible(settingsJFrame.isVisible());
-        frame.setLayout(settingsJFrame.getLayout());
     }
 
     private void createJMenuBar() {
-        MenuBar menuBar = new MenuBar(frame, song, soundEffects);
+        MenuBar menuBar = new MenuBar(frame.getContentPane(), song, soundEffects);
         frame.setJMenuBar(menuBar.getMenubar());
-        menuBar.createNavigation("Historia");
-        menuBar.createNavigation("Comandos");
-        menuBar.createNavigation("Ajuda");
-        menuBar.createNavigation("Musica");
-        menuBar.createNavigation("Efeitos");
-        menuBar.createNavigation("Sair");
+        var navigations = List.of("Historia", "Comandos", "Ajuda", "Musica", "Efeitos", "Sair");
+        navigations.forEach(menuBar::createNavigation);
     }
 
     private void createJLabelPlayer() {
         SettingsPlayer settingsPlayer = new SettingsPlayer();
         playerJLabel.setIcon(settingsPlayer.ImageInitial());
-        frame.add(playerJLabel);
+        frame.getContentPane().add(playerJLabel);
         playerJLabel.setBounds(settingsPlayer.positionInitialX(), settingsPlayer.positionInitialY(),
                 settingsPlayer.labelWidth(), settingsPlayer.labelHeight());
 
@@ -80,14 +79,15 @@ public class InterfaceGame {
 
     private void createJLabelMapGame() {
         SettingsMapGame settingsMapGame = new SettingsMapGame();
-        frame.add(mapGameJLabel);
+        mapGameJLabel.setText("mapa");
+        frame.getContentPane().add(mapGameJLabel);
         mapGameJLabel.setBounds(settingsMapGame.labelPositionX(), settingsMapGame.labelPositionY(),
                 settingsMapGame.labelWidth(), settingsMapGame.labelHeight());
     }
 
     public void clearJLabelItens() {
         for (JLabel itens : itensJLabel)
-            frame.remove(itens);
+            frame.getContentPane().remove(itens);
         itensJLabel.clear();
     }
 
@@ -100,7 +100,7 @@ public class InterfaceGame {
                         item.getImagemIcon()
                 )
         );
-        frame.add(itensJLabel.get(ultimo), index);
+        frame.getContentPane().add(itensJLabel.get(ultimo), index);
 
         itensJLabel.get(ultimo)
                 .setBounds(settingsItem.labelPositionX(item.getPositionItemX()),
@@ -117,8 +117,8 @@ public class InterfaceGame {
         return soundEffects;
     }
 
-    public void playEffects (String effect, String itemName){
-        if(Objects.isNull(itemName))
+    public void playEffects(String effect, String itemName) {
+        if (Objects.isNull(itemName))
             soundEffects.play(effect);
         else
             soundEffects.play(effect, itemName);
