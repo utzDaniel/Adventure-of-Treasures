@@ -3,6 +3,8 @@ package model;
 import model.interfaces.IUsable;
 
 import javax.swing.*;
+import java.util.Comparator;
+import java.util.List;
 
 public class ItemUsable extends Item implements IUsable {
 
@@ -23,4 +25,13 @@ public class ItemUsable extends Item implements IUsable {
         return this.localUse;
     }
 
+    @Override
+    public boolean action(Item item, Player player) {
+        return this.use(item, player);
+    }
+
+    @Override
+    public boolean action(List<Item> itens, Player player) {
+        return action(itens.get(0), player);
+    }
 }

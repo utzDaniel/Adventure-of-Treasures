@@ -37,10 +37,7 @@ public class ButtonAction {
 
     private void style(String name) {
         switch (name) {
-            case "usar" -> action();
-            case "equipar" -> action();
-            case "combinar" -> action();
-            case "remover" -> action();
+            case "usar", "equipar", "combinar", "remover" -> action();
             case "cancelar" -> actionCancel();
             case "confirmar" -> actionConfirm();
             default -> throw new ButtonException("Nome do botão não encontrado");

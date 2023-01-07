@@ -1,8 +1,10 @@
 package model;
 
+import model.interfaces.IAction;
+
 import javax.swing.*;
 
-public abstract class Item {
+public abstract class Item implements IAction {
     protected final String name;
     protected final String description;
     protected final int weight;

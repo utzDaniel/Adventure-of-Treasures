@@ -9,7 +9,6 @@ import settings.SettingsMapGame;
 import settings.SettingsPlayer;
 
 import javax.swing.*;
-import java.io.ObjectStreamException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

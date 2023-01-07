@@ -19,7 +19,7 @@ public class CombinationTest {
     private final ArrayList<Item> item = new ArrayList<>();
 
     @Before
-    public void crearCombination() {
+    public void criarCombination() {
         player = new Player();
         CreateMapGame createMapGame = new CreateMapGame();
         player.setCurrentMap(createMapGame.getInitialScenery());

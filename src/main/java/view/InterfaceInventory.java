@@ -132,23 +132,15 @@ public class InterfaceInventory {
     }
 
     private void setActionConfirm(String command) {
-        boolean success = false;
+        boolean success;
         Item item = buttonAction.getUseItem();
-        switch (command) {
-            case "remover" -> success = player.dropItem(item);
-            case "usar" -> {
-                success = ((ItemUsable) item).use(item, player);
-                updateItensMapGame();
-            }
-            case "equipar" -> {
-                if (((ItemEquipable) item).isEquipped()) {
-                    success = ((ItemEquipable) item).unequip(item, player);
-                } else {
-                    success = ((ItemEquipable) item).equip(item, player);
-                }
-            }
-            case "combinar" -> success = ((ItemCombinable) item).combination(items, player);
-        }
+        success = switch (command) {
+            case "remover" -> player.dropItem(item);
+            case "usar", "equipar" ->  item.action(item, player);
+            case "combinar" -> item.action(items, player);
+            default -> false;
+        };
+        if(command.equals("usar") && success) updateItensMapGame();
         playEffects(command, success, item.getName());
         setActionCancel();
     }

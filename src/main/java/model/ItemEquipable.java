@@ -1,10 +1,12 @@
 package model;
 
+import model.interfaces.IAction;
 import model.interfaces.IEquipable;
 import service.Equip;
 import service.Unequip;
 
 import javax.swing.*;
+import java.util.List;
 
 public class ItemEquipable extends Item implements IEquipable {
 
@@ -19,14 +21,12 @@ public class ItemEquipable extends Item implements IEquipable {
 
     @Override
     public boolean equip(Item item, Player player) {
-        if (isEquipped()) return false;
         this.equipped = new Equip(player,item).run();
-        return this.equipped ;
+        return this.equipped;
     }
 
     @Override
     public boolean unequip(Item item, Player player) {
-        if (!isEquipped()) return false;
         this.equipped = !new Unequip(player, item).run();
         return !this.equipped;
     }
@@ -34,6 +34,17 @@ public class ItemEquipable extends Item implements IEquipable {
     @Override
     public boolean isEquipped() {
         return this.equipped;
+    }
+
+    @Override
+    public boolean action(Item item, Player player) {
+        return this.isEquipped() ?
+                this.unequip(item, player) : this.equip(item, player);
+    }
+
+    @Override
+    public boolean action(List<Item> itens, Player player) {
+        return action(itens.get(0), player);
     }
 
 //    public void setRoom(Room room) {
