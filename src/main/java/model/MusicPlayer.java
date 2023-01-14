@@ -13,7 +13,7 @@ public abstract class MusicPlayer {
 
     public abstract void onPlayer();
 
-    protected String getFilename() { return this.filename; }
+    public String getFilename() { return this.filename; }
 
     protected void setFilename(String filename) {
         this.filename = filename;

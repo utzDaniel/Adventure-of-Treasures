@@ -17,7 +17,7 @@ public class SoundEffects extends MusicPlayer {
     public void play(String command, String nameItem) {
         if(SettingsSoundEffects.isOnPlayer()) {
             ListSoundEffects filename = new ListSoundEffects();
-            setFilename(filename.listSoundEffects(command, nameItem));
+            setFilename(filename.itensSoundEffects(command, nameItem));
             startPlay();
         }
     }
