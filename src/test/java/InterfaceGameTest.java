@@ -13,7 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class InterfaceGameTest {
 
@@ -104,6 +104,31 @@ public class InterfaceGameTest {
         interfaceGame.setItensJLabel(itens, 2);
         interfaceGame.clearJLabelItens();
         assertEquals(size, container.getComponentCount());
+    }
+
+    @Test
+    public void validSong() {
+        assertNotNull(interfaceGame.getSong());
+    }
+
+    @Test
+    public void validSoundEffects() {
+        assertNotNull(interfaceGame.getSoundEffects());
+    }
+
+    @Test
+    public void validSoundEffectsPlayCommand() {
+        String command = "pegar";
+        interfaceGame.playEffects(command, null);
+        assertTrue(interfaceGame.getSoundEffects().getFilename().contains(command));
+    }
+
+    @Test
+    public void validSoundEffectsPlayItem() {
+        String command = "usar";
+        String item = "chave";
+        interfaceGame.playEffects(command, item);
+        assertTrue(interfaceGame.getSoundEffects().getFilename().contains(item));
     }
 
 }

@@ -33,7 +33,7 @@ public class AddItemMapGame {
             this.coordinate.setAxisY(this.player.getPositionPlayerY() + (move.getToMoveY() * this.multiply));
             if(checkCoordinateDropItem()) return true;
         }
-        return false;//TODO criar uma exception
+        return false;//TODO criar uma exception, pode ficar em loop, criar um algoritmo melhor de dropar item
     }
 
     private boolean checkCoordinateDropItem(){

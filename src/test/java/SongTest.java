@@ -22,8 +22,9 @@ public class SongTest {
 
     @Test
     public void invalidFilename(){
-        song.play("filename");
-        assertNull(song.getFilename());
+        String filename = "filename";
+        song.play(filename);
+        assertFalse(song.getFilename().contains(filename));
     }
 
 

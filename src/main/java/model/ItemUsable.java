@@ -3,7 +3,6 @@ package model;
 import model.interfaces.IUsable;
 
 import javax.swing.*;
-import java.util.Comparator;
 import java.util.List;
 
 public class ItemUsable extends Item implements IUsable {
