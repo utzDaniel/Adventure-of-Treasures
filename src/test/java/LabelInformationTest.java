@@ -21,7 +21,7 @@ public class LabelInformationTest {
         for (String s : label) {
             labelInformation.create(s);
         }
-        item = new ItemUsable("pa", "ferramenta usada para cavar", 3, "praia", 200, 280, null);
+        item = new ItemUsable("pa", "ferramenta usada para cavar", 0, "praia", 200, 280, null);
     }
 
     @Test

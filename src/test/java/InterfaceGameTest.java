@@ -20,7 +20,7 @@ public class InterfaceGameTest {
     private InterfaceGame interfaceGame;
     private JFrame frame;
     private Container container;
-    Player player = new Player();
+    Player player = Player.getInstance();
 
     @Before
     public void create() {
@@ -29,7 +29,7 @@ public class InterfaceGameTest {
         for (Item item : createMapGame.getItemInvisiblePlayer()) {
             player.getInventory().setItemInvisible(item);
         }
-        interfaceGame = new InterfaceGame(player);
+        interfaceGame = new InterfaceGame();
         frame = interfaceGame.getFrame();
         container = frame.getContentPane();
     }
@@ -62,27 +62,27 @@ public class InterfaceGameTest {
     public void validIconJLabelPlayer() {
         SettingsPlayer settingsPlayer = new SettingsPlayer();
         var icon = ((JLabel) container.getComponent(0)).getIcon();
-        assertEquals(settingsPlayer.ImageInitial().toString(), icon.toString());
+        assertEquals(settingsPlayer.getIcon().toString(), icon.toString());
     }
 
     @Test
     public void validIconJLabelMapGame() {
         var icon = ((JLabel) container.getComponent(1)).getIcon();
-        assertEquals(player.getCurrentMap().getImagemIcon(), icon);
+        assertEquals(player.getCurrentMap().getImagemIcon().toString(), icon.toString());
     }
 
     @Test
     public void validWidthJLabelMapGame() {
         SettingsMapGame settingsMapGame = new SettingsMapGame();
         var width = container.getComponent(1).getWidth();
-        assertEquals(settingsMapGame.labelWidth(), width);
+        assertEquals(settingsMapGame.getRectangle().width, width);
     }
 
     @Test
     public void validHeightJLabelMapGame() {
         SettingsMapGame settingsMapGame = new SettingsMapGame();
         var height = container.getComponent(1).getHeight();
-        assertEquals(settingsMapGame.labelHeight(), height);
+        assertEquals(settingsMapGame.getRectangle().height, height);
     }
 
     @Test

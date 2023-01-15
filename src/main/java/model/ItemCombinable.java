@@ -21,12 +21,12 @@ public class ItemCombinable extends Item implements ICombinable {
     }
 
     @Override
-    public boolean action(Item item, Player player) {
+    public boolean action(Item item) {
         return false;
     }
 
     @Override
-    public boolean action(List<Item> itens, Player player) {
-        return this.combination(itens, player);
+    public boolean action(List<Item> itens) {
+        return this.combination(itens);
     }
 }

@@ -11,9 +11,9 @@ public final class Walk {
     private final Player player;
     private MovePlayer move;
 
-    public Walk(String direction, Player player) {
+    public Walk(String direction) {
         this.direction = direction;
-        this.player = player;
+        this.player = Player.getInstance();
     }
 
     public boolean run (){

@@ -19,14 +19,14 @@ public class ItemEquipable extends Item implements IEquipable {
     }
 
     @Override
-    public boolean equip(Item item, Player player) {
-        this.equipped = new Equip(player,item).run();
+    public boolean equip(Item item) {
+        this.equipped = new Equip(item).run();
         return this.equipped;
     }
 
     @Override
-    public boolean unequip(Item item, Player player) {
-        this.equipped = !new Unequip(player, item).run();
+    public boolean unequip(Item item) {
+        this.equipped = !new Unequip(item).run();
         return !this.equipped;
     }
 
@@ -36,14 +36,14 @@ public class ItemEquipable extends Item implements IEquipable {
     }
 
     @Override
-    public boolean action(Item item, Player player) {
+    public boolean action(Item item) {
         return this.isEquipped() ?
-                this.unequip(item, player) : this.equip(item, player);
+                this.unequip(item) : this.equip(item);
     }
 
     @Override
-    public boolean action(List<Item> itens, Player player) {
-        return action(itens.get(0), player);
+    public boolean action(List<Item> itens) {
+        return action(itens.get(0));
     }
 
 //    public void setRoom(Room room) {

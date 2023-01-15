@@ -10,8 +10,8 @@ public class NextScenery {
     private final Player player;
     private final InterfaceGame interfaceGame;
 
-    public NextScenery(Player player, InterfaceGame interfaceGame) {
-        this.player = player;
+    public NextScenery(InterfaceGame interfaceGame) {
+        this.player = Player.getInstance();
         this.interfaceGame = interfaceGame;
     }
 

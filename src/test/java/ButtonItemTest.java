@@ -83,13 +83,13 @@ public class ButtonItemTest {
 
     @Test
     public void validEnableIButtonItens() {
-        Player player = new Player();
+        Player player = Player.getInstance();
         var enableIButton = new ArrayList<Boolean>();
         itens.forEach(item -> {
             enableIButton.add(item instanceof ItemCombinable);
             player.getInventory().addItem(item);
         });
-        buttonItem.enableIButtonItensNotCombinable(player);
+        buttonItem.enableIButtonItensNotCombinable();
         for (int i = 0; i < itens.size(); i++) {
             assertEquals(enableIButton.get(i),
                     buttonItem.getButtonItens()[i].isEnabled());

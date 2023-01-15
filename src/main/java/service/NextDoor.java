@@ -9,8 +9,8 @@ public class NextDoor {
     private final Player player;
     private final InterfaceGame interfaceGame;
 
-    public NextDoor(Player player, InterfaceGame interfaceGame) {
-        this.player = player;
+    public NextDoor(InterfaceGame interfaceGame) {
+        this.player = Player.getInstance();
         this.interfaceGame = interfaceGame;
     }
 

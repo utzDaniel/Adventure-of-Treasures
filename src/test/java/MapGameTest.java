@@ -14,16 +14,14 @@ import static org.junit.Assert.*;
 public class MapGameTest {
 
     private Player player;
-    private JLabel jLabel = new JLabel();
-    private final ArrayList<Item> item = new ArrayList<>();
 
     @Before
     public void crearCombination() {
-        player = new Player();
+        player = Player.getInstance();
         CreateMapGame createMapGame = new CreateMapGame();
         player.setCurrentMap(createMapGame.getInitialScenery());
         for (Item item : createMapGame.getItemInvisiblePlayer()) {
-            player.getInventory().addItem(item);
+            player.getInventory().setItemInvisible(item);
         }
     }
 

@@ -25,12 +25,12 @@ public class ItemUsable extends Item implements IUsable {
     }
 
     @Override
-    public boolean action(Item item, Player player) {
-        return this.use(item, player);
+    public boolean action(Item item) {
+        return this.use(item);
     }
 
     @Override
-    public boolean action(List<Item> itens, Player player) {
-        return action(itens.get(0), player);
+    public boolean action(List<Item> itens) {
+        return action(itens.get(0));
     }
 }

@@ -71,10 +71,10 @@ public class ButtonItem {
         return buttons;
     }
 
-    public void enableIButtonItensNotCombinable(Player player) {
+    public void enableIButtonItensNotCombinable() {
         if(!isEnableIButtonItensNotCombinable){
             for (JButton jButton : getButtonItens()) {
-                Item item = player.getInventory().getItem(jButton.getName());
+                Item item = Player.getInstance().getInventory().getItem(jButton.getName());
                 if (!(item instanceof ItemCombinable)) {
                     jButton.setEnabled(false);
                     jButton.setBackground(Colors.GREY);

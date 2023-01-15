@@ -7,31 +7,37 @@ import service.Walk;
 import settings.SettingsPlayer;
 
 import javax.swing.*;
+import java.util.Objects;
 
 public final class Player {
+
+    private static Player player;
     private int positionPlayerX;
     private int positionPlayerY;
     private String direction;
     private MapGame currentMapGame;
     private final Inventory inventory;
-
     private final JLabel jLabel;
 
-    public Player() {
+    private Player() {
         SettingsPlayer settingsPlayer = new SettingsPlayer();
-        this.positionPlayerX = settingsPlayer.positionInitialX();
-        this.positionPlayerY = settingsPlayer.positionInitialY();
+        this.positionPlayerX = settingsPlayer.getRectangle().x;
+        this.positionPlayerY = settingsPlayer.getRectangle().y;
         this.currentMapGame = null;
         this.inventory = new Inventory();
         this.jLabel = new JLabel();
     }
 
-    public Inventory getInventory() {
-        return this.inventory;
-    }
-
     public JLabel getJLabel() {
         return this.jLabel;
+    }
+
+    public void setLocation() {
+        this.jLabel.setLocation(this.positionPlayerX, this.positionPlayerY);
+    }
+
+    public void setIcon(ImageIcon imageIcon) {
+        this.jLabel.setIcon(imageIcon);
     }
 
     public int getPositionPlayerX() {
@@ -52,6 +58,13 @@ public final class Player {
         setLocation();
     }
 
+    public static Player getInstance() {
+        if (Objects.isNull(player)) {
+            player = new Player();
+        }
+        return player;
+    }
+
     public String getDirection() {
         return this.direction;
     }
@@ -60,35 +73,31 @@ public final class Player {
         this.direction = direction;
     }
 
-    public void setIcon(ImageIcon imageIcon) {
-        this.jLabel.setIcon(imageIcon);
-    }
-
-    public void setLocation() {
-        this.jLabel.setLocation(this.positionPlayerX, this.positionPlayerY);
+    public MapGame getCurrentMap() {
+        return this.currentMapGame;
     }
 
     public void setCurrentMap(MapGame currentScenery) {
         this.currentMapGame = currentScenery;
     }
 
-    public MapGame getCurrentMap() {
-        return this.currentMapGame;
+    public Inventory getInventory() {
+        return this.inventory;
     }
 
     public void walk(String direction) {
-        new Walk(direction, this).run();
+        new Walk(direction).run();
     }
 
     public Item lookItem() {
-        return new LookItem(this).run();
+        return new LookItem().run();
     }
 
     public boolean takeItem(Item item) {
-        return new TakeItem(this, item).run();
+        return new TakeItem(item).run();
     }
 
     public boolean dropItem(Item item) {
-        return new DropItem(this, item).run();
+        return new DropItem(item).run();
     }
 }

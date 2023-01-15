@@ -12,12 +12,11 @@ import static org.junit.Assert.*;
 public class LookItemTest {
 
     private Player player;
-    private JLabel jLabel = new JLabel();
 
     @Before
     public void iniciacaoDoPlayerParaTeste() {
         CreateMapGame createMapGame = new CreateMapGame();
-        player = new Player();
+        player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
         player.setCurrentMap(createMapGame.getInitialScenery());
     }

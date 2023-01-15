@@ -11,9 +11,9 @@ public class AddItemMapGame {
     private int multiply;
     private final MapGame mapGame;
 
-    public AddItemMapGame(Item item, Player player) {
+    public AddItemMapGame(Item item) {
         this.item = item;
-        this.player = player;
+        this.player = Player.getInstance();
         this.coordinate = new Coordinate(0,0);
         this.multiply = 0;
         this.mapGame = player.getCurrentMap();

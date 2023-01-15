@@ -20,27 +20,32 @@ public class TakeTest {
     @Before
     public void inicialize() {
         CreateMapGame createMapGame = new CreateMapGame();
-        player = new Player();
+        player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
         player.setCurrentMap(createMapGame.getInitialScenery());
         for (Item item : createMapGame.getItemInvisiblePlayer()) {
             player.getInventory().setItemInvisible(item);
         }
-        item = new ItemUsable("pa", "ferramenta usada para cavar", 10, "praia",
+        item = new ItemUsable("pa", "ferramenta usada para cavar", 0, "praia",
                 300, 480, null);
         player.getCurrentMap().setItem(item);
-        take = new Take(player);
+        take = new Take();
     }
 
     @Test
     public void testarItemValidoAFrente() {
+        player.setPositionPlayerX(item.getPositionItemX());
+        player.setPositionPlayerY(item.getPositionItemY()-10);
         assertTrue(take.run());
     }
 
     @Test (expected = InventoryException.class)
     public void testarItemValidoAFrenteSemCapacitadadeNoInventario() {
-        player.takeItem(new ItemUsable("tata", "ferramenta usada para cavar", 10, "praia",
-                290, 470, null));
+        Item item = new ItemUsable("tata", "ferramenta usada para cavar", 30, "praia",
+                290, 470, null);
+        player.setPositionPlayerX(item.getPositionItemX());
+        player.setPositionPlayerY(item.getPositionItemY()-10);
+        player.getCurrentMap().setItem(item);
         take.run();
     }
 

@@ -45,8 +45,6 @@ public abstract class Item implements IAction {
         return imagemIcon;
     }
 
-
-
     public String getName() {
         return this.name;
     }

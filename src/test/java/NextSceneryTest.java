@@ -18,10 +18,10 @@ public class NextSceneryTest {
     @Before
     public void inicialize() {
         CreateMapGame createMapGame = new CreateMapGame();
-        player = new Player();
+        player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
         player.setCurrentMap(createMapGame.getInitialScenery());
-        nextScenery = new NextScenery(player, new InterfaceGame(player));
+        nextScenery = new NextScenery(new InterfaceGame());
     }
 
     @Test

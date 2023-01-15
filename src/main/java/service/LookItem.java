@@ -13,8 +13,8 @@ public final class LookItem {
     private Coordinate coordinate;
 
 
-    public LookItem(Player player) {
-        this.player = player;
+    public LookItem() {
+        this.player = Player.getInstance();
         this.coordinate = new Coordinate(0,0);
     }
 

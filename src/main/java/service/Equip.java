@@ -11,8 +11,8 @@ public final class Equip <T extends Item> {
     private final Player player;
     private final T item;
 
-    public Equip(Player player, T item) {
-        this.player = player;
+    public Equip(T item) {
+        this.player = Player.getInstance();
         this.item = item;
     }
     public boolean run() {
@@ -30,7 +30,7 @@ public final class Equip <T extends Item> {
     private void equipItem() {
         for (ItemsEquipable equipable : ItemsEquipable.values()) {
             if (equipable.getLabel().equals(this.item.getName())) {
-                equipable.equip(this.player);
+                equipable.equip();
                 return;
             }
         }

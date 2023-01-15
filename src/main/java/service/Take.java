@@ -9,8 +9,8 @@ public class Take {
 
     private final Player player;
 
-    public Take(Player player) {
-        this.player = player;
+    public Take() {
+        this.player = Player.getInstance();
     }
 
     public boolean run() {

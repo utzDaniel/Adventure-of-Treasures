@@ -11,13 +11,13 @@ public class Game {
     private final SoundEffects soundEffects;
 
     public Game() {
-        player = new Player();
+        player = Player.getInstance();
         initialPlayer();
-        interfaceGame = new InterfaceGame(player);
+        interfaceGame = new InterfaceGame();
         song = interfaceGame.getSong();
         soundEffects = interfaceGame.getSoundEffects();
         song.play(player.getCurrentMap().getName());
-        new Keyboard(interfaceGame, player, song, soundEffects).run();
+        new Keyboard(interfaceGame, song, soundEffects).run();
     }
 
     private void initialPlayer() {

@@ -4,21 +4,32 @@ import model.enums.Direction;
 import repository.CreateImagePlayer;
 
 import javax.swing.*;
+import java.awt.*;
 
-public class SettingsPlayer {
+public class SettingsPlayer implements ISettingsJLabel {
 
-    public int positionInitialX (){
-        return 300;
-    }
-    public int positionInitialY (){
-        return 470;
-    }
-    public int labelWidth (){
-        return 32;
-    }
-    public int labelHeight (){
-        return 47;
-    }
-    public ImageIcon ImageInitial (){ return new CreateImagePlayer().selectImage(Direction.SUL.getLabel()); }
+    private final Rectangle rectangle;
 
+    public SettingsPlayer(){
+        int x = 300;
+        int y = 470;
+        int WIDTH = 32;
+        int HEIGHT = 47;
+        rectangle = new Rectangle(x, y, WIDTH, HEIGHT);
+    }
+
+    @Override
+    public ImageIcon getIcon() {
+        return new CreateImagePlayer().selectImage(Direction.SUL.getLabel());
+    }
+
+    @Override
+    public String getName() {
+        return "player";
+    }
+
+    @Override
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
 }

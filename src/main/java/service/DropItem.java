@@ -8,8 +8,8 @@ public final class DropItem {
     private final Player player;
     private final Item item;
 
-    public DropItem(Player player, Item item) {
-        this.player = player;
+    public DropItem(Item item) {
+        this.player = Player.getInstance();
         this.item = item;
     }
     public boolean run() {
@@ -24,7 +24,7 @@ public final class DropItem {
 
     private void addItemCurrentMap() {
         this.player.getCurrentMap().
-                addItem(this.item, this.player);
+                addItem(this.item);
     }
 
 }

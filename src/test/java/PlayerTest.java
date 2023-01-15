@@ -11,39 +11,40 @@ import static org.junit.Assert.*;
 public class PlayerTest {
 
     private Player player;
-    private JLabel jLabel = new JLabel();
 
     @Before
     public void iniciacaoDoPlayerParaTeste() {
         CreateMapGame createMapGame = new CreateMapGame();
-        player = new Player();
+        player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
         player.setCurrentMap(createMapGame.getInitialScenery());
         for (Item item : createMapGame.getItemInvisiblePlayer()) {
             player.getInventory().setItemInvisible(item);
         }
-        player.getInventory().addItem(new ItemEquipable("mochila", "utilizada para carregar mais coisas", 0,
-                650, 220, null));
-
     }
 
     @Test
     public void testarPegarItem() {
-        player.takeItem(new ItemUsable("pa", "ferramenta usada para cavar", 3, "praia",
+        int size = player.getInventory().getItemVisible().size();
+        player.getInventory().addItem(new ItemEquipable("asqe", "utilizada para carregar mais coisas", 0,
+                650, 220, null));
+        player.takeItem(new ItemUsable("aq1a4e", "ferramenta usada para cavar", 0, "praia",
                 200, 280, null));
-        assertEquals(player.getInventory().getItemVisible().size(), 2);
+        assertEquals(player.getInventory().getItemVisible().size(), size+2);
     }
 
     @Test
     public void validarCapacidadeMaximaDoInventory() {
-        assertTrue(player.takeItem(new ItemUsable("pa", "ferramenta usada para cavar", 3,
+        assertTrue(player.takeItem(new ItemUsable("pa", "ferramenta usada para cavar", 0,
                 "praia", 200, 280, null)));
     }
 
 
     @Test
     public void buscarPeloNomeDoItem() {
-        assertNotNull(player.getInventory().getItem("mochila"));
+        player.getInventory().addItem(new ItemEquipable("mochila22", "utilizada para carregar mais coisas", 0,
+                650, 220, null));
+        assertNotNull(player.getInventory().getItem("mochila22"));
     }
 
     @Test
@@ -53,7 +54,10 @@ public class PlayerTest {
 
     @Test
     public void buscarListaDeItensVisivelNoInventario() {
-        assertEquals(player.getInventory().getItemVisible().size(), 1);
+        int size = player.getInventory().getItemVisible().size();
+        player.getInventory().addItem(new ItemEquipable("m1154h", "utilizada para carregar mais coisas", 0,
+                650, 220, null));
+        assertEquals(player.getInventory().getItemVisible().size(), size+1);
     }
 
     @Test
@@ -63,10 +67,10 @@ public class PlayerTest {
 
     @Test
     public void atualizarOTamanhoDoInventarioAoAdicionarItemNovo() {
-        Item item = new ItemCombinable("faca", "serve para cortar algo", 3, 3, 420, 130, null);
-        int tamanhoAnterio = player.getInventory().getCapacity();
+        Item item = new ItemCombinable("faca", "serve para cortar algo", 1, 3, 420, 130, null);
+        int tamanhoAnterior = player.getInventory().getCapacity();
         player.getInventory().updadeCapacity(item.getWeight());
-        assertNotEquals(tamanhoAnterio, player.getInventory().getCapacity());
+        assertNotEquals(tamanhoAnterior, player.getInventory().getCapacity());
     }
 
 }

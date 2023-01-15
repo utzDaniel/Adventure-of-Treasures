@@ -11,8 +11,8 @@ public final class Use<T extends IUsable> {
     private final Player player;
     private final Item item;
 
-    public Use(Player player, Item item) {
-        this.player = player;
+    public Use(Item item) {
+        this.player = Player.getInstance();
         this.item = item;
     }
 
@@ -37,7 +37,7 @@ public final class Use<T extends IUsable> {
     private void useItem() {
         for (ItemsUsable value : ItemsUsable.values()) {
             if (this.item.getName().equals(value.getLabel())) {
-                value.use(this.player);
+                value.use();
                 return;
             }
         }

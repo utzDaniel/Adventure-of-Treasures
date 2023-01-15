@@ -18,14 +18,14 @@ public class InterfaceInventoryTest {
 
     @Before
     public void create() {
-        player = new Player();
+        player = Player.getInstance();
         CreateMapGame createMapGame = new CreateMapGame();
         player.setCurrentMap(createMapGame.getInitialScenery());
         for (Item item : createMapGame.getItemInvisiblePlayer()) {
-            player.getInventory().addItem(item);
+            player.getInventory().setItemInvisible(item);
         }
-        interfaceGame = new InterfaceGame(player);
-        interfaceInventory = new InterfaceInventory(interfaceGame, player);
+        interfaceGame = new InterfaceGame();
+        interfaceInventory = new InterfaceInventory(interfaceGame);
     }
 
     @Test

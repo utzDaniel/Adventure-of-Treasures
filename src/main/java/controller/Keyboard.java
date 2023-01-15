@@ -22,12 +22,12 @@ public class Keyboard {
     private final InterfaceInventory inventory;
 
 
-    public Keyboard(InterfaceGame interfaceGame, Player player, Song song, SoundEffects soundEffects) {
+    public Keyboard(InterfaceGame interfaceGame, Song song, SoundEffects soundEffects) {
         this.song = song;
         this.interfaceGame = interfaceGame;
-        this.player = player;
+        this.player = Player.getInstance();
         this.soundEffects = soundEffects;
-        inventory = new InterfaceInventory(interfaceGame, player);
+        inventory = new InterfaceInventory(interfaceGame);
     }
 
     public void run() {
@@ -49,7 +49,7 @@ public class Keyboard {
                         finish();
                     try {
                         MapGame atual = player.getCurrentMap();
-                        new NextDoor(player, interfaceGame).run();
+                        new NextDoor(interfaceGame).run();
                         if (atual != player.getCurrentMap())
                             updateItensMapGame();
                     } catch (MapGameException ex) {
@@ -61,7 +61,7 @@ public class Keyboard {
                 } else if (keyCode == 98) {
 
                     try {
-                        if (new Take(player).run()) {
+                        if (new Take().run()) {
                             soundEffects.play("pegar");
                             updateItensMapGame();
                         }
@@ -95,25 +95,25 @@ public class Keyboard {
             if (player.getPositionPlayerY() > 0) {
                 player.walk("norte");
             } else {
-                sucess = new NextScenery(player, interfaceGame).run("norte");
+                sucess = new NextScenery(interfaceGame).run("norte");
             }
         } else if (keyCode == 40) {
             if (player.getPositionPlayerY() < interfaceGame.getMapGameJLabel().getHeight() - 50) {
                 player.walk("sul");
             } else {
-                sucess = new NextScenery(player, interfaceGame).run("sul");
+                sucess = new NextScenery(interfaceGame).run("sul");
             }
         } else if (keyCode == 37) {
             if (player.getPositionPlayerX() > 0) {
                 player.walk("oeste");
             } else {
-                sucess = new NextScenery(player, interfaceGame).run("oeste");
+                sucess = new NextScenery(interfaceGame).run("oeste");
             }
         } else if (keyCode == 39) {
             if (player.getPositionPlayerX() < interfaceGame.getMapGameJLabel().getWidth() - 30) {
                 player.walk("leste");
             } else {
-                sucess = new NextScenery(player, interfaceGame).run("leste");
+                sucess = new NextScenery(interfaceGame).run("leste");
             }
         }
         if (sucess) {

@@ -26,12 +26,12 @@ public final class ItemNotRemove extends Item {
     }
 
     @Override
-    public boolean action(Item item, Player player) {
+    public boolean action(Item item) {
         return false;
     }
 
     @Override
-    public boolean action(List<Item> itens, Player player) {
-        return action(itens.get(0), player);
+    public boolean action(List<Item> itens) {
+        return action(itens.get(0));
     }
 }

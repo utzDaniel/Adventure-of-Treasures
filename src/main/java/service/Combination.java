@@ -17,8 +17,8 @@ public final class Combination<T extends ICombinable> {
     private final List<Item> itens;
     private Item newItem;
 
-    public Combination(Player player, List<Item> itens) {
-        this.player = player;
+    public Combination(List<Item> itens) {
+        this.player = Player.getInstance();
         this.itensCombinable = new ArrayList<>();
         this.itens = itens;
         newItem = null;

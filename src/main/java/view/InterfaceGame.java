@@ -22,10 +22,10 @@ public class InterfaceGame {
     private final Song song;
     private final SoundEffects soundEffects;
 
-    public InterfaceGame(Player player) {
+    public InterfaceGame() {
         frame = new JFrame();
-        this.playerJLabel = player.getJLabel();
-        mapGameJLabel = new JLabel(player.getCurrentMap().getImagemIcon());
+        this.playerJLabel =  Player.getInstance().getJLabel();
+        mapGameJLabel = new JLabel();
         song = new Song();
         soundEffects = new SoundEffects();
         settingsFrame();
@@ -64,20 +64,19 @@ public class InterfaceGame {
 
     private void createJLabelPlayer() {
         SettingsPlayer settingsPlayer = new SettingsPlayer();
-        playerJLabel.setIcon(settingsPlayer.ImageInitial());
-        playerJLabel.setName("player");
+        playerJLabel.setIcon(settingsPlayer.getIcon());
+        playerJLabel.setName(settingsPlayer.getName());
         frame.getContentPane().add(playerJLabel);
-        playerJLabel.setBounds(settingsPlayer.positionInitialX(), settingsPlayer.positionInitialY(),
-                settingsPlayer.labelWidth(), settingsPlayer.labelHeight());
+        playerJLabel.setBounds(settingsPlayer.getRectangle());
 
     }
 
     private void createJLabelMapGame() {
         SettingsMapGame settingsMapGame = new SettingsMapGame();
-        mapGameJLabel.setName("mapa");
+        mapGameJLabel.setIcon(settingsMapGame.getIcon());
+        mapGameJLabel.setName(settingsMapGame.getName());
         frame.getContentPane().add(mapGameJLabel);
-        mapGameJLabel.setBounds(settingsMapGame.labelPositionX(), settingsMapGame.labelPositionY(),
-                settingsMapGame.labelWidth(), settingsMapGame.labelHeight());
+        mapGameJLabel.setBounds(settingsMapGame.getRectangle());
     }
 
     public void clearJLabelItens() {

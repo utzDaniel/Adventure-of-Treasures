@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 public abstract class MapGame {
 
     protected static Scenery mapInicial;
-
     protected final String name;
     protected ImageIcon imagemIcon;
     protected int[][] limits;
@@ -93,8 +92,8 @@ public abstract class MapGame {
         this.limits[coordinate.getAxisY()][coordinate.getAxisX()] = 1;
     }
 
-    public void addItem(Item item, Player player) {
-        new AddItemMapGame(item, player).run();
+    public void addItem(Item item) {
+        new AddItemMapGame(item).run();
     }
 
     public void setItem(Item item) {

@@ -18,9 +18,9 @@ public class InterfaceInventory {
     private LabelInformation labelInformation;
     private ButtonAction buttonAction;
 
-    public InterfaceInventory(InterfaceGame interfaceGame, Player player) {
+    public InterfaceInventory(InterfaceGame interfaceGame) {
         this.interfaceGame = interfaceGame;
-        this.player = player;
+        this.player = Player.getInstance();
     }
 
     public void open() {
@@ -91,7 +91,7 @@ public class InterfaceInventory {
         if (command.equals("combinar")) {
             Item item = buttonAction.getUseItem();
             addListItem(item);
-            buttonItem.enableIButtonItensNotCombinable(player);
+            buttonItem.enableIButtonItensNotCombinable();
             buttonItem.selectButtonItem(item);
             if (items.size() > 1) {
                 buttonAction.visibleConfirmCombine(command);
@@ -117,8 +117,8 @@ public class InterfaceInventory {
         Item item = buttonAction.getUseItem();
         success = switch (command) {
             case "remover" -> player.dropItem(item);
-            case "usar", "equipar" ->  item.action(item, player);
-            case "combinar" -> item.action(items, player);
+            case "usar", "equipar" ->  item.action(item);
+            case "combinar" -> item.action(items);
             default -> false;
         };
         if(command.equals("usar") && success) updateItensMapGame();

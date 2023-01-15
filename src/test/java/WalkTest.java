@@ -16,7 +16,7 @@ public class WalkTest {
     @Before
     public void iniciacaoDoPlayerParaTeste() {
         CreateMapGame createMapGame = new CreateMapGame();
-        player = new Player();
+        player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
         player.setCurrentMap(createMapGame.getInitialScenery());
     }

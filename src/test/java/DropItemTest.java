@@ -14,7 +14,7 @@ public class DropItemTest {
     @Before
     public void iniciacaoDoPlayerParaTeste() {
         CreateMapGame createMapGame = new CreateMapGame();
-        player = new Player();
+        player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
         player.setCurrentMap(createMapGame.getInitialScenery());
         for (Item item : createMapGame.getItemInvisiblePlayer()) {
@@ -22,12 +22,11 @@ public class DropItemTest {
         }
         player.getInventory().addItem(new ItemEquipable("mochila", "utilizada para carregar mais coisas", 0,
                 650, 220, null));
-
     }
 
     @Test
     public void removerItemPorItemDentroDoInventario() {
-        Item item = new ItemUsable("pa", "ferramenta usada para cavar", 3, "praia",
+        Item item = new ItemUsable("pa", "ferramenta usada para cavar", 0, "praia",
                 200, 280, null);
         player.takeItem(item);
         assertTrue(player.dropItem(item));
@@ -35,7 +34,7 @@ public class DropItemTest {
 
     @Test (expected = InventoryException.class)
     public void naoRemoverItemNotRemovePorItemDentroDoInventario() {
-        Item item = new ItemNotRemove("tesouro", "tesouro lendário dos templários", null, 3, 620, 240, null);
+        Item item = new ItemNotRemove("tesouro", "tesouro lendário dos templários", null, 0, 620, 240, null);
         player.takeItem(item);
         player.dropItem(item);
     }

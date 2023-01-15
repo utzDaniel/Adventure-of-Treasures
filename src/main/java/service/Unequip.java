@@ -8,11 +8,9 @@ import model.Player;
 
 public final class Unequip<T extends Item> {
 
-    private final Player player;
     private final T item;
 
-    public Unequip(Player player, T item) {
-        this.player = player;
+    public Unequip(T item) {
         this.item = item;
     }
 
@@ -31,7 +29,7 @@ public final class Unequip<T extends Item> {
     private void unequipItem() {
         for (ItemsEquipable equipable : ItemsEquipable.values()) {
             if (equipable.getLabel().equals(this.item.getName())) {
-                equipable.unequip(this.player);
+                equipable.unequip();
                 return;
             }
         }

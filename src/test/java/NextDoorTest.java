@@ -17,7 +17,7 @@ public class NextDoorTest {
 
     @Before
     public void inicialize() {
-        player = new Player();
+        player = Player.getInstance();
         Scenery village = new Scenery("vila", null);
         templeDoor = new Door(380, 530, 370, 150, false);
         Room temple = new Room("templo", null);
@@ -26,7 +26,7 @@ public class NextDoorTest {
         player.setCurrentMap(village);
         player.setPositionPlayerX(370);
         player.setPositionPlayerY(150);
-        nextDoor = new NextDoor(player, new InterfaceGame(player));
+        nextDoor = new NextDoor(new InterfaceGame());
     }
 
     @Test
