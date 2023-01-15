@@ -15,34 +15,41 @@ public final class Player {
     private MapGame currentMapGame;
     private final Inventory inventory;
 
+    private final JLabel jLabel;
+
     public Player() {
         SettingsPlayer settingsPlayer = new SettingsPlayer();
         this.positionPlayerX = settingsPlayer.positionInitialX();
         this.positionPlayerY = settingsPlayer.positionInitialY();
         this.currentMapGame = null;
         this.inventory = new Inventory();
+        this.jLabel = new JLabel();
     }
 
     public Inventory getInventory() {
         return this.inventory;
     }
 
-    public int getPositionPlayerX() {
-        return this.positionPlayerX;
+    public JLabel getJLabel() {
+        return this.jLabel;
     }
 
-    public void setPositionPlayerX(int positionPlayerX, JLabel playerJLabel) {
-        this.positionPlayerX = positionPlayerX;
-        setLocation(playerJLabel);
+    public int getPositionPlayerX() {
+        return this.positionPlayerX;
     }
 
     public int getPositionPlayerY() {
         return this.positionPlayerY;
     }
 
-    public void setPositionPlayerY(int positionPlayerY, JLabel playerJLabel) {
+    public void setPositionPlayerX(int positionPlayerX) {
+        this.positionPlayerX = positionPlayerX;
+        setLocation();
+    }
+
+    public void setPositionPlayerY(int positionPlayerY) {
         this.positionPlayerY = positionPlayerY;
-        setLocation(playerJLabel);
+        setLocation();
     }
 
     public String getDirection() {
@@ -53,12 +60,12 @@ public final class Player {
         this.direction = direction;
     }
 
-    public void setIcon(ImageIcon imageIcon, JLabel playerJLabel) {
-        playerJLabel.setIcon(imageIcon);
+    public void setIcon(ImageIcon imageIcon) {
+        this.jLabel.setIcon(imageIcon);
     }
 
-    public void setLocation(JLabel playerJLabel) {
-        playerJLabel.setLocation(this.positionPlayerX, this.positionPlayerY);
+    public void setLocation() {
+        this.jLabel.setLocation(this.positionPlayerX, this.positionPlayerY);
     }
 
     public void setCurrentMap(MapGame currentScenery) {
@@ -69,8 +76,8 @@ public final class Player {
         return this.currentMapGame;
     }
 
-    public void walk(String direction, JLabel playerJLabel) {
-        new Walk(direction, playerJLabel, this).run();
+    public void walk(String direction) {
+        new Walk(direction, this).run();
     }
 
     public Item lookItem() {

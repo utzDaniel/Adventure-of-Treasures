@@ -1,6 +1,7 @@
 package view;
 
 import model.Item;
+import model.Player;
 import model.Song;
 import model.SoundEffects;
 import settings.SettingsItem;
@@ -21,10 +22,10 @@ public class InterfaceGame {
     private final Song song;
     private final SoundEffects soundEffects;
 
-    public InterfaceGame(ImageIcon imageMapGame) {
+    public InterfaceGame(Player player) {
         frame = new JFrame();
-        playerJLabel = new JLabel();
-        mapGameJLabel = new JLabel(imageMapGame);
+        this.playerJLabel = player.getJLabel();
+        mapGameJLabel = new JLabel(player.getCurrentMap().getImagemIcon());
         song = new Song();
         soundEffects = new SoundEffects();
         settingsFrame();
@@ -35,10 +36,6 @@ public class InterfaceGame {
 
     public JFrame getFrame() {
         return frame;
-    }
-
-    public JLabel getPlayerJLabel() {
-        return playerJLabel;
     }
 
     public JLabel getMapGameJLabel() {

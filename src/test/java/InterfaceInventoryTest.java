@@ -1,6 +1,8 @@
+import model.Item;
 import model.Player;
 import org.junit.Before;
 import org.junit.Test;
+import repository.CreateMapGame;
 import settings.SettingsPlayer;
 import view.InterfaceGame;
 import view.InterfaceInventory;
@@ -10,12 +12,19 @@ import static org.junit.Assert.assertTrue;
 
 public class InterfaceInventoryTest {
 
-    private final Player player = new Player();
-    private final InterfaceGame interfaceGame = new InterfaceGame(new SettingsPlayer().ImageInitial());
+    private Player player;
+    private InterfaceGame interfaceGame;
     private InterfaceInventory interfaceInventory;
 
     @Before
     public void create() {
+        player = new Player();
+        CreateMapGame createMapGame = new CreateMapGame();
+        player.setCurrentMap(createMapGame.getInitialScenery());
+        for (Item item : createMapGame.getItemInvisiblePlayer()) {
+            player.getInventory().addItem(item);
+        }
+        interfaceGame = new InterfaceGame(player);
         interfaceInventory = new InterfaceInventory(interfaceGame, player);
     }
 

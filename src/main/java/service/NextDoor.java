@@ -26,11 +26,11 @@ public class NextDoor {
 
     private void setPositionPlayer(Door door) {
         if (door.getPositionInsideX() == player.getPositionPlayerX() && door.getPositionInsideY() == player.getPositionPlayerY()) {
-            player.setPositionPlayerX(door.getPositionOutsideX(), interfaceGame.getPlayerJLabel());
-            player.setPositionPlayerY(door.getPositionOutsideY(), interfaceGame.getPlayerJLabel());
+            player.setPositionPlayerX(door.getPositionOutsideX());
+            player.setPositionPlayerY(door.getPositionOutsideY());
         } else {
-            player.setPositionPlayerX(door.getPositionInsideX(), interfaceGame.getPlayerJLabel());
-            player.setPositionPlayerY(door.getPositionInsideY(), interfaceGame.getPlayerJLabel());
+            player.setPositionPlayerX(door.getPositionInsideX());
+            player.setPositionPlayerY(door.getPositionInsideY());
         }
     }
 }

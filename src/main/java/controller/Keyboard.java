@@ -93,25 +93,25 @@ public class Keyboard {
         boolean sucess = false;
         if (keyCode == 38) {
             if (player.getPositionPlayerY() > 0) {
-                player.walk("norte", interfaceGame.getPlayerJLabel());
+                player.walk("norte");
             } else {
                 sucess = new NextScenery(player, interfaceGame).run("norte");
             }
         } else if (keyCode == 40) {
             if (player.getPositionPlayerY() < interfaceGame.getMapGameJLabel().getHeight() - 50) {
-                player.walk("sul", interfaceGame.getPlayerJLabel());
+                player.walk("sul");
             } else {
                 sucess = new NextScenery(player, interfaceGame).run("sul");
             }
         } else if (keyCode == 37) {
             if (player.getPositionPlayerX() > 0) {
-                player.walk("oeste", interfaceGame.getPlayerJLabel());
+                player.walk("oeste");
             } else {
                 sucess = new NextScenery(player, interfaceGame).run("oeste");
             }
         } else if (keyCode == 39) {
             if (player.getPositionPlayerX() < interfaceGame.getMapGameJLabel().getWidth() - 30) {
-                player.walk("leste", interfaceGame.getPlayerJLabel());
+                player.walk("leste");
             } else {
                 sucess = new NextScenery(player, interfaceGame).run("leste");
             }

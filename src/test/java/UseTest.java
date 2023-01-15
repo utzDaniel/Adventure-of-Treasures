@@ -36,8 +36,8 @@ public class UseTest {
         Room temple = new Room("templo", null);
         village.setExitsDoors(templeDoor, temple);
         player.setCurrentMap(village);
-        player.setPositionPlayerX(370,new JLabel());
-        player.setPositionPlayerY(150,new JLabel());
+        player.setPositionPlayerX(370);
+        player.setPositionPlayerY(150);
         Use use = new Use(player,itens.get(0));
         assertTrue(use.run());
     }
@@ -49,8 +49,8 @@ public class UseTest {
         Room temple = new Room("templo", null);
         village.setExitsDoors(templeDoor, temple);
         player.setCurrentMap(village);
-        player.setPositionPlayerX(370,new JLabel());
-        player.setPositionPlayerY(150,new JLabel());
+        player.setPositionPlayerX(370);
+        player.setPositionPlayerY(150);
         new Use(player,itens.get(3)).run();
     }
 
@@ -61,8 +61,8 @@ public class UseTest {
         Room temple = new Room("templo", null);
         village.setExitsDoors(templeDoor, temple);
         player.setCurrentMap(village);
-        player.setPositionPlayerX(0,new JLabel());
-        player.setPositionPlayerY(0,new JLabel());
+        player.setPositionPlayerX(0);
+        player.setPositionPlayerY(0);
         new Use(player,itens.get(0)).run();
     }
 
@@ -79,8 +79,8 @@ public class UseTest {
         temple.setExitsDoors(basementDoor,basement);
         temple.setExitsDoors(topTempleDoor,topTemple);
         player.setCurrentMap(temple);
-        player.setPositionPlayerX(370,new JLabel());
-        player.setPositionPlayerY(150,new JLabel());
+        player.setPositionPlayerX(370);
+        player.setPositionPlayerY(150);
         new Use(player,itens.get(0)).run();
     }
 
@@ -97,8 +97,8 @@ public class UseTest {
         temple.setExitsDoors(basementDoor,basement);
         temple.setExitsDoors(topTempleDoor,topTemple);
         player.setCurrentMap(temple);
-        player.setPositionPlayerX(250,new JLabel());
-        player.setPositionPlayerY(180,new JLabel());
+        player.setPositionPlayerX(250);
+        player.setPositionPlayerY(180);
         Use use = new Use(player,itens.get(1));
         assertTrue(use.run());
     }
@@ -116,8 +116,8 @@ public class UseTest {
         temple.setExitsDoors(basementDoor,basement);
         temple.setExitsDoors(topTempleDoor,topTemple);
         player.setCurrentMap(temple);
-        player.setPositionPlayerX(0,new JLabel());
-        player.setPositionPlayerY(0,new JLabel());
+        player.setPositionPlayerX(0);
+        player.setPositionPlayerY(0);
         new Use(player,itens.get(1)).run();
     }
 
@@ -134,8 +134,8 @@ public class UseTest {
         temple.setExitsDoors(basementDoor,basement);
         temple.setExitsDoors(topTempleDoor,topTemple);
         player.setCurrentMap(village);
-        player.setPositionPlayerX(250,new JLabel());
-        player.setPositionPlayerY(180,new JLabel());
+        player.setPositionPlayerX(250);
+        player.setPositionPlayerY(180);
         new Use(player,itens.get(1)).run();
     }
 
@@ -152,8 +152,8 @@ public class UseTest {
         temple.setExitsDoors(basementDoor,basement);
         temple.setExitsDoors(topTempleDoor,topTemple);
         player.setCurrentMap(temple);
-        player.setPositionPlayerX(250,new JLabel());
-        player.setPositionPlayerY(180,new JLabel());
+        player.setPositionPlayerX(250);
+        player.setPositionPlayerY(180);
         new Use(player,itens.get(3)).run();
     }
 

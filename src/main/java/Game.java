@@ -13,7 +13,7 @@ public class Game {
     public Game() {
         player = new Player();
         initialPlayer();
-        interfaceGame = new InterfaceGame(player.getCurrentMap().getImagemIcon());
+        interfaceGame = new InterfaceGame(player);
         song = interfaceGame.getSong();
         soundEffects = interfaceGame.getSoundEffects();
         song.play(player.getCurrentMap().getName());

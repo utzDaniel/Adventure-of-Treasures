@@ -27,10 +27,10 @@ public class NextScenery {
 
     private void newPosition(String direction) {
         switch (direction) {
-            case "norte" -> player.setPositionPlayerY(interfaceGame.getMapGameJLabel().getHeight() - 70, interfaceGame.getPlayerJLabel());
-            case "sul" -> player.setPositionPlayerY(10, interfaceGame.getPlayerJLabel());
-            case "oeste" -> player.setPositionPlayerX(interfaceGame.getMapGameJLabel().getWidth() - 50, interfaceGame.getPlayerJLabel());
-            case "leste" -> player.setPositionPlayerX(10, interfaceGame.getPlayerJLabel());
+            case "norte" -> player.setPositionPlayerY(interfaceGame.getMapGameJLabel().getHeight() - 70);
+            case "sul" -> player.setPositionPlayerY(10);
+            case "oeste" -> player.setPositionPlayerX(interfaceGame.getMapGameJLabel().getWidth() - 50);
+            case "leste" -> player.setPositionPlayerX(10);
         }
     }
 }

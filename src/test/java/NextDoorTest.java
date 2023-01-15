@@ -24,14 +24,14 @@ public class NextDoorTest {
         village.setExitsDoors(templeDoor, temple);
         temple.setExitsDoors(templeDoor, village);
         player.setCurrentMap(village);
-        player.setPositionPlayerX(370,new JLabel());
-        player.setPositionPlayerY(150,new JLabel());
-        nextDoor = new NextDoor(player, new InterfaceGame(null));
+        player.setPositionPlayerX(370);
+        player.setPositionPlayerY(150);
+        nextDoor = new NextDoor(player, new InterfaceGame(player));
     }
 
     @Test
     public void testDoorNull(){
-        player.setPositionPlayerX(350,new JLabel());
+        player.setPositionPlayerX(350);
         MapGame atualMap = player.getCurrentMap();
         nextDoor.run();
         assertEquals(atualMap, player.getCurrentMap());

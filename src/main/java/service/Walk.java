@@ -2,21 +2,17 @@ package service;
 
 import exception.MoveException;
 import model.Coordinate;
-import model.enums.MovePlayer;
 import model.Player;
-
-import javax.swing.*;
+import model.enums.MovePlayer;
 
 public final class Walk {
 
     private final String direction;
-    private final JLabel playerJLabel;
     private final Player player;
     private MovePlayer move;
 
-    public Walk(String direction, JLabel playerJLabel, Player player) {
+    public Walk(String direction, Player player) {
         this.direction = direction;
-        this.playerJLabel = playerJLabel;
         this.player = player;
     }
 
@@ -43,8 +39,8 @@ public final class Walk {
     private void move(){
         int newPositionX = this.player.getPositionPlayerX() + this.move.getToMoveX();
         int newPositionY = this.player.getPositionPlayerY() + this.move.getToMoveY();
-        this.player.setPositionPlayerX(newPositionX, this.playerJLabel);
-        this.player.setPositionPlayerY(newPositionY, this.playerJLabel);
+        this.player.setPositionPlayerX(newPositionX);
+        this.player.setPositionPlayerY(newPositionY);
     }
 
     private boolean checkCanWalk(){
@@ -55,8 +51,8 @@ public final class Walk {
     private void comeBack(){
         int newPositionX = this.player.getPositionPlayerX() - this.move.getToMoveX();
         int newPositionY = this.player.getPositionPlayerY() - this.move.getToMoveY();
-        this.player.setPositionPlayerX(newPositionX, this.playerJLabel);
-        this.player.setPositionPlayerY(newPositionY, this.playerJLabel);
+        this.player.setPositionPlayerX(newPositionX);
+        this.player.setPositionPlayerY(newPositionY);
     }
 
     private void setDirection(){
@@ -64,10 +60,10 @@ public final class Walk {
     }
 
     private void setLocation(){
-        this.player.setLocation(this.playerJLabel);
+        this.player.setLocation();
     }
 
     private void setIcon(){
-        this.player.setIcon(this.move.getImageIcon(), this.playerJLabel);
+        this.player.setIcon(this.move.getImageIcon());
     }
 }

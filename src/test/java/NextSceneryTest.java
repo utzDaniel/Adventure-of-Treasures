@@ -21,7 +21,7 @@ public class NextSceneryTest {
         player = new Player();
         player.setDirection(Direction.SUL.getLabel());
         player.setCurrentMap(createMapGame.getInitialScenery());
-        nextScenery = new NextScenery(player, new InterfaceGame(null));
+        nextScenery = new NextScenery(player, new InterfaceGame(player));
     }
 
     @Test

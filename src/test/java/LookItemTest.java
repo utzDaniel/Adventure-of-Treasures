@@ -27,8 +27,8 @@ public class LookItemTest {
         Scenery nextScenery = ((Scenery) player.getCurrentMap()).getExit("oeste");
         player.setCurrentMap(nextScenery);
         player.setDirection("oest");
-        player.setPositionPlayerX(210,jLabel);
-        player.setPositionPlayerY(280,jLabel);
+        player.setPositionPlayerX(210);
+        player.setPositionPlayerY(280);
         player.lookItem();
     }
 
@@ -37,8 +37,8 @@ public class LookItemTest {
         Scenery nextScenery = ((Scenery) player.getCurrentMap()).getExit("oeste");
         player.setCurrentMap(nextScenery);
         player.setDirection(Direction.OESTE.getLabel());
-        player.setPositionPlayerX(210,jLabel);
-        player.setPositionPlayerY(280,jLabel);
+        player.setPositionPlayerX(210);
+        player.setPositionPlayerY(280);
         assertNotNull(player.lookItem());
     }
 
@@ -47,8 +47,8 @@ public class LookItemTest {
         Scenery nextScenery = ((Scenery) player.getCurrentMap()).getExit("oeste");
         player.setCurrentMap(nextScenery);
         player.setDirection(Direction.OESTE.getLabel());
-        player.setPositionPlayerX(210,jLabel);
-        player.setPositionPlayerY(270,jLabel);
+        player.setPositionPlayerX(210);
+        player.setPositionPlayerY(270);
         assertNull(player.lookItem());
     }
 

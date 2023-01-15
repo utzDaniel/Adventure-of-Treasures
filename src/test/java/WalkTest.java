@@ -24,41 +24,41 @@ public class WalkTest {
     @Test
     public void andarPlayerParaLeste() {
         int positionX = player.getPositionPlayerX();
-        player.walk(Direction.LESTE.getLabel(), new JLabel());
+        player.walk(Direction.LESTE.getLabel());
         assertEquals(positionX+10, player.getPositionPlayerX());
     }
     @Test
     public void andarPlayerParaOeste() {
         int positionX = player.getPositionPlayerX();
-        player.walk(Direction.OESTE.getLabel(), new JLabel());
+        player.walk(Direction.OESTE.getLabel());
         assertEquals(positionX-10, player.getPositionPlayerX());
     }
     @Test
     public void andarPlayerParaSul() {
         int positionY = player.getPositionPlayerY();
-        player.walk(Direction.SUL.getLabel(), new JLabel());
+        player.walk(Direction.SUL.getLabel());
         assertEquals(positionY+10, player.getPositionPlayerY());
     }
     @Test
     public void andarPlayerParaNorte() {
         int positionY = player.getPositionPlayerY();
-        player.walk(Direction.NORTE.getLabel(), new JLabel());
+        player.walk(Direction.NORTE.getLabel());
         assertEquals(positionY-10, player.getPositionPlayerY());
     }
 
     @Test (expected = MoveException.class)
     public void naoAndarPlayerParaNort() {
         int positionY = player.getPositionPlayerY();
-        player.walk("nort", new JLabel());
+        player.walk("nort");
         assertEquals(positionY-10, player.getPositionPlayerY());
     }
 
     @Test
     public void naoAndarPlayer() {
-        player.setPositionPlayerX(230,new JLabel());
-        player.setPositionPlayerY(530,new JLabel());
+        player.setPositionPlayerX(230);
+        player.setPositionPlayerY(530);
         int positionY = player.getPositionPlayerY();
-        player.walk(Direction.SUL.getLabel(), new JLabel());
+        player.walk(Direction.SUL.getLabel());
         assertEquals(positionY, player.getPositionPlayerY());
     }
 

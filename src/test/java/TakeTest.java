@@ -46,7 +46,7 @@ public class TakeTest {
 
     @Test
     public void testarItemInvalidoAFrente() {
-        player.setPositionPlayerX(290, new JLabel());
+        player.setPositionPlayerX(290);
         assertFalse(take.run());
     }
 }

@@ -29,7 +29,7 @@ public class InterfaceGameTest {
         for (Item item : createMapGame.getItemInvisiblePlayer()) {
             player.getInventory().setItemInvisible(item);
         }
-        interfaceGame = new InterfaceGame(player.getCurrentMap().getImagemIcon());
+        interfaceGame = new InterfaceGame(player);
         frame = interfaceGame.getFrame();
         container = frame.getContentPane();
     }

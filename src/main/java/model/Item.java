@@ -25,9 +25,27 @@ public abstract class Item implements IAction {
         this.visible = true;
     }
 
+    public int getPositionItemX() {
+        return positionItemX;
+    }
+
+    public int getPositionItemY() {
+        return positionItemY;
+    }
+
+    public void setPositionItemX(int positionItemX) {
+        this.positionItemX = positionItemX;
+    }
+
+    public void setPositionItemY(int positionItemY) {
+        this.positionItemY = positionItemY;
+    }
+
     public ImageIcon getImagemIcon() {
         return imagemIcon;
     }
+
+
 
     public String getName() {
         return this.name;
@@ -37,22 +55,6 @@ public abstract class Item implements IAction {
 
     public int getWeight() {
         return this.weight;
-    }
-
-    public int getPositionItemX() {
-        return positionItemX;
-    }
-
-    public void setPositionItemX(int positionItemX) {
-        this.positionItemX = positionItemX;
-    }
-
-    public int getPositionItemY() {
-        return positionItemY;
-    }
-
-    public void setPositionItemY(int positionItemY) {
-        this.positionItemY = positionItemY;
     }
 
     public boolean isVisible() {
