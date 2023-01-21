@@ -1,7 +1,7 @@
 package view;
 
 import exception.ButtonException;
-import model.*;
+import model.builder.item.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -110,7 +110,7 @@ public class ButtonAction {
             buttonActions[2].setBackground(Colors.BLUE);
             buttonActions[2].setEnabled(true);
         }
-        if (!(item instanceof ItemNotRemove) && !remove) {
+        if (!(item instanceof ItemMission) && !remove) {
             buttonActions[3].setBackground(Colors.BLUE);
             buttonActions[3].setEnabled(true);
         }

@@ -2,7 +2,7 @@ package service;
 
 import exception.ItemUsableException;
 import model.interfaces.IUsable;
-import model.Item;
+import model.builder.item.Item;
 import model.enums.ItemsUsable;
 import model.Player;
 

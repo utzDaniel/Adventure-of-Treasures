@@ -1,14 +1,12 @@
 import exception.ItemUsableException;
-import exception.MoveException;
 import model.*;
+import model.builder.item.*;
 import org.junit.Before;
 import org.junit.Test;
 import repository.CreateMapGame;
-import repository.RepositoryItem;
 import service.Combination;
 import service.Use;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +20,16 @@ public class UseTest {
 
     @Before
     public void inicial(){
-        itens.add(new ItemUsable("chave", "utilizada para abir algo", 0, "vila",580,300,null));
-        itens.add(new ItemUsable("escada", "utilizada para subir em algum lugar", 0, "templo",410,200,null));
-        itens.add(new ItemEquipable("tocha", "utilizado para iluminar", 0,410,200,null));
-        itens.add(new ItemUsable("chav", "utilizada para abir algo", 0, "vila",580,300,null));
-        itens.add(new ItemUsable("pa", "ferramenta usada para cavar", 0, "praia", 200, 280, null));
+        itens.add(ItemUsableBuilder.builder().localUse("vila").name("chave").description("utilizada para abir algo").weight(0)
+                .positionX(580).positionY(300).image(null).removable(true).build());
+        itens.add(ItemUsableBuilder.builder().localUse("templo").name("escada").description("utilizada para abir algo").weight(0)
+                .positionX(410).positionY(200).image(null).removable(true).build());
+        itens.add(ItemEquipableBuilder.builder().equipped(false).name("tocha").description("utilizado para iluminar").weight(0)
+                .positionX(410).positionY(220).image(null).removable(true).build());
+        itens.add(ItemUsableBuilder.builder().localUse("vila").name("chav").description("utilizada para abir algo").weight(0)
+                .positionX(580).positionY(300).image(null).removable(true).build());
+        itens.add(ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(0)
+                .positionX(200).positionY(280).image(null).removable(true).build());
     }
 
     @Test
@@ -168,12 +171,16 @@ public class UseTest {
         player.setCurrentMap(createMapGame.getInitialScenery().getExit("leste"));
 
         //mapa visivel
-        ArrayList<Item> item = new ArrayList<>();
-        item.add(new ItemCombinable("papel", "papel escrito em lingua antiga", 0, 1, 510, 320, null));
-        item.add(new ItemCombinable("livro", "livro antigo usado para decifrar escrita antiga", 0, 1, 490, 390, null));
-        new Combination(item).run();
+        ArrayList<Item> itens = new ArrayList<>();
+        itens.add(ItemCombinableBuilder.builder().combine(1).name("papel").description("papel escrito em lingua antiga").weight(0)
+                .positionX(510).positionY(320).image(null).removable(true).build());
 
-        Use use = new Use(itens.get(4));
+        itens.add(ItemCombinableBuilder.builder().combine(1).name("livro").description("livro antigo usado para decifrar escrita antiga").weight(0)
+                .positionX(490).positionY(390).image(null).removable(true).build());
+
+        new Combination(itens).run();
+
+        Use use = new Use(this.itens.get(4));
         assertTrue(use.run());
     }
 
@@ -187,12 +194,17 @@ public class UseTest {
         player.setCurrentMap(createMapGame.getInitialScenery().getExit("leste"));
 
         //mapa visivel
-        ArrayList<Item> item = new ArrayList<>();
-        item.add(new ItemCombinable("papel", "papel escrito em lingua antiga", 0, 1, 510, 320, null));
-        item.add(new ItemCombinable("livro", "livro antigo usado para decifrar escrita antiga", 0, 1, 490, 390, null));
-        new Combination(item).run();
+        ArrayList<Item> itens = new ArrayList<>();
 
-        new Use(itens.get(3)).run();
+        itens.add(ItemCombinableBuilder.builder().combine(1).name("papel").description("papel escrito em lingua antiga").weight(0)
+                .positionX(510).positionY(320).image(null).removable(true).build());
+
+        itens.add(ItemCombinableBuilder.builder().combine(1).name("livro").description("livro antigo usado para decifrar escrita antiga").weight(0)
+                .positionX(490).positionY(390).image(null).removable(true).build());
+
+        new Combination(itens).run();
+
+        new Use(this.itens.get(3)).run();
 
     }
 
@@ -221,12 +233,15 @@ public class UseTest {
         player.setCurrentMap(beach);
 
         //mapa visivel
-        ArrayList<Item> item = new ArrayList<>();
-        item.add(new ItemCombinable("papel", "papel escrito em lingua antiga", 0, 1, 510, 320, null));
-        item.add(new ItemCombinable("livro", "livro antigo usado para decifrar escrita antiga", 0, 1, 490, 390, null));
-        new Combination(item).run();
+        ArrayList<Item> itens = new ArrayList<>();
+        itens.add(ItemCombinableBuilder.builder().combine(1).name("papel").description("papel escrito em lingua antiga").weight(0)
+                .positionX(510).positionY(320).image(null).removable(true).build());
 
-        new Use(itens.get(4)).run();
+        itens.add(ItemCombinableBuilder.builder().combine(1).name("livro").description("livro antigo usado para decifrar escrita antiga").weight(0)
+                .positionX(490).positionY(390).image(null).removable(true).build());
+        new Combination(itens).run();
+
+        new Use(this.itens.get(4)).run();
 
     }
 
@@ -240,12 +255,15 @@ public class UseTest {
         player.setCurrentMap(createMapGame.getInitialScenery());
 
         //mapa visivel
-        ArrayList<Item> item = new ArrayList<>();
-        item.add(new ItemCombinable("papel", "papel escrito em lingua antiga", 0, 1, 510, 320, null));
-        item.add(new ItemCombinable("livro", "livro antigo usado para decifrar escrita antiga", 0, 1, 490, 390, null));
-        new Combination(item).run();
+        ArrayList<Item> itens = new ArrayList<>();
+        itens.add(ItemCombinableBuilder.builder().combine(1).name("papel").description("papel escrito em lingua antiga").weight(0)
+                .positionX(510).positionY(320).image(null).removable(true).build());
 
-        new Use(itens.get(4)).run();
+        itens.add(ItemCombinableBuilder.builder().combine(1).name("livro").description("livro antigo usado para decifrar escrita antiga").weight(0)
+                .positionX(490).positionY(390).image(null).removable(true).build());
+        new Combination(itens).run();
+
+        new Use(this.itens.get(4)).run();
 
     }
 

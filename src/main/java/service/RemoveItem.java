@@ -2,8 +2,8 @@ package service;
 
 import exception.InventoryException;
 import model.Inventory;
-import model.Item;
-import model.ItemNotRemove;
+import model.builder.item.Item;
+import model.builder.item.ItemMission;
 
 public final class RemoveItem {
 
@@ -23,7 +23,7 @@ public final class RemoveItem {
     }
 
     private void checkItemRemoved(){
-        if(item instanceof ItemNotRemove)
+        if(item instanceof ItemMission)
             throw new InventoryException("Item não pode ser removido!");
     }
 

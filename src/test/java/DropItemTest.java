@@ -1,5 +1,6 @@
 import exception.InventoryException;
 import model.*;
+import model.builder.item.*;
 import model.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,21 +21,22 @@ public class DropItemTest {
         for (Item item : createMapGame.getItemInvisiblePlayer()) {
             player.getInventory().setItemInvisible(item);
         }
-        player.getInventory().addItem(new ItemEquipable("mochila", "utilizada para carregar mais coisas", 0,
-                650, 220, null));
+        player.getInventory().addItem(ItemEquipableBuilder.builder().equipped(false).name("mochila").description("utilizada para carregar mais coisas").weight(0)
+                .positionX(650).positionY(220).image(null).removable(true).visible(true).build());
     }
 
     @Test
     public void removerItemPorItemDentroDoInventario() {
-        Item item = new ItemUsable("pa", "ferramenta usada para cavar", 0, "praia",
-                200, 280, null);
+        Item item = ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(0)
+                .positionX(200).positionY(280).image(null).removable(true).visible(true).build();
         player.takeItem(item);
         assertTrue(player.dropItem(item));
     }
 
-    @Test (expected = InventoryException.class)
+    @Test(expected = InventoryException.class)
     public void naoRemoverItemNotRemovePorItemDentroDoInventario() {
-        Item item = new ItemNotRemove("tesouro", "tesouro lendário dos templários", null, 0, 620, 240, null);
+        Item item = ItemMissionBuilder.builder().mapGame("barco").name("tesouro").description("tesouro lendário dos templários").weight(0)
+                .positionX(620).positionY(240).image(null).removable(false).build();
         player.takeItem(item);
         player.dropItem(item);
     }

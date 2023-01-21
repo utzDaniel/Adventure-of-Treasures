@@ -1,6 +1,6 @@
 package view;
 
-import model.Item;
+import model.builder.item.Item;
 import model.Player;
 import model.Song;
 import model.SoundEffects;
@@ -90,11 +90,11 @@ public class InterfaceGame {
     public void setItensJLabel(List<Item> itens, int index) {
         SettingsItem settingsItem = new SettingsItem();
         for (Item item : itens) {
-            JLabel label = new JLabel(item.getImagemIcon());
+            JLabel label = new JLabel(item.getImage());
             label.setName("item");
             frame.getContentPane().add(label, index);
-            label.setBounds(settingsItem.labelPositionX(item.getPositionItemX()),
-                    settingsItem.labelPositionY(item.getPositionItemY()),
+            label.setBounds(settingsItem.labelPositionX(item.getPositionX()),
+                    settingsItem.labelPositionY(item.getPositionY()),
                     settingsItem.labelWidth(), settingsItem.labelHeight());
         }
     }

@@ -1,6 +1,7 @@
-import model.Item;
-import model.ItemEquipable;
+import model.builder.item.Item;
+import model.builder.item.ItemEquipable;
 import model.Player;
+import model.builder.item.ItemEquipableBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import repository.CreateMapGame;
@@ -88,8 +89,10 @@ public class InterfaceGameTest {
     @Test
     public void validSetItensJLabel() {
         ArrayList<Item> itens = new ArrayList<>();
-        itens.add(new ItemEquipable("mochila1", "utilizada para carregar mais coisas", 0, 650, 220, null));
-        itens.add(new ItemEquipable("mochila2", "utilizada para carregar mais coisas", 0, 650, 220, null));
+        itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila1").description("utilizada para carregar mais coisas").weight(0)
+                .positionX(650).positionY(220).image(null).removable(true).visible(true).build());
+        itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila2").description("utilizada para carregar mais coisas").weight(0)
+                .positionX(650).positionY(220).image(null).removable(true).visible(true).build());
         int size = container.getComponentCount();
         interfaceGame.setItensJLabel(itens, 2);
         assertEquals(size + 2, container.getComponentCount());
@@ -98,8 +101,10 @@ public class InterfaceGameTest {
     @Test
     public void validClearItensJLabel() {
         ArrayList<Item> itens = new ArrayList<>();
-        itens.add(new ItemEquipable("mochila1", "utilizada para carregar mais coisas", 0, 650, 220, null));
-        itens.add(new ItemEquipable("mochila2", "utilizada para carregar mais coisas", 0, 650, 220, null));
+        itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila1").description("utilizada para carregar mais coisas").weight(0)
+                .positionX(650).positionY(220).image(null).removable(true).visible(true).build());
+        itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila2").description("utilizada para carregar mais coisas").weight(0)
+                .positionX(650).positionY(220).image(null).removable(true).visible(true).build());
         int size = container.getComponentCount();
         interfaceGame.setItensJLabel(itens, 2);
         interfaceGame.clearJLabelItens();

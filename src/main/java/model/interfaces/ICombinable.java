@@ -1,7 +1,6 @@
 package model.interfaces;
 
-import model.Item;
-import model.Player;
+import model.builder.item.Item;
 import service.Combination;
 
 import java.util.List;

@@ -1,5 +1,6 @@
 package model;
 
+import model.builder.item.Item;
 import service.AddItemInventory;
 import service.RemoveItem;
 

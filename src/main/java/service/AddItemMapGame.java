@@ -1,6 +1,7 @@
 package service;
 
 import model.*;
+import model.builder.item.Item;
 import model.enums.MovePlayer;
 
 public class AddItemMapGame {
@@ -41,8 +42,8 @@ public class AddItemMapGame {
     }
 
     private void setItemNewCoordinate(){
-        this.item.setPositionItemX(this.coordinate.getAxisX()*10);// position X item * STEP = 10
-        this.item.setPositionItemY(this.coordinate.getAxisY()*10);// position Y item * STEP = 10
+        this.item.setPositionX(this.coordinate.getAxisX()*10);// position X item * STEP = 10
+        this.item.setPositionY(this.coordinate.getAxisY()*10);// position Y item * STEP = 10
     }
 
     private void addItem(){

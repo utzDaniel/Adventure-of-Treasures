@@ -1,6 +1,7 @@
 import exception.ItemEquipableException;
 import exception.MoveException;
 import model.*;
+import model.builder.item.*;
 import org.junit.Before;
 import org.junit.Test;
 import repository.CreateMapGame;
@@ -16,10 +17,14 @@ public class EquipableTest {
 
     @Before
     public void inicial(){
-        itens.add(new ItemEquipable("mochila", "utilizada para carregar mais coisas", 0,650,220,null));
-        itens.add(new ItemUsable("chave", "utilizada para abir algo", 0, "vila",580,300,null));
-        itens.add(new ItemEquipable("toch", "utilizado para iluminar", 0,410,200,null));
-        itens.add(new ItemEquipable("tocha", "utilizado para iluminar", 0,410,200,null));
+        itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila").description("utilizada para carregar mais coisas").weight(0)
+                .positionX(650).positionY(220).image(null).removable(true).visible(true).build());
+        itens.add(ItemUsableBuilder.builder().localUse("vila").name("chave").description("utilizada para abir algo").weight(0)
+                .positionX(580).positionY(300).image(null).removable(true).visible(true).build());
+        itens.add(ItemEquipableBuilder.builder().equipped(false).name("toch").description("utilizado para iluminar").weight(0)
+                .positionX(410).positionY(220).image(null).removable(true).visible(true).build());
+        itens.add(ItemEquipableBuilder.builder().equipped(false).name("tocha").description("utilizado para iluminar").weight(0)
+                .positionX(410).positionY(220).image(null).removable(true).visible(true).build());
     }
 
     @Test
@@ -65,8 +70,8 @@ public class EquipableTest {
         ((ItemEquipable) itens.get(0)).equip(itens.get(0));
         int size = player.getInventory().getMaxCapacity() - player.getInventory().getCapacity();
         player.getInventory().addItem(
-                new ItemEquipable("peso", "pesar",
-                        size,0,0,null));
+                ItemEquipableBuilder.builder().equipped(false).name("peso").description("pesar").weight(size)
+                        .positionX(410).positionY(220).image(null).removable(true).visible(true).build());
         ((ItemEquipable) itens.get(0)).unequip(itens.get(0));
     }
 

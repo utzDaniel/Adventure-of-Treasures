@@ -1,5 +1,6 @@
-import model.Item;
-import model.ItemUsable;
+import model.builder.item.Item;
+import model.builder.item.ItemUsable;
+import model.builder.item.ItemUsableBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import view.LabelInformation;
@@ -21,7 +22,8 @@ public class LabelInformationTest {
         for (String s : label) {
             labelInformation.create(s);
         }
-        item = new ItemUsable("pa", "ferramenta usada para cavar", 0, "praia", 200, 280, null);
+        item = ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(0)
+                .positionX(200).positionY(280).image(null).removable(true).visible(true).build();
     }
 
     @Test

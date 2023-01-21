@@ -1,13 +1,10 @@
 import model.Coordinate;
-import model.Item;
+import model.builder.item.Item;
 import model.Player;
 import model.Scenery;
 import org.junit.Before;
 import org.junit.Test;
 import repository.CreateMapGame;
-
-import javax.swing.*;
-import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -42,14 +39,14 @@ public class MapGameTest {
     }
 
     @Test
-    public void pegarOsItensVisiveisNoMapaSIZETRUE(){
+    public void mostrarOsItensVisiveisNoMapaSIZETRUE(){
         Scenery nextScenery = ((Scenery) player.getCurrentMap()).getExit("oeste");
         player.setCurrentMap(nextScenery);
-        assertEquals(player.getCurrentMap().getItemVisible().size(), 1);
+        assertEquals(1, player.getCurrentMap().getItemVisible().size());
     }
 
     @Test
-    public void pegarOsItensVisiveisNoMapaSIZEFALSE(){
+    public void mostrarOsItensVisiveisNoMapaSIZEFALSE(){
         Scenery nextScenery = ((Scenery) player.getCurrentMap()).getExit("oeste");
         player.setCurrentMap(nextScenery);
         assertNotEquals(player.getCurrentMap().getItemVisible().size(), 0);

@@ -2,6 +2,8 @@ package service;
 
 import exception.ItemCombinableException;
 import model.*;
+import model.builder.item.Item;
+import model.builder.item.ItemMission;
 import model.enums.ItemsCombination;
 import model.interfaces.ICombinable;
 import repository.CreateImageMapGame;
@@ -66,8 +68,7 @@ public final class Combination<T extends ICombinable> {
 
     private void updateMap() {
         if (newItem.getName().equals("mapa")) {
-            CreateImageMapGame imageMapGame = new CreateImageMapGame();
-            ((ItemNotRemove) newItem).getMapGame().setImagemIcon(imageMapGame.selectImage(newItem.getName()));
+            this.player.getCurrentMap().activate(newItem.getName());
         }
     }
 

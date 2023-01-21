@@ -1,6 +1,7 @@
 package model;
 
 import exception.MoveException;
+import model.builder.item.Item;
 import service.AddItemMapGame;
 
 import javax.swing.*;
@@ -65,6 +66,7 @@ public abstract class MapGame {
         return null;
     }
 
+    //TODO resolver isso depois
     public boolean activate(String nameItem) {
         boolean activate = false;
         try {
@@ -75,6 +77,9 @@ public abstract class MapGame {
                 Door openDoor = templo.getDoorMap(90, 240);
                 openDoor.setOpen(!openDoor.isOpen());
                 activate = true;
+            }else if (nameItem.equals("mapa")){
+                MapGame praia = MapGame.mapInicial.getExit("leste");
+                praia.setImagemIcon(new ImageIcon("src/main/java/repository/map/cenario/praiaM.png"));
             }
         }catch (Exception e){
             throw new MoveException("Direção invalida!");
@@ -87,7 +92,7 @@ public abstract class MapGame {
     }
 
     public void removeItem(Item item) {
-        Coordinate coordinate = new Coordinate(item.getPositionItemX(), item.getPositionItemY());
+        Coordinate coordinate = new Coordinate(item.getPositionX(), item.getPositionY());
         this.item.remove(coordinate);
         this.limits[coordinate.getAxisY()][coordinate.getAxisX()] = 1;
     }
@@ -97,7 +102,7 @@ public abstract class MapGame {
     }
 
     public void setItem(Item item) {
-        Coordinate coordinate = new Coordinate(item.getPositionItemX(), item.getPositionItemY());
+        Coordinate coordinate = new Coordinate(item.getPositionX(), item.getPositionY());
         this.item.put(coordinate, item);
         this.limits[coordinate.getAxisY()][coordinate.getAxisX()] = 2;
     }

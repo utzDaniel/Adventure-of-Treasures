@@ -1,5 +1,6 @@
 package model;
 
+import model.builder.item.Item;
 import service.DropItem;
 import service.LookItem;
 import service.TakeItem;
@@ -26,6 +27,13 @@ public final class Player {
         this.currentMapGame = null;
         this.inventory = new Inventory();
         this.jLabel = new JLabel();
+    }
+
+    public static Player getInstance() {
+        if (Objects.isNull(player)) {
+            player = new Player();
+        }
+        return player;
     }
 
     public JLabel getJLabel() {
@@ -56,13 +64,6 @@ public final class Player {
     public void setPositionPlayerY(int positionPlayerY) {
         this.positionPlayerY = positionPlayerY;
         setLocation();
-    }
-
-    public static Player getInstance() {
-        if (Objects.isNull(player)) {
-            player = new Player();
-        }
-        return player;
     }
 
     public String getDirection() {

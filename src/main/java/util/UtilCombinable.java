@@ -1,4 +1,4 @@
-package service.util;
+package util;
 
 public final class UtilCombinable {
 

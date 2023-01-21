@@ -2,7 +2,7 @@ package service;
 
 import exception.MoveException;
 import model.Coordinate;
-import model.Item;
+import model.builder.item.Item;
 import model.enums.MovePlayer;
 import model.Player;
 

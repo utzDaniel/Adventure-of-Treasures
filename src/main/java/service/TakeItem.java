@@ -1,6 +1,6 @@
 package service;
 
-import model.Item;
+import model.builder.item.Item;
 import model.Player;
 
 public final class TakeItem {

@@ -2,7 +2,7 @@ package service;
 
 import exception.InventoryException;
 import model.Inventory;
-import model.Item;
+import model.builder.item.Item;
 
 public final class AddItemInventory {
 

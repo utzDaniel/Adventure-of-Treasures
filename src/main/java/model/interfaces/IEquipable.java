@@ -1,6 +1,6 @@
 package model.interfaces;
 
-import model.Item;
+import model.builder.item.Item;
 
 public interface IEquipable {
     boolean equip(Item item);

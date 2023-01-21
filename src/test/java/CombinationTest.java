@@ -1,8 +1,6 @@
 import exception.ItemCombinableException;
-import model.ItemEquipable;
+import model.builder.item.*;
 import service.Combination;
-import model.Item;
-import model.ItemCombinable;
 import model.Player;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,16 +29,21 @@ public class CombinationTest {
 
     @Test
     public void ItensValidoParaCombinacao() {
-        item.add(new ItemCombinable("martelo", "utilzado para construir algo", 0, 2, 160, 320, null));
-        item.add(new ItemCombinable("pregos", "utilzado para construir algo", 0, 2, 460, 400, null));
-        item.add(new ItemCombinable("madeiras", "madeira para construir algo", 0, 2, 640, 80, null));
+        item.add(ItemCombinableBuilder.builder().combine(2).name("martelo").description("utilzado para construir algo").weight(0)
+                .positionX(160).positionY(320).image(null).removable(true).visible(true).build());
+        item.add(ItemCombinableBuilder.builder().combine(2).name("pregos").description("utilzado para construir algo").weight(0)
+                .positionX(460).positionY(400).image(null).removable(true).visible(true).build());
+        item.add(ItemCombinableBuilder.builder().combine(2).name("madeiras").description("madeira para construir algo").weight(0)
+                .positionX(640).positionY(80).image(null).removable(true).visible(true).build());
         assertTrue(new Combination(item).run());
     }
 
     @Test
     public void ItensValidoParaCombinacaoMapa() {
-        item.add(new ItemCombinable("papel", "papel escrito em lingua antiga", 0, 1, 510, 320, null));
-        item.add(new ItemCombinable("livro", "livro antigo usado para decifrar escrita antiga", 0, 1, 490, 390, null));
+        item.add(ItemCombinableBuilder.builder().combine(1).name("papel").description("papel escrito em lingua antiga").weight(0)
+                .positionX(510).positionY(320).image(null).removable(true).visible(true).build());
+        item.add(ItemCombinableBuilder.builder().combine(1).name("livro").description("livro antigo usado para decifrar escrita antiga").weight(0)
+                .positionX(490).positionY(390).image(null).removable(true).visible(true).build());
         assertTrue(new Combination(item).run());
     }
 
@@ -48,23 +51,30 @@ public class CombinationTest {
 
     @Test (expected = ItemCombinableException.class)
     public void AllItemAleatorios() {
-        item.add(new ItemCombinable("faca", "serve para cortar algo", 0, 3, 420, 130, null));
-        item.add(new ItemCombinable("papel", "papel escrito em lingua antiga", 0, 1, 510, 320, null));
-        item.add(new ItemEquipable("mochila", "utilizada para carregar mais coisas", 0, 650, 220, null));
+        item.add(ItemCombinableBuilder.builder().combine(3).name("faca").description("serve para cortar algo").weight(0)
+                .positionX(420).positionY(130).image(null).removable(true).visible(true).build());
+        item.add(ItemCombinableBuilder.builder().combine(1).name("papel").description("papel escrito em lingua antiga").weight(0)
+                .positionX(510).positionY(320).image(null).removable(true).visible(true).build());
+        item.add(ItemEquipableBuilder.builder().equipped(false).name("mochila").description("utilizada para carregar mais coisas").weight(0)
+                .positionX(650).positionY(220).image(null).removable(true).visible(true).build());
         assertFalse(new Combination(item).run());
     }
 
     @Test (expected = ItemCombinableException.class)
     public void AllItemCombinableMasComCombinacaoDiferente() {
-        item.add(new ItemCombinable("madeiras", "madeira para construir algo", 0, 2, 640, 80, null));
-        item.add(new ItemCombinable("madeira", "cabo de madeira velho", 0, 3, 410, 200, null));
+        item.add(ItemCombinableBuilder.builder().combine(2).name("madeiras").description("madeira para construir algo").weight(0)
+                .positionX(640).positionY(80).image(null).removable(true).visible(true).build());
+        item.add(ItemCombinableBuilder.builder().combine(3).name("madeira").description("cabo de madeira velho").weight(0)
+                .positionX(410).positionY(200).image(null).removable(true).visible(true).build());
         assertFalse(new Combination(item).run());
     }
 
     @Test (expected = ItemCombinableException.class)
     public void AllItemCombinableComCombinacaoIguaisMasFaltandoAlgumItem() {
-        item.add(new ItemCombinable("madeiras", "madeira para construir algo", 0, 2, 640, 80, null));
-        item.add(new ItemCombinable("pregos", "utilzado para construir algo", 0, 2, 460, 400, null));
+        item.add(ItemCombinableBuilder.builder().combine(2).name("madeiras").description("madeira para construir algo").weight(0)
+                .positionX(640).positionY(80).image(null).removable(true).visible(true).build());
+        item.add(ItemCombinableBuilder.builder().combine(3).name("pregos").description("utilzado para construir algo").weight(0)
+                .positionX(460).positionY(400).image(null).removable(true).visible(true).build());
         assertFalse(new Combination(item).run());
     }
 

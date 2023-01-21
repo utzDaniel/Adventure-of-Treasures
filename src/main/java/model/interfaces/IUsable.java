@@ -1,6 +1,6 @@
 package model.interfaces;
 
-import model.Item;
+import model.builder.item.Item;
 import service.Use;
 
 public interface IUsable {

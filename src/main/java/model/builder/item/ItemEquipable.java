@@ -1,10 +1,9 @@
-package model;
+package model.builder.item;
 
 import model.interfaces.IEquipable;
 import service.Equip;
 import service.Unequip;
 
-import javax.swing.*;
 import java.util.List;
 
 public class ItemEquipable extends Item implements IEquipable {
@@ -12,10 +11,11 @@ public class ItemEquipable extends Item implements IEquipable {
     private boolean equipped;
 //    private Room room;
 
-    public ItemEquipable(String name, String description, int weight, int positionItemX, int positionItemY, ImageIcon imagemIcon) {
-        super(name, description, weight, positionItemX, positionItemY, imagemIcon);
-        this.equipped = false;
-//        this.room = null;
+    protected ItemEquipable() {
+    }
+
+    protected void setEquipped(boolean equipped) {
+        this.equipped = equipped;
     }
 
     @Override
@@ -46,7 +46,14 @@ public class ItemEquipable extends Item implements IEquipable {
         return action(itens.get(0));
     }
 
-//    public void setRoom(Room room) {
+    @Override
+    public String toString() {
+        return "ItemEquipable{" +
+                "equipped=" + equipped +
+                "} " + super.toString();
+    }
+
+    //    public void setRoom(Room room) {
 //        this.room = room;
 //    }
 //

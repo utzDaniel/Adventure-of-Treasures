@@ -1,5 +1,5 @@
 import exception.ButtonException;
-import model.*;
+import model.builder.item.*;
 import org.junit.Before;
 import org.junit.Test;
 import view.ButtonAction;
@@ -22,10 +22,14 @@ public class ButtonActionTest {
         for (String s : button) {
             buttonAction.create(s);
         }
-        itens.add(new ItemUsable("pa", "ferramenta usada para cavar", 0, "praia", 200, 280, null));
-        itens.add(new ItemEquipable("mochila", "utilizada para carregar mais coisas", 0,650,220,null));
-        itens.add(new ItemCombinable("madeira", "cabo de madeira velho", 0, 3,410,200,null));
-        itens.add(new ItemNotRemove("tesouro", "tesouro lendário dos templários", null, 0, 620, 240, null));
+        itens.add(ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(0)
+                .positionX(200).positionY(280).image(null).removable(true).visible(true).build());
+        itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila").description("utilizada para carregar mais coisas").weight(0)
+                .positionX(650).positionY(220).image(null).removable(true).visible(true).build());
+        itens.add(ItemCombinableBuilder.builder().combine(3).name("madeira").description("cabo de madeira velho").weight(0)
+                .positionX(410).positionY(200).image(null).removable(true).visible(true).build());
+        itens.add(ItemMissionBuilder.builder().mapGame("barco").name("tesouro").description("tesouro lendário dos templários").weight(0)
+                .positionX(620).positionY(240).image(null).removable(false).visible(true).build());
     }
 
     @Test

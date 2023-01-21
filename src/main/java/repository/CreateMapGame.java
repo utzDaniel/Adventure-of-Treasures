@@ -1,7 +1,7 @@
 package repository;
 
 import model.Door;
-import model.Item;
+import model.builder.item.Item;
 import model.Room;
 import model.Scenery;
 
@@ -103,8 +103,6 @@ public class CreateMapGame {
         temple.setItem(createItem.getItem("madeira"));
         topTemple.setItem(createItem.getItem("pederneira"));
         basement.setItem(createItem.getItem("tesouro"));
-
-        createItem.setLocalMapa(beach);
 
         itemInvisiblePlayer = createItem.getItemInvisiblePlayer();
 

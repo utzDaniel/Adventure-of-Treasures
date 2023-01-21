@@ -1,12 +1,13 @@
 import exception.InventoryException;
 import model.*;
+import model.builder.item.Item;
+import model.builder.item.ItemUsable;
+import model.builder.item.ItemUsableBuilder;
 import model.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
 import repository.CreateMapGame;
 import service.Take;
-
-import javax.swing.*;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -26,25 +27,25 @@ public class TakeTest {
         for (Item item : createMapGame.getItemInvisiblePlayer()) {
             player.getInventory().setItemInvisible(item);
         }
-        item = new ItemUsable("pa", "ferramenta usada para cavar", 0, "praia",
-                300, 480, null);
+        item = ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(0)
+                .positionX(300).positionY(480).image(null).removable(true).visible(true).build();
         player.getCurrentMap().setItem(item);
         take = new Take();
     }
 
     @Test
     public void testarItemValidoAFrente() {
-        player.setPositionPlayerX(item.getPositionItemX());
-        player.setPositionPlayerY(item.getPositionItemY()-10);
+        player.setPositionPlayerX(item.getPositionX());
+        player.setPositionPlayerY(item.getPositionY()-10);
         assertTrue(take.run());
     }
 
     @Test (expected = InventoryException.class)
     public void testarItemValidoAFrenteSemCapacitadadeNoInventario() {
-        Item item = new ItemUsable("tata", "ferramenta usada para cavar", 30, "praia",
-                290, 470, null);
-        player.setPositionPlayerX(item.getPositionItemX());
-        player.setPositionPlayerY(item.getPositionItemY()-10);
+        Item item = ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(30)
+                .positionX(290).positionY(470).image(null).removable(true).visible(true).build();
+        player.setPositionPlayerX(item.getPositionX());
+        player.setPositionPlayerY(item.getPositionY()-10);
         player.getCurrentMap().setItem(item);
         take.run();
     }

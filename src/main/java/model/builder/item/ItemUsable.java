@@ -1,4 +1,4 @@
-package model;
+package model.builder.item;
 
 import model.interfaces.IUsable;
 
@@ -13,10 +13,11 @@ public class ItemUsable extends Item implements IUsable {
      *
      * */
 
-    private final String localUse;
+    private String localUse;
 
-    public ItemUsable(String name, String description, int weight, String localUse, int positionItemX, int positionItemY, ImageIcon imagemIcon){
-        super(name, description, weight, positionItemX, positionItemY, imagemIcon);
+    protected ItemUsable(){}
+
+    protected void setLocalUse(String localUse) {
         this.localUse = localUse;
     }
 
@@ -32,5 +33,12 @@ public class ItemUsable extends Item implements IUsable {
     @Override
     public boolean action(List<Item> itens) {
         return action(itens.get(0));
+    }
+
+    @Override
+    public String toString() {
+        return "ItemUsable{" +
+                "localUse='" + localUse + '\'' +
+                "} " + super.toString();
     }
 }

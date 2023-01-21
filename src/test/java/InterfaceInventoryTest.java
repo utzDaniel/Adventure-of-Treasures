@@ -1,9 +1,8 @@
-import model.Item;
+import model.builder.item.Item;
 import model.Player;
 import org.junit.Before;
 import org.junit.Test;
 import repository.CreateMapGame;
-import settings.SettingsPlayer;
 import view.InterfaceGame;
 import view.InterfaceInventory;
 

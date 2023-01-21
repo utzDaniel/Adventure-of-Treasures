@@ -1,6 +1,6 @@
 package view;
 
-import model.Item;
+import model.builder.item.Item;
 
 import javax.swing.*;
 import java.awt.*;

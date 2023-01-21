@@ -2,9 +2,8 @@ package service;
 
 import exception.ItemEquipableException;
 import model.interfaces.IEquipable;
-import model.Item;
+import model.builder.item.Item;
 import model.enums.ItemsEquipable;
-import model.Player;
 
 public final class Unequip<T extends Item> {
 

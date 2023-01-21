@@ -2,7 +2,7 @@ package model.enums;
 
 import exception.ItemUsableException;
 import model.Door;
-import model.Item;
+import model.builder.item.Item;
 import model.Player;
 import repository.CreateImageMapGame;
 

@@ -1,4 +1,6 @@
-import model.ItemCombinable;
+import model.builder.item.Item;
+import model.builder.item.ItemCombinable;
+import model.builder.item.ItemCombinableBuilder;
 import model.enums.ItemsCombination;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,16 +10,22 @@ import java.util.List;
 import static junit.framework.Assert.assertEquals;
 
 public class ItemsCombinationTest {
-    private final List<ItemCombinable> itens = new ArrayList<>();
+    private final List<Item> itens = new ArrayList<>();
 
     @Before
     public void createCombination(){
-        itens.add(new ItemCombinable("madeira", "cabo de madeira velho", 0, 3,410,200,null));
-        itens.add(new ItemCombinable("madeiras", "madeira para construir algo", 0, 2,640,80,null));
-        itens.add(new ItemCombinable("faca", "serve para cortar algo", 0, 3,420,130,null));
-        itens.add(new ItemCombinable("martelo", "utilzado para construir algo", 0, 2,160,320,null));
-        itens.add(new ItemCombinable("papel", "papel escrito em lingua antiga", 0, 1,510,320,null));
-        itens.add(new ItemCombinable("pregos", "utilzado para construir algo", 0, 2,460,400,null));
+        itens.add(ItemCombinableBuilder.builder().combine(3).name("madeira").description("cabo de madeira velho").weight(0)
+                .positionX(410).positionY(200).image(null).removable(true).visible(true).build());
+        itens.add(ItemCombinableBuilder.builder().combine(2).name("madeiras").description("madeira para construir algo").weight(0)
+                .positionX(640).positionY(80).image(null).removable(true).visible(true).build());
+        itens.add(ItemCombinableBuilder.builder().combine(3).name("faca").description("serve para cortar algo").weight(0)
+                .positionX(420).positionY(130).image(null).removable(true).visible(true).build());
+        itens.add(ItemCombinableBuilder.builder().combine(2).name("martelo").description("utilzado para construir algo").weight(0)
+                .positionX(160).positionY(320).image(null).removable(true).visible(true).build());
+        itens.add(ItemCombinableBuilder.builder().combine(1).name("papel").description("papel escrito em lingua antiga").weight(0)
+                .positionX(510).positionY(320).image(null).removable(true).visible(true).build());
+        itens.add(ItemCombinableBuilder.builder().combine(3).name("pregos").description("utilzado para construir algo").weight(0)
+                .positionX(460).positionY(400).image(null).removable(true).visible(true).build());
     }
     //1 - 1
     //2 - 3
