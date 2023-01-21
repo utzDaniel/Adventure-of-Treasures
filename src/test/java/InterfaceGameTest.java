@@ -88,7 +88,7 @@ public class InterfaceGameTest {
 
     @Test
     public void validSetItensJLabel() {
-        ArrayList<Item> itens = new ArrayList<>();
+        var itens = new ArrayList<Item>();
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila1").description("utilizada para carregar mais coisas").weight(0)
                 .positionX(650).positionY(220).image(null).removable(true).visible(true).build());
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila2").description("utilizada para carregar mais coisas").weight(0)
@@ -100,7 +100,7 @@ public class InterfaceGameTest {
 
     @Test
     public void validClearItensJLabel() {
-        ArrayList<Item> itens = new ArrayList<>();
+        var itens = new ArrayList<Item>();
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila1").description("utilizada para carregar mais coisas").weight(0)
                 .positionX(650).positionY(220).image(null).removable(true).visible(true).build());
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila2").description("utilizada para carregar mais coisas").weight(0)

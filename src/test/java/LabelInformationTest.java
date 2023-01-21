@@ -42,7 +42,7 @@ public class LabelInformationTest {
 
     @Test
     public void validUpdateText(){
-        List<String> labelItem = new ArrayList<>();
+        var labelItem = new ArrayList<String>();
         labelItem.add(label[0]);
         labelItem.add(label[1] + item.getName());
         labelItem.add(label[2] + item.getWeight());

@@ -15,7 +15,7 @@ public abstract class MapGame {
     protected ImageIcon imagemIcon;
     protected int[][] limits;
     protected final Map<Door, MapGame> exitsDoors;//Key mapa, Values List<Area> representar inicial X e final X,
-                                                  // inicial Y e final Y. Clase Area com uma Map espeficica
+    // inicial Y e final Y. Clase Area com uma Map espeficica
     protected final Map<Coordinate, Item> item;
 
     public MapGame(String name, ImageIcon imagemIcon) {
@@ -54,34 +54,29 @@ public abstract class MapGame {
         return this.exitsDoors.get(door);
     }
 
-    public Door getDoorMap(int positionPlayerX, int positionPlayerY) {
-        Set<Door> doors = this.exitsDoors.keySet();
-        for (Door exitDoor : doors) {
-            if (exitDoor.getPositionInsideX() == positionPlayerX && exitDoor.getPositionInsideY() == positionPlayerY) {
-                return exitDoor;
-            } else if (exitDoor.getPositionOutsideX() == positionPlayerX && exitDoor.getPositionOutsideY() == positionPlayerY) {
-                return exitDoor;
-            }
-        }
-        return null;
+    public Optional<Door> getDoorMap(int positionPlayerX, int positionPlayerY) {
+        return this.exitsDoors.keySet().stream()
+                .filter(door -> door.getPositionInsideX() == positionPlayerX && door.getPositionInsideY() == positionPlayerY
+                        || door.getPositionOutsideX() == positionPlayerX && door.getPositionOutsideY() == positionPlayerY)
+                .findFirst();
     }
 
     //TODO resolver isso depois
     public boolean activate(String nameItem) {
         boolean activate = false;
         try {
-            if(nameItem.equals("tocha")){
+            if (nameItem.equals("tocha")) {
                 MapGame village = MapGame.mapInicial.getExit("norte").getExit("norte");
-                Door templeDoor = village.getDoorMap(380,530);
+                Door templeDoor = village.getDoorMap(380, 530).get();
                 MapGame templo = village.getMapDoor(templeDoor);
-                Door openDoor = templo.getDoorMap(90, 240);
+                Door openDoor = templo.getDoorMap(90, 240).get();
                 openDoor.setOpen(!openDoor.isOpen());
                 activate = true;
-            }else if (nameItem.equals("mapa")){
+            } else if (nameItem.equals("mapa")) {
                 MapGame praia = MapGame.mapInicial.getExit("leste");
                 praia.setImagemIcon(new ImageIcon("src/main/java/repository/map/cenario/praiaM.png"));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new MoveException("Direção invalida!");
         }
         return activate;
@@ -108,15 +103,13 @@ public abstract class MapGame {
     }
 
     public List<Item> getItemVisible() {
-        List<Item> itens = new ArrayList<>(this.item.values());
-        return itens.stream()
+        return this.item.values().stream()
                 .filter(Item::isVisible)
                 .collect(Collectors.toList());
     }
 
     public List<Item> getItemInvisible() {
-        List<Item> itens = new ArrayList<>(this.item.values());
-        return itens.stream()
+        return this.item.values().stream()
                 .filter(item1 -> !item1.isVisible())
                 .collect(Collectors.toList());
     }

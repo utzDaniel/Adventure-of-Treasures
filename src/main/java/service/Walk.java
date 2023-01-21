@@ -5,6 +5,8 @@ import model.Coordinate;
 import model.Player;
 import model.enums.MovePlayer;
 
+import java.util.Arrays;
+
 public final class Walk {
 
     private final String direction;
@@ -27,13 +29,9 @@ public final class Walk {
     }
 
     private void moveToDirection(){
-        for (MovePlayer move : MovePlayer.values()) {
-            if(move.getDirection().equals(this.direction)){
-                this.move = move;
-                return;
-            }
-        }
-        throw new MoveException("Direção invalida!");
+        this.move = Arrays.stream(MovePlayer.values())
+                .filter(movePlayer -> movePlayer.getDirection().equals(this.direction))
+                .findFirst().orElseThrow(() -> new MoveException("Direção invalida!"));
     }
 
     private void move(){

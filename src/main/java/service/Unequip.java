@@ -5,6 +5,8 @@ import model.interfaces.IEquipable;
 import model.builder.item.Item;
 import model.enums.ItemsEquipable;
 
+import java.util.Arrays;
+
 public final class Unequip<T extends Item> {
 
     private final T item;
@@ -26,12 +28,9 @@ public final class Unequip<T extends Item> {
 
     //item equipavel com room e outro sem, será que deve criar uma nova classe?
     private void unequipItem() {
-        for (ItemsEquipable equipable : ItemsEquipable.values()) {
-            if (equipable.getLabel().equals(this.item.getName())) {
-                equipable.unequip();
-                return;
-            }
-        }
-        throw new ItemEquipableException("Item equipavél não encontrado");
+        var item = Arrays.stream(ItemsEquipable.values())
+                .filter(equipable -> equipable.getLabel().equals(this.item.getName()))
+                .findFirst().orElseThrow(() -> new ItemEquipableException("Item equipavél não encontrado"));
+        item.unequip();
     }
 }

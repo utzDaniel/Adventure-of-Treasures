@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 
-public class DirectorItemTest {
+public class ItemFactoryTest {
 
     private ArrayList<Item> itens;
     private ArrayList<Item> itensFile;
@@ -63,10 +63,9 @@ public class DirectorItemTest {
     }
 
     @Test
-    public void validType() {
+    public void validAllItens() {
         for (int i = 0; i < itens.size(); i++) {
             assertEquals(itens.get(i).toString(), itensFile.get(i).toString());
         }
-
     }
 }

@@ -6,6 +6,8 @@ import model.builder.item.Item;
 import model.enums.ItemsUsable;
 import model.Player;
 
+import java.util.Arrays;
+
 public final class Use<T extends IUsable> {
 
     private final Player player;
@@ -35,13 +37,10 @@ public final class Use<T extends IUsable> {
     }
 
     private void useItem() {
-        for (ItemsUsable value : ItemsUsable.values()) {
-            if (this.item.getName().equals(value.getLabel())) {
-                value.use();
-                return;
-            }
-        }
-        throw new ItemUsableException("Não foi possível usar esse item!");
+        var item = Arrays.stream(ItemsUsable.values())
+                .filter(itemsUsable -> itemsUsable.getLabel().equals(this.item.getName()))
+                .findFirst().orElseThrow(() -> new ItemUsableException("Não foi possível usar esse item!"));
+        item.use();
     }
 
     private void removeItem() {

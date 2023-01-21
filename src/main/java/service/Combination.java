@@ -9,6 +9,7 @@ import model.interfaces.ICombinable;
 import repository.CreateImageMapGame;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,18 +41,18 @@ public final class Combination<T extends ICombinable> {
     }
 
     private void checkItensICombinable() {
-        for (Item item : itens) {
-            if (item instanceof ICombinable) {
-                this.itensCombinable.add((T) item);
-            } else throw new ItemCombinableException("Itens não combináveis");
-        }
+        var allICombinable = itens.stream()
+                .allMatch(item -> item instanceof ICombinable);
+        if(!allICombinable)
+            throw new ItemCombinableException("Itens não combináveis");
+        itens.forEach(item -> this.itensCombinable.add((T)item));
     }
 
     private void checkAllEqualsCombination() {
-        for (int i = 1; i < itensCombinable.size(); i++)
-            if (itensCombinable.get(0).getCombine() != itensCombinable.get(i).getCombine())
-                throw new ItemCombinableException("Itens não são combináveis entre eles");
-
+        int combine = itensCombinable.get(0).getCombine();
+        var isCombine = itensCombinable.stream().allMatch(t -> t.getCombine() == combine);
+        if(!isCombine)
+            throw new ItemCombinableException("Itens não são combináveis entre eles");
     }
 
     private void checkEnoughAmountCombine() {
@@ -60,10 +61,10 @@ public final class Combination<T extends ICombinable> {
     }
 
     private void getItemCombination() {
-        for (Item item : this.player.getInventory().getItemInvisible())
-            if (item.getName().equals(Objects.requireNonNull(ItemsCombination
-                    .getItemCombined(itensCombinable.get(0).getCombine())).getLabel()))
-                newItem = item;
+        newItem = this.player.getInventory().getItemInvisible().stream()
+                .filter(item -> item.getName().equals(
+                        ItemsCombination.getItemCombined(itensCombinable.get(0).getCombine()).get().getLabel()))
+                .findFirst().get();
     }
 
     private void updateMap() {

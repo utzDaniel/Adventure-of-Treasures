@@ -1,6 +1,7 @@
 package model;
 
 import java.io.File;
+import java.util.Objects;
 import javax.sound.sampled.*;
 
 public abstract class MusicPlayer {
@@ -51,7 +52,7 @@ public abstract class MusicPlayer {
     }
 
     public void closePlay() {
-        if (this.clip != null) {
+        if (Objects.nonNull(this.clip)) {
             this.clip.close();
         }
     }

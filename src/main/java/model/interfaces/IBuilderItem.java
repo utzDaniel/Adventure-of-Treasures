@@ -3,6 +3,7 @@ package model.interfaces;
 import model.builder.item.Item;
 
 public interface IBuilderItem {
+
     IBuilderItem name(String name);
 
     IBuilderItem description(String description);

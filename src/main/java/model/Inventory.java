@@ -12,13 +12,13 @@ public final class Inventory {
     private int capacity;
     private int maxCapacity;
     private boolean isInventory;
-    private final Map<String, Item> item;
+    private final Map<String, Item> itens;
 
     public Inventory() {
         this.capacity = 0;
         this.maxCapacity = 10;
         this.isInventory = false;
-        item = new HashMap<>();
+        this.itens = new HashMap<>();
     }
 
     public int getCapacity() {
@@ -46,27 +46,25 @@ public final class Inventory {
     }
 
     public Item getItem(String nameItem) {
-        return item.get(nameItem);
+        return this.itens.get(nameItem);
     }
 
     public Map<String, Item> getMapItem() {
-        return item;
+        return this.itens;
     }
 
     public List<Item> getItemVisible() {
-        List<Item> items = new ArrayList<>(item.values());
-        return items.stream()
+        return this.itens.values().stream()
                 .filter(Item::isVisible)
                 .collect(Collectors.toList());
     }
 
     public void setItemInvisible(Item item) {
-        this.item.put(item.getName(), item);
+        this.itens.put(item.getName(), item);
     }
 
     public List<Item> getItemInvisible() {
-        List<Item> items = new ArrayList<>(item.values());
-        return items.stream()
+        return this.itens.values().stream()
                 .filter(item -> !item.isVisible())
                 .collect(Collectors.toList());
     }

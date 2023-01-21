@@ -167,11 +167,10 @@ public class UseTest {
         for (Item item : createMapGame.getItemInvisiblePlayer()) {
             player.getInventory().setItemInvisible(item);
         }
-
         player.setCurrentMap(createMapGame.getInitialScenery().getExit("leste"));
 
         //mapa visivel
-        ArrayList<Item> itens = new ArrayList<>();
+        var itens = new ArrayList<Item>();
         itens.add(ItemCombinableBuilder.builder().combine(1).name("papel").description("papel escrito em lingua antiga").weight(0)
                 .positionX(510).positionY(320).image(null).removable(true).build());
 
@@ -194,7 +193,7 @@ public class UseTest {
         player.setCurrentMap(createMapGame.getInitialScenery().getExit("leste"));
 
         //mapa visivel
-        ArrayList<Item> itens = new ArrayList<>();
+        var itens = new ArrayList<Item>();
 
         itens.add(ItemCombinableBuilder.builder().combine(1).name("papel").description("papel escrito em lingua antiga").weight(0)
                 .positionX(510).positionY(320).image(null).removable(true).build());
@@ -233,7 +232,7 @@ public class UseTest {
         player.setCurrentMap(beach);
 
         //mapa visivel
-        ArrayList<Item> itens = new ArrayList<>();
+        var itens = new ArrayList<Item>();
         itens.add(ItemCombinableBuilder.builder().combine(1).name("papel").description("papel escrito em lingua antiga").weight(0)
                 .positionX(510).positionY(320).image(null).removable(true).build());
 
@@ -255,7 +254,7 @@ public class UseTest {
         player.setCurrentMap(createMapGame.getInitialScenery());
 
         //mapa visivel
-        ArrayList<Item> itens = new ArrayList<>();
+        var itens = new ArrayList<Item>();
         itens.add(ItemCombinableBuilder.builder().combine(1).name("papel").description("papel escrito em lingua antiga").weight(0)
                 .positionX(510).positionY(320).image(null).removable(true).build());
 

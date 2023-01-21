@@ -29,7 +29,7 @@ public final class Player {
         this.jLabel = new JLabel();
     }
 
-    public static Player getInstance() {
+    public static synchronized Player getInstance() {
         if (Objects.isNull(player)) {
             player = new Player();
         }

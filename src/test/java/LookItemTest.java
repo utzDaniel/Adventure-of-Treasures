@@ -25,9 +25,9 @@ public class LookItemTest {
     public void testarDirectionInvalida(){
         Scenery nextScenery = ((Scenery) player.getCurrentMap()).getExit("oeste");
         player.setCurrentMap(nextScenery);
-        player.setDirection("oest");
         player.setPositionPlayerX(210);
         player.setPositionPlayerY(280);
+        player.setDirection("oest");
         player.lookItem();
     }
 

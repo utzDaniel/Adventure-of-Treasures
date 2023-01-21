@@ -1,11 +1,14 @@
 package model.mapper;
 
 import model.builder.item.Item;
-import model.builder.DirectorItem;
+import model.builder.ItemFactory;
 
 import java.util.function.Function;
 
 public class ItemMapper implements Function<String, Item> {
+
+    private final ItemFactory itemFactory = new ItemFactory();
+
     @Override
     public Item apply(String l) {
         var dadosLinha = l.split(";");
@@ -16,7 +19,7 @@ public class ItemMapper implements Function<String, Item> {
             dadosTratado[i + 1] = dadosLinha[i].trim();
         }
         dadosTratado[11] = dadosTratado[11].equals("null") ? "false" : "true";
-        return new DirectorItem().create(dadosTratado);
+        return this.itemFactory.create(dadosTratado);
     }
 
     private String createCode(String[] dados) {

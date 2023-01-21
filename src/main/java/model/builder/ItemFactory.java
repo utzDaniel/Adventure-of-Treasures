@@ -6,7 +6,7 @@ import model.interfaces.IBuilderItem;
 import static java.lang.Boolean.parseBoolean;
 import static java.lang.Integer.parseInt;
 
-public class DirectorItem {
+public class ItemFactory {
 
     private String [] dados;
 

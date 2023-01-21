@@ -6,6 +6,7 @@ import model.builder.item.Item;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class InterfaceInventory {
@@ -51,31 +52,28 @@ public class InterfaceInventory {
     }
 
     private void setItens() {
-        for (Item item : player.getInventory().getItemVisible()) {
+        player.getInventory().getItemVisible().forEach(item -> {
             buttonItem.create(item);
             buttonItem.getLast().addActionListener(e ->
                     actionButtonItem(item));
             labelSideEast.add(buttonItem.getLast());
-        }
+        });
     }
 
     private void setInfoItens() {
         String capicadade = String.format("Capacidade do inventario %d/%d",player.getInventory().getCapacity(),player.getInventory().getMaxCapacity());
-        var labels = List.of(capicadade,"Nome: ","Peso: ","Descrição: ");
-        labels.forEach(labelInformation::create);
-        for (JLabel label : labelInformation.getInfoLabel()) {
-            labelSideEast.add(label, BorderLayout.NORTH, 0);
-        }
+        List.of(capicadade,"Nome: ","Peso: ","Descrição: ").forEach(labelInformation::create);
+        Arrays.stream(labelInformation.getInfoLabel())
+                .forEach(jLabel -> labelSideEast.add(jLabel, BorderLayout.NORTH, 0));
     }
 
     private void setButtonsActions() {
-        var names = List.of("usar","equipar","combinar","remover","cancelar","confirmar");
-        names.forEach(buttonAction::create);
+        List.of("usar","equipar","combinar","remover","cancelar","confirmar").forEach(buttonAction::create);
         JButton[] buttons = buttonAction.getButtonActions();
-        for (int i = 0; i < 4; i++) {
-            buttons[i].addActionListener(e -> setConfirm(e.getActionCommand()));
-            labelSideEast.add(buttons[i]);
-        }
+        Arrays.stream(buttons).limit(4).forEach(jButton -> {
+            jButton.addActionListener(e -> setConfirm(e.getActionCommand()));
+            labelSideEast.add(jButton);
+        });
         buttons[4].addActionListener(e -> setActionCancel());
         labelSideEast.add(buttons[4]);
         buttons[5].addActionListener(e -> setActionConfirm(e.getActionCommand()));
@@ -101,14 +99,9 @@ public class InterfaceInventory {
     }
 
     private void addListItem(Item item) {
-        boolean addItem = true;
-        for (Item itens : this.items) {
-            if (itens.getName().equals(item.getName())) {
-                addItem = false;
-                break;
-            }
-        }
-        if (addItem) {
+        var addItem = this.items.stream()
+                .anyMatch(item1 -> item1.getName().equals(item.getName()));
+        if (!addItem) {
             this.items.add(item);
         }
     }

@@ -6,6 +6,8 @@ import model.builder.item.Item;
 import model.enums.ItemsEquipable;
 import model.Player;
 
+import java.util.Arrays;
+
 public final class Equip <T extends Item> {
 
     private final Player player;
@@ -28,12 +30,9 @@ public final class Equip <T extends Item> {
 
     //item equipavel com room e outro sem, será que deve criar uma nova classe?
     private void equipItem() {
-        for (ItemsEquipable equipable : ItemsEquipable.values()) {
-            if (equipable.getLabel().equals(this.item.getName())) {
-                equipable.equip();
-                return;
-            }
-        }
-        throw new ItemEquipableException("Item equipavél não encontrado");
+        var item = Arrays.stream(ItemsEquipable.values())
+                .filter(equipable -> equipable.getLabel().equals(this.item.getName()))
+                .findFirst().orElseThrow(() -> new ItemEquipableException("Item equipavél não encontrado"));
+        item.equip();
     }
 }

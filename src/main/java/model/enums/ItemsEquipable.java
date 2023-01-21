@@ -8,33 +8,35 @@ public enum ItemsEquipable {
     MOCHILA("mochila") {
         @Override
         public boolean equip() {
-            Player.getInstance().getInventory().updadeMaxCapacity(5);
+            player.getInventory().updadeMaxCapacity(UPDATE);
             return true;
         }
 
         @Override
         public boolean unequip() {
-            if (!(Player.getInstance().getInventory().getCapacity() <= (Player.getInstance().getInventory().getMaxCapacity() - 5)))
+            if (!(player.getInventory().getCapacity() <= (player.getInventory().getMaxCapacity() - UPDATE)))
                 throw new ItemEquipableException("Remove itens da mochila, antes de tentar desequipar");
-            Player.getInstance().getInventory().updadeMaxCapacity(-5);
+            player.getInventory().updadeMaxCapacity(-UPDATE);
             return true;
         }
     }, TOCHA("tocha") {
         @Override
         public boolean equip() {
-            boolean openDoor = Player.getInstance().getCurrentMap().activate("tocha");
+            boolean openDoor = player.getCurrentMap().activate("tocha");
             if(!openDoor) throw new ItemEquipableException("Erro ao abrir a door");
             return true;
         }
 
         @Override
         public boolean unequip() {
-            boolean openDoor = Player.getInstance().getCurrentMap().activate("tocha");
+            boolean openDoor = player.getCurrentMap().activate("tocha");
             if(!openDoor) throw new ItemEquipableException("Erro ao abrir a door");
             return true;
         }
     };
 
+    static private final int UPDATE = 5;
+    static private final Player player = Player.getInstance();
     private final String label;
 
     public abstract boolean equip();
@@ -46,6 +48,6 @@ public enum ItemsEquipable {
     }
 
     public String getLabel() {
-        return label;
+        return this.label;
     }
 }

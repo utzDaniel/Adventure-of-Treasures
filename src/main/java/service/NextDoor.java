@@ -1,8 +1,11 @@
 package service;
 
+import exception.ItemUsableException;
 import exception.MapGameException;
 import model.*;
 import view.InterfaceGame;
+
+import java.util.Objects;
 
 public class NextDoor {
 
@@ -15,11 +18,11 @@ public class NextDoor {
     }
 
     public void run() {
-        Door door = player.getCurrentMap().getDoorMap(player.getPositionPlayerX(), player.getPositionPlayerY());
-        if (door == null) return;
-        if(!door.isOpen()) throw new MapGameException("Porta está fechada!");
-        MapGame mapGame = player.getCurrentMap().getMapDoor(door);
-        setPositionPlayer(door);
+        var door = player.getCurrentMap().getDoorMap(player.getPositionPlayerX(), player.getPositionPlayerY());
+        if (door.isEmpty()) return;
+        if(!door.get().isOpen()) throw new MapGameException("Porta está fechada!");
+        MapGame mapGame = player.getCurrentMap().getMapDoor(door.get());
+        setPositionPlayer(door.get());
         player.setCurrentMap(mapGame);
         interfaceGame.getMapGameJLabel().setIcon(mapGame.getImagemIcon());
     }

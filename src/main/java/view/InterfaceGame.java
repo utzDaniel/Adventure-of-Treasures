@@ -11,6 +11,7 @@ import settings.SettingsPlayer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -58,8 +59,8 @@ public class InterfaceGame {
     private void createJMenuBar() {
         MenuBar menuBar = new MenuBar(frame.getContentPane(), song, soundEffects);
         frame.setJMenuBar(menuBar.getMenubar());
-        var navigations = List.of("Historia", "Comandos", "Ajuda", "Musica", "Efeitos", "Sair");
-        navigations.forEach(menuBar::createNavigation);
+        List.of("Historia", "Comandos", "Ajuda", "Musica", "Efeitos", "Sair")
+                .forEach(menuBar::createNavigation);
     }
 
     private void createJLabelPlayer() {
@@ -80,23 +81,21 @@ public class InterfaceGame {
     }
 
     public void clearJLabelItens() {
-        for(Component component : frame.getContentPane().getComponents()){
-            if(component instanceof JLabel && component.getName().equals("item")){
-                frame.getContentPane().remove(component);
-            }
-        }
+        Arrays.stream(frame.getContentPane().getComponents())
+                .filter(component -> component instanceof JLabel && component.getName().equals("item"))
+                .forEach(component -> frame.getContentPane().remove(component));
     }
 
     public void setItensJLabel(List<Item> itens, int index) {
         SettingsItem settingsItem = new SettingsItem();
-        for (Item item : itens) {
+        itens.forEach(item -> {
             JLabel label = new JLabel(item.getImage());
             label.setName("item");
             frame.getContentPane().add(label, index);
             label.setBounds(settingsItem.labelPositionX(item.getPositionX()),
                     settingsItem.labelPositionY(item.getPositionY()),
                     settingsItem.labelWidth(), settingsItem.labelHeight());
-        }
+        });
     }
 
     public Song getSong() {

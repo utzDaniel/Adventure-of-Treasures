@@ -6,6 +6,8 @@ import model.builder.item.Item;
 import model.enums.MovePlayer;
 import model.Player;
 
+import java.util.Arrays;
+
 public final class LookItem {
 
     private final Player player;
@@ -26,13 +28,9 @@ public final class LookItem {
     }
 
     private void lookToDirection(){
-        for (MovePlayer move : MovePlayer.values()) {
-            if(move.getDirection().equals(this.player.getDirection())){
-                this.move = move;
-                return;
-            }
-        }
-        throw new MoveException("Direção invalida!");
+        this.move =  Arrays.stream(MovePlayer.values())
+                .filter(move -> move.getDirection().equals(this.player.getDirection()))
+                .findFirst().orElseThrow(() -> new MoveException("Direção invalida!"));
     }
 
     private void setCoordinate(){
