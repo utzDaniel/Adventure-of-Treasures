@@ -1,15 +1,15 @@
 package model.enums;
 
-import repository.CreateImagePlayer;
+import repository.ImagePlayer;
 
 import javax.swing.*;
 
 public enum MovePlayer {
 
-    OESTE("oeste",-MovePlayer.STEP,0, new CreateImagePlayer().selectImage(Direction.OESTE.getLabel())),
-    NORTE("norte",0,-MovePlayer.STEP, new CreateImagePlayer().selectImage(Direction.NORTE.getLabel())),
-    LESTE("leste", MovePlayer.STEP,0, new CreateImagePlayer().selectImage(Direction.LESTE.getLabel())),
-    SUL("sul",0, MovePlayer.STEP, new CreateImagePlayer().selectImage(Direction.SUL.getLabel()));
+    OESTE("oeste",-MovePlayer.STEP,0, ImagePlayer.ESQUERDA.select()),
+    NORTE("norte",0,-MovePlayer.STEP,ImagePlayer.CIMA.select()),
+    LESTE("leste", MovePlayer.STEP,0, ImagePlayer.DIREITA.select()),
+    SUL("sul",0, MovePlayer.STEP, ImagePlayer.BAIXO.select());
 
     private final String direction;
     private final int toMoveX;

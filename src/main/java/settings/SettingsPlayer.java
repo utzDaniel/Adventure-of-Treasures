@@ -1,7 +1,6 @@
 package settings;
 
-import model.enums.Direction;
-import repository.CreateImagePlayer;
+import repository.ImagePlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +19,7 @@ public class SettingsPlayer implements ISettingsJLabel {
 
     @Override
     public ImageIcon getIcon() {
-        return new CreateImagePlayer().selectImage(Direction.SUL.getLabel());
+        return ImagePlayer.BAIXO.select();
     }
 
     @Override
