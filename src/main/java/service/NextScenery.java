@@ -1,6 +1,7 @@
 package service;
 
 import model.*;
+import model.builder.map.Scenery;
 import view.InterfaceGame;
 
 import java.util.Objects;
@@ -20,7 +21,7 @@ public class NextScenery {
         if (Objects.isNull(nextScenery)) return false;
         player.setCurrentMap(nextScenery);
         newPosition(direction);
-        interfaceGame.getMapGameJLabel().setIcon(nextScenery.getImagemIcon());
+        interfaceGame.getMapGameJLabel().setIcon(nextScenery.getImage());
         return true;
 
     }

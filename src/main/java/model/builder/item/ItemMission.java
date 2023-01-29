@@ -1,15 +1,13 @@
 package model.builder.item;
 
-import model.MapGame;
-
-import javax.swing.*;
 import java.util.List;
 
 public final class ItemMission extends Item {
 
     private String mapGame;
 
-    protected ItemMission() { }
+    protected ItemMission() {
+    }
 
     public String getMapGame() {
         return mapGame;

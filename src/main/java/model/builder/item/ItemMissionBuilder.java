@@ -6,7 +6,7 @@ public class ItemMissionBuilder extends ItemBuilder {
 
     private ItemMissionBuilder() {
         this.itemMission = new ItemMission();
-        item = this.itemMission;
+        super.item = this.itemMission;
     }
 
     static public ItemMissionBuilder builder() {

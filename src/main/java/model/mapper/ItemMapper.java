@@ -3,6 +3,7 @@ package model.mapper;
 import model.builder.item.Item;
 import model.builder.ItemFactory;
 
+import java.util.Arrays;
 import java.util.function.Function;
 
 public class ItemMapper implements Function<String, Item> {
@@ -24,9 +25,8 @@ public class ItemMapper implements Function<String, Item> {
 
     private String createCode(String[] dados) {
         StringBuilder code = new StringBuilder();
-        for (String dado : dados) {
-            code.append(dado.equals("null") ? "0" : "1");
-        }
+        Arrays.stream(dados)
+                .forEach(dado -> code.append(dado.equals("null") ? "0" : "1"));
         return code.toString();
     }
 }

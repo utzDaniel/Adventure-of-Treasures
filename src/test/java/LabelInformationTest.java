@@ -1,12 +1,10 @@
 import model.builder.item.Item;
-import model.builder.item.ItemUsable;
 import model.builder.item.ItemUsableBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import view.LabelInformation;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 

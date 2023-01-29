@@ -1,5 +1,4 @@
 import exception.CreateImageException;
-import exception.MoveException;
 import org.junit.Before;
 import org.junit.Test;
 import repository.CreateImageInventory;

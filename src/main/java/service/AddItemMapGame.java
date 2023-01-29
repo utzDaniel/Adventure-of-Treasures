@@ -2,6 +2,7 @@ package service;
 
 import model.*;
 import model.builder.item.Item;
+import model.builder.map.MapGame;
 import model.enums.MovePlayer;
 
 public class AddItemMapGame {
@@ -20,19 +21,23 @@ public class AddItemMapGame {
         this.mapGame = player.getCurrentMap();
     }
 
-    public void run(){
+    public boolean run(){
         do{
             this.multiply++;
         }while (!checkDirectionDropItem());
         setItemNewCoordinate();
-        addItem();
+        return true;
     }
 
     private boolean checkDirectionDropItem(){
+        int x,y;
         for (MovePlayer move : MovePlayer.values()) {
-            this.coordinate.setAxisX(this.player.getPositionPlayerX() + (move.getToMoveX() * this.multiply));
-            this.coordinate.setAxisY(this.player.getPositionPlayerY() + (move.getToMoveY() * this.multiply));
-            if(checkCoordinateDropItem()) return true;
+            x = this.player.getPositionPlayerX() + (move.getToMoveX() * this.multiply);
+            y = this.player.getPositionPlayerY() + (move.getToMoveY() * this.multiply);
+            this.coordinate.setAxisX(x);
+            this.coordinate.setAxisY(y);
+            if(x >= 10 && y >= 10 && x <= 770 && y <= 550 && checkCoordinateDropItem()) return true;
+            if(this.multiply == 20) break;
         }
         return false;//TODO criar uma exception, pode ficar em loop, criar um algoritmo melhor de dropar item
     }
@@ -45,9 +50,4 @@ public class AddItemMapGame {
         this.item.setPositionX(this.coordinate.getAxisX()*10);// position X item * STEP = 10
         this.item.setPositionY(this.coordinate.getAxisY()*10);// position Y item * STEP = 10
     }
-
-    private void addItem(){
-        this.mapGame.setItem(item);
-    }
-
 }

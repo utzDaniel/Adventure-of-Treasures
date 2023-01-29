@@ -1,10 +1,8 @@
 import model.*;
 import model.builder.item.*;
-import repository.CreateMapGame;
+import repository.RepositoryMapGame;
 import view.InterfaceGame;
 import controller.Keyboard;
-
-import java.util.ArrayList;
 
 public class Game {
 
@@ -24,7 +22,7 @@ public class Game {
     }
 
     private void initialPlayer() {
-        CreateMapGame createMapGame = new CreateMapGame();
+        RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
         player.setCurrentMap(createMapGame.getInitialScenery());
         for (Item item : createMapGame.getItemInvisiblePlayer()) {
             player.getInventory().setItemInvisible(item);

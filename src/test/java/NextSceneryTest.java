@@ -1,10 +1,10 @@
 import model.enums.Direction;
-import model.MapGame;
+import model.builder.map.MapGame;
 import model.Player;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import repository.CreateMapGame;
+import repository.RepositoryMapGame;
 import service.NextScenery;
 import view.InterfaceGame;
 
@@ -17,7 +17,7 @@ public class NextSceneryTest {
 
     @Before
     public void inicialize() {
-        CreateMapGame createMapGame = new CreateMapGame();
+        RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
         player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
         player.setCurrentMap(createMapGame.getInitialScenery());

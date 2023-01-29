@@ -21,6 +21,7 @@ public final class Walk {
     public boolean run (){
         moveToDirection();
         move();
+        this.move.run();
         if (checkCanWalk()) setLocation();
         else comeBack();
         setDirection();

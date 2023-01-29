@@ -1,15 +1,12 @@
 package service;
 
 import exception.ItemCombinableException;
-import model.*;
+import model.Player;
 import model.builder.item.Item;
-import model.builder.item.ItemMission;
 import model.enums.ItemsCombination;
 import model.interfaces.ICombinable;
-import repository.CreateImageMapGame;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -61,10 +58,10 @@ public final class Combination<T extends ICombinable> {
     }
 
     private void getItemCombination() {
-        newItem = this.player.getInventory().getItemInvisible().stream()
+        this.player.getInventory().getItemInvisible().stream()
                 .filter(item -> item.getName().equals(
                         ItemsCombination.getItemCombined(itensCombinable.get(0).getCombine()).get().getLabel()))
-                .findFirst().get();
+                .findFirst().ifPresent(item -> newItem = item);
     }
 
     private void updateMap() {

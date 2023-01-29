@@ -1,10 +1,9 @@
-import model.builder.item.Item;
-import model.builder.item.ItemEquipable;
 import model.Player;
+import model.builder.item.Item;
 import model.builder.item.ItemEquipableBuilder;
 import org.junit.Before;
 import org.junit.Test;
-import repository.CreateMapGame;
+import repository.RepositoryMapGame;
 import settings.SettingsJFrame;
 import settings.SettingsMapGame;
 import settings.SettingsPlayer;
@@ -25,7 +24,7 @@ public class InterfaceGameTest {
 
     @Before
     public void create() {
-        CreateMapGame createMapGame = new CreateMapGame();
+        RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
         player.setCurrentMap(createMapGame.getInitialScenery());
         for (Item item : createMapGame.getItemInvisiblePlayer()) {
             player.getInventory().setItemInvisible(item);
@@ -69,7 +68,7 @@ public class InterfaceGameTest {
     @Test
     public void validIconJLabelMapGame() {
         var icon = ((JLabel) container.getComponent(1)).getIcon();
-        assertEquals(player.getCurrentMap().getImagemIcon().toString(), icon.toString());
+        assertEquals(player.getCurrentMap().getImage().toString(), icon.toString());
     }
 
     @Test

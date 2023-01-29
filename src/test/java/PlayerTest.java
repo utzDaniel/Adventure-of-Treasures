@@ -1,9 +1,12 @@
-import model.*;
-import model.builder.item.*;
+import model.Player;
+import model.builder.item.Item;
+import model.builder.item.ItemCombinableBuilder;
+import model.builder.item.ItemEquipableBuilder;
+import model.builder.item.ItemUsableBuilder;
 import model.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
-import repository.CreateMapGame;
+import repository.RepositoryMapGame;
 
 import static org.junit.Assert.*;
 
@@ -13,7 +16,7 @@ public class PlayerTest {
 
     @Before
     public void iniciacaoDoPlayerParaTeste() {
-        CreateMapGame createMapGame = new CreateMapGame();
+        RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
         player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
         player.setCurrentMap(createMapGame.getInitialScenery());

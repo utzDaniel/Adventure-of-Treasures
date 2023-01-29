@@ -3,6 +3,7 @@ package controller;
 import exception.InventoryException;
 import exception.MapGameException;
 import model.*;
+import model.builder.map.MapGame;
 import service.NextDoor;
 import service.NextScenery;
 import service.Take;

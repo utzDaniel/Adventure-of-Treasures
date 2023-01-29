@@ -1,6 +1,6 @@
 package settings;
 
-import repository.ImagePlayer;
+import model.enums.ImagePlayer;
 
 import javax.swing.*;
 import java.awt.*;

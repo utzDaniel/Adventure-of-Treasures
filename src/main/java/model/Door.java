@@ -1,37 +1,24 @@
 package model;
 
 public final class Door {
+    private final String mapGame;
+    private final Coordinate coordinate;
 
-    private final int positionInsideX;
-    private final int positionInsideY;
-    private final int positionOutsideX;
-    private final int positionOutsideY;
     private boolean open;
 
-    public Door(int positionInsideX, int positionInsideY, int positionOutsideX, int positionOutsideY, boolean open){
-        this.positionInsideX = positionInsideX;
-        this.positionInsideY = positionInsideY;
-        this.positionOutsideX = positionOutsideX;
-        this.positionOutsideY = positionOutsideY;
+    public Door(String mapGame, Coordinate coordinate, boolean open){
+        this.mapGame = mapGame;
+        this.coordinate = coordinate;
         this.open = open;
     }
 
-    public int getPositionInsideX() {
-        return positionInsideX;
+    public String getMapGame() {
+        return this.mapGame;
     }
 
-    public int getPositionInsideY() {
-        return positionInsideY;
+    public Coordinate getCoordinate() {
+        return this.coordinate;
     }
-
-    public int getPositionOutsideX() {
-        return positionOutsideX;
-    }
-
-    public int getPositionOutsideY() {
-        return positionOutsideY;
-    }
-
     public void setOpen(boolean open) {
         this.open = open;
     }
@@ -40,4 +27,12 @@ public final class Door {
         return open;
     }
 
+    @Override
+    public String toString() {
+        return "Door{" +
+                "mapGame='" + mapGame + '\'' +
+                ", coordinate=" + coordinate +
+                ", open=" + open +
+                '}';
+    }
 }

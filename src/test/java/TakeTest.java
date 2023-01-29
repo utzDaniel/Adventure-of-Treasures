@@ -1,12 +1,11 @@
 import exception.InventoryException;
-import model.*;
+import model.Player;
 import model.builder.item.Item;
-import model.builder.item.ItemUsable;
 import model.builder.item.ItemUsableBuilder;
 import model.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
-import repository.CreateMapGame;
+import repository.RepositoryMapGame;
 import service.Take;
 
 import static org.junit.Assert.assertFalse;
@@ -20,7 +19,7 @@ public class TakeTest {
 
     @Before
     public void inicialize() {
-        CreateMapGame createMapGame = new CreateMapGame();
+        RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
         player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
         player.setCurrentMap(createMapGame.getInitialScenery());
@@ -29,7 +28,7 @@ public class TakeTest {
         }
         item = ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(0)
                 .positionX(300).positionY(480).image(null).removable(true).visible(true).build();
-        player.getCurrentMap().setItem(item);
+        player.getCurrentMap().addItem(item);
         take = new Take();
     }
 
@@ -42,11 +41,12 @@ public class TakeTest {
 
     @Test (expected = InventoryException.class)
     public void testarItemValidoAFrenteSemCapacitadadeNoInventario() {
-        Item item = ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(30)
-                .positionX(290).positionY(470).image(null).removable(true).visible(true).build();
+        Item item = ItemUsableBuilder.builder().localUse("praia").name("pa1").description("ferramenta usada para cavar").weight(30)
+                .positionX(300).positionY(470).image(null).removable(true).visible(true).build();
         player.setPositionPlayerX(item.getPositionX());
         player.setPositionPlayerY(item.getPositionY()-10);
-        player.getCurrentMap().setItem(item);
+        player.setDirection("oeste");
+        player.getCurrentMap().addItem(item);
         take.run();
     }
 

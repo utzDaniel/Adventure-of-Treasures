@@ -1,27 +1,25 @@
 package model.enums;
 
-import repository.ImagePlayer;
-
 import javax.swing.*;
 
 public enum MovePlayer {
 
-    OESTE("oeste",-MovePlayer.STEP,0, ImagePlayer.ESQUERDA.select()),
-    NORTE("norte",0,-MovePlayer.STEP,ImagePlayer.CIMA.select()),
-    LESTE("leste", MovePlayer.STEP,0, ImagePlayer.DIREITA.select()),
-    SUL("sul",0, MovePlayer.STEP, ImagePlayer.BAIXO.select());
+    OESTE("oeste",-MovePlayer.STEP,0, ImagePlayer.ESQUERDA),
+    NORTE("norte",0,-MovePlayer.STEP,ImagePlayer.CIMA),
+    LESTE("leste", MovePlayer.STEP,0, ImagePlayer.DIREITA),
+    SUL("sul",0, MovePlayer.STEP, ImagePlayer.BAIXO);
 
     private final String direction;
     private final int toMoveX;
     private final int toMoveY;
-    private final ImageIcon imageIcon;
+    private final ImagePlayer imagePlayer;
     public static final int STEP = 10;
 
-    MovePlayer(String direction, int toMoveX, int toMoveY, ImageIcon imageIcon) {
+    MovePlayer(String direction, int toMoveX, int toMoveY, ImagePlayer imagePlayer) {
         this.direction = direction;
         this.toMoveX = toMoveX;
         this.toMoveY = toMoveY;
-        this.imageIcon = imageIcon;
+        this.imagePlayer = imagePlayer;
     }
 
     public String getDirection() {
@@ -37,6 +35,11 @@ public enum MovePlayer {
     }
 
     public ImageIcon getImageIcon() {
-        return this.imageIcon;
+        return this.imagePlayer.select();
     }
+
+    public void run() {
+        this.imagePlayer.run();
+    }
+
 }

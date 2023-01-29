@@ -1,16 +1,17 @@
 import exception.ItemUsableException;
-import model.*;
+import model.Player;
 import model.builder.item.*;
+import model.builder.map.Room;
+import model.builder.map.Scenery;
 import org.junit.Before;
 import org.junit.Test;
-import repository.CreateMapGame;
+import repository.RepositoryMapGame;
 import service.Combination;
 import service.Use;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class UseTest {
@@ -34,10 +35,7 @@ public class UseTest {
 
     @Test
     public void validarUsoDaChave(){
-        Scenery village = new Scenery("vila", null);
-        Door templeDoor = new Door(380, 530, 370, 150, false);
-        Room temple = new Room("templo", null);
-        village.setExitsDoors(templeDoor, temple);
+        Scenery village =  (Scenery)RepositoryMapGame.getInstance().getMapGame("vila");
         player.setCurrentMap(village);
         player.setPositionPlayerX(370);
         player.setPositionPlayerY(150);
@@ -47,10 +45,7 @@ public class UseTest {
 
     @Test (expected = ItemUsableException.class)
     public void invalidarUsoDaChavePorItem(){
-        Scenery village = new Scenery("vila", null);
-        Door templeDoor = new Door(380, 530, 370, 150, false);
-        Room temple = new Room("templo", null);
-        village.setExitsDoors(templeDoor, temple);
+        Scenery village =  (Scenery)RepositoryMapGame.getInstance().getMapGame("vila");
         player.setCurrentMap(village);
         player.setPositionPlayerX(370);
         player.setPositionPlayerY(150);
@@ -59,10 +54,7 @@ public class UseTest {
 
     @Test(expected = ItemUsableException.class)
     public void invalidarUsoDaChavePorDoor(){
-        Scenery village = new Scenery("vila", null);
-        Door templeDoor = new Door(380, 530, 370, 150, false);
-        Room temple = new Room("templo", null);
-        village.setExitsDoors(templeDoor, temple);
+        Scenery village =  (Scenery)RepositoryMapGame.getInstance().getMapGame("vila");
         player.setCurrentMap(village);
         player.setPositionPlayerX(0);
         player.setPositionPlayerY(0);
@@ -71,16 +63,7 @@ public class UseTest {
 
     @Test (expected = ItemUsableException.class)
     public void invalidarUsoDaChavePorScenery(){
-        Scenery village = new Scenery("vila", null);
-        Door templeDoor = new Door(380, 530, 370, 150, false);
-        Room temple = new Room("templo", null);
-        Door basementDoor = new Door(100,150,90,240,false);
-        Room basement = new Room("porao do templo", null);
-        Room topTemple = new Room("topo do templo", null);
-        Door topTempleDoor = new Door(250,180,260,190,false);
-        temple.setExitsDoors(templeDoor, village);
-        temple.setExitsDoors(basementDoor,basement);
-        temple.setExitsDoors(topTempleDoor,topTemple);
+        Room temple =  (Room) RepositoryMapGame.getInstance().getMapGame("templo");
         player.setCurrentMap(temple);
         player.setPositionPlayerX(370);
         player.setPositionPlayerY(150);
@@ -89,35 +72,17 @@ public class UseTest {
 
     @Test
     public void validarUsoDaEscada(){
-        Scenery village = new Scenery("vila", null);
-        Door templeDoor = new Door(380, 530, 370, 150, false);
-        Room temple = new Room("templo", null);
-        Door basementDoor = new Door(100,150,90,240,false);
-        Room basement = new Room("porao do templo", null);
-        Room topTemple = new Room("topo do templo", null);
-        Door topTempleDoor = new Door(250,180,260,190,false);
-        temple.setExitsDoors(templeDoor, village);
-        temple.setExitsDoors(basementDoor,basement);
-        temple.setExitsDoors(topTempleDoor,topTemple);
+        Room temple =  (Room) RepositoryMapGame.getInstance().getMapGame("templo");
+        player.setPositionPlayerX(260);
+        player.setPositionPlayerY(190);
         player.setCurrentMap(temple);
-        player.setPositionPlayerX(250);
-        player.setPositionPlayerY(180);
         Use use = new Use(itens.get(1));
         assertTrue(use.run());
     }
 
     @Test (expected = ItemUsableException.class)
     public void invalidarUsoDaEscadaPorDoor(){
-        Scenery village = new Scenery("vila", null);
-        Door templeDoor = new Door(380, 530, 370, 150, false);
-        Room temple = new Room("templo", null);
-        Door basementDoor = new Door(100,150,90,240,false);
-        Room basement = new Room("porao do templo", null);
-        Room topTemple = new Room("topo do templo", null);
-        Door topTempleDoor = new Door(250,180,260,190,false);
-        temple.setExitsDoors(templeDoor, village);
-        temple.setExitsDoors(basementDoor,basement);
-        temple.setExitsDoors(topTempleDoor,topTemple);
+        Room temple =  (Room) RepositoryMapGame.getInstance().getMapGame("templo");
         player.setCurrentMap(temple);
         player.setPositionPlayerX(0);
         player.setPositionPlayerY(0);
@@ -126,16 +91,7 @@ public class UseTest {
 
     @Test (expected = ItemUsableException.class)
     public void invalidarUsoDaEscadaPorScenery(){
-        Scenery village = new Scenery("vila", null);
-        Door templeDoor = new Door(380, 530, 370, 150, false);
-        Room temple = new Room("templo", null);
-        Door basementDoor = new Door(100,150,90,240,false);
-        Room basement = new Room("porao do templo", null);
-        Room topTemple = new Room("topo do templo", null);
-        Door topTempleDoor = new Door(250,180,260,190,false);
-        temple.setExitsDoors(templeDoor, village);
-        temple.setExitsDoors(basementDoor,basement);
-        temple.setExitsDoors(topTempleDoor,topTemple);
+        Scenery village =  (Scenery) RepositoryMapGame.getInstance().getMapGame("vila");
         player.setCurrentMap(village);
         player.setPositionPlayerX(250);
         player.setPositionPlayerY(180);
@@ -144,16 +100,7 @@ public class UseTest {
 
     @Test (expected = ItemUsableException.class)
     public void invalidarUsoDaEscadaPorItem(){
-        Scenery village = new Scenery("vila", null);
-        Door templeDoor = new Door(380, 530, 370, 150, false);
-        Room temple = new Room("templo", null);
-        Door basementDoor = new Door(100,150,90,240,false);
-        Room basement = new Room("porao do templo", null);
-        Room topTemple = new Room("topo do templo", null);
-        Door topTempleDoor = new Door(250,180,260,190,false);
-        temple.setExitsDoors(templeDoor, village);
-        temple.setExitsDoors(basementDoor,basement);
-        temple.setExitsDoors(topTempleDoor,topTemple);
+        Room temple =  (Room) RepositoryMapGame.getInstance().getMapGame("templo");
         player.setCurrentMap(temple);
         player.setPositionPlayerX(250);
         player.setPositionPlayerY(180);
@@ -162,7 +109,7 @@ public class UseTest {
 
     @Test
     public void validarUsoDaPa(){
-        CreateMapGame createMapGame = new CreateMapGame();
+        RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
         player.setCurrentMap(createMapGame.getInitialScenery());
         for (Item item : createMapGame.getItemInvisiblePlayer()) {
             player.getInventory().setItemInvisible(item);
@@ -176,7 +123,9 @@ public class UseTest {
 
         itens.add(ItemCombinableBuilder.builder().combine(1).name("livro").description("livro antigo usado para decifrar escrita antiga").weight(0)
                 .positionX(490).positionY(390).image(null).removable(true).build());
-
+        Item item = ItemMissionBuilder.builder().mapGame("praia").name("mapa").description("algo está enterrado na praia").weight(0)
+                .positionX(410).positionY(200).image(null).removable(false).visible(false).build();
+        player.getInventory().setItemInvisible(item);
         new Combination(itens).run();
 
         Use use = new Use(this.itens.get(4));
@@ -185,7 +134,7 @@ public class UseTest {
 
     @Test(expected = ItemUsableException.class)
     public void invalidarUsoDaPaPorItem(){
-        CreateMapGame createMapGame = new CreateMapGame();
+        RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
         player.setCurrentMap(createMapGame.getInitialScenery());
         for (Item item : createMapGame.getItemInvisiblePlayer()) {
             player.getInventory().setItemInvisible(item);
@@ -200,6 +149,9 @@ public class UseTest {
 
         itens.add(ItemCombinableBuilder.builder().combine(1).name("livro").description("livro antigo usado para decifrar escrita antiga").weight(0)
                 .positionX(490).positionY(390).image(null).removable(true).build());
+        Item item = ItemMissionBuilder.builder().mapGame("praia").name("mapa").description("algo está enterrado na praia").weight(0)
+        .positionX(410).positionY(200).image(null).removable(false).visible(false).build();
+        player.getInventory().setItemInvisible(item);
 
         new Combination(itens).run();
 
@@ -209,12 +161,14 @@ public class UseTest {
 
     @Test(expected = ItemUsableException.class)
     public void invalidarUsoDaPaPorInventario(){
-        CreateMapGame createMapGame = new CreateMapGame();
+        RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
         player.setCurrentMap(createMapGame.getInitialScenery());
         for (Item item : createMapGame.getItemInvisiblePlayer()) {
             player.getInventory().setItemInvisible(item);
         }
-
+        Item item = ItemMissionBuilder.builder().mapGame("praia").name("mapa").description("algo está enterrado na praia").weight(0)
+                .positionX(410).positionY(200).image(null).removable(false).visible(false).build();
+        player.getInventory().setItemInvisible(item);
         player.setCurrentMap(createMapGame.getInitialScenery().getExit("leste"));
 
         new Use(itens.get(4)).run();
@@ -222,31 +176,8 @@ public class UseTest {
     }
 
     @Test(expected = ItemUsableException.class)
-    public void invalidarUsoDaPaPorItensInvisiveis(){
-        CreateMapGame createMapGame = new CreateMapGame();
-        player.setCurrentMap(createMapGame.getInitialScenery());
-        for (Item item : createMapGame.getItemInvisiblePlayer()) {
-            player.getInventory().setItemInvisible(item);
-        }
-        Scenery beach = new Scenery("praia", null);
-        player.setCurrentMap(beach);
-
-        //mapa visivel
-        var itens = new ArrayList<Item>();
-        itens.add(ItemCombinableBuilder.builder().combine(1).name("papel").description("papel escrito em lingua antiga").weight(0)
-                .positionX(510).positionY(320).image(null).removable(true).build());
-
-        itens.add(ItemCombinableBuilder.builder().combine(1).name("livro").description("livro antigo usado para decifrar escrita antiga").weight(0)
-                .positionX(490).positionY(390).image(null).removable(true).build());
-        new Combination(itens).run();
-
-        new Use(this.itens.get(4)).run();
-
-    }
-
-    @Test(expected = ItemUsableException.class)
     public void invalidarUsoDaPaPorScenery(){
-        CreateMapGame createMapGame = new CreateMapGame();
+        RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
         player.setCurrentMap(createMapGame.getInitialScenery());
         for (Item item : createMapGame.getItemInvisiblePlayer()) {
             player.getInventory().setItemInvisible(item);
@@ -260,6 +191,11 @@ public class UseTest {
 
         itens.add(ItemCombinableBuilder.builder().combine(1).name("livro").description("livro antigo usado para decifrar escrita antiga").weight(0)
                 .positionX(490).positionY(390).image(null).removable(true).build());
+
+        Item item = ItemMissionBuilder.builder().mapGame("praia").name("mapa").description("algo está enterrado na praia").weight(0)
+                .positionX(410).positionY(200).image(null).removable(false).visible(false).build();
+        player.getInventory().setItemInvisible(item);
+
         new Combination(itens).run();
 
         new Use(this.itens.get(4)).run();

@@ -1,13 +1,14 @@
 import exception.MoveException;
-import model.*;
+import model.Player;
+import model.builder.map.MapGame;
+import model.builder.map.Scenery;
 import model.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
-import repository.CreateMapGame;
+import repository.RepositoryMapGame;
 
-import javax.swing.*;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class LookItemTest {
 
@@ -15,7 +16,7 @@ public class LookItemTest {
 
     @Before
     public void iniciacaoDoPlayerParaTeste() {
-        CreateMapGame createMapGame = new CreateMapGame();
+        RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
         player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
         player.setCurrentMap(createMapGame.getInitialScenery());

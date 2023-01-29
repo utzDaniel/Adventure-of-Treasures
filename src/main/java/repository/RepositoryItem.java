@@ -8,18 +8,28 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class RepositoryItem {
 
+    private static RepositoryItem repositoryItem;
     private final Map<String, Item> itens;
     private final Map<String, Item> itensInvisiblePlayer;
 
-    public RepositoryItem() {
+    private RepositoryItem() {
         this.itens = new HashMap<>();
         this.itensInvisiblePlayer = new HashMap<>();
         createItens();
     }
+
+    public static synchronized RepositoryItem getInstance(){
+        if(Objects.isNull(repositoryItem)){
+            repositoryItem = new RepositoryItem();
+        }
+        return repositoryItem;
+    }
+
 
     private void createItens() {
         String filename = "item/item.csv";
@@ -40,8 +50,8 @@ public class RepositoryItem {
         this.itens.get("tocha").setVisible(false);
     }
 
-    public Item getItem(String key) {
-        return this.itens.get(key);
+    public Item getItem(String name) {
+        return this.itens.get(name);
     }
 
     public List<Item> getItemInvisiblePlayer() {

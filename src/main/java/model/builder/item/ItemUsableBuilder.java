@@ -6,7 +6,7 @@ public class ItemUsableBuilder extends ItemBuilder {
 
     private ItemUsableBuilder() {
         this.itemUsable = new ItemUsable();
-        item = this.itemUsable;
+        super.item = this.itemUsable;
     }
 
     static public ItemUsableBuilder builder() {

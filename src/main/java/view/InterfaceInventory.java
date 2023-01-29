@@ -146,7 +146,7 @@ public class InterfaceInventory {
         interfaceGame.clearJLabelItens();
         interfaceGame.setItensJLabel(player.getCurrentMap().getItemVisible(), 2);
         interfaceGame.getMapGameJLabel().repaint();
-        interfaceGame.getMapGameJLabel().setIcon(player.getCurrentMap().getImagemIcon());
+        interfaceGame.getMapGameJLabel().setIcon(player.getCurrentMap().getImage());
     }
 
     public void quit() {

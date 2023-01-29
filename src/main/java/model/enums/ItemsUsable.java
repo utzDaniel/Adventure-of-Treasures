@@ -2,7 +2,6 @@ package model.enums;
 
 import exception.ItemUsableException;
 import model.Player;
-import repository.CreateImageMapGame;
 
 public enum ItemsUsable {
     PA("pa") {
@@ -14,14 +13,14 @@ public enum ItemsUsable {
                     .filter(item1 -> item1.getName().equals("chave"))
                     .findFirst().orElseThrow(() -> new ItemUsableException("O mapa não possui itens invisiveis!"));//TODO colocar log de erro
             item.setVisible(true);
-            player.getCurrentMap().setImagemIcon(new CreateImageMapGame().selectImage(player.getCurrentMap().getName()));
+            player.getCurrentMap().activate("chave");
             return true;
         }
     },
     CHAVE("chave") {
         @Override
         public boolean use() {
-            var door = player.getCurrentMap().getDoorMap(player.getPositionPlayerX(), player.getPositionPlayerY())
+            var door = player.getCurrentMap().getDoor(player.getPositionPlayerX(), player.getPositionPlayerY())
                     .orElseThrow(() -> new ItemUsableException("Não foi possível usar esse item, neste local!"));
             door.setOpen(true);
             return true;
@@ -30,10 +29,10 @@ public enum ItemsUsable {
     ESCADA("escada") {
         @Override
         public boolean use() {
-            var door = player.getCurrentMap().getDoorMap(player.getPositionPlayerX(), player.getPositionPlayerY())
+            var door = player.getCurrentMap().getDoor(player.getPositionPlayerX(), player.getPositionPlayerY())
                     .orElseThrow(() -> new ItemUsableException("Não foi possível usar esse item, neste local!"));
             door.setOpen(true);
-            player.getCurrentMap().setImagemIcon(new CreateImageMapGame().selectImage(ItemsUsable.ESCADA.label));
+            player.getCurrentMap().activate("escada");
             return true;
         }
     };

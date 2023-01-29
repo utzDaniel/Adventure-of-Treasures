@@ -16,19 +16,19 @@ public class Coordinate {
     }
 
     public int getAxisX() {
-        return axisX;
+        return this.axisX;
     }
 
     public int getAxisY() {
-        return axisY;
+        return this.axisY;
     }
 
     public void setAxisX(int axisX) {
-        this.axisX = axisX / STEP;
+        this.axisX = axisX / this.STEP;
     }
 
     public void setAxisY(int axisY) {
-        this.axisY = axisY / STEP;
+        this.axisY = axisY / this.STEP;
     }
 
     @Override
@@ -36,11 +36,20 @@ public class Coordinate {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Coordinate that = (Coordinate) o;
-        return axisX == that.axisX && axisY == that.axisY;
+        return this.axisX == that.axisX && this.axisY == that.axisY;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(axisX, axisY);
+        return Objects.hash(this.axisX, this.axisY);
+    }
+
+    @Override
+    public String toString() {
+        return "Coordinate{" +
+                "STEP=" + STEP +
+                ", axisX=" + axisX +
+                ", axisY=" + axisY +
+                '}';
     }
 }

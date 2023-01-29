@@ -6,7 +6,7 @@ public class ItemEquipableBuilder extends ItemBuilder {
 
     private ItemEquipableBuilder() {
         this.itemEquipable = new ItemEquipable();
-        item = this.itemEquipable;
+        super.item = this.itemEquipable;
     }
 
     static public ItemEquipableBuilder builder() {

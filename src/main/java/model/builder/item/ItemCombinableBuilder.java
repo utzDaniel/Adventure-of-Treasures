@@ -8,7 +8,7 @@ public class ItemCombinableBuilder extends ItemBuilder {
 
     private ItemCombinableBuilder() {
         this.itemCombinable = new ItemCombinable();
-        item = this.itemCombinable;
+        super.item = this.itemCombinable;
     }
 
     static public ItemCombinableBuilder builder() {

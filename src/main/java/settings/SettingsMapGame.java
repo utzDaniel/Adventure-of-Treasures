@@ -1,7 +1,5 @@
 package settings;
 
-import repository.CreateImageMapGame;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -19,7 +17,7 @@ public class SettingsMapGame implements ISettingsJLabel {
 
     @Override
     public ImageIcon getIcon() {
-        return new CreateImageMapGame().selectImage("cais");
+        return new ImageIcon("src/main/resources/map/cais.png");
     }
 
     @Override

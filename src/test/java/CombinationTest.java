@@ -4,7 +4,7 @@ import service.Combination;
 import model.Player;
 import org.junit.Before;
 import org.junit.Test;
-import repository.CreateMapGame;
+import repository.RepositoryMapGame;
 
 import java.util.ArrayList;
 
@@ -13,13 +13,12 @@ import static org.junit.Assert.assertTrue;
 
 public class CombinationTest {
 
-    private Player player;
     private final ArrayList<Item> item = new ArrayList<>();
 
     @Before
     public void criarCombination() {
-        player = Player.getInstance();
-        CreateMapGame createMapGame = new CreateMapGame();
+        Player player = Player.getInstance();
+        RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
         player.setCurrentMap(createMapGame.getInitialScenery());
         for (Item item : createMapGame.getItemInvisiblePlayer()) {
             player.getInventory().setItemInvisible(item);
@@ -73,7 +72,7 @@ public class CombinationTest {
     public void AllItemCombinableComCombinacaoIguaisMasFaltandoAlgumItem() {
         item.add(ItemCombinableBuilder.builder().combine(2).name("madeiras").description("madeira para construir algo").weight(0)
                 .positionX(640).positionY(80).image(null).removable(true).visible(true).build());
-        item.add(ItemCombinableBuilder.builder().combine(3).name("pregos").description("utilzado para construir algo").weight(0)
+        item.add(ItemCombinableBuilder.builder().combine(2).name("pregos").description("utilzado para construir algo").weight(0)
                 .positionX(460).positionY(400).image(null).removable(true).visible(true).build());
         assertFalse(new Combination(item).run());
     }

@@ -4,7 +4,7 @@ import model.builder.item.*;
 import model.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
-import repository.CreateMapGame;
+import repository.RepositoryMapGame;
 
 import static org.junit.Assert.*;
 
@@ -14,7 +14,7 @@ public class RemoveItemTest {
 
     @Before
     public void iniciacaoDoPlayerParaTeste() {
-        CreateMapGame createMapGame = new CreateMapGame();
+        RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
         player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
         player.setCurrentMap(createMapGame.getInitialScenery());
