@@ -47,7 +47,8 @@ public final class Combination<T extends ICombinable> {
 
     private void checkAllEqualsCombination() {
         int combine = itensCombinable.get(0).getCombine();
-        var isCombine = itensCombinable.stream().allMatch(t -> t.getCombine() == combine);
+        var isCombine = itensCombinable.stream()
+                .allMatch(item -> item.getCombine() == combine);
         if(!isCombine)
             throw new ItemCombinableException("Itens não são combináveis entre eles");
     }

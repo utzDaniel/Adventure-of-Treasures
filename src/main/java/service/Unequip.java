@@ -7,7 +7,7 @@ import model.enums.ItemsEquipable;
 
 import java.util.Arrays;
 
-public final class Unequip<T extends Item> {
+public final class Unequip<T extends Item> { //TODO T extends IEquipable
 
     private final T item;
 

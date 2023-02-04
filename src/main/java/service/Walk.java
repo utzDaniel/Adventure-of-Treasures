@@ -43,6 +43,8 @@ public final class Walk {
     }
 
     private boolean checkCanWalk(){
+        System.out.println("X = "+ this.player.getPositionPlayerX());
+        System.out.println("Y = "+this.player.getPositionPlayerY());
         return this.player.getCurrentMap()
                 .checkLimits( new Coordinate(this.player.getPositionPlayerX(),this.player.getPositionPlayerY()));
     }

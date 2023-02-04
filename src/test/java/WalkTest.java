@@ -53,7 +53,7 @@ public class WalkTest {
 
     @Test
     public void naoAndarPlayer() {
-        player.setPositionPlayerX(230);
+        player.setPositionPlayerX(550);
         player.setPositionPlayerY(530);
         int positionY = player.getPositionPlayerY();
         player.walk(Direction.SUL.getLabel());

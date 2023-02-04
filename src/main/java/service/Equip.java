@@ -8,7 +8,7 @@ import model.Player;
 
 import java.util.Arrays;
 
-public final class Equip <T extends Item> {
+public final class Equip<T extends Item> {//TODO T extends IEquipable
 
     private final Player player;
     private final T item;
@@ -17,6 +17,7 @@ public final class Equip <T extends Item> {
         this.player = Player.getInstance();
         this.item = item;
     }
+
     public boolean run() {
         checkItemIEquipable();
         equipItem();
@@ -24,8 +25,8 @@ public final class Equip <T extends Item> {
     }
 
     private void checkItemIEquipable() {
-        if(!(this.item instanceof IEquipable))
-        throw new ItemEquipableException("Item não é equipavél");
+        if (!(this.item instanceof IEquipable))
+            throw new ItemEquipableException("Item não é equipavél");
     }
 
     //item equipavel com room e outro sem, será que deve criar uma nova classe?

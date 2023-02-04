@@ -24,7 +24,6 @@ public class NextDoorTest {
         player = Player.getInstance();
         Scenery village = (Scenery) RepositoryMapGame.getInstance().getMapGame("vila");
         Room temple = (Room) RepositoryMapGame.getInstance().getMapGame("templo");
-        //templeDoor = new Door(380, 530, 370, 150, false);
         templeDoor = temple.getDoor(380,530).get();
         vilaDoor = village.getDoor(370,150).get();
         player.setCurrentMap(village);

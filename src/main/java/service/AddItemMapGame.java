@@ -1,53 +1,79 @@
 package service;
 
-import model.*;
+import exception.MapGameException;
+import model.Coordinate;
+import model.Player;
 import model.builder.item.Item;
 import model.builder.map.MapGame;
-import model.enums.MovePlayer;
 
 public class AddItemMapGame {
 
+    public static final int STEP = 10; //TODO colocar no settings arquivo
+    public final int POSITION_MINIMUM = 10; //TODO colocar no settings arquivo
+    public final int POSITION_X_MAXIMUM = 56; //TODO colocar no settings arquivo
+    public final int POSITION_Y_MAXIMUM = 78; //TODO colocar no settings arquivo
     private final Item item;
     private final Player player;
     private final Coordinate coordinate;
-    private int multiply;
+    private int areaTraveled = 1;
     private final MapGame mapGame;
 
     public AddItemMapGame(Item item) {
         this.item = item;
         this.player = Player.getInstance();
-        this.coordinate = new Coordinate(0,0);
-        this.multiply = 0;
+        this.coordinate = new Coordinate(player.getPositionPlayerX(), player.getPositionPlayerY());
         this.mapGame = player.getCurrentMap();
     }
 
-    public boolean run(){
-        do{
-            this.multiply++;
-        }while (!checkDirectionDropItem());
+    public boolean run() {
+        int distance = 0;
+        do {
+            distance++;
+        } while (!searchCoordinate(distance));
         setItemNewCoordinate();
         return true;
     }
 
-    private boolean checkDirectionDropItem(){
-        int x,y;
-        for (MovePlayer move : MovePlayer.values()) {
-            x = this.player.getPositionPlayerX() + (move.getToMoveX() * this.multiply);
-            y = this.player.getPositionPlayerY() + (move.getToMoveY() * this.multiply);
-            this.coordinate.setAxisX(x);
-            this.coordinate.setAxisY(y);
-            if(x >= 10 && y >= 10 && x <= 770 && y <= 550 && checkCoordinateDropItem()) return true;
-            if(this.multiply == 20) break;
+    private boolean searchCoordinate(int distance) {
+        int move = moveEixo(distance);
+        for (int axis = 1; axis <= 2; axis++) {
+            for (int i = 1; i <= distance; i++) {
+                updateCoordinate(move, axis);
+                if (!checkLimitPosition()) continue;
+                areaTraveled++;
+                if (checkCoordinateValid()) return true;
+                if (isAreaTraveledComplete()) throw new MapGameException("Não é possivel drop esse item neste mapa!");
+            }
         }
-        return false;//TODO criar uma exception, pode ficar em loop, criar um algoritmo melhor de dropar item
+        return false;
     }
 
-    private boolean checkCoordinateDropItem(){
+    private int moveEixo(int distance) {
+        return distance % 2 != 0 ? -1 : +1;
+    }
+
+    private void updateCoordinate(int move, int axis) {
+        if (axis == 1)
+            coordinate.setAxisX((coordinate.getAxisX() + move) * STEP);
+        else
+            coordinate.setAxisY((coordinate.getAxisY() + move) * STEP);
+    }
+
+    private boolean checkLimitPosition() {
+        return Math.min(coordinate.getAxisX(), coordinate.getAxisY()) >= POSITION_MINIMUM &&
+                coordinate.getAxisX() <= POSITION_X_MAXIMUM && coordinate.getAxisY() <= POSITION_Y_MAXIMUM;
+    }
+
+    private boolean checkCoordinateValid() {
         return this.mapGame.checkLimits(this.coordinate);
     }
 
-    private void setItemNewCoordinate(){
-        this.item.setPositionX(this.coordinate.getAxisX()*10);// position X item * STEP = 10
-        this.item.setPositionY(this.coordinate.getAxisY()*10);// position Y item * STEP = 10
+    private boolean isAreaTraveledComplete() {
+        return areaTraveled >= POSITION_X_MAXIMUM * POSITION_Y_MAXIMUM;
+    }
+
+    private void setItemNewCoordinate() {
+        this.item.setPositionX(this.coordinate.getAxisX() * STEP);
+        this.item.setPositionY(this.coordinate.getAxisY() * STEP);
     }
 }

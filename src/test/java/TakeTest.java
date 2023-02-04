@@ -2,6 +2,8 @@ import exception.InventoryException;
 import model.Player;
 import model.builder.item.Item;
 import model.builder.item.ItemUsableBuilder;
+import model.builder.map.MapGame;
+import model.builder.map.Scenery;
 import model.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +17,7 @@ public class TakeTest {
 
     private Take take;
     private Player player;
+    private MapGame mapGame;
     private Item item;
 
     @Before
@@ -28,7 +31,8 @@ public class TakeTest {
         }
         item = ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(0)
                 .positionX(300).positionY(480).image(null).removable(true).visible(true).build();
-        player.getCurrentMap().addItem(item);
+        mapGame = player.getCurrentMap();
+        mapGame.addItem(item);
         take = new Take();
     }
 
@@ -36,6 +40,7 @@ public class TakeTest {
     public void testarItemValidoAFrente() {
         player.setPositionPlayerX(item.getPositionX());
         player.setPositionPlayerY(item.getPositionY()-10);
+        player.setCurrentMap(mapGame);
         assertTrue(take.run());
     }
 
@@ -46,13 +51,15 @@ public class TakeTest {
         player.setPositionPlayerX(item.getPositionX());
         player.setPositionPlayerY(item.getPositionY()-10);
         player.setDirection("oeste");
-        player.getCurrentMap().addItem(item);
+        mapGame.addItem(item);
+        player.setCurrentMap(mapGame);
         take.run();
     }
 
     @Test
     public void testarItemInvalidoAFrente() {
         player.setPositionPlayerX(290);
+        player.setCurrentMap(mapGame);
         assertFalse(take.run());
     }
 }
