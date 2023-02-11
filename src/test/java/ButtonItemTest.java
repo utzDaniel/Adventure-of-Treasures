@@ -2,6 +2,7 @@ import model.*;
 import model.builder.item.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import view.ButtonItem;
 import view.Colors;
 
@@ -34,11 +35,13 @@ public class ButtonItemTest {
     }
 
     @Test
+    @DisplayName("Verificar a quantidade de botões criados")
     public void createAllButtonValid() {
         assertEquals(itens.size(), buttonItem.getButtonItens().length);
     }
 
     @Test
+    @DisplayName("Verificar se os nomes dos botões foi criado corretamente")
     public void validAllNameButton() {
         String name;
         for (int i = 0; i < button.length; i++) {
@@ -48,6 +51,7 @@ public class ButtonItemTest {
     }
 
     @Test
+    @DisplayName("Verificar se os nomes dos comandos dos botões foi criado corretamente")
     public void validAllActionCommandButton() {
         String name;
         for (int i = 0; i < button.length; i++) {
@@ -57,24 +61,28 @@ public class ButtonItemTest {
     }
 
     @Test
+    @DisplayName("Verificar se todos os 4 botões foram removido do JLabel")
     public void validRemoveAllButton() {
         buttonItem.remove(new JLabel());
         assertEquals(0, buttonItem.getButtonItens().length);
     }
 
     @Test
+    @DisplayName("Verificar se o ultimo botão foi atribuido corretamente")
     public void validGetLast() {
         assertEquals(itens.get(itens.size() - 1).getName(),
                 buttonItem.getLast().getName());
     }
 
     @Test
+    @DisplayName("Verificar se o ultimo botão incia como null")
     public void invalidGetLast() {
         ButtonItem button = new ButtonItem();
         assertNull(button.getLast());
     }
 
     @Test
+    @DisplayName("Verificar se ao criar mais 4 botões, a quantidade vai pra 8 quantidade")
     public void validUpdate() {
         for (Item item : itens) {
             buttonItem.create(item);
@@ -84,6 +92,7 @@ public class ButtonItemTest {
     }
 
     @Test
+    @DisplayName("Verificar se desabilitara os butons itens que não são Combinable e mander habilitado os Combinable")
     public void validEnableIButtonItens() {
         Player player = Player.getInstance();
         var enableIButton = new ArrayList<Boolean>();
@@ -99,6 +108,7 @@ public class ButtonItemTest {
     }
 
     @Test
+    @DisplayName("Verificar se ao clicar no botão ele ficaram com o Background verde")
     public void validSelectButtonItem() {
         buttonItem.selectButtonItem(itens.get(0));
         var color = buttonItem.getButtonItens()[0].getBackground();

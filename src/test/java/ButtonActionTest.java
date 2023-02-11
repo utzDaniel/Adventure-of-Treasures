@@ -2,6 +2,7 @@ import exception.ButtonException;
 import model.builder.item.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import view.ButtonAction;
 
 import javax.swing.*;
@@ -33,11 +34,13 @@ public class ButtonActionTest {
     }
 
     @Test
+    @DisplayName("Verificar a quantidade de botões criados")
     public void createAllButtonValid(){
         assertEquals(button.length,buttonAction.getButtonActions().length);
     }
 
     @Test
+    @DisplayName("Verificar se os nomes dos botões foi criado corretamente")
     public void validAllNameButton(){
         String name;
         for (int i = 0; i < button.length; i++) {
@@ -47,6 +50,7 @@ public class ButtonActionTest {
     }
 
     @Test
+    @DisplayName("Verificar se os nomes dos comandos dos botões foi criado corretamente")
     public void validAllActionCommandButton(){
         String name;
         for (int i = 0; i < button.length; i++) {
@@ -56,6 +60,7 @@ public class ButtonActionTest {
     }
 
     @Test
+    @DisplayName("Verificar se os botões foi criado inicialmente como invisivel")
     public void validAllInvisibleButton(){
         buttonAction.invisible();
         for (JButton  button : buttonAction.getButtonActions()) {
@@ -64,6 +69,7 @@ public class ButtonActionTest {
     }
 
     @Test
+    @DisplayName("Verificar se ao cliclar o botão com o comando usar, os botões cancelar e confirmar estará visivel")
     public void validVisibleCancelAndConfirm(){
         buttonAction.visibleCancelAndConfirm("usar");
         for (int i = 4; i < buttonAction.getButtonActions().length; i++) {
@@ -72,24 +78,28 @@ public class ButtonActionTest {
     }
 
     @Test
+    @DisplayName("Verificar se ao cliclar o botão com o comando combinar, o botão confirmar estará invisivel")
     public void invalidVisibleCancelAndConfirm(){
         buttonAction.visibleCancelAndConfirm("combinar");
         assertFalse(buttonAction.getButtonActions()[5].isVisible());
     }
 
     @Test
+    @DisplayName("Verificar se ao cliclar o botão com o comando combinar, o botão confirmar estará visivel")
     public void validVisibleConfirmCombine(){
         buttonAction.visibleConfirmCombine("combinar");
         assertTrue(buttonAction.getButtonActions()[5].isVisible());
     }
 
     @Test
+    @DisplayName("Verificar se o item foi atribuido corretamente")
     public void validGetItem(){
         buttonAction.setUseItem(itens.get(0));
         assertNotNull(buttonAction.getUseItem());
     }
 
     @Test
+    @DisplayName("Verificar se ao atribuir um item do tipo Usable, os botões ficará visivel corretamente")
     public void validEnabledItemUsable(){
         Boolean [] enables = {true, false, false, true};
         buttonAction.setUseItem(itens.get(0));
@@ -99,6 +109,7 @@ public class ButtonActionTest {
     }
 
     @Test
+    @DisplayName("Verificar se ao atribuir um item do tipo Equipable, os botões ficará visivel corretamente")
     public void validEnabledItemEquipable(){
         Boolean [] enables = {false, true, false, true};
         buttonAction.setUseItem(itens.get(1));
@@ -108,6 +119,7 @@ public class ButtonActionTest {
     }
 
     @Test
+    @DisplayName("Verificar se ao atribuir um item do tipo Combinable, os botões ficará visivel corretamente")
     public void validEnabledItemCombinable(){
         Boolean [] enables = {false, false, true, true};
         buttonAction.setUseItem(itens.get(2));
@@ -117,6 +129,7 @@ public class ButtonActionTest {
     }
 
     @Test
+    @DisplayName("Verificar se ao atribuir um item do tipo NotRemove, os botões ficará visivel corretamente")
     public void validEnabledItemNotRemove(){
         buttonAction.setUseItem(itens.get(3));
         for (int i = 0; i < 4; i++) {
@@ -125,6 +138,7 @@ public class ButtonActionTest {
     }
 
     @Test(expected = ButtonException.class)
+    @DisplayName("Verificar ao tentar criar um botão invalido, irá lançar ButtonException 'Nome do botão não encontrado'")
     public void createButtonInvalid(){
         ButtonAction button = new ButtonAction();
         button.create("button");
