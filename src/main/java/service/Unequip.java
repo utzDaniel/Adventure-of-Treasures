@@ -17,8 +17,7 @@ public final class Unequip<T extends Item> { //TODO T extends IEquipable
 
     public boolean run() {
         checkItemIEquipable();
-        unequipItem();
-        return true;
+        return unequipItem();
     }
 
     public void checkItemIEquipable() {
@@ -27,10 +26,10 @@ public final class Unequip<T extends Item> { //TODO T extends IEquipable
     }
 
     //item equipavel com room e outro sem, será que deve criar uma nova classe?
-    private void unequipItem() {
+    private boolean unequipItem() {
         var item = Arrays.stream(ItemsEquipable.values())
                 .filter(equipable -> equipable.getLabel().equals(this.item.getName()))
                 .findFirst().orElseThrow(() -> new ItemEquipableException("Item equipavél não encontrado"));
-        item.unequip();
+        return item.unequip();
     }
 }

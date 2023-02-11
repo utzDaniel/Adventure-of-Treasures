@@ -15,11 +15,10 @@ public final class RemoveItem {
         this.item = item;
     }
 
-    public boolean run() {
+    public void run() {
         checkItemRemoved();
         removeItem();
         updateInventoryCapacity();
-        return true;
     }
 
     private void checkItemRemoved(){

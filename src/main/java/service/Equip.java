@@ -10,18 +10,15 @@ import java.util.Arrays;
 
 public final class Equip<T extends Item> {//TODO T extends IEquipable
 
-    private final Player player;
     private final T item;
 
     public Equip(T item) {
-        this.player = Player.getInstance();
         this.item = item;
     }
 
     public boolean run() {
         checkItemIEquipable();
-        equipItem();
-        return true;
+        return equipItem();
     }
 
     private void checkItemIEquipable() {
@@ -30,10 +27,10 @@ public final class Equip<T extends Item> {//TODO T extends IEquipable
     }
 
     //item equipavel com room e outro sem, será que deve criar uma nova classe?
-    private void equipItem() {
+    private boolean equipItem() {
         var item = Arrays.stream(ItemsEquipable.values())
-                .filter(equipable -> equipable.getLabel().equals(this.item.getName()))
-                .findFirst().orElseThrow(() -> new ItemEquipableException("Item equipavél não encontrado"));
-        item.equip();
+                .filter(equipable -> equipable.getLabel().equals(this.item.getName())).findFirst()
+                .orElseThrow(() -> new ItemEquipableException("Item equipavél não encontrado"));
+        return item.equip();
     }
 }

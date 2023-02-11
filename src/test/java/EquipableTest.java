@@ -1,12 +1,9 @@
 import exception.ItemEquipableException;
-import exception.MoveException;
 import model.Player;
 import model.builder.item.Item;
 import model.builder.item.ItemEquipable;
 import model.builder.item.ItemEquipableBuilder;
 import model.builder.item.ItemUsableBuilder;
-import model.builder.map.MapGame;
-import model.builder.map.Scenery;
 import org.junit.Before;
 import org.junit.Test;
 import repository.RepositoryMapGame;
@@ -21,7 +18,7 @@ public class EquipableTest {
     private final ArrayList<Item> itens = new ArrayList<>();
 
     @Before
-    public void inicial(){
+    public void inicial() {
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila").description("utilizada para carregar mais coisas").weight(0)
                 .positionX(650).positionY(220).image(null).removable(true).visible(true).build());
         itens.add(ItemUsableBuilder.builder().localUse("vila").name("chave").description("utilizada para abir algo").weight(0)
@@ -33,7 +30,7 @@ public class EquipableTest {
     }
 
     @Test
-    public void validarItemEquipMochila(){
+    public void validarItemEquipMochila() {
         Player player = Player.getInstance();
         player.getInventory().addItem(itens.get(0));
         ((ItemEquipable) itens.get(0)).equip(itens.get(0));
@@ -41,16 +38,16 @@ public class EquipableTest {
     }
 
     @Test
-    public void validarItemEquipMochilaAtributo(){
+    public void validarItemEquipMochilaAtributo() {
         Player player = Player.getInstance();
         int capacity = player.getInventory().getMaxCapacity();
         player.getInventory().addItem(itens.get(0));
         ((ItemEquipable) itens.get(0)).equip(itens.get(0));
-        assertEquals(capacity+5,player.getInventory().getMaxCapacity());
+        assertEquals(capacity + 5, player.getInventory().getMaxCapacity());
     }
 
     @Test
-    public void validarItemUnequipMochila(){
+    public void validarItemUnequipMochila() {
         Player player = Player.getInstance();
         player.getInventory().addItem(itens.get(0));
         ((ItemEquipable) itens.get(0)).equip(itens.get(0));
@@ -59,17 +56,17 @@ public class EquipableTest {
     }
 
     @Test
-    public void validarItemUnequipMochilaAtributo(){
+    public void validarItemUnequipMochilaAtributo() {
         Player player = Player.getInstance();
         int capacity = player.getInventory().getMaxCapacity();
         player.getInventory().addItem(itens.get(0));
         ((ItemEquipable) itens.get(0)).equip(itens.get(0));
         ((ItemEquipable) itens.get(0)).unequip(itens.get(0));
-        assertEquals(capacity,player.getInventory().getMaxCapacity());
+        assertEquals(capacity, player.getInventory().getMaxCapacity());
     }
 
-    @Test (expected = ItemEquipableException.class)
-    public void validarItemUnequipMochilaAtributoErro(){
+    @Test(expected = ItemEquipableException.class)
+    public void validarItemUnequipMochilaAtributoErro() {
         Player player = Player.getInstance();
         player.getInventory().addItem(itens.get(0));
         ((ItemEquipable) itens.get(0)).equip(itens.get(0));
@@ -81,7 +78,7 @@ public class EquipableTest {
     }
 
     @Test
-    public void validarItemEquipTocha(){
+    public void validarItemEquipTocha() {
         Player player = Player.getInstance();
         RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
         player.setCurrentMap(createMapGame.getInitialScenery());
@@ -94,7 +91,7 @@ public class EquipableTest {
     }
 
     @Test
-    public void validarItemEquipTochaAtributo(){
+    public void validarItemEquipTochaAtributo() {
         Player player = Player.getInstance();
         RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
         player.setCurrentMap(createMapGame.getInitialScenery());
@@ -106,7 +103,7 @@ public class EquipableTest {
     }
 
     @Test
-    public void validarItemUnequipTocha(){
+    public void validarItemUnequipTocha() {
         Player player = Player.getInstance();
         RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
         player.setCurrentMap(createMapGame.getInitialScenery());
@@ -120,7 +117,7 @@ public class EquipableTest {
     }
 
     @Test
-    public void validarItemUnequipTochaAtributo(){
+    public void validarItemUnequipTochaAtributo() {
         Player player = Player.getInstance();
         RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
         player.setCurrentMap(createMapGame.getInitialScenery());
@@ -131,33 +128,34 @@ public class EquipableTest {
         ((ItemEquipable) itens.get(3)).equip(itens.get(3));
         assertTrue(((ItemEquipable) itens.get(3)).unequip(itens.get(3)));
     }
+
     @Test
-    public void validarItemEquip(){
+    public void validarItemEquip() {
         assertTrue(new Equip(itens.get(0)).run());
     }
 
-    @Test (expected = ItemEquipableException.class)
-    public void itemEquipInvalido(){
+    @Test(expected = ItemEquipableException.class)
+    public void itemEquipInvalido() {
         assertFalse(new Equip(itens.get(2)).run());
     }
 
-    @Test (expected = ItemEquipableException.class)
-    public void naoValidarItemEquip(){
+    @Test(expected = ItemEquipableException.class)
+    public void naoValidarItemEquip() {
         assertFalse(new Equip(itens.get(1)).run());
     }
 
     @Test
-    public void validarItemUnequip(){
+    public void validarItemUnequip() {
         assertTrue(new Unequip(itens.get(0)).run());
     }
 
     @Test(expected = ItemEquipableException.class)
-    public void naoValidarItemUnequipe(){
+    public void naoValidarItemUnequipe() {
         assertFalse(new Unequip(itens.get(1)).run());
     }
 
-    @Test (expected = ItemEquipableException.class)
-    public void itemUnequipInvalido(){
+    @Test(expected = ItemEquipableException.class)
+    public void itemUnequipInvalido() {
         assertFalse(new Unequip(itens.get(2)).run());
     }
 }

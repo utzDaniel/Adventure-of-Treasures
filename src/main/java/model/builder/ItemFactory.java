@@ -25,8 +25,8 @@ public class ItemFactory {
         };
     }
 
-    private void inicial(IBuilderItem item) {
-        item.name(dados[1])
+    private IBuilderItem inicial(IBuilderItem item) {
+        return item.name(dados[1])
                 .description(dados[2])
                 .weight(parseInt(dados[3]))
                 .positionX(parseInt(dados[4]))
@@ -37,30 +37,30 @@ public class ItemFactory {
     }
 
     private Item createItemCombinable() {
-        var itemCombinable = ItemCombinableBuilder.builder();
-        inicial(itemCombinable);
-        return itemCombinable.combine(parseInt(dados[7]))
+        return inicial(ItemCombinableBuilder
+                .builder()
+                .combine(parseInt(dados[7])))
                 .build();
     }
 
     private Item createItemEquipable() {
-        var itemEquipable = ItemEquipableBuilder.builder();
-        inicial(itemEquipable);
-        return itemEquipable.equipped(false)
+        return inicial(ItemEquipableBuilder
+                .builder()
+                .equipped(false))
                 .build();
     }
 
     private Item createItemUsable() {
-        var itemUsable = ItemUsableBuilder.builder();
-        inicial(itemUsable);
-        return itemUsable.localUse(dados[10])
+        return inicial(ItemUsableBuilder
+                .builder()
+                .localUse(dados[10]))
                 .build();
     }
 
     private Item createItemNotRemove() {
-        var itemNotRemove = ItemMissionBuilder.builder();
-        inicial(itemNotRemove);
-        return itemNotRemove.mapGame(dados[9])
+        return inicial(ItemMissionBuilder
+                .builder()
+                .mapGame(dados[9]))
                 .build();
     }
 }

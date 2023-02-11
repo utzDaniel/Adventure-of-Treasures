@@ -24,8 +24,8 @@ public class MapGameFactory {
         return dados[0].equals("0000") ? createRoom() : createScenery();
     }
 
-    private void inicial(IBuilderMapGame mapGame) {
-        mapGame.name(dados[1])
+    private IBuilderMapGame inicial(IBuilderMapGame mapGame) {
+        return mapGame.name(dados[1])
                 .image(dados[2])
                 .doors(createDoor(dados[7]))
                 .doors(createDoor(dados[8]))
@@ -39,19 +39,18 @@ public class MapGameFactory {
     }
 
     private MapGame createRoom() {
-        var room = RoomBuilder.builder();
-        inicial(room);
-        return room.build();
+        return inicial(RoomBuilder
+                .builder())
+                .build();
     }
 
     private MapGame createScenery() {
-        var scenery = SceneryBuilder.builder();
-        inicial(scenery);
-        return scenery
+        return inicial(SceneryBuilder
+                .builder()
                 .exits("norte", dados[3])
                 .exits("sul", dados[4])
                 .exits("oeste", dados[5])
-                .exits("leste", dados[6])
+                .exits("leste", dados[6]))
                 .build();
     }
 

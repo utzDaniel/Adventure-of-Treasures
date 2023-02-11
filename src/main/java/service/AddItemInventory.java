@@ -14,11 +14,10 @@ public final class AddItemInventory {
         this.item = item;
     }
 
-    public boolean run() {
+    public void run() {
         checkInventoryCapacity();
         addItem();
         updateInventoryCapacity();
-        return true;
     }
 
     private void checkInventoryCapacity() {
