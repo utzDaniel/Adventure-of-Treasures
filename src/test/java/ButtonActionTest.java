@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import view.ButtonAction;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -24,13 +25,13 @@ public class ButtonActionTest {
             buttonAction.create(s);
         }
         itens.add(ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(0)
-                .positionX(200).positionY(280).image(null).removable(true).visible(true).build());
+                .point(new Point(200,280)).image(null).removable(true).visible(true).build());
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila").description("utilizada para carregar mais coisas").weight(0)
-                .positionX(650).positionY(220).image(null).removable(true).visible(true).build());
+                .point(new Point(650,220)).image(null).removable(true).visible(true).build());
         itens.add(ItemCombinableBuilder.builder().combine(3).name("madeira").description("cabo de madeira velho").weight(0)
-                .positionX(410).positionY(200).image(null).removable(true).visible(true).build());
+                .point(new Point(410,200)).image(null).removable(true).visible(true).build());
         itens.add(ItemMissionBuilder.builder().mapGame("barco").name("tesouro").description("tesouro lendário dos templários").weight(0)
-                .positionX(620).positionY(240).image(null).removable(false).visible(true).build());
+                .point(new Point(620,240)).image(null).removable(false).visible(true).build());
     }
 
     @Test

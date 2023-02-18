@@ -1,22 +1,32 @@
 package settings;
 
-public class SettingsItem {
+import javax.swing.*;
+import java.awt.*;
 
-    public int labelPositionX(int positionItemX) {
-        return positionItemX - 30;
+public class SettingsItem implements ISettingsJLabel {
+
+    private final Rectangle rectangle;
+
+    public SettingsItem() {
+        int x = 0;
+        int y = 0;
+        int WIDTH = 80;
+        int HEIGHT = 50;
+        rectangle = new Rectangle(x, y, WIDTH, HEIGHT);
     }
 
-    public int labelPositionY(int positionItemY) {
-        return positionItemY - 10;
+    @Override
+    public ImageIcon getIcon() {
+        return null;
     }
 
-    public int labelWidth() {
-        return 100;
+    @Override
+    public String getName() {
+        return "item";
     }
 
-    public int labelHeight() {
-        return 100;
+    @Override
+    public Rectangle getRectangle() {
+        return rectangle;
     }
-
-
 }

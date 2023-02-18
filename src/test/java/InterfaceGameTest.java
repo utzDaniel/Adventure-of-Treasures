@@ -89,9 +89,9 @@ public class InterfaceGameTest {
     public void validSetItensJLabel() {
         var itens = new ArrayList<Item>();
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila1").description("utilizada para carregar mais coisas").weight(0)
-                .positionX(650).positionY(220).image(null).removable(true).visible(true).build());
+                .point(new Point(650,220)).image(null).removable(true).visible(true).build());
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila2").description("utilizada para carregar mais coisas").weight(0)
-                .positionX(650).positionY(220).image(null).removable(true).visible(true).build());
+                .point(new Point(650,220)).image(null).removable(true).visible(true).build());
         int size = container.getComponentCount();
         interfaceGame.setItensJLabel(itens, 2);
         assertEquals(size + 2, container.getComponentCount());
@@ -101,9 +101,9 @@ public class InterfaceGameTest {
     public void validClearItensJLabel() {
         var itens = new ArrayList<Item>();
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila1").description("utilizada para carregar mais coisas").weight(0)
-                .positionX(650).positionY(220).image(null).removable(true).visible(true).build());
+                .point(new Point(650,220)).image(null).removable(true).visible(true).build());
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila2").description("utilizada para carregar mais coisas").weight(0)
-                .positionX(650).positionY(220).image(null).removable(true).visible(true).build());
+                .point(new Point(650,220)).image(null).removable(true).visible(true).build());
         int size = container.getComponentCount();
         interfaceGame.setItensJLabel(itens, 2);
         interfaceGame.clearJLabelItens();

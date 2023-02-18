@@ -21,6 +21,7 @@ public class RepositoryItem {
         this.itens = new HashMap<>();
         this.itensInvisiblePlayer = new HashMap<>();
         createItens();
+        updateItens();
     }
 
     public static synchronized RepositoryItem getInstance(){
@@ -40,7 +41,9 @@ public class RepositoryItem {
         } catch (IOException e) {
             System.exit(0);
         }
+    }
 
+    private void updateItens() {
         this.itens.get("chave").setVisible(false);
         this.itensInvisiblePlayer.put("mapa", this.itens.get("mapa"));
         this.itensInvisiblePlayer.put("escada", this.itens.get("escada"));

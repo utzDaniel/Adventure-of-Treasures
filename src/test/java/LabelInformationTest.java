@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import view.LabelInformation;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
@@ -21,7 +22,7 @@ public class LabelInformationTest {
             labelInformation.create(s);
         }
         item = ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(0)
-                .positionX(200).positionY(280).image(null).removable(true).visible(true).build();
+                .point(new Point(200,280)).image(null).removable(true).visible(true).build();
     }
 
     @Test

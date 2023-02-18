@@ -3,6 +3,7 @@ package model.builder.item;
 import model.interfaces.IBuilderItem;
 
 import javax.swing.*;
+import java.awt.*;
 
 abstract class ItemBuilder implements IBuilderItem {
 
@@ -27,14 +28,8 @@ abstract class ItemBuilder implements IBuilderItem {
     }
 
     @Override
-    public IBuilderItem positionX(int x) {
-        this.item.setPositionX(x);
-        return this;
-    }
-
-    @Override
-    public IBuilderItem positionY(int y) {
-        this.item.setPositionY(y);
+    public IBuilderItem point(Point point) {
+        this.item.setLocation(point);
         return this;
     }
 

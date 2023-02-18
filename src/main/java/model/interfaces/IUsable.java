@@ -5,8 +5,7 @@ import service.Use;
 
 public interface IUsable {
 
-    default boolean use(Item item){
-        return new Use(item).run();
-    }
+    boolean use(Item item);
     String getLocalUse();
+    String getName();
 }

@@ -4,9 +4,9 @@ import exception.MapGameException;
 import model.Door;
 import model.Player;
 import model.builder.map.MapGame;
-import repository.RepositoryMapGame;
 import view.InterfaceGame;
 
+import java.awt.*;
 import java.util.Optional;
 
 public class NextDoor {
@@ -34,11 +34,12 @@ public class NextDoor {
     }
 
     private Optional<Door> getDoor() {
-        return player.getCurrentMap().getDoor(player.getPositionPlayerX(), player.getPositionPlayerY());
+        return player.getCurrentMap().getDoor(player.getLocation().x, player.getLocation().y);
     }
 
     private void setPositionPlayer(Door door) {
-        player.setPositionPlayerX(door.getCoordinate().getAxisX()*10);
-        player.setPositionPlayerY(door.getCoordinate().getAxisY()*10);
+        int x = door.getCoordinate().getAxisX() * 10;
+        int y = door.getCoordinate().getAxisY() * 10;
+        player.setLocation(new Point(x,y));
     }
 }

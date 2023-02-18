@@ -45,7 +45,7 @@ public class Keyboard {
                     movePlayer(keyCode);
                 } else if (keyCode == 97) {
 
-                    if (player.getPositionPlayerX() == 710 && player.getPositionPlayerY() == 280
+                    if (player.getLocation().x == 710 && player.getLocation().y == 280
                             && Objects.nonNull(player.getInventory().getItem("tesouro")))
                         finish();
                     try {
@@ -93,25 +93,25 @@ public class Keyboard {
     private void movePlayer(int keyCode) {
         boolean sucess = false;
         if (keyCode == 38) {
-            if (player.getPositionPlayerY() > 0) {
+            if (player.getLocation().y > 0) {
                 player.walk("norte");
             } else {
                 sucess = new NextScenery(interfaceGame).run("norte");
             }
         } else if (keyCode == 40) {
-            if (player.getPositionPlayerY() < interfaceGame.getMapGameJLabel().getHeight() - 50) {
+            if (player.getLocation().y  < interfaceGame.getMapGameJLabel().getHeight() - 50) {
                 player.walk("sul");
             } else {
                 sucess = new NextScenery(interfaceGame).run("sul");
             }
         } else if (keyCode == 37) {
-            if (player.getPositionPlayerX() > 0) {
+            if (player.getLocation().x> 0) {
                 player.walk("oeste");
             } else {
                 sucess = new NextScenery(interfaceGame).run("oeste");
             }
         } else if (keyCode == 39) {
-            if (player.getPositionPlayerX() < interfaceGame.getMapGameJLabel().getWidth() - 30) {
+            if (player.getLocation().x < interfaceGame.getMapGameJLabel().getWidth() - 30) {
                 player.walk("leste");
             } else {
                 sucess = new NextScenery(interfaceGame).run("leste");

@@ -4,13 +4,12 @@ import model.builder.item.Item;
 import model.Player;
 import model.Song;
 import model.SoundEffects;
+import model.builder.map.MapGame;
 import settings.SettingsItem;
 import settings.SettingsJFrame;
 import settings.SettingsMapGame;
-import settings.SettingsPlayer;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -26,11 +25,11 @@ public class InterfaceGame {
     public InterfaceGame() {
         frame = new JFrame();
         this.playerJLabel =  Player.getInstance().getJLabel();
-        mapGameJLabel = new JLabel();
+        mapGameJLabel = MapGame.getJLabel();
         song = new Song();
         soundEffects = new SoundEffects();
         settingsFrame();
-        createJLabelPlayer();
+        setJLabelPlayer();
         createJLabelMapGame();
         //history();
     }
@@ -63,39 +62,24 @@ public class InterfaceGame {
                 .forEach(menuBar::createNavigation);
     }
 
-    private void createJLabelPlayer() {
-        SettingsPlayer settingsPlayer = new SettingsPlayer();
-        playerJLabel.setIcon(settingsPlayer.getIcon());
-        playerJLabel.setName(settingsPlayer.getName());
+    private void setJLabelPlayer() {
         frame.getContentPane().add(playerJLabel);
-        playerJLabel.setBounds(settingsPlayer.getRectangle());
-
     }
 
     private void createJLabelMapGame() {
-        SettingsMapGame settingsMapGame = new SettingsMapGame();
-        mapGameJLabel.setIcon(settingsMapGame.getIcon());
-        mapGameJLabel.setName(settingsMapGame.getName());
         frame.getContentPane().add(mapGameJLabel);
-        mapGameJLabel.setBounds(settingsMapGame.getRectangle());
     }
 
     public void clearJLabelItens() {
         Arrays.stream(frame.getContentPane().getComponents())
                 .filter(component -> component instanceof JLabel && component.getName().equals("item"))
                 .forEach(component -> frame.getContentPane().remove(component));
+        frame.getContentPane().repaint();
     }
 
     public void setItensJLabel(List<Item> itens, int index) {
-        SettingsItem settingsItem = new SettingsItem();
-        itens.forEach(item -> {
-            JLabel label = new JLabel(item.getImage());
-            label.setName("item");
-            frame.getContentPane().add(label, index);
-            label.setBounds(settingsItem.labelPositionX(item.getPositionX()),
-                    settingsItem.labelPositionY(item.getPositionY()),
-                    settingsItem.labelWidth(), settingsItem.labelHeight());
-        });
+        itens.forEach(item ->
+            frame.getContentPane().add(item.getJLabel(), index));
     }
 
     public Song getSong() {

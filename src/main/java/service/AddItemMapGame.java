@@ -6,6 +6,8 @@ import model.Player;
 import model.builder.item.Item;
 import model.builder.map.MapGame;
 
+import java.awt.*;
+
 public class AddItemMapGame {
 
     public static final int STEP = 10; //TODO colocar no settings arquivo
@@ -21,7 +23,7 @@ public class AddItemMapGame {
     public AddItemMapGame(Item item) {
         this.item = item;
         this.player = Player.getInstance();
-        this.coordinate = new Coordinate(player.getPositionPlayerX(), player.getPositionPlayerY());
+        this.coordinate = new Coordinate(player.getLocation().x, player.getLocation().y);
         this.mapGame = player.getCurrentMap();
     }
 
@@ -59,6 +61,7 @@ public class AddItemMapGame {
             coordinate.setAxisY((coordinate.getAxisY() + move) * STEP);
     }
 
+    //TODO colocar a logica dentro da coordinate
     private boolean checkLimitPosition() {
         return Math.min(coordinate.getAxisX(), coordinate.getAxisY()) >= POSITION_MINIMUM &&
                 coordinate.getAxisX() <= POSITION_X_MAXIMUM && coordinate.getAxisY() <= POSITION_Y_MAXIMUM;
@@ -73,7 +76,8 @@ public class AddItemMapGame {
     }
 
     private void setItemNewCoordinate() {
-        this.item.setPositionX(this.coordinate.getAxisX() * STEP);
-        this.item.setPositionY(this.coordinate.getAxisY() * STEP);
+        int x = this.coordinate.getAxisX() * STEP;
+        int y = this.coordinate.getAxisY() * STEP;
+        this.item.setLocation(new Point(x, y));
     }
 }

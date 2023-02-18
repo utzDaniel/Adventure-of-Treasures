@@ -9,25 +9,22 @@ import service.Walk;
 import settings.SettingsPlayer;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.Objects;
 
 public final class Player {
 
     private static Player player;
-    private int positionPlayerX;
-    private int positionPlayerY;
     private String direction;
     private MapGame currentMapGame;
     private final Inventory inventory;
     private final JLabel jLabel;
 
     private Player() {
-        SettingsPlayer settingsPlayer = new SettingsPlayer();
-        this.positionPlayerX = settingsPlayer.getRectangle().x;
-        this.positionPlayerY = settingsPlayer.getRectangle().y;
         this.currentMapGame = null;
         this.inventory = new Inventory();
         this.jLabel = new JLabel();
+        settingsPlayer();
     }
 
     public static synchronized Player getInstance() {
@@ -37,40 +34,30 @@ public final class Player {
         return player;
     }
 
+    private void settingsPlayer() {
+        SettingsPlayer settingsPlayer = new SettingsPlayer();
+        this.jLabel.setIcon(settingsPlayer.getIcon());
+        this.jLabel.setName(settingsPlayer.getName());
+        this.jLabel.setBounds(settingsPlayer.getRectangle());
+    }
+
     public JLabel getJLabel() {
         return this.jLabel;
     }
 
-    public void setLocation() {
-        this.jLabel.setLocation(this.positionPlayerX, this.positionPlayerY);
+    public Point getLocation() {
+        return this.jLabel.getLocation();
     }
 
-    public void setIcon(ImageIcon imageIcon) {
-        this.jLabel.setIcon(imageIcon);
-    }
-
-    public int getPositionPlayerX() {
-        return this.positionPlayerX;
-    }
-
-    public int getPositionPlayerY() {
-        return this.positionPlayerY;
-    }
-
-    public void setPositionPlayerX(int positionPlayerX) {
-        this.positionPlayerX = positionPlayerX;
-        setLocation();
-    }
-
-    public void setPositionPlayerY(int positionPlayerY) {
-        this.positionPlayerY = positionPlayerY;
-        setLocation();
+    public void setLocation(Point point) {
+        this.jLabel.setLocation(point);
     }
 
     public String getDirection() {
         return this.direction;
     }
 
+    //TODO refatorar os teste, pois o setDirection spi usar em teste agora
     public void setDirection(String direction) {
         this.direction = direction;
     }
@@ -88,7 +75,9 @@ public final class Player {
     }
 
     public void walk(String direction) {
-        new Walk(direction).run();
+        var imageIcon = new Walk(direction).run();
+        this.direction = direction;
+        this.jLabel.setIcon(imageIcon);
     }
 
     public Item lookItem() {

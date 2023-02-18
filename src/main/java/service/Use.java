@@ -11,9 +11,9 @@ import java.util.Arrays;
 public final class Use<T extends IUsable> {
 
     private final Player player;
-    private final Item item;
+    private final IUsable item;
 
-    public Use(Item item) {
+    public Use(IUsable item) {
         this.player = Player.getInstance();
         this.item = item;
     }
@@ -22,7 +22,6 @@ public final class Use<T extends IUsable> {
         checkItensIUsable();
         checkCurrentMap();
         useItem();
-        removeItem();
         return true;
     }
 
@@ -41,9 +40,5 @@ public final class Use<T extends IUsable> {
                 .filter(itemsUsable -> itemsUsable.getLabel().equals(this.item.getName()))
                 .findFirst().orElseThrow(() -> new ItemUsableException("Não foi possível usar esse item!"));
         item.use();
-    }
-
-    private void removeItem() {
-        player.getInventory().removeItem(this.item);
     }
 }

@@ -15,13 +15,8 @@ public class RepositoryMapGame {
     private static RepositoryMapGame repositoryMapGame;
     private final Map<String, MapGame> mapGame;
 
-    private Scenery initialScenery;
-    private List<Item> itemInvisiblePlayer;
-
     private RepositoryMapGame() {
         this.mapGame = new HashMap<>();
-        this.initialScenery = null;
-        itemInvisiblePlayer = new ArrayList<>();
         createMapGame();
     }
 
@@ -33,7 +28,7 @@ public class RepositoryMapGame {
     }
 
     public List<Item> getItemInvisiblePlayer() {
-        return itemInvisiblePlayer;
+        return RepositoryItem.getInstance().getItemInvisiblePlayer();
     }
 
     private void createMapGame() {
@@ -45,16 +40,12 @@ public class RepositoryMapGame {
         } catch (IOException e) {
             System.exit(0);
         }
-
-        itemInvisiblePlayer = RepositoryItem.getInstance().getItemInvisiblePlayer();
-
-        this.initialScenery = (Scenery) mapGame.get("cais");
     }
 
     public MapGame getMapGame(String name) {
         return this.mapGame.get(name);
     }
     public Scenery getInitialScenery() {
-        return this.initialScenery;
+        return (Scenery) mapGame.get("cais");
     }
 }

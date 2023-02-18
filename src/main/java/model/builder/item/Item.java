@@ -1,48 +1,56 @@
 package model.builder.item;
 
 import model.interfaces.IAction;
+import settings.SettingsItem;
 
 import javax.swing.*;
+import java.awt.*;
 
 public abstract class Item implements IAction {
 
     private String name;
     private String description;
     private int weight;
-    private int positionX;
-    private int positionY;
-    private ImageIcon image;
+    private final JLabel jLabel;
     private boolean removable;
     private boolean visible;
 
-    protected Item() {}
-
-    //TODO colocar no JLabel?
-    public int getPositionX() {
-        return this.positionX;
+    protected Item() {
+        this.jLabel = new JLabel();
+        settingsItem();
     }
 
-    public int getPositionY() {
-        return this.positionY;
+    private void settingsItem() {
+        SettingsItem settingsItem = new SettingsItem();
+        this.jLabel.setIcon(settingsItem.getIcon());
+        this.jLabel.setName(settingsItem.getName());
+        this.jLabel.setBounds(settingsItem.getRectangle());
+        this.jLabel.setVerticalAlignment(SwingConstants.BOTTOM);
     }
 
-    public void setPositionX(int positionX) {
-        this.positionX = positionX;
-    }// TODO JLabel atualizar automaticamente com referencia
+    public JLabel getJLabel() {
+        return this.jLabel;
+    }
 
-    public void setPositionY(int positionY) {
-        this.positionY = positionY;
-    }// TODO JLabel atualizar automaticamente com referencia
+    public Point getLocation() {
+        return this.jLabel.getLocation();
+    }
 
-    public ImageIcon getImage() {
-        return this.image;
+    public void setLocation(Point point) {
+        this.jLabel.setLocation(point);
+    }
+
+    public Icon getImage() {
+        return this.jLabel.getIcon();
     }
 
     public String getName() {
         return this.name;
     }
 
-    public String getDescription() {return description;}
+    public String getDescription() {
+        return this.description;
+    }
 
     public int getWeight() {
         return this.weight;
@@ -69,7 +77,7 @@ public abstract class Item implements IAction {
     }
 
     protected void setImage(ImageIcon image) {
-        this.image = image;
+        this.jLabel.setIcon(image);
     }
 
     protected void setRemovable(boolean removable) {
@@ -82,9 +90,9 @@ public abstract class Item implements IAction {
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", weight=" + weight +
-                ", positionX=" + positionX +
-                ", positionY=" + positionY +
-                ", image=" + image +
+                ", positionX=" + this.jLabel.getLocation().x +
+                ", positionY=" + this.jLabel.getLocation().y +
+                ", image=" + this.jLabel.getIcon() +
                 ", removable=" + removable +
                 ", visible=" + visible +
                 '}';

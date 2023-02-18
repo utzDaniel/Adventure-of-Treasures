@@ -9,6 +9,8 @@ import repository.RepositoryMapGame;
 import service.NextDoor;
 import view.InterfaceGame;
 
+import java.awt.*;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
@@ -27,14 +29,13 @@ public class NextDoorTest {
         templeDoor = temple.getDoor(380,530).get();
         vilaDoor = village.getDoor(370,150).get();
         player.setCurrentMap(village);
-        player.setPositionPlayerX(370);
-        player.setPositionPlayerY(150);
+        player.setLocation(new Point(370,150));
         nextDoor = new NextDoor(new InterfaceGame());
     }
 
     @Test
     public void testDoorNull(){
-        player.setPositionPlayerX(350);
+        player.setLocation(new Point(350, player.getLocation().y ));
         MapGame atualMap = player.getCurrentMap();
         nextDoor.run();
         assertEquals(atualMap, player.getCurrentMap());
@@ -44,6 +45,7 @@ public class NextDoorTest {
     public void testDoorFechada(){
         vilaDoor.setOpen(false);
         templeDoor.setOpen(false);
+        player.setLocation(new Point(370,150));
         nextDoor.run();
     }
 
@@ -51,6 +53,7 @@ public class NextDoorTest {
     public void testDoorAberta(){
         vilaDoor.setOpen(true);
         MapGame atualMap = player.getCurrentMap();
+        player.setLocation(new Point(370,150));
         nextDoor.run();
         assertNotEquals(atualMap.getName(), player.getCurrentMap().getName());
     }

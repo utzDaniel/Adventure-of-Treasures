@@ -3,6 +3,8 @@ package model.builder;
 import model.builder.item.*;
 import model.interfaces.IBuilderItem;
 
+import java.awt.*;
+
 import static java.lang.Boolean.parseBoolean;
 import static java.lang.Integer.parseInt;
 
@@ -29,8 +31,7 @@ public class ItemFactory {
         return item.name(dados[1])
                 .description(dados[2])
                 .weight(parseInt(dados[3]))
-                .positionX(parseInt(dados[4]))
-                .positionY(parseInt(dados[5]))
+                .point(new Point(parseInt(dados[4]),parseInt(dados[5])))
                 .image(dados[6])
                 .removable(parseBoolean(dados[11]))
                 .visible(true);

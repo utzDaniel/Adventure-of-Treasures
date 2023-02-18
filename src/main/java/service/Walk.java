@@ -5,6 +5,8 @@ import model.Coordinate;
 import model.Player;
 import model.enums.MovePlayer;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.Arrays;
 
 public final class Walk {
@@ -18,15 +20,12 @@ public final class Walk {
         this.player = Player.getInstance();
     }
 
-    public boolean run (){
+    public ImageIcon run (){
         moveToDirection();
         move();
         this.move.run();
-        if (checkCanWalk()) setLocation();
-        else comeBack();
-        setDirection();
-        setIcon();
-        return true;
+        if (!checkCanWalk()) comeBack();
+        return this.move.getImageIcon();
     }
 
     private void moveToDirection(){
@@ -36,33 +35,19 @@ public final class Walk {
     }
 
     private void move(){
-        int newPositionX = this.player.getPositionPlayerX() + this.move.getToMoveX();
-        int newPositionY = this.player.getPositionPlayerY() + this.move.getToMoveY();
-        this.player.setPositionPlayerX(newPositionX);
-        this.player.setPositionPlayerY(newPositionY);
+        int newPositionX = this.player.getLocation().x + this.move.getToMoveX();
+        int newPositionY = this.player.getLocation().y + this.move.getToMoveY();
+        this.player.setLocation(new Point(newPositionX,newPositionY));
     }
 
     private boolean checkCanWalk(){
         return this.player.getCurrentMap()
-                .checkLimits( new Coordinate(this.player.getPositionPlayerX(),this.player.getPositionPlayerY()));
+                .checkLimits( new Coordinate(this.player.getLocation().x,this.player.getLocation().y));
     }
 
     private void comeBack(){
-        int newPositionX = this.player.getPositionPlayerX() - this.move.getToMoveX();
-        int newPositionY = this.player.getPositionPlayerY() - this.move.getToMoveY();
-        this.player.setPositionPlayerX(newPositionX);
-        this.player.setPositionPlayerY(newPositionY);
-    }
-
-    private void setDirection(){
-        this.player.setDirection(this.direction);
-    }
-
-    private void setLocation(){
-        this.player.setLocation();
-    }
-
-    private void setIcon(){
-        this.player.setIcon(this.move.getImageIcon());
+        int newPositionX = this.player.getLocation().x - this.move.getToMoveX();
+        int newPositionY = this.player.getLocation().y - this.move.getToMoveY();
+        this.player.setLocation(new Point(newPositionX,newPositionY));
     }
 }

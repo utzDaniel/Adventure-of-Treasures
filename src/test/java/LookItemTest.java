@@ -7,6 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 import repository.RepositoryMapGame;
 
+import java.awt.*;
+
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -26,8 +28,7 @@ public class LookItemTest {
     public void testarDirectionInvalida(){
         Scenery nextScenery = ((Scenery) player.getCurrentMap()).getExit("oeste");
         player.setCurrentMap(nextScenery);
-        player.setPositionPlayerX(210);
-        player.setPositionPlayerY(280);
+        player.setLocation(new Point(210,280));
         player.setDirection("oest");
         player.lookItem();
     }
@@ -37,8 +38,7 @@ public class LookItemTest {
         Scenery nextScenery = ((Scenery) player.getCurrentMap()).getExit("oeste");
         player.setCurrentMap(nextScenery);
         player.setDirection(Direction.OESTE.getLabel());
-        player.setPositionPlayerX(210);
-        player.setPositionPlayerY(280);
+        player.setLocation(new Point(210,280));
         assertNotNull(player.lookItem());
     }
 
@@ -47,8 +47,7 @@ public class LookItemTest {
         Scenery nextScenery = ((Scenery) player.getCurrentMap()).getExit("oeste");
         player.setCurrentMap(nextScenery);
         player.setDirection(Direction.OESTE.getLabel());
-        player.setPositionPlayerX(210);
-        player.setPositionPlayerY(270);
+        player.setLocation(new Point(210,270));
         assertNull(player.lookItem());
     }
 

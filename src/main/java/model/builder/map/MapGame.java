@@ -6,12 +6,10 @@ import model.Door;
 import model.builder.item.Item;
 import repository.RepositoryMapGame;
 import service.AddItemMapGame;
+import settings.SettingsMapGame;
 
 import javax.swing.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class MapGame {
@@ -22,11 +20,27 @@ public abstract class MapGame {
     //Key mapa, Values List<Area> representar inicial X e final X,
     // inicial Y e final Y. Clase Area com uma Map espeficica
     private Map<Coordinate, Item> itens;
+    private static final JLabel jLabel = new JLabel();
 
     protected MapGame() {
         this.limits = new int[56][78];
         this.doors = new HashMap<>();
         this.itens = new HashMap<>();
+        settingsMapGame();
+    }
+
+    public static JLabel getJLabel(){
+        if(Objects.isNull(jLabel.getName())){
+            settingsMapGame();
+        }
+        return jLabel;
+    }
+
+    private static void settingsMapGame() {
+        SettingsMapGame settingsMapGame = new SettingsMapGame();
+        jLabel.setIcon(settingsMapGame.getIcon());
+        jLabel.setName(settingsMapGame.getName());
+        jLabel.setBounds(settingsMapGame.getRectangle());
     }
 
     public String getName() {
@@ -103,14 +117,14 @@ public abstract class MapGame {
     }
 
     public void removeItem(Item item) {
-        Coordinate coordinate = new Coordinate(item.getPositionX(), item.getPositionY());
+        Coordinate coordinate = new Coordinate(item.getLocation().x, item.getLocation().y);
         this.itens.remove(coordinate);
         this.limits[coordinate.getAxisY()][coordinate.getAxisX()] = 1;
     }
 
     public void addItem(Item item) {
         if (new AddItemMapGame(item).run()) {
-            Coordinate coordinate = new Coordinate(item.getPositionX(), item.getPositionY());
+            Coordinate coordinate = new Coordinate(item.getLocation().x, item.getLocation().y);
             this.itens.put(coordinate, item);
             this.limits[coordinate.getAxisY()][coordinate.getAxisX()] = 2;
         }

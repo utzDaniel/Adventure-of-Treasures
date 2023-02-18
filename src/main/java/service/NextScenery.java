@@ -4,6 +4,7 @@ import model.*;
 import model.builder.map.Scenery;
 import view.InterfaceGame;
 
+import java.awt.*;
 import java.util.Objects;
 
 public class NextScenery {
@@ -27,11 +28,14 @@ public class NextScenery {
     }
 
     private void newPosition(String direction) {
+        int x = player.getLocation().x;
+        int y = player.getLocation().y;
         switch (direction) {
-            case "norte" -> player.setPositionPlayerY(interfaceGame.getMapGameJLabel().getHeight() - 70);
-            case "sul" -> player.setPositionPlayerY(10);
-            case "oeste" -> player.setPositionPlayerX(interfaceGame.getMapGameJLabel().getWidth() - 50);
-            case "leste" -> player.setPositionPlayerX(10);
+            case "norte" -> y = interfaceGame.getMapGameJLabel().getHeight() - 70;
+            case "sul" -> y = 10;
+            case "oeste" -> x = interfaceGame.getMapGameJLabel().getWidth() - 50;
+            case "leste" -> x = 10;
         }
+        player.setLocation(new Point(x, y));
     }
 }
