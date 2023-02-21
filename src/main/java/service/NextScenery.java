@@ -1,10 +1,10 @@
 package service;
 
-import model.*;
+import model.Coordinate;
+import model.Player;
 import model.builder.map.Scenery;
 import view.InterfaceGame;
 
-import java.awt.*;
 import java.util.Objects;
 
 public class NextScenery {
@@ -18,24 +18,23 @@ public class NextScenery {
     }
 
     public boolean run(String direction) {
-        Scenery nextScenery = ((Scenery) player.getCurrentMap()).getExit(direction);
+        Scenery nextScenery = ((Scenery) this.player.getCurrentMap()).getExit(direction);
         if (Objects.isNull(nextScenery)) return false;
-        player.setCurrentMap(nextScenery);
+        this.player.setCurrentMap(nextScenery);
         newPosition(direction);
-        interfaceGame.getMapGameJLabel().setIcon(nextScenery.getImage());
+        this.interfaceGame.getMapGameJLabel().setIcon(nextScenery.getImage());
         return true;
 
     }
 
     private void newPosition(String direction) {
-        int x = player.getLocation().x;
-        int y = player.getLocation().y;
+        Coordinate coordinate = this.player.getLocation();
         switch (direction) {
-            case "norte" -> y = interfaceGame.getMapGameJLabel().getHeight() - 70;
-            case "sul" -> y = 10;
-            case "oeste" -> x = interfaceGame.getMapGameJLabel().getWidth() - 50;
-            case "leste" -> x = 10;
+            case "norte" -> coordinate.setY(this.interfaceGame.getMapGameJLabel().getHeight() - 70);
+            case "sul" -> coordinate.setY(10);
+            case "oeste" -> coordinate.setX(this.interfaceGame.getMapGameJLabel().getWidth() - 50);
+            case "leste" -> coordinate.setX(10);
         }
-        player.setLocation(new Point(x, y));
+        this.player.setLocation(coordinate);
     }
 }

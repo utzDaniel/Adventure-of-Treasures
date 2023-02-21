@@ -2,45 +2,34 @@ package service;
 
 import exception.MoveException;
 import model.Coordinate;
-import model.builder.item.Item;
 import model.enums.MovePlayer;
-import model.Player;
 
-import java.awt.*;
 import java.util.Arrays;
 
 public final class LookItem {
 
-    private final Player player;
-    private MovePlayer move;
-    private Coordinate coordinate;
+    private final String direction;
+    private final Coordinate coordinate;
 
-
-    public LookItem() {
-        this.player = Player.getInstance();
-        this.coordinate = new Coordinate(new Point(0,0));
+    public LookItem(String direction, Coordinate coordinate) {
+        this.direction = direction;
+        this.coordinate = new Coordinate(coordinate.getPoint());
     }
 
-    public Item run(){
-        lookToDirection();
-        setCoordinate();
-        return getItemMapGame();
-
+    public Coordinate run() {
+        Coordinate coordinate = lookToDirection();
+        updateCoordinate(coordinate);
+        return this.coordinate;
     }
 
-    private void lookToDirection(){
-        this.move =  Arrays.stream(MovePlayer.values())
-                .filter(move -> move.getDirection().equals(this.player.getDirection()))
-                .findFirst().orElseThrow(() -> new MoveException("Direção invalida!"));
+    private Coordinate lookToDirection() {
+        return Arrays.stream(MovePlayer.values())
+                .filter(move -> move.getDirection().equals(this.direction))
+                .findFirst().map(MovePlayer::getCoordinate)
+                .orElseThrow(() -> new MoveException("Direção invalida!"));
     }
 
-    private void setCoordinate(){
-        int newPositionX = this.player.getLocation().x+ this.move.getToMoveX();
-        int newPositionY = this.player.getLocation().y + this.move.getToMoveY();
-        this.coordinate = new Coordinate(new Point(newPositionX,newPositionY));
-    }
-
-    private Item getItemMapGame() {
-        return this.player.getCurrentMap().getItem(this.coordinate);
+    private void updateCoordinate(Coordinate coordinate) {
+        this.coordinate.move(coordinate);
     }
 }

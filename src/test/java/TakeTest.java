@@ -1,4 +1,5 @@
 import exception.InventoryException;
+import model.Coordinate;
 import model.Player;
 import model.builder.item.Item;
 import model.builder.item.ItemUsableBuilder;
@@ -31,33 +32,35 @@ public class TakeTest {
             player.getInventory().setItemInvisible(item);
         }
         item = ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(0)
-                .point(new Point(300,480)).image(null).removable(true).visible(true).build();
+                .coordinate(new Coordinate(340, 340)).image(null).removable(true).visible(true).build();
         mapGame = player.getCurrentMap();
-        mapGame.addItem(item);
+        mapGame.addItem(item, player.getLocation());
         take = new Take();
     }
 
     @Test
     public void testarItemValidoAFrente() {
-        player.setLocation(new Point(item.getLocation().x,(item.getLocation().y-10)));
+        player.setLocation(new Coordinate(item.getLocation().getX(), (item.getLocation().getY() - 10)));
         player.setCurrentMap(mapGame);
         assertTrue(take.run());
     }
 
-    @Test (expected = InventoryException.class)
+    @Test(expected = InventoryException.class)
     public void testarItemValidoAFrenteSemCapacitadadeNoInventario() {
-        Item item = ItemUsableBuilder.builder().localUse("praia").name("pa1").description("ferramenta usada para cavar").weight(30)
-                .point(new Point(300,470)).image(null).removable(true).visible(true).build();
-        player.setLocation(new Point(item.getLocation().x,(item.getLocation().y-10)));
+        Item item = ItemUsableBuilder.builder().localUse("praia").name("pa1487").description("ferramenta usada para cavar").weight(30)
+                .coordinate(new Coordinate(320, 320)).image(null).removable(true).visible(true).build();
+        player.setLocation(new Coordinate(320, 320));
         player.setDirection("oeste");
-        mapGame.addItem(item);
+        mapGame.addItem(item, player.getLocation());
         player.setCurrentMap(mapGame);
         take.run();
+        System.out.println(player.getLocation());
+        System.out.println(mapGame.getItem(new Coordinate(310,320)));
     }
 
     @Test
     public void testarItemInvalidoAFrente() {
-        player.setLocation(new Point(290,player.getLocation().y ));
+        player.setLocation(new Coordinate(290, player.getLocation().getY()));
         player.setCurrentMap(mapGame);
         assertFalse(take.run());
     }

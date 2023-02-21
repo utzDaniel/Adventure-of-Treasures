@@ -26,16 +26,16 @@ public class NextDoorTest {
         player = Player.getInstance();
         Scenery village = (Scenery) RepositoryMapGame.getInstance().getMapGame("vila");
         Room temple = (Room) RepositoryMapGame.getInstance().getMapGame("templo");
-        templeDoor = temple.getDoor(new Point(380,530)).get();
-        vilaDoor = village.getDoor(new Point(370,150)).get();
+        templeDoor = temple.getDoor(new Coordinate(380,530)).get();
+        vilaDoor = village.getDoor(new Coordinate(370,150)).get();
         player.setCurrentMap(village);
-        player.setLocation(new Point(370,150));
+        player.setLocation(new Coordinate(370,150));
         nextDoor = new NextDoor(new InterfaceGame());
     }
 
     @Test
     public void testDoorNull(){
-        player.setLocation(new Point(350, player.getLocation().y ));
+        player.setLocation(new Coordinate(350, player.getLocation().getY()));
         MapGame atualMap = player.getCurrentMap();
         nextDoor.run();
         assertEquals(atualMap, player.getCurrentMap());
@@ -45,7 +45,7 @@ public class NextDoorTest {
     public void testDoorFechada(){
         vilaDoor.setOpen(false);
         templeDoor.setOpen(false);
-        player.setLocation(new Point(370,150));
+        player.setLocation(new Coordinate(370,150));
         nextDoor.run();
     }
 
@@ -53,7 +53,7 @@ public class NextDoorTest {
     public void testDoorAberta(){
         vilaDoor.setOpen(true);
         MapGame atualMap = player.getCurrentMap();
-        player.setLocation(new Point(370,150));
+        player.setLocation(new Coordinate(370,150));
         nextDoor.run();
         assertNotEquals(atualMap.getName(), player.getCurrentMap().getName());
     }

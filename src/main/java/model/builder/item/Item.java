@@ -1,10 +1,10 @@
 package model.builder.item;
 
+import model.Coordinate;
 import model.interfaces.IAction;
 import settings.SettingsItem;
 
 import javax.swing.*;
-import java.awt.*;
 
 public abstract class Item implements IAction {
 
@@ -15,9 +15,12 @@ public abstract class Item implements IAction {
     private boolean removable;
     private boolean visible;
 
+    private Coordinate coordinate;
+
     protected Item() {
         this.jLabel = new JLabel();
         settingsItem();
+        this.coordinate = new Coordinate(this.jLabel.getLocation());
     }
 
     private void settingsItem() {
@@ -32,12 +35,13 @@ public abstract class Item implements IAction {
         return this.jLabel;
     }
 
-    public Point getLocation() {
-        return this.jLabel.getLocation();
+    public Coordinate getLocation() {
+        return this.coordinate;
     }
 
-    public void setLocation(Point point) {
-        this.jLabel.setLocation(point);
+    public void setLocation(Coordinate coordinate) {
+        this.coordinate.setLocation(coordinate);
+        this.jLabel.setLocation(this.coordinate.getPoint());
     }
 
     public Icon getImage() {

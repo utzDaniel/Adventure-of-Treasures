@@ -9,7 +9,6 @@ import service.Walk;
 import settings.SettingsPlayer;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.Objects;
 
 public final class Player {
@@ -20,11 +19,14 @@ public final class Player {
     private final Inventory inventory;
     private final JLabel jLabel;
 
+    private Coordinate coordinate;
+
     private Player() {
         this.currentMapGame = null;
         this.inventory = new Inventory();
         this.jLabel = new JLabel();
         settingsPlayer();
+        this.coordinate = new Coordinate(this.jLabel.getLocation());
     }
 
     public static synchronized Player getInstance() {
@@ -45,19 +47,21 @@ public final class Player {
         return this.jLabel;
     }
 
-    public Point getLocation() {
-        return this.jLabel.getLocation();
+    //TODO devolver uma nova referencia
+    public Coordinate getLocation() {
+        return this.coordinate;
     }
 
-    public void setLocation(Point point) {
-        this.jLabel.setLocation(point);
+    public void setLocation(Coordinate coordinate) {
+        this.coordinate.setLocation(coordinate);
+        this.jLabel.setLocation(this.coordinate.getPoint());
     }
 
     public String getDirection() {
         return this.direction;
     }
 
-    //TODO refatorar os teste, pois o setDirection spi usar em teste agora
+    //TODO refatorar os teste, pois o setDirection usa so em teste agora
     public void setDirection(String direction) {
         this.direction = direction;
     }
@@ -81,7 +85,8 @@ public final class Player {
     }
 
     public Item lookItem() {
-        return new LookItem().run();
+        Coordinate coordinate = new LookItem(this.direction, this.getLocation()).run();
+        return this.getCurrentMap().getItem(coordinate);
     }
 
     public boolean takeItem(Item item) {

@@ -1,4 +1,5 @@
 import exception.ItemEquipableException;
+import model.Coordinate;
 import model.Player;
 import model.builder.item.Item;
 import model.builder.item.ItemEquipable;
@@ -10,7 +11,6 @@ import repository.RepositoryMapGame;
 import service.Equip;
 import service.Unequip;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -21,13 +21,13 @@ public class EquipableTest {
     @Before
     public void inicial() {
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila").description("utilizada para carregar mais coisas").weight(0)
-                .point(new Point(650,220)).image(null).removable(true).visible(true).build());
+                .coordinate(new Coordinate(650, 220)).image(null).removable(true).visible(true).build());
         itens.add(ItemUsableBuilder.builder().localUse("vila").name("chave").description("utilizada para abir algo").weight(0)
-                .point(new Point(580,300)).image(null).removable(true).visible(true).build());
+                .coordinate(new Coordinate(580, 300)).image(null).removable(true).visible(true).build());
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("toch").description("utilizado para iluminar").weight(0)
-                .point(new Point(410,220)).image(null).removable(true).visible(true).build());
+                .coordinate(new Coordinate(410, 220)).image(null).removable(true).visible(true).build());
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("tocha").description("utilizado para iluminar").weight(0)
-                .point(new Point(410,220)).image(null).removable(true).visible(true).build());
+                .coordinate(new Coordinate(410, 220)).image(null).removable(true).visible(true).build());
     }
 
     @Test
@@ -74,7 +74,7 @@ public class EquipableTest {
         int size = player.getInventory().getMaxCapacity() - player.getInventory().getCapacity();
         player.getInventory().addItem(
                 ItemEquipableBuilder.builder().equipped(false).name("peso").description("pesar").weight(size)
-                        .point(new Point(410,220)).image(null).removable(true).visible(true).build());
+                        .coordinate(new Coordinate(410, 220)).image(null).removable(true).visible(true).build());
         ((ItemEquipable) itens.get(0)).unequip(itens.get(0));
     }
 

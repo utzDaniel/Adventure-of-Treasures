@@ -1,32 +1,63 @@
 package model;
 
+import model.enums.MovePlayer;
+
 public class Area {
 
-    private final int initialAxisX;
-    private final int finalAxisX;
-    private final int initialAxisY;
-    private final int finalAxisY;
+    public static final int STEP = MovePlayer.STEP;
+    private static final int POSITION_MINIMUM = 10;
+    private static final int POSITION_X_MAXIMUM = 56;
+    private static final int POSITION_Y_MAXIMUM = 78;
 
-    public Area(int initialAxisX, int finalAxisX, int initialAxisY, int finalAxisY) {
-        this.initialAxisX = initialAxisX;
-        this.finalAxisX = finalAxisX;
-        this.initialAxisY = initialAxisY;
-        this.finalAxisY = finalAxisY;
+    private final int[][] limits;
+
+    public static boolean isLimit(Coordinate coordinate) {
+        return !(Math.min(x(coordinate), y(coordinate)) >= POSITION_MINIMUM &&
+                x(coordinate) <= POSITION_X_MAXIMUM && y(coordinate) <= POSITION_Y_MAXIMUM);
     }
 
-    public int getInitialAxisX() {
-        return this.initialAxisX;
+    public static int getTotalArea() {
+        return POSITION_X_MAXIMUM * POSITION_Y_MAXIMUM;
     }
 
-    public int getFinalAxisX() {
-        return this.finalAxisX;
+    public Area(int[][] limits) {
+        this.limits = limits;
     }
 
-    public int getInitialAxisY() {
-        return this.initialAxisY;
+    public boolean isBlock(Coordinate coordinate) {
+        return this.limits[y(coordinate)][x(coordinate)] == 1;
     }
 
-    public int getFinalAxisY() {
-        return this.finalAxisY;
+    public void unlock(Coordinate coordinate) {
+        this.limits[y(coordinate)][x(coordinate)] = 1;
+    }
+
+    public void block(Coordinate coordinate) {
+        this.limits[y(coordinate)][x(coordinate)] = 2;
+    }
+
+    private static int x(Coordinate coordinate) {
+        return coordinate.getX() / Area.STEP;
+    }
+
+    private static int y(Coordinate coordinate) {
+        return coordinate.getY() / Area.STEP;
+    }
+
+    @Override
+    public String toString() {
+        return "Area{" +
+                "limits=" + limits() +
+                '}';
+    }
+
+    private String limits() {
+        StringBuilder str = new StringBuilder();
+        for (int[] limit : limits) {
+            for (int i : limit) {
+                str.append(i);
+            }
+        }
+        return str.toString();
     }
 }

@@ -1,51 +1,54 @@
 package model;
 
-import model.enums.MovePlayer;
-
 import java.awt.*;
 import java.util.Objects;
 
 public class Coordinate {
 
-    private final int STEP = MovePlayer.STEP;
-    private int x;
-    private int y;
-    private boolean blocked;
+    private Point point;
 
     public Coordinate(int x, int y) {
-        setX(x);
-        setY(y);
-        this.blocked = false;
+        this.point = new Point(x, y);
     }
 
     public Coordinate(Point point) {
-        setX(point.x);
-        setY(point.y);
+        this.point = new Point(point);
     }
 
     public int getX() {
-        return this.x;
+        return this.point.x;
+    }
+
+    public Point getPoint() {
+        return this.point;
     }
 
     public void setX(int x) {
-        this.x = x / this.STEP;
+        this.point.move(x, this.point.y);
+    }
+
+    public void updateX(int x) {
+        this.point.translate(x, 0);
     }
 
     public int getY() {
-        return this.y;
+        return this.point.y;
     }
-
 
     public void setY(int y) {
-        this.y = y / this.STEP;
+        this.point.move(this.point.x,y);
     }
 
-    public boolean isBlocked() {
-        return this.blocked;
+    public void updateY(int y) {
+        this.point.translate(0,y);
     }
 
-    public void setBlocked(boolean blocked) {
-        this.blocked = blocked;
+    public void move(Coordinate coordinate) {
+        this.point.translate(coordinate.getX(), coordinate.getY());
+    }
+
+    public void setLocation(Coordinate coordinate) {
+        this.point.move(coordinate.getX(), coordinate.getY());
     }
 
     @Override
@@ -53,20 +56,19 @@ public class Coordinate {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Coordinate that = (Coordinate) o;
-        return this.x == that.x && this.y == that.y;
+        return this.point.x == that.point.x && this.point.y == that.point.y;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.x, this.y);
+        return Objects.hash(this.point.x, this.point.y);
     }
 
     @Override
     public String toString() {
         return "Coordinate{" +
-                "STEP=" + STEP +
-                ", axisX=" + x +
-                ", axisY=" + y +
+                ", x =" + this.point.x +
+                ", y =" + this.point.y +
                 '}';
     }
 }

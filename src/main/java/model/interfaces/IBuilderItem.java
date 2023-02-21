@@ -1,8 +1,7 @@
 package model.interfaces;
 
+import model.Coordinate;
 import model.builder.item.Item;
-
-import java.awt.*;
 
 public interface IBuilderItem {
 
@@ -12,7 +11,7 @@ public interface IBuilderItem {
 
     IBuilderItem weight(int weight);
 
-    IBuilderItem point(Point point);
+    IBuilderItem coordinate(Coordinate coordinate);
 
     IBuilderItem image(String filename);
 

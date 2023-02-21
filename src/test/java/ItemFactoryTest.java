@@ -1,3 +1,4 @@
+import model.Coordinate;
 import model.builder.item.*;
 import model.mapper.ItemMapper;
 import org.junit.Before;
@@ -20,37 +21,37 @@ public class ItemFactoryTest {
         itens = new ArrayList<>();
         String filename1 = "src/main/resources/item/";
         itens.add(ItemUsableBuilder.builder().localUse("vila").name("chave").description("utilizada para abrir algo").weight(3)
-                .point(new Point(580,300)).image(filename1 + "chave.png").removable(true).visible(true).build());
+                .coordinate(new Coordinate(580,300)).image(filename1 + "chave.png").removable(true).visible(true).build());
         itens.add(ItemUsableBuilder.builder().localUse("templo").name("escada").description("utilizada para subir em algum lugar").weight(5)
-                .point(new Point(410,200)).image(filename1 + "escada.png").removable(true).visible(true).build());
+                .coordinate(new Coordinate(410,200)).image(filename1 + "escada.png").removable(true).visible(true).build());
         itens.add(ItemCombinableBuilder.builder().combine(3).name("faca").description("serve para cortar algo").weight(3)
-                .point(new Point(420,130)).image(filename1 + "faca.png").removable(true).visible(true).build());
+                .coordinate(new Coordinate(420,130)).image(filename1 + "faca.png").removable(true).visible(true).build());
         itens.add(ItemCombinableBuilder.builder().combine(3).name("frasco").description("contém algum líquido inflamável").weight(3)
-                .point(new Point(280,310)).image(filename1 + "frasco.png").removable(true).visible(true).build());
+                .coordinate(new Coordinate(280,310)).image(filename1 + "frasco.png").removable(true).visible(true).build());
         itens.add(ItemCombinableBuilder.builder().combine(1).name("livro").description("livro antigo usado para decifrar escrita antiga").weight(1)
-                .point(new Point(490,390)).image(filename1 + "livro.png").removable(true).visible(true).build());
+                .coordinate(new Coordinate(490,390)).image(filename1 + "livro.png").removable(true).visible(true).build());
         itens.add(ItemCombinableBuilder.builder().combine(3).name("madeira").description("cabo de madeira velho").weight(5)
-                .point(new Point(410,200)).image(filename1 + "madeira.png").removable(true).visible(true).visible(true).build());
+                .coordinate(new Coordinate(410,200)).image(filename1 + "madeira.png").removable(true).visible(true).visible(true).build());
         itens.add(ItemCombinableBuilder.builder().combine(2).name("madeiras").description("madeira para construir algo").weight(5)
-                .point(new Point(640,80)).image(filename1 + "madeiras.png").removable(true).visible(true).build());
+                .coordinate(new Coordinate(640,80)).image(filename1 + "madeiras.png").removable(true).visible(true).build());
         itens.add(ItemMissionBuilder.builder().mapGame("praia").name("mapa").description("algo está enterrado na praia").weight(0)
-                .point(new Point(410,200)).image(filename1 + "mapa.png").removable(false).visible(true).build());
+                .coordinate(new Coordinate(410,200)).image(filename1 + "mapa.png").removable(false).visible(true).build());
         itens.add(ItemCombinableBuilder.builder().combine(2).name("martelo").description("utilizado para construir algo").weight(4)
-                .point(new Point(160,320)).image(filename1 + "martelo.png").removable(true).visible(true).build());
+                .coordinate(new Coordinate(160,320)).image(filename1 + "martelo.png").removable(true).visible(true).build());
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila").description("utilizada para carregar mais coisas").weight(0)
-                .point(new Point(650,220)).image(filename1 + "mochila.png").removable(true).visible(true).build());
+                .coordinate(new Coordinate(650,220)).image(filename1 + "mochila.png").removable(true).visible(true).build());
         itens.add(ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(3)
-                .point(new Point(200,280)).image(filename1 + "pa.png").removable(true).visible(true).build());
+                .coordinate(new Coordinate(200,280)).image(filename1 + "pa.png").removable(true).visible(true).build());
         itens.add(ItemCombinableBuilder.builder().combine(1).name("papel").description("papel escrito em lingua antiga").weight(2)
-                .point(new Point(510,320)).image(filename1 + "papel.png").removable(true).visible(true).build());
+                .coordinate(new Coordinate(510,320)).image(filename1 + "papel.png").removable(true).visible(true).build());
         itens.add(ItemCombinableBuilder.builder().combine(3).name("pederneira").description("item específico para fazer fogo").weight(2)
-                .point(new Point(440,200)).image(filename1 + "pederneira.png").removable(true).visible(true).build());
+                .coordinate(new Coordinate(440,200)).image(filename1 + "pederneira.png").removable(true).visible(true).build());
         itens.add(ItemCombinableBuilder.builder().combine(2).name("pregos").description("utilizado para construir algo").weight(3)
-                .point(new Point(460,400)).image(filename1 + "pregos.png").removable(true).visible(true).build());
+                .coordinate(new Coordinate(460,400)).image(filename1 + "pregos.png").removable(true).visible(true).build());
         itens.add(ItemMissionBuilder.builder().mapGame("barco").name("tesouro").description("tesouro lendário dos templários").weight(3)
-                .point(new Point(620,240)).image(filename1 + "tesouro.png").removable(false).visible(true).build());
+                .coordinate(new Coordinate(620,240)).image(filename1 + "tesouro.png").removable(false).visible(true).build());
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("tocha").description("utilizado para iluminar").weight(5)
-                .point(new Point(410,200)).image(filename1 + "tocha.png").removable(true).visible(true).build());
+                .coordinate(new Coordinate(410,200)).image(filename1 + "tocha.png").removable(true).visible(true).build());
 
         itensFile = new ArrayList<>();
         String filename = "item/item.csv";

@@ -38,8 +38,6 @@ public class NextDoor {
     }
 
     private void setPositionPlayer(Door door) {
-        int x = door.getCoordinate().getX() * 10;
-        int y = door.getCoordinate().getY() * 10;
-        player.setLocation(new Point(x,y));
+        player.setLocation(door.getCoordinate());
     }
 }

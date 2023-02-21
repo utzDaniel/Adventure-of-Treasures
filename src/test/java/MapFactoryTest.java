@@ -48,13 +48,13 @@ public class MapFactoryTest {
                 .exits("norte", "floresta")
                 .exits("leste", "praia")
                 .name("cais").image(filename1 + "cais.png")
-                .doors(new Door( "barco", new Coordinate(300, 520), true))
+                .doors(new Door("barco", new Coordinate(300, 520), true))
                 .limits(limitsPier()).build();
 
         var lighthouse = SceneryBuilder.builder()
                 .exits("leste", "cais")
                 .name("farol").image(filename1 + "farol.png")
-                .doors(new Door("dentro do farol",new Coordinate(270, 240), true))
+                .doors(new Door("dentro do farol", new Coordinate(270, 240), true))
                 .itens("pa").limits(limitsLighthouse()).build();
 
         var lighthouseRoom = RoomBuilder.builder().name("dentro do farol").image(filename1 + "dentro-do-farol.png")
@@ -75,9 +75,9 @@ public class MapFactoryTest {
         var village = SceneryBuilder.builder()
                 .exits("sul", "floresta")
                 .name("vila").image(filename1 + "vila.png")
-                .doors(new Door("alojamento",new Coordinate(140, 380), true))
-                .doors(new Door( "enfermaria",new Coordinate(720, 310), true))
-                .doors(new Door("templo",new Coordinate( 370, 150), false))
+                .doors(new Door("alojamento", new Coordinate(140, 380), true))
+                .doors(new Door("enfermaria", new Coordinate(720, 310), true))
+                .doors(new Door("templo", new Coordinate(370, 150), false))
                 .limits(limitsVillage()).build();
 
         var accommodation = RoomBuilder.builder().name("alojamento").image(filename1 + "alojamento.png")
@@ -86,7 +86,7 @@ public class MapFactoryTest {
 
         var temple = RoomBuilder.builder().name("templo").image(filename1 + "templo.png")
                 .doors(new Door("vila", new Coordinate(380, 530), false))
-                .doors(new Door("topo do templo",  new Coordinate(260, 190), false))
+                .doors(new Door("topo do templo", new Coordinate(260, 190), false))
                 .doors(new Door("porao do templo", new Coordinate(90, 240), false))
                 .itens("madeira").limits(limitsTemple()).build();
 

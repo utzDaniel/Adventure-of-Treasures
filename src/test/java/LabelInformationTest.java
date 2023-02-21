@@ -1,3 +1,4 @@
+import model.Coordinate;
 import model.builder.item.Item;
 import model.builder.item.ItemUsableBuilder;
 import org.junit.Before;
@@ -22,7 +23,7 @@ public class LabelInformationTest {
             labelInformation.create(s);
         }
         item = ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(0)
-                .point(new Point(200,280)).image(null).removable(true).visible(true).build();
+                .coordinate(new Coordinate(200,280)).image(null).removable(true).visible(true).build();
     }
 
     @Test

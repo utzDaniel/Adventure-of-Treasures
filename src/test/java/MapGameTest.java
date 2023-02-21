@@ -1,10 +1,12 @@
 import model.Coordinate;
-import model.builder.item.Item;
 import model.Player;
+import model.builder.item.Item;
 import model.builder.map.Scenery;
 import org.junit.Before;
 import org.junit.Test;
 import repository.RepositoryMapGame;
+
+import java.awt.*;
 
 import static org.junit.Assert.*;
 

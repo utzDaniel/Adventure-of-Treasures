@@ -24,7 +24,7 @@ public final class DropItem {
 
     private void addItemCurrentMap() {
         this.player.getCurrentMap().
-                addItem(this.item);
+                addItem(this.item, this.player.getLocation());
     }
 
 }

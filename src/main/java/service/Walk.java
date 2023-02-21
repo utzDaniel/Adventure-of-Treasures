@@ -6,48 +6,48 @@ import model.Player;
 import model.enums.MovePlayer;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.Arrays;
 
 public final class Walk {
 
     private final String direction;
     private final Player player;
+    private Coordinate coordinate;
     private MovePlayer move;
 
     public Walk(String direction) {
         this.direction = direction;
         this.player = Player.getInstance();
+        this.coordinate = new Coordinate(player.getLocation().getPoint());
     }
 
     public ImageIcon run() {
-        moveToDirection();
-        move();
-        this.move.run();
-        if (!checkCanWalk()) comeBack();
-        return this.move.getImageIcon();
+        this.move = getMovePlayer();
+        updateImagePlayer();
+        updateCoordinate();
+        if (validCoordinate()) setLocationPlayer();
+        return this.move.getImage();
     }
 
-    private void moveToDirection() {
-        this.move = Arrays.stream(MovePlayer.values())
+    private MovePlayer getMovePlayer() {
+        return Arrays.stream(MovePlayer.values())
                 .filter(movePlayer -> movePlayer.getDirection().equals(this.direction))
                 .findFirst().orElseThrow(() -> new MoveException("Direção invalida!"));
     }
 
-    private void move() {
-        int newPositionX = this.player.getLocation().x + this.move.getToMoveX();
-        int newPositionY = this.player.getLocation().y + this.move.getToMoveY();
-        this.player.setLocation(new Point(newPositionX, newPositionY));
+    private void updateImagePlayer() {
+        this.move.run();
     }
 
-    private boolean checkCanWalk() {
-        return this.player.getCurrentMap()
-                .checkLimits(new Coordinate(this.player.getLocation()));
+    private void updateCoordinate() {
+        this.coordinate.move(move.getCoordinate());
     }
 
-    private void comeBack() {
-        int newPositionX = this.player.getLocation().x - this.move.getToMoveX();
-        int newPositionY = this.player.getLocation().y - this.move.getToMoveY();
-        this.player.setLocation(new Point(newPositionX, newPositionY));
+    private boolean validCoordinate() {
+        return this.player.getCurrentMap().checkLimits(this.coordinate);
+    }
+
+    private void setLocationPlayer() {
+        this.player.setLocation(this.coordinate);
     }
 }

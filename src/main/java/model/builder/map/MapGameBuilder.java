@@ -46,7 +46,7 @@ abstract class MapGameBuilder implements IBuilderMapGame {
         if (Objects.isNull(name))
             return this;
         Item item = RepositoryItem.getInstance().getItem(name);
-        this.itens.put(new Coordinate(item.getLocation()), item);
+        this.itens.put(item.getLocation(), item);
         return this;
     }
 

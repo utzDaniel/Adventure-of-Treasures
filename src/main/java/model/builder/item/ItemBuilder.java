@@ -1,9 +1,9 @@
 package model.builder.item;
 
+import model.Coordinate;
 import model.interfaces.IBuilderItem;
 
 import javax.swing.*;
-import java.awt.*;
 
 abstract class ItemBuilder implements IBuilderItem {
 
@@ -28,8 +28,8 @@ abstract class ItemBuilder implements IBuilderItem {
     }
 
     @Override
-    public IBuilderItem point(Point point) {
-        this.item.setLocation(point);
+    public IBuilderItem coordinate(Coordinate coordinate) {
+        this.item.setLocation(coordinate);
         return this;
     }
 

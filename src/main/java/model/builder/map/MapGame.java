@@ -1,6 +1,7 @@
 package model.builder.map;
 
 import exception.MoveException;
+import model.Area;
 import model.Coordinate;
 import model.Door;
 import model.builder.item.Item;
@@ -10,29 +11,26 @@ import settings.SettingsMapGame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class MapGame {
     private String name;
     private ImageIcon image;
-    private int[][] limits;
+    private Area area;
     private Map<Coordinate, Door> doors;
-    //Key mapa, Values List<Area> representar inicial X e final X,
-    // inicial Y e final Y. Clase Area com uma Map espeficica
     private Map<Coordinate, Item> itens;
     private static final JLabel jLabel = new JLabel();
 
     protected MapGame() {
-        this.limits = new int[56][78];
         this.doors = new HashMap<>();
         this.itens = new HashMap<>();
         settingsMapGame();
     }
 
-    public static JLabel getJLabel(){
-        if(Objects.isNull(jLabel.getName())){
+    public static JLabel getJLabel() {
+        if (Objects.isNull(jLabel.getName())) {
             settingsMapGame();
         }
         return jLabel;
@@ -62,16 +60,16 @@ public abstract class MapGame {
     }
 
     public boolean checkLimits(Coordinate coordinate) {
-        return this.limits[coordinate.getY()][coordinate.getX()] == 1;
+        return this.area.isBlock(coordinate);
     }
 
     protected void setLimits(int[][] limits) {
-        this.limits = limits;
+        this.area = new Area(limits);
     }
 
-    public Optional<Door> getDoor(Point point) {
+    public Optional<Door> getDoor(Coordinate coordinate) {
         return this.doors.values().stream()
-                .filter(o -> o.isDoor(point))
+                .filter(o -> o.isDoor(coordinate))
                 .findFirst();
     }
 
@@ -95,16 +93,16 @@ public abstract class MapGame {
         try {
             if (nameItem.equals("tocha")) {
                 MapGame templo = RepositoryMapGame.getInstance().getMapGame("templo");
-                Door openDoor = templo.getDoor(new Point(90, 240)).get();
+                Door openDoor = templo.getDoor(new Coordinate(90, 240)).get();
                 openDoor.setOpen(!openDoor.isOpen());
                 activate = true;
             } else if (nameItem.equals("mapa")) {
                 MapGame praia = RepositoryMapGame.getInstance().getMapGame("praia");
                 praia.setImage(new ImageIcon("src/main/resources/map/praiaM.png"));
-            }else if (nameItem.equals("chave")){
+            } else if (nameItem.equals("chave")) {
                 MapGame praia = RepositoryMapGame.getInstance().getMapGame("praia");
                 praia.setImage(new ImageIcon("src/main/resources/map/praia.png"));
-            }else if (nameItem.equals("escada")){
+            } else if (nameItem.equals("escada")) {
                 MapGame templo = RepositoryMapGame.getInstance().getMapGame("templo");
                 templo.setImage(new ImageIcon("src/main/resources/map/temploF.png"));
             }
@@ -119,23 +117,21 @@ public abstract class MapGame {
     }
 
     public void removeItem(Item item) {
-        Coordinate coordinate = new Coordinate(item.getLocation());
-        this.itens.remove(coordinate);
-        this.limits[coordinate.getY()][coordinate.getX()] = 1;
+        this.itens.remove(item.getLocation());
+        this.area.unlock(item.getLocation());
     }
 
-    public void addItem(Item item) {
-        if (new AddItemMapGame(item).run()) {
-            Coordinate coordinate = new Coordinate(item.getLocation());
-            this.itens.put(coordinate, item);
-            this.limits[coordinate.getY()][coordinate.getX()] = 2;
+    public void addItem(Item item, Coordinate coordinate) {
+        if (new AddItemMapGame(item, coordinate).run()) {
+            this.itens.put(item.getLocation(), item);
+            this.area.block(item.getLocation());
         }
     }
 
     protected void setItens(Map<Coordinate, Item> itens) {
         this.itens = itens;
         this.itens.keySet()
-                .forEach(coordinate -> this.limits[coordinate.getY()][coordinate.getX()] = 2);
+                .forEach(c -> this.area.block(c));
     }
 
     public List<Item> getItemVisible() {
@@ -155,19 +151,9 @@ public abstract class MapGame {
         return "MapGame{" +
                 "name='" + name +
                 ", image=" + image +
-                ", limits=" + limits() +
+                ", area=" + area +
                 ", doors=" + doors +
                 ", itens=" + itens +
                 '}';
-    }
-
-    private String limits() {
-        StringBuilder str = new StringBuilder();
-        for (int[] limit : limits) {
-            for (int i : limit) {
-                str.append(i);
-            }
-        }
-        return str.toString();
     }
 }

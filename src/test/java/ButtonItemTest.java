@@ -1,4 +1,5 @@
-import model.*;
+import model.Coordinate;
+import model.Player;
 import model.builder.item.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,7 +8,6 @@ import view.ButtonItem;
 import view.Colors;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
@@ -23,13 +23,13 @@ public class ButtonItemTest {
     @Before
     public void create() {
         itens.add(ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(0)
-                .point(new Point(200,280)).image(null).removable(true).visible(true).build());
+                .coordinate(new Coordinate(200, 280)).image(null).removable(true).visible(true).build());
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila").description("utilizada para carregar mais coisas").weight(0)
-                .point(new Point(650,220)).image(null).removable(true).visible(true).build());
+                .coordinate(new Coordinate(650, 220)).image(null).removable(true).visible(true).build());
         itens.add(ItemCombinableBuilder.builder().combine(3).name("madeira").description("cabo de madeira velho").weight(0)
-                .point(new Point(410,200)).image(null).removable(true).visible(true).build());
+                .coordinate(new Coordinate(410, 200)).image(null).removable(true).visible(true).build());
         itens.add(ItemMissionBuilder.builder().mapGame("barco").name("tesouro").description("tesouro lendário dos templários").weight(0)
-                .point(new Point(620,240)).image(null).removable(false).visible(true).build());
+                .coordinate(new Coordinate(620, 240)).image(null).removable(false).visible(true).build());
         for (Item item : itens) {
             buttonItem.create(item);
         }
