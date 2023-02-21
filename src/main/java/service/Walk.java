@@ -20,7 +20,7 @@ public final class Walk {
         this.player = Player.getInstance();
     }
 
-    public ImageIcon run (){
+    public ImageIcon run() {
         moveToDirection();
         move();
         this.move.run();
@@ -28,26 +28,26 @@ public final class Walk {
         return this.move.getImageIcon();
     }
 
-    private void moveToDirection(){
+    private void moveToDirection() {
         this.move = Arrays.stream(MovePlayer.values())
                 .filter(movePlayer -> movePlayer.getDirection().equals(this.direction))
                 .findFirst().orElseThrow(() -> new MoveException("Direção invalida!"));
     }
 
-    private void move(){
+    private void move() {
         int newPositionX = this.player.getLocation().x + this.move.getToMoveX();
         int newPositionY = this.player.getLocation().y + this.move.getToMoveY();
-        this.player.setLocation(new Point(newPositionX,newPositionY));
+        this.player.setLocation(new Point(newPositionX, newPositionY));
     }
 
-    private boolean checkCanWalk(){
+    private boolean checkCanWalk() {
         return this.player.getCurrentMap()
-                .checkLimits( new Coordinate(this.player.getLocation().x,this.player.getLocation().y));
+                .checkLimits(new Coordinate(this.player.getLocation()));
     }
 
-    private void comeBack(){
+    private void comeBack() {
         int newPositionX = this.player.getLocation().x - this.move.getToMoveX();
         int newPositionY = this.player.getLocation().y - this.move.getToMoveY();
-        this.player.setLocation(new Point(newPositionX,newPositionY));
+        this.player.setLocation(new Point(newPositionX, newPositionY));
     }
 }

@@ -9,7 +9,9 @@ import service.AddItemMapGame;
 import settings.SettingsMapGame;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class MapGame {
@@ -60,22 +62,22 @@ public abstract class MapGame {
     }
 
     public boolean checkLimits(Coordinate coordinate) {
-        return this.limits[coordinate.getAxisY()][coordinate.getAxisX()] == 1;
+        return this.limits[coordinate.getY()][coordinate.getX()] == 1;
     }
 
     protected void setLimits(int[][] limits) {
         this.limits = limits;
     }
 
-    public Optional<Door> getDoor(int positionPlayerX, int positionPlayerY) {
+    public Optional<Door> getDoor(Point point) {
         return this.doors.values().stream()
-                .filter(door -> door.getCoordinate().getAxisX()*10 == positionPlayerX && door.getCoordinate().getAxisY()*10 == positionPlayerY)
+                .filter(o -> o.isDoor(point))
                 .findFirst();
     }
 
     public Optional<Door> getDoor(String map) {
         return this.doors.values().stream()
-                .filter(door -> door.getMapGame().equals(map))
+                .filter(o -> o.isMap(map))
                 .findFirst();
     }
 
@@ -93,7 +95,7 @@ public abstract class MapGame {
         try {
             if (nameItem.equals("tocha")) {
                 MapGame templo = RepositoryMapGame.getInstance().getMapGame("templo");
-                Door openDoor = templo.getDoor(90, 240).get();
+                Door openDoor = templo.getDoor(new Point(90, 240)).get();
                 openDoor.setOpen(!openDoor.isOpen());
                 activate = true;
             } else if (nameItem.equals("mapa")) {
@@ -117,23 +119,23 @@ public abstract class MapGame {
     }
 
     public void removeItem(Item item) {
-        Coordinate coordinate = new Coordinate(item.getLocation().x, item.getLocation().y);
+        Coordinate coordinate = new Coordinate(item.getLocation());
         this.itens.remove(coordinate);
-        this.limits[coordinate.getAxisY()][coordinate.getAxisX()] = 1;
+        this.limits[coordinate.getY()][coordinate.getX()] = 1;
     }
 
     public void addItem(Item item) {
         if (new AddItemMapGame(item).run()) {
-            Coordinate coordinate = new Coordinate(item.getLocation().x, item.getLocation().y);
+            Coordinate coordinate = new Coordinate(item.getLocation());
             this.itens.put(coordinate, item);
-            this.limits[coordinate.getAxisY()][coordinate.getAxisX()] = 2;
+            this.limits[coordinate.getY()][coordinate.getX()] = 2;
         }
     }
 
     protected void setItens(Map<Coordinate, Item> itens) {
         this.itens = itens;
         this.itens.keySet()
-                .forEach(coordinate -> this.limits[coordinate.getAxisY()][coordinate.getAxisX()] = 2);
+                .forEach(coordinate -> this.limits[coordinate.getY()][coordinate.getX()] = 2);
     }
 
     public List<Item> getItemVisible() {
@@ -144,14 +146,14 @@ public abstract class MapGame {
 
     public List<Item> getItemInvisible() {
         return this.itens.values().stream()
-                .filter(item1 -> !item1.isVisible())
+                .filter(Item::isInvisible)
                 .collect(Collectors.toList());
     }
 
     @Override
     public String toString() {
         return "MapGame{" +
-                "name='" + name + '\'' +
+                "name='" + name +
                 ", image=" + image +
                 ", limits=" + limits() +
                 ", doors=" + doors +

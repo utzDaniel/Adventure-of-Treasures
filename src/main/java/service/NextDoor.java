@@ -34,12 +34,12 @@ public class NextDoor {
     }
 
     private Optional<Door> getDoor() {
-        return player.getCurrentMap().getDoor(player.getLocation().x, player.getLocation().y);
+        return player.getCurrentMap().getDoor(player.getLocation());
     }
 
     private void setPositionPlayer(Door door) {
-        int x = door.getCoordinate().getAxisX() * 10;
-        int y = door.getCoordinate().getAxisY() * 10;
+        int x = door.getCoordinate().getX() * 10;
+        int y = door.getCoordinate().getY() * 10;
         player.setLocation(new Point(x,y));
     }
 }

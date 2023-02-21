@@ -60,6 +60,10 @@ public abstract class Item implements IAction {
         return this.visible;
     }
 
+    public boolean isInvisible() {
+        return !this.visible;
+    }
+
     public void setVisible(boolean visible) {
         this.visible = visible;
     }

@@ -6,6 +6,7 @@ import model.builder.item.Item;
 import model.enums.MovePlayer;
 import model.Player;
 
+import java.awt.*;
 import java.util.Arrays;
 
 public final class LookItem {
@@ -17,7 +18,7 @@ public final class LookItem {
 
     public LookItem() {
         this.player = Player.getInstance();
-        this.coordinate = new Coordinate(0,0);
+        this.coordinate = new Coordinate(new Point(0,0));
     }
 
     public Item run(){
@@ -36,8 +37,7 @@ public final class LookItem {
     private void setCoordinate(){
         int newPositionX = this.player.getLocation().x+ this.move.getToMoveX();
         int newPositionY = this.player.getLocation().y + this.move.getToMoveY();
-        this.coordinate.setAxisX(newPositionX);
-        this.coordinate.setAxisY(newPositionY);
+        this.coordinate = new Coordinate(new Point(newPositionX,newPositionY));
     }
 
     private Item getItemMapGame() {

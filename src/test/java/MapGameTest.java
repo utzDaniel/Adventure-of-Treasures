@@ -24,17 +24,13 @@ public class MapGameTest {
 
     @Test
     public void testarSeOPlayerPodeMoverTRUE(){
-        int positionX = 300;
-        int positionY = 470;
-        Coordinate coordinate = new Coordinate(positionX, positionY);
+        Coordinate coordinate = new Coordinate(300, 470);
         assertTrue(player.getCurrentMap().checkLimits(coordinate));
     }
 
     @Test
     public void testarSeOPlayerPodeMoverFALSE(){
-        int positionX = 0;
-        int positionY = 0;
-        Coordinate coordinate = new Coordinate(positionX, positionY);
+        Coordinate coordinate = new Coordinate(0, 0);
         assertFalse(player.getCurrentMap().checkLimits(coordinate));
     }
 

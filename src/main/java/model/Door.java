@@ -1,5 +1,7 @@
 package model;
 
+import java.awt.*;
+
 public final class Door {
     private final String mapGame;
     private final Coordinate coordinate;
@@ -25,6 +27,14 @@ public final class Door {
 
     public boolean isOpen() {
         return open;
+    }
+
+    public boolean isDoor(Point point) {
+        return this.coordinate.getX()*10 == point.x && this.coordinate.getY()*10 == point.y;
+    }
+
+    public boolean isMap(String map) {
+        return this.mapGame.equals(map);
     }
 
     @Override

@@ -2,33 +2,50 @@ package model;
 
 import model.enums.MovePlayer;
 
+import java.awt.*;
 import java.util.Objects;
 
 public class Coordinate {
 
     private final int STEP = MovePlayer.STEP;
-    private int axisX;
-    private int axisY;
+    private int x;
+    private int y;
+    private boolean blocked;
 
-    public Coordinate(int eixoX, int eixoY) {
-        setAxisX(eixoX);
-        setAxisY(eixoY);
+    public Coordinate(int x, int y) {
+        setX(x);
+        setY(y);
+        this.blocked = false;
     }
 
-    public int getAxisX() {
-        return this.axisX;
+    public Coordinate(Point point) {
+        setX(point.x);
+        setY(point.y);
     }
 
-    public int getAxisY() {
-        return this.axisY;
+    public int getX() {
+        return this.x;
     }
 
-    public void setAxisX(int axisX) {
-        this.axisX = axisX / this.STEP;
+    public void setX(int x) {
+        this.x = x / this.STEP;
     }
 
-    public void setAxisY(int axisY) {
-        this.axisY = axisY / this.STEP;
+    public int getY() {
+        return this.y;
+    }
+
+
+    public void setY(int y) {
+        this.y = y / this.STEP;
+    }
+
+    public boolean isBlocked() {
+        return this.blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
     }
 
     @Override
@@ -36,20 +53,20 @@ public class Coordinate {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Coordinate that = (Coordinate) o;
-        return this.axisX == that.axisX && this.axisY == that.axisY;
+        return this.x == that.x && this.y == that.y;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.axisX, this.axisY);
+        return Objects.hash(this.x, this.y);
     }
 
     @Override
     public String toString() {
         return "Coordinate{" +
                 "STEP=" + STEP +
-                ", axisX=" + axisX +
-                ", axisY=" + axisY +
+                ", axisX=" + x +
+                ", axisY=" + y +
                 '}';
     }
 }

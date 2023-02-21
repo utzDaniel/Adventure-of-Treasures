@@ -65,7 +65,7 @@ public final class Inventory {
 
     public List<Item> getItemInvisible() {
         return this.itens.values().stream()
-                .filter(item -> !item.isVisible())
+                .filter(Item::isInvisible)
                 .collect(Collectors.toList());
     }
 

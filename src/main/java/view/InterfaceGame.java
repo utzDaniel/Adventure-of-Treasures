@@ -5,9 +5,7 @@ import model.Player;
 import model.Song;
 import model.SoundEffects;
 import model.builder.map.MapGame;
-import settings.SettingsItem;
 import settings.SettingsJFrame;
-import settings.SettingsMapGame;
 
 import javax.swing.*;
 import java.util.Arrays;
@@ -17,20 +15,16 @@ import java.util.Objects;
 public class InterfaceGame {
 
     private final JFrame frame;
-    private final JLabel mapGameJLabel;
-    private final JLabel playerJLabel;
     private final Song song;
     private final SoundEffects soundEffects;
 
     public InterfaceGame() {
         frame = new JFrame();
-        this.playerJLabel =  Player.getInstance().getJLabel();
-        mapGameJLabel = MapGame.getJLabel();
         song = new Song();
         soundEffects = new SoundEffects();
         settingsFrame();
-        setJLabelPlayer();
-        createJLabelMapGame();
+        frame.getContentPane().add(Player.getInstance().getJLabel());
+        frame.getContentPane().add(MapGame.getJLabel());
         //history();
     }
 
@@ -39,7 +33,7 @@ public class InterfaceGame {
     }
 
     public JLabel getMapGameJLabel() {
-        return mapGameJLabel;
+        return MapGame.getJLabel();
     }
 
     private void settingsFrame() {
@@ -60,14 +54,6 @@ public class InterfaceGame {
         frame.setJMenuBar(menuBar.getMenubar());
         List.of("Historia", "Comandos", "Ajuda", "Musica", "Efeitos", "Sair")
                 .forEach(menuBar::createNavigation);
-    }
-
-    private void setJLabelPlayer() {
-        frame.getContentPane().add(playerJLabel);
-    }
-
-    private void createJLabelMapGame() {
-        frame.getContentPane().add(mapGameJLabel);
     }
 
     public void clearJLabelItens() {

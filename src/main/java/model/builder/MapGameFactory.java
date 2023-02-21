@@ -7,6 +7,7 @@ import model.builder.map.RoomBuilder;
 import model.builder.map.SceneryBuilder;
 import model.interfaces.IBuilderMapGame;
 
+import java.awt.*;
 import java.util.Objects;
 
 import static java.lang.Boolean.parseBoolean;
@@ -61,7 +62,7 @@ public class MapGameFactory {
         var x = parseInt(dadosDoor[1].trim());
         var y = parseInt(dadosDoor[2].trim());
         var open = parseBoolean(dadosDoor[3].trim());
-        return new Door(mapGame, new Coordinate(x, y), open);
+        return new Door(mapGame, new Coordinate( new Point(x,y)), open);
     }
 
     private int[][] createLimits(String dados) {

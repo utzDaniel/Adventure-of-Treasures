@@ -20,7 +20,7 @@ public enum ItemsUsable {
     CHAVE("chave") {
         @Override
         public boolean use() {
-            var door = player.getCurrentMap().getDoor(player.getLocation().x, player.getLocation().y)
+            var door = player.getCurrentMap().getDoor(player.getLocation())
                     .orElseThrow(() -> new ItemUsableException("Não foi possível usar esse item, neste local!"));
             door.setOpen(true);
             return true;
@@ -29,7 +29,7 @@ public enum ItemsUsable {
     ESCADA("escada") {
         @Override
         public boolean use() {
-            var door = player.getCurrentMap().getDoor(player.getLocation().x, player.getLocation().y)
+            var door = player.getCurrentMap().getDoor(player.getLocation())
                     .orElseThrow(() -> new ItemUsableException("Não foi possível usar esse item, neste local!"));
             door.setOpen(true);
             player.getCurrentMap().activate("escada");

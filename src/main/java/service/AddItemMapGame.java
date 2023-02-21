@@ -23,7 +23,7 @@ public class AddItemMapGame {
     public AddItemMapGame(Item item) {
         this.item = item;
         this.player = Player.getInstance();
-        this.coordinate = new Coordinate(player.getLocation().x, player.getLocation().y);
+        this.coordinate = new Coordinate(this.player.getLocation());
         this.mapGame = player.getCurrentMap();
     }
 
@@ -56,15 +56,15 @@ public class AddItemMapGame {
 
     private void updateCoordinate(int move, int axis) {
         if (axis == 1)
-            coordinate.setAxisX((coordinate.getAxisX() + move) * STEP);
+            coordinate.setX((coordinate.getX() + move) * STEP);
         else
-            coordinate.setAxisY((coordinate.getAxisY() + move) * STEP);
+            coordinate.setY((coordinate.getY() + move) * STEP);
     }
 
     //TODO colocar a logica dentro da coordinate
     private boolean checkLimitPosition() {
-        return Math.min(coordinate.getAxisX(), coordinate.getAxisY()) >= POSITION_MINIMUM &&
-                coordinate.getAxisX() <= POSITION_X_MAXIMUM && coordinate.getAxisY() <= POSITION_Y_MAXIMUM;
+        return Math.min(coordinate.getX(), coordinate.getY()) >= POSITION_MINIMUM &&
+                coordinate.getX() <= POSITION_X_MAXIMUM && coordinate.getY() <= POSITION_Y_MAXIMUM;
     }
 
     private boolean checkCoordinateValid() {
@@ -76,8 +76,8 @@ public class AddItemMapGame {
     }
 
     private void setItemNewCoordinate() {
-        int x = this.coordinate.getAxisX() * STEP;
-        int y = this.coordinate.getAxisY() * STEP;
+        int x = this.coordinate.getX() * STEP;
+        int y = this.coordinate.getY() * STEP;
         this.item.setLocation(new Point(x, y));
     }
 }
