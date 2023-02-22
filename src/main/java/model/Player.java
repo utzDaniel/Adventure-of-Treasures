@@ -19,14 +19,11 @@ public final class Player {
     private final Inventory inventory;
     private final JLabel jLabel;
 
-    private Coordinate coordinate;
-
     private Player() {
         this.currentMapGame = null;
         this.inventory = new Inventory();
         this.jLabel = new JLabel();
         settingsPlayer();
-        this.coordinate = new Coordinate(this.jLabel.getLocation());
     }
 
     public static synchronized Player getInstance() {
@@ -47,14 +44,12 @@ public final class Player {
         return this.jLabel;
     }
 
-    //TODO devolver uma nova referencia
     public Coordinate getLocation() {
-        return this.coordinate;
+        return new Coordinate(this.jLabel.getLocation());
     }
 
     public void setLocation(Coordinate coordinate) {
-        this.coordinate.setLocation(coordinate);
-        this.jLabel.setLocation(this.coordinate.getPoint());
+        this.jLabel.setLocation(coordinate.getPoint());
     }
 
     public String getDirection() {
@@ -79,7 +74,7 @@ public final class Player {
     }
 
     public void walk(String direction) {
-        var imageIcon = new Walk(direction).run();
+        var imageIcon = new Walk(direction, this.getLocation()).run();
         this.direction = direction;
         this.jLabel.setIcon(imageIcon);
     }

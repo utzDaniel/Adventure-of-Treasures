@@ -15,12 +15,9 @@ public abstract class Item implements IAction {
     private boolean removable;
     private boolean visible;
 
-    private Coordinate coordinate;
-
     protected Item() {
         this.jLabel = new JLabel();
         settingsItem();
-        this.coordinate = new Coordinate(this.jLabel.getLocation());
     }
 
     private void settingsItem() {
@@ -36,12 +33,11 @@ public abstract class Item implements IAction {
     }
 
     public Coordinate getLocation() {
-        return this.coordinate;
+        return new Coordinate(this.jLabel.getLocation());
     }
 
     public void setLocation(Coordinate coordinate) {
-        this.coordinate.setLocation(coordinate);
-        this.jLabel.setLocation(this.coordinate.getPoint());
+        this.jLabel.setLocation(coordinate.getPoint());
     }
 
     public Icon getImage() {
@@ -95,11 +91,11 @@ public abstract class Item implements IAction {
     @Override
     public String toString() {
         return "Item{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
+                "name='" + name +
+                ", description='" + description +
                 ", weight=" + weight +
-                ", positionX=" + this.jLabel.getLocation().x +
-                ", positionY=" + this.jLabel.getLocation().y +
+                ", X=" + this.jLabel.getLocation().x +
+                ", Y=" + this.jLabel.getLocation().y +
                 ", image=" + this.jLabel.getIcon() +
                 ", removable=" + removable +
                 ", visible=" + visible +

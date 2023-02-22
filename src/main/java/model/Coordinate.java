@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Coordinate {
 
-    private Point point;
+    private final Point point;
 
     public Coordinate(int x, int y) {
         this.point = new Point(x, y);
@@ -15,12 +15,12 @@ public class Coordinate {
         this.point = new Point(point);
     }
 
-    public int getX() {
-        return this.point.x;
-    }
-
     public Point getPoint() {
         return this.point;
+    }
+
+    public int getX() {
+        return this.point.x;
     }
 
     public void setX(int x) {
@@ -36,20 +36,17 @@ public class Coordinate {
     }
 
     public void setY(int y) {
-        this.point.move(this.point.x,y);
+        this.point.move(this.point.x, y);
     }
 
     public void updateY(int y) {
-        this.point.translate(0,y);
+        this.point.translate(0, y);
     }
 
     public void move(Coordinate coordinate) {
         this.point.translate(coordinate.getX(), coordinate.getY());
     }
 
-    public void setLocation(Coordinate coordinate) {
-        this.point.move(coordinate.getX(), coordinate.getY());
-    }
 
     @Override
     public boolean equals(Object o) {

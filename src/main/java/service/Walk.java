@@ -15,10 +15,10 @@ public final class Walk {
     private Coordinate coordinate;
     private MovePlayer move;
 
-    public Walk(String direction) {
+    public Walk(String direction, Coordinate coordinate) {
         this.direction = direction;
         this.player = Player.getInstance();
-        this.coordinate = new Coordinate(player.getLocation().getPoint());
+        this.coordinate = coordinate;
     }
 
     public ImageIcon run() {

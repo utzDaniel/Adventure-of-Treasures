@@ -13,7 +13,7 @@ public final class LookItem {
 
     public LookItem(String direction, Coordinate coordinate) {
         this.direction = direction;
-        this.coordinate = new Coordinate(coordinate.getPoint());
+        this.coordinate = coordinate;
     }
 
     public Coordinate run() {

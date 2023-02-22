@@ -16,7 +16,7 @@ public class AddItemMapGame {
 
     public AddItemMapGame(Item item,Coordinate coordinate) {
         this.item = item;
-        this.coordinate = new Coordinate(coordinate.getPoint());
+        this.coordinate = coordinate;
         this.mapGame = Player.getInstance().getCurrentMap();
     }
 

@@ -10,8 +10,6 @@ import service.AddItemMapGame;
 import settings.SettingsMapGame;
 
 import javax.swing.*;
-import java.awt.*;
-import java.util.List;
 import java.util.*;
 import java.util.stream.Collectors;
 
