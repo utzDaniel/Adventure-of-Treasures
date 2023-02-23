@@ -56,7 +56,6 @@ public final class Player {
         return this.direction;
     }
 
-    //TODO refatorar os teste, pois o setDirection usa so em teste agora
     public void setDirection(String direction) {
         this.direction = direction;
     }
@@ -74,21 +73,18 @@ public final class Player {
     }
 
     public void walk(String direction) {
-        var imageIcon = new Walk(direction, this.getLocation()).run();
-        this.direction = direction;
-        this.jLabel.setIcon(imageIcon);
+        new Walk(this, direction).run();
     }
 
     public Item lookItem() {
-        Coordinate coordinate = new LookItem(this.direction, this.getLocation()).run();
-        return this.getCurrentMap().getItem(coordinate);
+        return new LookItem(this).run();
     }
 
     public boolean takeItem(Item item) {
-        return new TakeItem(item).run();
+        return new TakeItem(this, item).run();
     }
 
     public boolean dropItem(Item item) {
-        return new DropItem(item).run();
+        return new DropItem(this, item).run();
     }
 }

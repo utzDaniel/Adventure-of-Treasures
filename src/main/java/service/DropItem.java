@@ -8,8 +8,8 @@ public final class DropItem {
     private final Player player;
     private final Item item;
 
-    public DropItem(Item item) {
-        this.player = Player.getInstance();
+    public DropItem(Player player, Item item) {
+        this.player = player;
         this.item = item;
     }
     public boolean run() {

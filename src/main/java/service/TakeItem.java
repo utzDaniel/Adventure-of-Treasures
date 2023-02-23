@@ -8,8 +8,8 @@ public final class TakeItem {
     private final Player player;
     private final Item item;
 
-    public TakeItem(Item item) {
-        this.player = Player.getInstance();
+    public TakeItem(Player player, Item item) {
+        this.player = player;
         this.item = item;
     }
 

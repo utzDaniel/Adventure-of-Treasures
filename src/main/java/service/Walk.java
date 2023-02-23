@@ -3,6 +3,7 @@ package service;
 import exception.MoveException;
 import model.Coordinate;
 import model.Player;
+import model.builder.item.Item;
 import model.enums.MovePlayer;
 
 import javax.swing.*;
@@ -15,18 +16,18 @@ public final class Walk {
     private Coordinate coordinate;
     private MovePlayer move;
 
-    public Walk(String direction, Coordinate coordinate) {
+    public Walk(Player player, String direction) {
         this.direction = direction;
-        this.player = Player.getInstance();
-        this.coordinate = coordinate;
+        this.player = player;
+        this.coordinate = player.getLocation();
     }
 
-    public ImageIcon run() {
+    public void run() {
         this.move = getMovePlayer();
         updateImagePlayer();
+        updateDirectionPlayer();
         updateCoordinate();
-        if (validCoordinate()) setLocationPlayer();
-        return this.move.getImage();
+        if (validCoordinate()) updateLocationPlayer();
     }
 
     private MovePlayer getMovePlayer() {
@@ -37,17 +38,21 @@ public final class Walk {
 
     private void updateImagePlayer() {
         this.move.run();
+        this.player.getJLabel().setIcon(this.move.getImage());
     }
 
     private void updateCoordinate() {
         this.coordinate.move(move.getCoordinate());
+    }
+    private void updateDirectionPlayer() {
+        this.player.setDirection(this.direction);
     }
 
     private boolean validCoordinate() {
         return this.player.getCurrentMap().checkLimits(this.coordinate);
     }
 
-    private void setLocationPlayer() {
+    private void updateLocationPlayer() {
         this.player.setLocation(this.coordinate);
     }
 }
