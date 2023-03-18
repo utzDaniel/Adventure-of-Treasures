@@ -1,5 +1,6 @@
 package model.builder.item;
 
+import model.interfaces.ICombinable;
 import model.interfaces.IEquipable;
 import service.Equip;
 import service.Unequip;
@@ -9,7 +10,8 @@ import java.util.List;
 public class ItemEquipable extends Item implements IEquipable {
 
     private boolean equipped;
-//    private Room room;
+    //    private Room room;
+    private String effect;
 
     protected ItemEquipable() {
     }
@@ -19,14 +21,14 @@ public class ItemEquipable extends Item implements IEquipable {
     }
 
     @Override
-    public boolean equip(Item item) {
-        this.equipped = new Equip(item).run();
+    public boolean equip() {
+        this.equipped = new Equip(this).run();
         return this.equipped;
     }
 
     @Override
-    public boolean unequip(Item item) {
-        this.equipped = !new Unequip(item).run();
+    public boolean unequip() {
+        this.equipped = !new Unequip(this).run();
         return !this.equipped;
     }
 
@@ -36,21 +38,29 @@ public class ItemEquipable extends Item implements IEquipable {
     }
 
     @Override
-    public boolean action(Item item) {
+    public boolean action() {
         return this.isEquipped() ?
-                this.unequip(item) : this.equip(item);
+                this.unequip() : this.equip();
     }
 
     @Override
-    public boolean action(List<Item> itens) {
-        return action(itens.get(0));
+    public String getEffect() {
+        return this.effect;
+    }
+    protected void setEffect(String filename) {
+        this.effect = filename;
+    }
+
+    @Override
+    public boolean action(List<ICombinable> itens) {
+        return action();
     }
 
     @Override
     public String toString() {
         return "ItemEquipable{" +
-                "equipped=" + equipped +
-                "} " + super.toString();
+                "equipped=" + this.equipped +
+                ", effect='" + this.effect +"} "+ super.toString();
     }
 
     //    public void setRoom(Room room) {

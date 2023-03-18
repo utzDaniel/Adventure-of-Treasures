@@ -55,7 +55,7 @@ public class Keyboard {
                             updateItensMapGame();
                     } catch (MapGameException ex) {
                         //TODO porta fechada
-                        soundEffects.play("erro");
+                        soundEffects.play(commandEffects("erro"));
                     }
 
 
@@ -63,13 +63,13 @@ public class Keyboard {
 
                     try {
                         if (new Take().run()) {
-                            soundEffects.play("pegar");
+                            soundEffects.play(commandEffects("pegar"));
                             updateItensMapGame();
                         }
 
                     } catch (InventoryException ex) {
                         //TODO inventario cheio
-                        soundEffects.play("erro");
+                        soundEffects.play(commandEffects("erro"));
                     }
 
 
@@ -96,43 +96,52 @@ public class Keyboard {
             if (player.getLocation().getY()  > 0) {
                 player.walk("norte");
             } else {
-                sucess = new NextScenery(interfaceGame).run("norte");
+                sucess = new NextScenery(this.interfaceGame).run("norte");
             }
         } else if (keyCode == 40) {
-            if (player.getLocation().getY()  < interfaceGame.getMapGameJLabel().getHeight() - 50) {
+            if (player.getLocation().getY()  < this.interfaceGame.getMapGameJLabel().getHeight() - 50) {
                 player.walk("sul");
             } else {
-                sucess = new NextScenery(interfaceGame).run("sul");
+                sucess = new NextScenery(this.interfaceGame).run("sul");
             }
         } else if (keyCode == 37) {
             if (player.getLocation().getX() > 0) {
                 player.walk("oeste");
             } else {
-                sucess = new NextScenery(interfaceGame).run("oeste");
+                sucess = new NextScenery(this.interfaceGame).run("oeste");
             }
         } else if (keyCode == 39) {
-            if (player.getLocation().getX() < interfaceGame.getMapGameJLabel().getWidth() - 30) {
+            if (player.getLocation().getX() < this.interfaceGame.getMapGameJLabel().getWidth() - 30) {
                 player.walk("leste");
             } else {
-                sucess = new NextScenery(interfaceGame).run("leste");
+                sucess = new NextScenery(this.interfaceGame).run("leste");
             }
         }
         if (sucess) {
-            song.play(player.getCurrentMap().getName());
+            this.song.play(this.player.getCurrentMap().getSong());
             updateItensMapGame();
         }
     }
 
     private void updateItensMapGame() {
-        interfaceGame.clearJLabelItens();
-        interfaceGame.setItensJLabel(player.getCurrentMap().getItemVisible(), 1);
-        interfaceGame.getMapGameJLabel().repaint();
+        this.interfaceGame.clearJLabelItens();
+        this.interfaceGame.setItensJLabel(this.player.getCurrentMap().getItemVisible(), 1);
+        this.interfaceGame.getMapGameJLabel().repaint();
     }
 
     private void finish() {
-        song.closePlay();
-        soundEffects.play("finish");
+        this.song.closePlay();
+        this.soundEffects.play(commandEffects("finish"));
         System.exit(0);
     }
 
+    private String commandEffects(String command) {
+        return "src/main/resources/audio/effects/" +
+                switch (command) {
+                    case "pegar" -> "pegar.wav";
+                    case "remover" -> "remover.wav";
+                    case "finish" -> "finish.wav";
+                    default -> "erro.wav";
+                };
+    }
 }

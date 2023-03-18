@@ -7,32 +7,24 @@ import static org.junit.Assert.*;
 public class SongTest {
 
     private final Song song = new Song();
+    private final String filename = "src/main/resources/audio/scenery/";
     private final String [] filenames =
-            {"cais","farol","praia","vila",
-                    "templo"};
+            {"cais","farol","praia","vila", "templo"};
 
 
     @Test
     public void validAllFilenames(){
-        for (String filename : filenames) {
-            song.play(filename);
-            assertTrue(song.getFilename().contains(filename));
+        for (String filename : this.filenames) {
+            this.song.play(this.filename + filename + ".wav");
+            assertTrue(this.song.getFilename().contains(filename));
         }
     }
 
     @Test
-    public void invalidFilename(){
-        String filename = "filename";
-        song.play(filename);
-        assertFalse(song.getFilename().contains(filename));
-    }
-
-
-    @Test
     public void validCloseFilename(){
-        song.play(filenames[0]);
-        song.closePlay();
-        assertTrue(song.getFilename().contains(filenames[0]));
+        this.song.play(this.filename + this.filenames[0] + ".wav");
+        this.song.closePlay();
+        assertTrue(this.song.getFilename().contains(this.filenames[0]));
     }
 
     @Test
@@ -44,15 +36,15 @@ public class SongTest {
     @Test
     public void validOnPlay(){
         boolean onOff = SettingsSong.isOnPlayer();
-        song.onPlayer();
+        this.song.onPlayer();
         assertEquals(!onOff,SettingsSong.isOnPlayer());
     }
 
     @Test
     public void validOnPlayOff(){
         boolean onOff = SettingsSong.isOnPlayer();
-        song.onPlayer();
-        song.onPlayer();
+        this.song.onPlayer();
+        this.song.onPlayer();
         assertEquals(onOff,SettingsSong.isOnPlayer());
     }
 

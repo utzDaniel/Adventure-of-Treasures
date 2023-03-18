@@ -1,23 +1,13 @@
 package model;
 
-import repository.ListSoundEffects;
 import settings.SettingsSoundEffects;
 
 public class SoundEffects extends MusicPlayer {
 
     @Override
-    public void play(String command) {
-        if(SettingsSoundEffects.isOnPlayer()){
-            ListSoundEffects filename = new ListSoundEffects();
-            setFilename(filename.commandSoundEffects(command));
-            startPlay();
-        }
-    }
-
-    public void play(String command, String nameItem) {
-        if(SettingsSoundEffects.isOnPlayer()) {
-            ListSoundEffects filename = new ListSoundEffects();
-            setFilename(filename.itensSoundEffects(command, nameItem));
+    public void play(String effect) {
+        if (SettingsSoundEffects.isOnPlayer()) {
+            setFilename(effect);
             startPlay();
         }
     }
@@ -31,15 +21,16 @@ public class SoundEffects extends MusicPlayer {
             Thread.sleep(super.returnDuration() / 100);
         } catch (Exception ex) {
             ex.getStackTrace();
+            this.play("src/main/resources/audio/effects/erro.wav");
         }
     }
 
     @Override
     public void onPlayer() {
-        if(SettingsSoundEffects.isOnPlayer()){
+        if (SettingsSoundEffects.isOnPlayer()) {
             SettingsSoundEffects.setOnPlayer();
             super.closePlay();
-        }else{
+        } else {
             SettingsSoundEffects.setOnPlayer();
             startPlay();
         }

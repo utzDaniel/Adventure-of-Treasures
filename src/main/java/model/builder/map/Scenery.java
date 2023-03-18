@@ -26,7 +26,7 @@ public class Scenery extends MapGame {
     @Override
     public String toString() {
         return "Scenery{" +
-                "exits=" + exits +
+                "exits=" + this.exits +
                 "} " + super.toString();
     }
 }

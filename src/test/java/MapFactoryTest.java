@@ -42,17 +42,20 @@ public class MapFactoryTest {
 
     private void createMapGame() {
         String filename1 = "src/main/resources/map/";
+        String filename2 = "src/main/resources/audio/scenery/";
 
         var pier = SceneryBuilder.builder()
                 .exits("oeste", "farol")
                 .exits("norte", "floresta")
                 .exits("leste", "praia")
+                .song(filename2 + "cais.wav")
                 .name("cais").image(filename1 + "cais.png")
                 .doors(new Door("barco", new Coordinate(300, 520), true))
                 .limits(limitsPier()).build();
 
         var lighthouse = SceneryBuilder.builder()
                 .exits("leste", "cais")
+                .song(filename2 + "farol.wav")
                 .name("farol").image(filename1 + "farol.png")
                 .doors(new Door("dentro do farol", new Coordinate(270, 240), true))
                 .itens("pa").limits(limitsLighthouse()).build();
@@ -63,6 +66,7 @@ public class MapFactoryTest {
 
         var beach = SceneryBuilder.builder()
                 .exits("oeste", "cais")
+                .song(filename2 + "praia.wav")
                 .name("praia").image(filename1 + "praia.png")
                 .itens("chave").limits(limitsBeach()).build();
 
@@ -74,6 +78,7 @@ public class MapFactoryTest {
 
         var village = SceneryBuilder.builder()
                 .exits("sul", "floresta")
+                .song(filename2 + "vila.wav")
                 .name("vila").image(filename1 + "vila.png")
                 .doors(new Door("alojamento", new Coordinate(140, 380), true))
                 .doors(new Door("enfermaria", new Coordinate(720, 310), true))
@@ -84,7 +89,9 @@ public class MapFactoryTest {
                 .doors(new Door("vila", new Coordinate(500, 510), true))
                 .itens("martelo").itens("papel").limits(limitsAccommodation()).build();
 
-        var temple = RoomBuilder.builder().name("templo").image(filename1 + "templo.png")
+        var temple = RoomBuilder.builder()
+                .song(filename2 + "templo.wav")
+                .name("templo").image(filename1 + "templo.png")
                 .doors(new Door("vila", new Coordinate(380, 530), false))
                 .doors(new Door("topo do templo", new Coordinate(260, 190), false))
                 .doors(new Door("porao do templo", new Coordinate(90, 240), false))

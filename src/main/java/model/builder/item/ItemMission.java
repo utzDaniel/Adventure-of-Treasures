@@ -1,16 +1,20 @@
 package model.builder.item;
 
+import model.interfaces.ICombinable;
+import model.interfaces.IMission;
+
 import java.util.List;
 
-public final class ItemMission extends Item {
+public final class ItemMission extends Item implements IMission {
 
     private String mapGame;
 
     protected ItemMission() {
     }
 
+    @Override
     public String getMapGame() {
-        return mapGame;
+        return this.mapGame;
     }
 
     public void setMapGame(String name) {
@@ -18,19 +22,23 @@ public final class ItemMission extends Item {
     }
 
     @Override
-    public boolean action(Item item) {
+    public boolean action() {
         return false;
     }
 
     @Override
-    public boolean action(List<Item> itens) {
-        return action(itens.get(0));
+    public boolean action(List<ICombinable> itens) {
+        return action();
+    }
+
+    @Override
+    public String getEffect() {
+        return null;
     }
 
     @Override
     public String toString() {
         return "ItemMission{" +
-                "mapGame='" + mapGame + '\'' +
-                "} " + super.toString();
+                "mapGame='" + this.mapGame + "} " + super.toString();
     }
 }

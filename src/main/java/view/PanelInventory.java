@@ -1,7 +1,5 @@
 package view;
 
-import repository.CreateImageInventory;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -9,18 +7,16 @@ import java.awt.*;
 public class PanelInventory {
 
     private final JPanel panelMain;
-    private final CreateImageInventory imageInventory;
     private final JLabel labelSideEast;
     private final JButton button;
 
-    public PanelInventory(JLabel labelSideEast){
+    public PanelInventory(JLabel labelSideEast) {
         this.labelSideEast = labelSideEast;
         button = new JButton("SAIR");
         panelMain = new JPanel();
-        imageInventory = new CreateImageInventory();
     }
 
-    public void create(){
+    public void create() {
         panelMain.setBackground(Colors.BROWN_1);
         panelMain.setName("painel");
         panelMain.setBorder(new EmptyBorder(8, 10, 10, 10));
@@ -30,12 +26,12 @@ public class PanelInventory {
         setSouthPanel();
         setWestPanel();
         setEastPanel();
-        labelSideEast.setIcon(imageInventory.selectImage("icons"));
+        labelSideEast.setIcon(new ImageIcon("src/main/resources/inventario/icons.png"));
     }
 
     private void setNorthPanel() {
         JLabel label = new JLabel();
-        label.setIcon(imageInventory.selectImage("top"));
+        label.setIcon(new ImageIcon("src/main/resources/inventario/top.png"));
         label.setBounds(300, 0, 100, 100);
         panelMain.add(label, BorderLayout.NORTH);
     }
@@ -49,7 +45,7 @@ public class PanelInventory {
     private void setWestPanel() {
         JLabel label = new JLabel();
         label.setLayout(new BorderLayout(8, 8));
-        label.setIcon(imageInventory.selectImage("player"));
+        label.setIcon(new ImageIcon("src/main/resources/inventario/player.png"));
         label.setBounds(0, 100, 100, 100);
         panelMain.add(label, BorderLayout.WEST);
     }

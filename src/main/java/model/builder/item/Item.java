@@ -91,14 +91,14 @@ public abstract class Item implements IAction {
     @Override
     public String toString() {
         return "Item{" +
-                "name='" + name +
-                ", description='" + description +
-                ", weight=" + weight +
+                "name='" + this.name +
+                ", description='" + this.description +
+                ", weight=" + this.weight +
                 ", X=" + this.jLabel.getLocation().x +
                 ", Y=" + this.jLabel.getLocation().y +
                 ", image=" + this.jLabel.getIcon() +
-                ", removable=" + removable +
-                ", visible=" + visible +
+                ", removable=" + this.removable +
+                ", visible=" + this.visible +
                 '}';
     }
 }

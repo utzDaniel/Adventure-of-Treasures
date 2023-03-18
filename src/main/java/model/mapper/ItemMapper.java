@@ -20,12 +20,13 @@ public class ItemMapper implements Function<String, Item> {
             dadosTratado[i + 1] = dadosLinha[i].trim();
         }
         dadosTratado[11] = dadosTratado[11].equals("null") ? "false" : "true";
+        dadosTratado[12] = dadosTratado[12].equals("null") ? "false" : "true";
         return this.itemFactory.create(dadosTratado);
     }
 
     private String createCode(String[] dados) {
         StringBuilder code = new StringBuilder();
-        Arrays.stream(dados)
+        Arrays.stream(dados).limit(11)
                 .forEach(dado -> code.append(dado.equals("null") ? "0" : "1"));
         return code.toString();
     }

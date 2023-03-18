@@ -49,6 +49,12 @@ abstract class MapGameBuilder implements IBuilderMapGame {
         this.itens.put(item.getLocation(), item);
         return this;
     }
+    @Override
+    public IBuilderMapGame song(String filename) {
+        this.mapGame.setSong(filename);
+        return this;
+    }
+
 
     @Override
     public MapGame build() {

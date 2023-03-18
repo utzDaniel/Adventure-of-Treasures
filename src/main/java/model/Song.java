@@ -1,6 +1,5 @@
 package model;
 
-import repository.ListSong;
 import settings.SettingsSong;
 
 import java.util.Objects;
@@ -8,9 +7,8 @@ import java.util.Objects;
 public class Song extends MusicPlayer {
 
     @Override
-    public void play(String nameMapGame) {
-        ListSong filename = new ListSong();
-        if(nextPlay(filename.listSong(nameMapGame)) && SettingsSong.isOnPlayer()){
+    public void play(String song) {
+        if(nextPlay(song) && SettingsSong.isOnPlayer()){
             startPlay();
         }
     }

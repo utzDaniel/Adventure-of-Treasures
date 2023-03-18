@@ -17,7 +17,10 @@ public class ItemEquipableBuilder extends ItemBuilder {
         this.itemEquipable.setEquipped(equipped);
         return this;
     }
-
+    public ItemEquipableBuilder effect(String filename) {
+        this.itemEquipable.setEffect(filename);
+        return this;
+    }
     @Override
     public ItemEquipable build() {
         return this.itemEquipable;

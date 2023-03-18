@@ -1,11 +1,9 @@
 package model.interfaces;
 
-import model.builder.item.Item;
-import service.Use;
-
 public interface IUsable {
 
-    boolean use(Item item);
+    boolean use();
     String getLocalUse();
     String getName();
+    String getEffect();
 }

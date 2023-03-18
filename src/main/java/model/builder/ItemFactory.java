@@ -33,27 +33,30 @@ public class ItemFactory {
                 .coordinate(new Coordinate(parseInt(dados[4]),parseInt(dados[5])))
                 .image(dados[6])
                 .removable(parseBoolean(dados[11]))
-                .visible(true);
+                .visible(parseBoolean(dados[12]));
     }
 
     private Item createItemCombinable() {
         return inicial(ItemCombinableBuilder
                 .builder()
-                .combine(parseInt(dados[7])))
+                .combine(parseInt(dados[7]))
+                .effect(dados[13]))
                 .build();
     }
 
     private Item createItemEquipable() {
         return inicial(ItemEquipableBuilder
                 .builder()
-                .equipped(false))
+                .equipped(false)
+                .effect(dados[14]))
                 .build();
     }
 
     private Item createItemUsable() {
         return inicial(ItemUsableBuilder
                 .builder()
-                .localUse(dados[10]))
+                .localUse(dados[10])
+                .effect(dados[15]))
                 .build();
     }
 

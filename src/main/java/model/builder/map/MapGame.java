@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 public abstract class MapGame {
     private String name;
+    private String song;
     private ImageIcon image;
     private Area area;
     private Map<Coordinate, Door> doors;
@@ -143,15 +144,22 @@ public abstract class MapGame {
                 .filter(Item::isInvisible)
                 .collect(Collectors.toList());
     }
+    public String getSong() {
+        return this.song;
+    }
+    protected void setSong(String filename) {
+        this.song = filename;
+    }
 
     @Override
     public String toString() {
         return "MapGame{" +
-                "name='" + name +
-                ", image=" + image +
-                ", area=" + area +
-                ", doors=" + doors +
-                ", itens=" + itens +
+                "name='" + this.name +
+                ", image=" + this.image +
+                ", area=" + this.area +
+                ", doors=" + this.doors +
+                ", itens=" + this.itens +
+                ", song=" + this.song +
                 '}';
     }
 }

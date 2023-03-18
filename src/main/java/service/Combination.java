@@ -6,26 +6,22 @@ import model.builder.item.Item;
 import model.enums.ItemsCombination;
 import model.interfaces.ICombinable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public final class Combination<T extends ICombinable> {
+public final class Combination {
 
     private final Player player;
-    private final List<T> itensCombinable;
-    private final List<Item> itens;
+    private final List<ICombinable> itens;
     private Item newItem;
 
-    public Combination(List<Item> itens) {
+    public Combination(List<ICombinable> itensCombination) {
         this.player = Player.getInstance();
-        this.itensCombinable = new ArrayList<>();
-        this.itens = itens;
+        this.itens = itensCombination;
         newItem = null;
     }
 
     public boolean run() {
-        checkItensICombinable();
         checkAllEqualsCombination();
         checkEnoughAmountCombine();
         getItemCombination();
@@ -37,31 +33,23 @@ public final class Combination<T extends ICombinable> {
         return true;
     }
 
-    private void checkItensICombinable() {
-        var allICombinable = itens.stream()
-                .allMatch(item -> item instanceof ICombinable);
-        if(!allICombinable)
-            throw new ItemCombinableException("Itens não combináveis");
-        itens.forEach(item -> this.itensCombinable.add((T)item));
-    }
-
     private void checkAllEqualsCombination() {
-        int combine = itensCombinable.get(0).getCombine();
-        var isCombine = itensCombinable.stream()
+        int combine = itens.get(0).getCombine();
+        var isCombine = itens.stream()
                 .allMatch(item -> item.getCombine() == combine);
-        if(!isCombine)
+        if (!isCombine)
             throw new ItemCombinableException("Itens não são combináveis entre eles");
     }
 
     private void checkEnoughAmountCombine() {
-        if (!(itensCombinable.size() == ItemsCombination.getAmountCombination(itensCombinable.get(0).getCombine())))
+        if (!(itens.size() == ItemsCombination.getAmountCombination(itens.get(0).getCombine())))
             throw new ItemCombinableException("Está faltando Itens para realizar a combinação!");
     }
 
     private void getItemCombination() {
         this.player.getInventory().getItemInvisible().stream()
                 .filter(item -> item.getName().equals(
-                        ItemsCombination.getItemCombined(itensCombinable.get(0).getCombine()).get().getLabel()))
+                        ItemsCombination.getItemCombined(itens.get(0).getCombine()).get().getLabel()))
                 .findFirst().ifPresent(item -> newItem = item);
     }
 
@@ -72,7 +60,7 @@ public final class Combination<T extends ICombinable> {
     }
 
     private void removeAllItemCombine() {
-        this.itensCombinable.forEach(itensCombinable ->
+        this.itens.forEach(itensCombinable ->
                 this.player.getInventory().removeItem((Item) itensCombinable));
 
     }

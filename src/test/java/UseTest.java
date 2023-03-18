@@ -4,6 +4,7 @@ import model.Player;
 import model.builder.item.*;
 import model.builder.map.Room;
 import model.builder.map.Scenery;
+import model.interfaces.ICombinable;
 import model.interfaces.IUsable;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,8 +29,6 @@ public class UseTest {
                 .coordinate(new Coordinate(580, 300)).image(null).removable(true).build());
         itens.add(ItemUsableBuilder.builder().localUse("templo").name("escada").description("utilizada para abir algo").weight(0)
                 .coordinate(new Coordinate(410, 200)).image(null).removable(true).build());
-        itens.add(ItemEquipableBuilder.builder().equipped(false).name("tocha").description("utilizado para iluminar").weight(0)
-                .coordinate(new Coordinate(410, 220)).image(null).removable(true).build());
         itens.add(ItemUsableBuilder.builder().localUse("vila").name("chav").description("utilizada para abir algo").weight(0)
                 .coordinate(new Coordinate(580, 300)).image(null).removable(true).build());
         itens.add(ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(0)
@@ -50,7 +49,7 @@ public class UseTest {
         Scenery village = (Scenery) RepositoryMapGame.getInstance().getMapGame("vila");
         player.setCurrentMap(village);
         player.setLocation(new Coordinate(370, 150));
-        new Use((IUsable) itens.get(3)).run();
+        new Use((IUsable) itens.get(2)).run();
     }
 
     @Test(expected = ItemUsableException.class)
@@ -99,7 +98,7 @@ public class UseTest {
         Room temple = (Room) RepositoryMapGame.getInstance().getMapGame("templo");
         player.setCurrentMap(temple);
         player.setLocation(new Coordinate(250, 180));
-        new Use((IUsable) itens.get(3)).run();
+        new Use((IUsable) itens.get(2)).run();
     }
 
     @Test
@@ -120,9 +119,12 @@ public class UseTest {
         Item item = ItemMissionBuilder.builder().mapGame("praia").name("mapa").description("algo está enterrado na praia").weight(0)
                 .coordinate(new Coordinate(410, 200)).image(null).removable(false).visible(false).build();
         player.getInventory().setItemInvisible(item);
-        new Combination(itens).run();
 
-        Use use = new Use((IUsable) this.itens.get(4));
+        var iCombinableList = itens.stream()
+                .map(item1 -> (ICombinable) item1).toList();
+        new Combination(iCombinableList).run();
+
+        Use use = new Use((IUsable) this.itens.get(3));
         assertTrue(use.run());
     }
 
@@ -146,9 +148,11 @@ public class UseTest {
                 .coordinate(new Coordinate(410, 200)).image(null).removable(false).visible(false).build();
         player.getInventory().setItemInvisible(item);
 
-        new Combination(itens).run();
+        var iCombinableList = itens.stream()
+                .map(item1 -> (ICombinable) item1).toList();
+        new Combination(iCombinableList).run();
 
-        new Use((IUsable) this.itens.get(3)).run();
+        new Use((IUsable) this.itens.get(2)).run();
 
     }
 
@@ -164,7 +168,7 @@ public class UseTest {
         player.getInventory().setItemInvisible(item);
         player.setCurrentMap(createMapGame.getInitialScenery().getExit("leste"));
 
-        new Use((IUsable) itens.get(4)).run();
+        new Use((IUsable) itens.get(3)).run();
 
     }
 
@@ -187,9 +191,11 @@ public class UseTest {
                 .coordinate(new Coordinate(410, 200)).image(null).removable(false).visible(false).build();
         player.getInventory().setItemInvisible(item);
 
-        new Combination(itens).run();
+        var iCombinableList = itens.stream()
+                .map(item1 -> (ICombinable) item1).toList();
+        new Combination(iCombinableList).run();
 
-        new Use((IUsable) this.itens.get(4)).run();
+        new Use((IUsable) this.itens.get(3)).run();
 
     }
 }

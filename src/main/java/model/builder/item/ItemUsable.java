@@ -2,6 +2,7 @@ package model.builder.item;
 
 import exception.ItemUsableException;
 import model.Player;
+import model.interfaces.ICombinable;
 import model.interfaces.IUsable;
 import service.Use;
 
@@ -16,20 +17,22 @@ public class ItemUsable extends Item implements IUsable {
      * */
 
     private String localUse;
+    private String effect;
 
-    protected ItemUsable(){}
+    protected ItemUsable() {
+    }
 
     protected void setLocalUse(String localUse) {
         this.localUse = localUse;
     }
 
     @Override
-    public boolean use(Item item) {
+    public boolean use() {
         try {
             new Use(this).run();
-            Player.getInstance().getInventory().removeItem(item);
+            Player.getInstance().getInventory().removeItem(this);
             return true;
-        }catch (ItemUsableException e){
+        } catch (ItemUsableException e) {
             System.out.println(e.getMessage());
         }
         return false;
@@ -40,19 +43,28 @@ public class ItemUsable extends Item implements IUsable {
     }
 
     @Override
-    public boolean action(Item item) {
-        return this.use(this);
+    public String getEffect() {
+        return this.effect;
+    }
+
+    protected void setEffect(String filename) {
+        this.effect = filename;
     }
 
     @Override
-    public boolean action(List<Item> itens) {
-        return action(itens.get(0));
+    public boolean action() {
+        return this.use();
+    }
+
+    @Override
+    public boolean action(List<ICombinable> itens) {
+        return action();
     }
 
     @Override
     public String toString() {
         return "ItemUsable{" +
-                "localUse='" + localUse + '\'' +
-                "} " + super.toString();
+                "localUse='" + this.localUse +
+                ", effect='" + this.effect +"} "+ super.toString();
     }
 }

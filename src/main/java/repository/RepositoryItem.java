@@ -44,13 +44,9 @@ public class RepositoryItem {
     }
 
     private void updateItens() {
-        this.itens.get("chave").setVisible(false);
         this.itensInvisiblePlayer.put("mapa", this.itens.get("mapa"));
         this.itensInvisiblePlayer.put("escada", this.itens.get("escada"));
         this.itensInvisiblePlayer.put("tocha", this.itens.get("tocha"));
-        this.itens.get("mapa").setVisible(false);
-        this.itens.get("escada").setVisible(false);
-        this.itens.get("tocha").setVisible(false);
     }
 
     public Item getItem(String name) {

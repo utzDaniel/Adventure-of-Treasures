@@ -1,14 +1,13 @@
 package service;
 
 import exception.ItemUsableException;
-import model.interfaces.IUsable;
-import model.builder.item.Item;
-import model.enums.ItemsUsable;
 import model.Player;
+import model.enums.ItemsUsable;
+import model.interfaces.IUsable;
 
 import java.util.Arrays;
 
-public final class Use<T extends IUsable> {
+public final class Use {
 
     private final Player player;
     private final IUsable item;
@@ -19,19 +18,13 @@ public final class Use<T extends IUsable> {
     }
 
     public boolean run() {
-        checkItensIUsable();
         checkCurrentMap();
         useItem();
         return true;
     }
 
-    private void checkItensIUsable() {
-        if (!(this.item instanceof IUsable))
-            throw new ItemUsableException("Item não usavél!");
-    }
-
     private void checkCurrentMap() {
-        if (!(((T) this.item).getLocalUse().equals(this.player.getCurrentMap().getName())))
+        if (!(this.item.getLocalUse().equals(this.player.getCurrentMap().getName())))
             throw new ItemUsableException("Esse item não pode ser usado nesse mapa!");
     }
 

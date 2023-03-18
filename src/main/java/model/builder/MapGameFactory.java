@@ -36,7 +36,8 @@ public class MapGameFactory {
                 .itens(dados[12])
                 .itens(dados[13])
                 .itens(dados[14])
-                .limits(createLimits(dados[15]));
+                .song(dados[15])
+                .limits(createLimits(dados[16]));
     }
 
     private MapGame createRoom() {

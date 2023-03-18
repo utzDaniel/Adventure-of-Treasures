@@ -7,22 +7,16 @@ import model.enums.ItemsEquipable;
 
 import java.util.Arrays;
 
-public final class Unequip<T extends Item> { //TODO T extends IEquipable
+public final class Unequip {
 
-    private final T item;
+    private final IEquipable item;
 
-    public Unequip(T item) {
+    public Unequip(IEquipable item) {
         this.item = item;
     }
 
     public boolean run() {
-        checkItemIEquipable();
         return unequipItem();
-    }
-
-    public void checkItemIEquipable() {
-        if (!(this.item instanceof IEquipable))
-            throw new ItemEquipableException("Item não é equipavél");
     }
 
     //item equipavel com room e outro sem, será que deve criar uma nova classe?

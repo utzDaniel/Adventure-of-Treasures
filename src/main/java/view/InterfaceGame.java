@@ -76,10 +76,20 @@ public class InterfaceGame {
         return soundEffects;
     }
 
-    public void playEffects(String effect, String itemName) {
-        if (Objects.isNull(itemName))
-            soundEffects.play(effect);
+    public void playEffects(String command, String effect) {
+        if (Objects.isNull(effect))
+            soundEffects.play(commandEffects(command));
         else
-            soundEffects.play(effect, itemName);
+            soundEffects.play(effect);
+    }
+
+    private String commandEffects(String command) {
+        return "src/main/resources/audio/effects/" +
+                switch (command) {
+                    case "pegar" -> "pegar.wav";
+                    case "remover" -> "remover.wav";
+                    case "finish" -> "finish.wav";
+                    default -> "erro.wav";
+                };
     }
 }

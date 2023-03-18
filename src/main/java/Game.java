@@ -17,7 +17,7 @@ public class Game {
         interfaceGame = new InterfaceGame();
         song = interfaceGame.getSong();
         soundEffects = interfaceGame.getSoundEffects();
-        song.play(player.getCurrentMap().getName());
+        song.play(player.getCurrentMap().getSong());
         new Keyboard(interfaceGame, song, soundEffects).run();
     }
 

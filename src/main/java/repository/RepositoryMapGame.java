@@ -27,10 +27,6 @@ public class RepositoryMapGame {
         return repositoryMapGame;
     }
 
-    public List<Item> getItemInvisiblePlayer() {
-        return RepositoryItem.getInstance().getItemInvisiblePlayer();
-    }
-
     private void createMapGame() {
         String filename = "map/map.csv";
         var filee = new FileUtil<MapGame>(filename);
@@ -40,6 +36,9 @@ public class RepositoryMapGame {
         } catch (IOException e) {
             System.exit(0);
         }
+    }
+    public List<Item> getItemInvisiblePlayer() {
+        return RepositoryItem.getInstance().getItemInvisiblePlayer();
     }
 
     public MapGame getMapGame(String name) {

@@ -20,6 +20,11 @@ public class ItemCombinableBuilder extends ItemBuilder {
         return this;
     }
 
+    public ItemCombinableBuilder effect(String filename) {
+        this.itemCombinable.setEffect(filename);
+        return this;
+    }
+
     @Override
     public ItemCombinable build() {
         return this.itemCombinable;

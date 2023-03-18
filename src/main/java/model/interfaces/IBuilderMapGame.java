@@ -14,6 +14,7 @@ public interface IBuilderMapGame {
     IBuilderMapGame doors(Door door);
 
     IBuilderMapGame itens(String item);
+    public IBuilderMapGame song(String filename);
 
     MapGame build();
 

@@ -4,6 +4,7 @@ import model.Player;
 import model.builder.item.Item;
 import model.builder.item.ItemCombinableBuilder;
 import model.builder.item.ItemEquipableBuilder;
+import model.interfaces.ICombinable;
 import org.junit.Before;
 import org.junit.Test;
 import repository.RepositoryMapGame;
@@ -37,7 +38,9 @@ public class CombinationTest {
                 .coordinate(new Coordinate(460, 400)).image(null).removable(true).visible(true).build());
         item.add(ItemCombinableBuilder.builder().combine(2).name("madeiras").description("madeira para construir algo").weight(0)
                 .coordinate(new Coordinate(640, 80)).image(null).removable(true).visible(true).build());
-        assertTrue(new Combination(item).run());
+        var iCombinableList = item.stream()
+                .map(item1 -> (ICombinable) item1).toList();
+        assertTrue(new Combination(iCombinableList).run());
     }
 
     @Test
@@ -46,19 +49,9 @@ public class CombinationTest {
                 .coordinate(new Coordinate(510, 320)).image(null).removable(true).visible(true).build());
         item.add(ItemCombinableBuilder.builder().combine(1).name("livro").description("livro antigo usado para decifrar escrita antiga").weight(0)
                 .coordinate(new Coordinate(490, 390)).image(null).removable(true).visible(true).build());
-        assertTrue(new Combination(item).run());
-    }
-
-
-    @Test(expected = ItemCombinableException.class)
-    public void AllItemAleatorios() {
-        item.add(ItemCombinableBuilder.builder().combine(3).name("faca").description("serve para cortar algo").weight(0)
-                .coordinate(new Coordinate(420, 130)).image(null).removable(true).visible(true).build());
-        item.add(ItemCombinableBuilder.builder().combine(1).name("papel").description("papel escrito em lingua antiga").weight(0)
-                .coordinate(new Coordinate(510, 320)).image(null).removable(true).visible(true).build());
-        item.add(ItemEquipableBuilder.builder().equipped(false).name("mochila").description("utilizada para carregar mais coisas").weight(0)
-                .coordinate(new Coordinate(650, 220)).image(null).removable(true).visible(true).build());
-        assertFalse(new Combination(item).run());
+        var iCombinableList = item.stream()
+                .map(item1 -> (ICombinable) item1).toList();
+        assertTrue(new Combination(iCombinableList).run());
     }
 
     @Test(expected = ItemCombinableException.class)
@@ -67,7 +60,9 @@ public class CombinationTest {
                 .coordinate(new Coordinate(640, 80)).image(null).removable(true).visible(true).build());
         item.add(ItemCombinableBuilder.builder().combine(3).name("madeira").description("cabo de madeira velho").weight(0)
                 .coordinate(new Coordinate(410, 200)).image(null).removable(true).visible(true).build());
-        assertFalse(new Combination(item).run());
+        var iCombinableList = item.stream()
+                .map(item1 -> (ICombinable) item1).toList();
+        assertFalse(new Combination(iCombinableList).run());
     }
 
     @Test(expected = ItemCombinableException.class)
@@ -76,7 +71,9 @@ public class CombinationTest {
                 .coordinate(new Coordinate(640, 80)).image(null).removable(true).visible(true).build());
         item.add(ItemCombinableBuilder.builder().combine(2).name("pregos").description("utilzado para construir algo").weight(0)
                 .coordinate(new Coordinate(640, 400)).image(null).removable(true).visible(true).build());
-        assertFalse(new Combination(item).run());
+        var iCombinableList = item.stream()
+                .map(item1 -> (ICombinable) item1).toList();
+        assertFalse(new Combination(iCombinableList).run());
     }
 
 }

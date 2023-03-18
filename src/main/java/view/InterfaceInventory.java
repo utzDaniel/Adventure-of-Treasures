@@ -2,6 +2,7 @@ package view;
 
 import model.*;
 import model.builder.item.Item;
+import model.interfaces.ICombinable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +16,7 @@ public class InterfaceInventory {
     private final Player player;
     private JLabel labelSideEast;
     private PanelInventory panelInventory;
-    private List<Item> items;
+    private List<ICombinable> items;
     private ButtonItem buttonItem;
     private LabelInformation labelInformation;
     private ButtonAction buttonAction;
@@ -89,7 +90,7 @@ public class InterfaceInventory {
         buttonAction.visibleCancelAndConfirm(command);
         if (command.equals("combinar")) {
             Item item = buttonAction.getUseItem();
-            addListItem(item);
+            addListItem((ICombinable)item);
             buttonItem.enableIButtonItensNotCombinable();
             buttonItem.selectButtonItem(item);
             if (items.size() > 1) {
@@ -98,7 +99,7 @@ public class InterfaceInventory {
         }
     }
 
-    private void addListItem(Item item) {
+    private void addListItem(ICombinable item) {
         var addItem = this.items.stream()
                 .anyMatch(item1 -> item1.getName().equals(item.getName()));
         if (!addItem) {
@@ -111,27 +112,27 @@ public class InterfaceInventory {
         Item item = buttonAction.getUseItem();
         success = switch (command) {
             case "remover" -> player.dropItem(item);
-            case "usar", "equipar" ->  item.action(item);
+            case "usar", "equipar" ->  item.action();
             case "combinar" -> item.action(items);
             default -> false;
         };
         if(command.equals("usar") && success) updateItensMapGame();
-        playEffects(command, success, item.getName());
+        playEffects(command, success, item.getEffect());//TODO item.getEffect() resolver depois
         setActionCancel();
     }
 
-    private void playEffects (String command, boolean success, String itemName){
-        String effect;
+    private void playEffects (String command, boolean success, String itemEffect){
+        String commandEffect;
         if (success) {
-            effect = command;
+            commandEffect = command;
             if (command.equals("remover")) {
                 updateItensMapGame();
-                itemName = null;
+                itemEffect = null;
             }
         } else {
-            effect = "erro";
+            commandEffect = "erro";
         }
-        interfaceGame.playEffects(effect, itemName);
+        interfaceGame.playEffects(commandEffect, itemEffect);
     }
 
     private void setActionCancel() {

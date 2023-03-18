@@ -131,7 +131,7 @@ public class InterfaceGameTest {
     @Test
     public void validSoundEffectsPlayItem() {
         String command = "usar";
-        String item = "chave";
+        String item = "src/main/resources/audio/effects/chave.wav";
         interfaceGame.playEffects(command, item);
         assertTrue(interfaceGame.getSoundEffects().getFilename().contains(item));
     }
