@@ -20,7 +20,7 @@ public class NextSceneryTest {
         RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
         player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
-        player.setCurrentMap(createMapGame.getInitialScenery());
+        player.setCurrentMap(createMapGame.get("cais"));
         nextScenery = new NextScenery(new InterfaceGame());
     }
 

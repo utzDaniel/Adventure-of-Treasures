@@ -1,8 +1,9 @@
+import controller.Keyboard;
 import model.*;
 import model.builder.item.*;
+import repository.RepositoryItem;
 import repository.RepositoryMapGame;
 import view.InterfaceGame;
-import controller.Keyboard;
 
 public class Game {
 
@@ -23,8 +24,8 @@ public class Game {
 
     private void initialPlayer() {
         RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
-        player.setCurrentMap(createMapGame.getInitialScenery());
-        for (Item item : createMapGame.getItemInvisiblePlayer()) {
+        player.setCurrentMap(createMapGame.get("cais"));
+        for (Item item : RepositoryItem.getInstance().getItemInvisible()) {
             player.getInventory().setItemInvisible(item);
         }
     }

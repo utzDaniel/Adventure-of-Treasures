@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import view.LabelInformation;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;

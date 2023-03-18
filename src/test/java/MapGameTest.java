@@ -4,9 +4,8 @@ import model.builder.item.Item;
 import model.builder.map.Scenery;
 import org.junit.Before;
 import org.junit.Test;
+import repository.RepositoryItem;
 import repository.RepositoryMapGame;
-
-import java.awt.*;
 
 import static org.junit.Assert.*;
 
@@ -18,8 +17,8 @@ public class MapGameTest {
     public void crearCombination() {
         player = Player.getInstance();
         RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
-        player.setCurrentMap(createMapGame.getInitialScenery());
-        for (Item item : createMapGame.getItemInvisiblePlayer()) {
+        player.setCurrentMap(createMapGame.get("cais"));
+        for (Item item : RepositoryItem.getInstance().getItemInvisible()) {
             player.getInventory().setItemInvisible(item);
         }
     }
@@ -38,28 +37,28 @@ public class MapGameTest {
 
     @Test
     public void mostrarOsItensVisiveisNoMapaSIZETRUE(){
-        Scenery nextScenery = (Scenery) RepositoryMapGame.getInstance().getMapGame("farol");
+        Scenery nextScenery = (Scenery) RepositoryMapGame.getInstance().get("farol");
         player.setCurrentMap(nextScenery);
         assertEquals(1, player.getCurrentMap().getItemVisible().size());
     }
 
     @Test
     public void mostrarOsItensVisiveisNoMapaSIZEFALSE(){
-        Scenery nextScenery = (Scenery) RepositoryMapGame.getInstance().getMapGame("farol");
+        Scenery nextScenery = (Scenery) RepositoryMapGame.getInstance().get("farol");
         player.setCurrentMap(nextScenery);
         assertNotEquals(player.getCurrentMap().getItemVisible().size(), 0);
     }
 
     @Test
     public void pegarOsItensInVisiveisNoMapaSIZETRUE(){
-        Scenery nextScenery = (Scenery) RepositoryMapGame.getInstance().getMapGame("praia");
+        Scenery nextScenery = (Scenery) RepositoryMapGame.getInstance().get("praia");
         player.setCurrentMap(nextScenery);
         assertEquals(player.getCurrentMap().getItemInvisible().size(), 1);
     }
 
     @Test
     public void pegarOsItensInVisiveisNoMapaSIZEFALSE(){
-        Scenery nextScenery = (Scenery) RepositoryMapGame.getInstance().getMapGame("praia");
+        Scenery nextScenery = (Scenery) RepositoryMapGame.getInstance().get("praia");
         player.setCurrentMap(nextScenery);
         assertNotEquals(player.getCurrentMap().getItemInvisible().size(), 0);
     }

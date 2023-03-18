@@ -7,7 +7,6 @@ import model.builder.map.RoomBuilder;
 import model.builder.map.SceneryBuilder;
 import model.interfaces.IBuilderMapGame;
 
-import java.awt.*;
 import java.util.Objects;
 
 import static java.lang.Boolean.parseBoolean;

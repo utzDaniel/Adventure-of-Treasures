@@ -1,8 +1,8 @@
 package view;
 
-import model.*;
-import model.builder.item.Item;
+import model.Player;
 import model.interfaces.ICombinable;
+import model.builder.item.Item;
 
 import javax.swing.*;
 import java.awt.*;

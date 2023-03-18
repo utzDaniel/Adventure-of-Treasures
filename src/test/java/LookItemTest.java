@@ -19,7 +19,7 @@ public class LookItemTest {
         RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
         player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
-        player.setCurrentMap(createMapGame.getInitialScenery());
+        player.setCurrentMap(createMapGame.get("cais"));
     }
 
     @Test(expected = MoveException.class)

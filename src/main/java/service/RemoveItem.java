@@ -3,7 +3,7 @@ package service;
 import exception.InventoryException;
 import model.Inventory;
 import model.builder.item.Item;
-import model.builder.item.ItemMission;
+import model.interfaces.IMission;
 
 public final class RemoveItem {
 
@@ -21,18 +21,18 @@ public final class RemoveItem {
         updateInventoryCapacity();
     }
 
-    private void checkItemRemoved(){
-        if(item instanceof ItemMission)
+    private void checkItemRemoved() {
+        if (item instanceof IMission)
             throw new InventoryException("Item não pode ser removido!");
     }
 
-    private void removeItem(){
+    private void removeItem() {
         this.inventory.getMapItem()
-                        .remove(this.item.getName());
+                .remove(this.item.getName());
 
     }
 
-    private void updateInventoryCapacity(){
+    private void updateInventoryCapacity() {
         this.inventory.updadeCapacity(-this.item.getWeight());
 
     }

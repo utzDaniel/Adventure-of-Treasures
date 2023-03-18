@@ -1,10 +1,10 @@
 package view;
 
-import model.builder.item.Item;
 import model.Player;
 import model.Song;
 import model.SoundEffects;
 import model.builder.map.MapGame;
+import model.builder.item.Item;
 import settings.SettingsJFrame;
 
 import javax.swing.*;

@@ -8,11 +8,11 @@ import model.interfaces.ICombinable;
 import model.interfaces.IUsable;
 import org.junit.Before;
 import org.junit.Test;
+import repository.RepositoryItem;
 import repository.RepositoryMapGame;
 import service.Combination;
 import service.Use;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class UseTest {
 
     @Test
     public void validarUsoDaChave() {
-        Scenery village = (Scenery) RepositoryMapGame.getInstance().getMapGame("vila");
+        Scenery village = (Scenery) RepositoryMapGame.getInstance().get("vila");
         player.setCurrentMap(village);
         player.setLocation(new Coordinate(370, 150));
         Use use = new Use((IUsable) itens.get(0));
@@ -46,7 +46,7 @@ public class UseTest {
 
     @Test(expected = ItemUsableException.class)
     public void invalidarUsoDaChavePorItem() {
-        Scenery village = (Scenery) RepositoryMapGame.getInstance().getMapGame("vila");
+        Scenery village = (Scenery) RepositoryMapGame.getInstance().get("vila");
         player.setCurrentMap(village);
         player.setLocation(new Coordinate(370, 150));
         new Use((IUsable) itens.get(2)).run();
@@ -54,7 +54,7 @@ public class UseTest {
 
     @Test(expected = ItemUsableException.class)
     public void invalidarUsoDaChavePorDoor() {
-        Scenery village = (Scenery) RepositoryMapGame.getInstance().getMapGame("vila");
+        Scenery village = (Scenery) RepositoryMapGame.getInstance().get("vila");
         player.setCurrentMap(village);
         player.setLocation(new Coordinate(0, 0));
         new Use((IUsable) itens.get(0)).run();
@@ -62,7 +62,7 @@ public class UseTest {
 
     @Test(expected = ItemUsableException.class)
     public void invalidarUsoDaChavePorScenery() {
-        Room temple = (Room) RepositoryMapGame.getInstance().getMapGame("templo");
+        Room temple = (Room) RepositoryMapGame.getInstance().get("templo");
         player.setCurrentMap(temple);
         player.setLocation(new Coordinate(370, 150));
         new Use((IUsable) itens.get(0)).run();
@@ -70,7 +70,7 @@ public class UseTest {
 
     @Test
     public void validarUsoDaEscada() {
-        Room temple = (Room) RepositoryMapGame.getInstance().getMapGame("templo");
+        Room temple = (Room) RepositoryMapGame.getInstance().get("templo");
         player.setLocation(new Coordinate(260, 190));
         player.setCurrentMap(temple);
         Use use = new Use((IUsable) itens.get(1));
@@ -79,7 +79,7 @@ public class UseTest {
 
     @Test(expected = ItemUsableException.class)
     public void invalidarUsoDaEscadaPorDoor() {
-        Room temple = (Room) RepositoryMapGame.getInstance().getMapGame("templo");
+        Room temple = (Room) RepositoryMapGame.getInstance().get("templo");
         player.setCurrentMap(temple);
         player.setLocation(new Coordinate(0, 0));
         new Use((IUsable) itens.get(1)).run();
@@ -87,7 +87,7 @@ public class UseTest {
 
     @Test(expected = ItemUsableException.class)
     public void invalidarUsoDaEscadaPorScenery() {
-        Scenery village = (Scenery) RepositoryMapGame.getInstance().getMapGame("vila");
+        Scenery village = (Scenery) RepositoryMapGame.getInstance().get("vila");
         player.setCurrentMap(village);
         player.setLocation(new Coordinate(250, 180));
         new Use((IUsable) itens.get(1)).run();
@@ -95,7 +95,7 @@ public class UseTest {
 
     @Test(expected = ItemUsableException.class)
     public void invalidarUsoDaEscadaPorItem() {
-        Room temple = (Room) RepositoryMapGame.getInstance().getMapGame("templo");
+        Room temple = (Room) RepositoryMapGame.getInstance().get("templo");
         player.setCurrentMap(temple);
         player.setLocation(new Coordinate(250, 180));
         new Use((IUsable) itens.get(2)).run();
@@ -104,11 +104,11 @@ public class UseTest {
     @Test
     public void validarUsoDaPa() {
         RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
-        player.setCurrentMap(createMapGame.getInitialScenery());
-        for (Item item : createMapGame.getItemInvisiblePlayer()) {
+        player.setCurrentMap(createMapGame.get("cais"));
+        for (Item item : RepositoryItem.getInstance().getItemInvisible()) {
             player.getInventory().setItemInvisible(item);
         }
-        player.setCurrentMap(createMapGame.getInitialScenery().getExit("leste"));
+        player.setCurrentMap(((Scenery)createMapGame.get("cais")).getExit("leste"));
 
         //mapa visivel
         var itens = new ArrayList<Item>();
@@ -131,11 +131,11 @@ public class UseTest {
     @Test(expected = ItemUsableException.class)
     public void invalidarUsoDaPaPorItem() {
         RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
-        player.setCurrentMap(createMapGame.getInitialScenery());
-        for (Item item : createMapGame.getItemInvisiblePlayer()) {
+        player.setCurrentMap(createMapGame.get("cais"));
+        for (Item item : RepositoryItem.getInstance().getItemInvisible()) {
             player.getInventory().setItemInvisible(item);
         }
-        player.setCurrentMap(createMapGame.getInitialScenery().getExit("leste"));
+        player.setCurrentMap(((Scenery)createMapGame.get("cais")).getExit("leste"));
 
         //mapa visivel
         var itens = new ArrayList<Item>();
@@ -159,14 +159,14 @@ public class UseTest {
     @Test(expected = ItemUsableException.class)
     public void invalidarUsoDaPaPorInventario() {
         RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
-        player.setCurrentMap(createMapGame.getInitialScenery());
-        for (Item item : createMapGame.getItemInvisiblePlayer()) {
+        player.setCurrentMap(createMapGame.get("cais"));
+        for (Item item : RepositoryItem.getInstance().getItemInvisible()) {
             player.getInventory().setItemInvisible(item);
         }
         Item item = ItemMissionBuilder.builder().mapGame("praia").name("mapa").description("algo está enterrado na praia").weight(0)
                 .coordinate(new Coordinate(410, 200)).image(null).removable(false).visible(false).build();
         player.getInventory().setItemInvisible(item);
-        player.setCurrentMap(createMapGame.getInitialScenery().getExit("leste"));
+        player.setCurrentMap(((Scenery)createMapGame.get("cais")).getExit("leste"));
 
         new Use((IUsable) itens.get(3)).run();
 
@@ -175,11 +175,11 @@ public class UseTest {
     @Test(expected = ItemUsableException.class)
     public void invalidarUsoDaPaPorScenery() {
         RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
-        player.setCurrentMap(createMapGame.getInitialScenery());
-        for (Item item : createMapGame.getItemInvisiblePlayer()) {
+        player.setCurrentMap(createMapGame.get("cais"));
+        for (Item item : RepositoryItem.getInstance().getItemInvisible()) {
             player.getInventory().setItemInvisible(item);
         }
-        player.setCurrentMap(createMapGame.getInitialScenery());
+        player.setCurrentMap(createMapGame.get("cais"));
 
         //mapa visivel
         var itens = new ArrayList<Item>();

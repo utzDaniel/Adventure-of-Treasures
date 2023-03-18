@@ -1,5 +1,6 @@
 import exception.EventException;
-import model.*;
+import model.Song;
+import model.SoundEffects;
 import org.junit.Before;
 import org.junit.Test;
 import view.EventsMenuBar;

@@ -4,9 +4,9 @@ import exception.MoveException;
 import model.Area;
 import model.Coordinate;
 import model.Door;
+import service.AddItemMapGame;
 import model.builder.item.Item;
 import repository.RepositoryMapGame;
-import service.AddItemMapGame;
 import settings.SettingsMapGame;
 
 import javax.swing.*;
@@ -83,7 +83,7 @@ public abstract class MapGame {
     }
 
     public MapGame getMapDoor(Door door) {
-        return RepositoryMapGame.getInstance().getMapGame(door.getMapGame());
+        return RepositoryMapGame.getInstance().get(door.getMapGame());
     }
 
     //TODO resolver isso depois
@@ -91,18 +91,18 @@ public abstract class MapGame {
         boolean activate = false;
         try {
             if (nameItem.equals("tocha")) {
-                MapGame templo = RepositoryMapGame.getInstance().getMapGame("templo");
+                MapGame templo = RepositoryMapGame.getInstance().get("templo");
                 Door openDoor = templo.getDoor(new Coordinate(90, 240)).get();
                 openDoor.setOpen(!openDoor.isOpen());
                 activate = true;
             } else if (nameItem.equals("mapa")) {
-                MapGame praia = RepositoryMapGame.getInstance().getMapGame("praia");
+                MapGame praia = RepositoryMapGame.getInstance().get("praia");
                 praia.setImage(new ImageIcon("src/main/resources/map/praiaM.png"));
             } else if (nameItem.equals("chave")) {
-                MapGame praia = RepositoryMapGame.getInstance().getMapGame("praia");
+                MapGame praia = RepositoryMapGame.getInstance().get("praia");
                 praia.setImage(new ImageIcon("src/main/resources/map/praia.png"));
             } else if (nameItem.equals("escada")) {
-                MapGame templo = RepositoryMapGame.getInstance().getMapGame("templo");
+                MapGame templo = RepositoryMapGame.getInstance().get("templo");
                 templo.setImage(new ImageIcon("src/main/resources/map/temploF.png"));
             }
         } catch (Exception e) {

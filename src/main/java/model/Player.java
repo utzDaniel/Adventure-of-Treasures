@@ -1,11 +1,11 @@
 package model;
 
-import model.builder.item.Item;
-import model.builder.map.MapGame;
 import service.DropItem;
 import service.LookItem;
 import service.TakeItem;
 import service.Walk;
+import model.builder.item.Item;
+import model.builder.map.MapGame;
 import settings.SettingsPlayer;
 
 import javax.swing.*;

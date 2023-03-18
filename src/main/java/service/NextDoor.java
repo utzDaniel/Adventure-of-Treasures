@@ -6,7 +6,6 @@ import model.Player;
 import model.builder.map.MapGame;
 import view.InterfaceGame;
 
-import java.awt.*;
 import java.util.Optional;
 
 public class NextDoor {

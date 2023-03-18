@@ -1,7 +1,7 @@
 package model.builder.map;
 
-import model.Coordinate;
 import model.Door;
+import model.Coordinate;
 import model.builder.item.Item;
 import model.interfaces.IBuilderMapGame;
 import repository.RepositoryItem;
@@ -45,7 +45,7 @@ abstract class MapGameBuilder implements IBuilderMapGame {
     public IBuilderMapGame itens(String name) {
         if (Objects.isNull(name))
             return this;
-        Item item = RepositoryItem.getInstance().getItem(name);
+        Item item = RepositoryItem.getInstance().get(name);
         this.itens.put(item.getLocation(), item);
         return this;
     }

@@ -4,9 +4,9 @@ import model.Player;
 import model.builder.item.Item;
 import model.builder.item.ItemEquipable;
 import model.builder.item.ItemEquipableBuilder;
-import model.builder.item.ItemUsableBuilder;
 import org.junit.Before;
 import org.junit.Test;
+import repository.RepositoryItem;
 import repository.RepositoryMapGame;
 import service.Equip;
 import service.Unequip;
@@ -80,8 +80,8 @@ public class EquipableTest {
     public void validarItemEquipTocha() {
         Player player = Player.getInstance();
         RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
-        player.setCurrentMap(createMapGame.getInitialScenery());
-        for (Item item : createMapGame.getItemInvisiblePlayer()) {
+        player.setCurrentMap(createMapGame.get("cais"));
+        for (Item item : RepositoryItem.getInstance().getItemInvisible()) {
             player.getInventory().setItemInvisible(item);
         }
         player.getInventory().addItem(itens.get(2));
@@ -93,8 +93,8 @@ public class EquipableTest {
     public void validarItemEquipTochaAtributo() {
         Player player = Player.getInstance();
         RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
-        player.setCurrentMap(createMapGame.getInitialScenery());
-        for (Item item : createMapGame.getItemInvisiblePlayer()) {
+        player.setCurrentMap(createMapGame.get("cais"));
+        for (Item item : RepositoryItem.getInstance().getItemInvisible()) {
             player.getInventory().setItemInvisible(item);
         }
         player.getInventory().addItem(itens.get(2));
@@ -105,8 +105,8 @@ public class EquipableTest {
     public void validarItemUnequipTocha() {
         Player player = Player.getInstance();
         RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
-        player.setCurrentMap(createMapGame.getInitialScenery());
-        for (Item item : createMapGame.getItemInvisiblePlayer()) {
+        player.setCurrentMap(createMapGame.get("cais"));
+        for (Item item : RepositoryItem.getInstance().getItemInvisible()) {
             player.getInventory().setItemInvisible(item);
         }
         player.getInventory().addItem(itens.get(2));
@@ -119,8 +119,8 @@ public class EquipableTest {
     public void validarItemUnequipTochaAtributo() {
         Player player = Player.getInstance();
         RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
-        player.setCurrentMap(createMapGame.getInitialScenery());
-        for (Item item : createMapGame.getItemInvisiblePlayer()) {
+        player.setCurrentMap(createMapGame.get("cais"));
+        for (Item item : RepositoryItem.getInstance().getItemInvisible()) {
             player.getInventory().setItemInvisible(item);
         }
         player.getInventory().addItem(itens.get(2));

@@ -3,10 +3,10 @@ import model.Coordinate;
 import model.Player;
 import model.builder.item.Item;
 import model.builder.item.ItemCombinableBuilder;
-import model.builder.item.ItemEquipableBuilder;
 import model.interfaces.ICombinable;
 import org.junit.Before;
 import org.junit.Test;
+import repository.RepositoryItem;
 import repository.RepositoryMapGame;
 import service.Combination;
 
@@ -23,8 +23,8 @@ public class CombinationTest {
     public void criarCombination() {
         Player player = Player.getInstance();
         RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
-        player.setCurrentMap(createMapGame.getInitialScenery());
-        for (Item item : createMapGame.getItemInvisiblePlayer()) {
+        player.setCurrentMap(createMapGame.get("cais"));
+        for (Item item : RepositoryItem.getInstance().getItemInvisible()) {
             player.getInventory().setItemInvisible(item);
         }
 

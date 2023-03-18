@@ -2,6 +2,7 @@ import model.Player;
 import model.builder.item.Item;
 import org.junit.Before;
 import org.junit.Test;
+import repository.RepositoryItem;
 import repository.RepositoryMapGame;
 import view.InterfaceGame;
 import view.InterfaceInventory;
@@ -19,8 +20,8 @@ public class InterfaceInventoryTest {
     public void create() {
         player = Player.getInstance();
         RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
-        player.setCurrentMap(createMapGame.getInitialScenery());
-        for (Item item : createMapGame.getItemInvisiblePlayer()) {
+        player.setCurrentMap(createMapGame.get("cais"));
+        for (Item item : RepositoryItem.getInstance().getItemInvisible()) {
             player.getInventory().setItemInvisible(item);
         }
         interfaceGame = new InterfaceGame();

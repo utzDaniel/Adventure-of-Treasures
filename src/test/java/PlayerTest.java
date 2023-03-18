@@ -7,6 +7,7 @@ import model.builder.item.ItemUsableBuilder;
 import model.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
+import repository.RepositoryItem;
 import repository.RepositoryMapGame;
 
 import static org.junit.Assert.*;
@@ -20,8 +21,8 @@ public class PlayerTest {
         RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
         player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
-        player.setCurrentMap(createMapGame.getInitialScenery());
-        for (Item item : createMapGame.getItemInvisiblePlayer()) {
+        player.setCurrentMap(createMapGame.get("cais"));
+        for (Item item : RepositoryItem.getInstance().getItemInvisible()) {
             player.getInventory().setItemInvisible(item);
         }
     }

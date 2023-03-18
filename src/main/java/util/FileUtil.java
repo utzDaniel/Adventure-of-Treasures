@@ -20,7 +20,7 @@ public class FileUtil<T> {
         var file = this.getClass().getClassLoader().getResourceAsStream(this.fileName);
 
         if (Objects.isNull(file)) {
-            throw new IllegalArgumentException("Arquivo não encontrado");
+            throw new IllegalArgumentException("Arquivo nï¿½o encontrado");
         }
 
         try(BufferedReader reader = new BufferedReader(new InputStreamReader(file, StandardCharsets.ISO_8859_1))) {

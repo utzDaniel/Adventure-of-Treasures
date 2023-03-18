@@ -1,8 +1,8 @@
 package view;
 
+import model.Player;
 import model.builder.item.Item;
 import model.builder.item.ItemCombinable;
-import model.Player;
 
 import javax.swing.*;
 import java.util.Arrays;

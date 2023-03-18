@@ -1,10 +1,8 @@
 package service;
 
 import exception.ItemEquipableException;
-import model.interfaces.IEquipable;
-import model.builder.item.Item;
 import model.enums.ItemsEquipable;
-import model.Player;
+import model.interfaces.IEquipable;
 
 import java.util.Arrays;
 

@@ -3,10 +3,8 @@ package service;
 import exception.MoveException;
 import model.Coordinate;
 import model.Player;
-import model.builder.item.Item;
 import model.enums.MovePlayer;
 
-import javax.swing.*;
 import java.util.Arrays;
 
 public final class Walk {

@@ -4,6 +4,7 @@ import model.builder.item.Item;
 import model.builder.item.ItemEquipableBuilder;
 import org.junit.Before;
 import org.junit.Test;
+import repository.RepositoryItem;
 import repository.RepositoryMapGame;
 import settings.SettingsJFrame;
 import settings.SettingsMapGame;
@@ -26,8 +27,8 @@ public class InterfaceGameTest {
     @Before
     public void create() {
         RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
-        player.setCurrentMap(createMapGame.getInitialScenery());
-        for (Item item : createMapGame.getItemInvisiblePlayer()) {
+        player.setCurrentMap(createMapGame.get("cais"));
+        for (Item item : RepositoryItem.getInstance().getItemInvisible()) {
             player.getInventory().setItemInvisible(item);
         }
         interfaceGame = new InterfaceGame();

@@ -17,7 +17,7 @@ public class WalkTest {
         RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
         player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
-        player.setCurrentMap(createMapGame.getInitialScenery());
+        player.setCurrentMap(createMapGame.get("cais"));
     }
 
     @Test
@@ -57,7 +57,7 @@ public class WalkTest {
 
     @Test
     public void naoAndarPlayer() {
-        player.setCurrentMap( RepositoryMapGame.getInstance().getMapGame("cais"));
+        player.setCurrentMap( RepositoryMapGame.getInstance().get("cais"));
         player.setLocation(new Coordinate(10, 10));
         int positionY = player.getLocation().getY();
         player.walk(Direction.SUL.getLabel());

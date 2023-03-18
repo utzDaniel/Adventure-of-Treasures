@@ -1,7 +1,7 @@
 package model.mapper;
 
-import model.builder.item.Item;
 import model.builder.ItemFactory;
+import model.builder.item.Item;
 
 import java.util.Arrays;
 import java.util.function.Function;

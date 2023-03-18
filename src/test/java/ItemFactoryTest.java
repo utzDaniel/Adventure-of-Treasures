@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import util.FileUtil;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 

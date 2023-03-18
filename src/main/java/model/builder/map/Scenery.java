@@ -16,7 +16,7 @@ public class Scenery extends MapGame {
 
     public Scenery getExit(String direction) {
         return Objects.isNull(this.exits.get(direction))
-                ? null : (Scenery) RepositoryMapGame.getInstance().getMapGame(this.exits.get(direction));
+                ? null : (Scenery) RepositoryMapGame.getInstance().get(this.exits.get(direction));
     }
 
     protected void setExits(Map<String, String> exits) {
