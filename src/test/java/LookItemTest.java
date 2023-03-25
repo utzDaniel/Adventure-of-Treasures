@@ -5,6 +5,7 @@ import model.builder.map.Scenery;
 import model.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
+import repository.RepositoryFactory;
 import repository.RepositoryMapGame;
 
 import static org.junit.Assert.assertNotNull;
@@ -16,7 +17,7 @@ public class LookItemTest {
 
     @Before
     public void iniciacaoDoPlayerParaTeste() {
-        RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
+        RepositoryMapGame createMapGame = RepositoryFactory.getRepositoryMapGame();
         player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
         player.setCurrentMap(createMapGame.get("cais"));

@@ -6,6 +6,7 @@ import model.builder.item.ItemCombinableBuilder;
 import model.interfaces.ICombinable;
 import org.junit.Before;
 import org.junit.Test;
+import repository.RepositoryFactory;
 import repository.RepositoryItem;
 import repository.RepositoryMapGame;
 import service.Combination;
@@ -22,9 +23,9 @@ public class CombinationTest {
     @Before
     public void criarCombination() {
         Player player = Player.getInstance();
-        RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
+        RepositoryMapGame createMapGame = RepositoryFactory.getRepositoryMapGame();
         player.setCurrentMap(createMapGame.get("cais"));
-        for (Item item : RepositoryItem.getInstance().getItemInvisible()) {
+        for (Item item : RepositoryFactory.getRepositoryItem().getItemInvisible()) {
             player.getInventory().setItemInvisible(item);
         }
 

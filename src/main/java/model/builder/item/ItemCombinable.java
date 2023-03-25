@@ -1,25 +1,25 @@
 package model.builder.item;
 
 import model.interfaces.ICombinable;
-import util.UtilCombinable;
+import util.CombinableUtil;
 
 import java.util.List;
 
 public class ItemCombinable extends Item implements ICombinable {
 
-    private UtilCombinable utilCombinable;
+    private CombinableUtil combinableUtil;
     private String effect;
 
     protected ItemCombinable() {
     }
 
-    protected void setUtilCombinable(UtilCombinable utilCombinable) {
-        this.utilCombinable = utilCombinable;
+    protected void setUtilCombinable(CombinableUtil combinableUtil) {
+        this.combinableUtil = combinableUtil;
     }
 
     @Override
     public int getCombine() {
-        return this.utilCombinable.getCombine();
+        return this.combinableUtil.getCombine();
     }
     @Override
     public String getEffect() {
@@ -42,7 +42,7 @@ public class ItemCombinable extends Item implements ICombinable {
     @Override
     public String toString() {
         return "ItemCombinable{" +
-                "utilCombinable=" + this.utilCombinable.getCombine() +
+                "utilCombinable=" + this.combinableUtil.getCombine() +
                 ", effect='" + this.effect +"} "+ super.toString();
     }
 }

@@ -4,9 +4,9 @@ import exception.MoveException;
 import model.Area;
 import model.Coordinate;
 import model.Door;
-import service.AddItemMapGame;
 import model.builder.item.Item;
-import repository.RepositoryMapGame;
+import repository.RepositoryFactory;
+import service.AddItemMapGame;
 import settings.SettingsMapGame;
 
 import javax.swing.*;
@@ -83,7 +83,7 @@ public abstract class MapGame {
     }
 
     public MapGame getMapDoor(Door door) {
-        return RepositoryMapGame.getInstance().get(door.getMapGame());
+        return RepositoryFactory.getRepositoryMapGame().get(door.getMapGame());
     }
 
     //TODO resolver isso depois
@@ -91,18 +91,18 @@ public abstract class MapGame {
         boolean activate = false;
         try {
             if (nameItem.equals("tocha")) {
-                MapGame templo = RepositoryMapGame.getInstance().get("templo");
+                MapGame templo = RepositoryFactory.getRepositoryMapGame().get("templo");
                 Door openDoor = templo.getDoor(new Coordinate(90, 240)).get();
                 openDoor.setOpen(!openDoor.isOpen());
                 activate = true;
             } else if (nameItem.equals("mapa")) {
-                MapGame praia = RepositoryMapGame.getInstance().get("praia");
+                MapGame praia = RepositoryFactory.getRepositoryMapGame().get("praia");
                 praia.setImage(new ImageIcon("src/main/resources/map/praiaM.png"));
             } else if (nameItem.equals("chave")) {
-                MapGame praia = RepositoryMapGame.getInstance().get("praia");
+                MapGame praia = RepositoryFactory.getRepositoryMapGame().get("praia");
                 praia.setImage(new ImageIcon("src/main/resources/map/praia.png"));
             } else if (nameItem.equals("escada")) {
-                MapGame templo = RepositoryMapGame.getInstance().get("templo");
+                MapGame templo = RepositoryFactory.getRepositoryMapGame().get("templo");
                 templo.setImage(new ImageIcon("src/main/resources/map/temploF.png"));
             }
         } catch (Exception e) {
@@ -121,7 +121,7 @@ public abstract class MapGame {
     }
 
     public void addItem(Item item, Coordinate coordinate) {
-        if (new AddItemMapGame(item, coordinate).run()) {
+        if (new AddItemMapGame(this, item, coordinate).run()) {
             this.itens.put(item.getLocation(), item);
             this.area.block(item.getLocation());
         }
@@ -144,9 +144,11 @@ public abstract class MapGame {
                 .filter(Item::isInvisible)
                 .collect(Collectors.toList());
     }
+
     public String getSong() {
         return this.song;
     }
+
     protected void setSong(String filename) {
         this.song = filename;
     }

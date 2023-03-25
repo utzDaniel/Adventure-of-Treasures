@@ -8,6 +8,7 @@ import model.builder.item.ItemUsableBuilder;
 import model.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
+import repository.RepositoryFactory;
 import repository.RepositoryItem;
 import repository.RepositoryMapGame;
 
@@ -19,11 +20,11 @@ public class RemoveItemTest {
 
     @Before
     public void iniciacaoDoPlayerParaTeste() {
-        RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
+        RepositoryMapGame createMapGame = RepositoryFactory.getRepositoryMapGame();
         player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
         player.setCurrentMap(createMapGame.get("cais"));
-        for (Item item : RepositoryItem.getInstance().getItemInvisible()) {
+        for (Item item : RepositoryFactory.getRepositoryItem().getItemInvisible()) {
             player.getInventory().setItemInvisible(item);
         }
         player.getInventory().addItem(ItemEquipableBuilder.builder().equipped(false).name("mochila").description("utilizada para carregar mais coisas").weight(0)

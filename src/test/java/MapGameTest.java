@@ -4,6 +4,7 @@ import model.builder.item.Item;
 import model.builder.map.Scenery;
 import org.junit.Before;
 import org.junit.Test;
+import repository.RepositoryFactory;
 import repository.RepositoryItem;
 import repository.RepositoryMapGame;
 
@@ -16,9 +17,9 @@ public class MapGameTest {
     @Before
     public void crearCombination() {
         player = Player.getInstance();
-        RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
+        RepositoryMapGame createMapGame = RepositoryFactory.getRepositoryMapGame();
         player.setCurrentMap(createMapGame.get("cais"));
-        for (Item item : RepositoryItem.getInstance().getItemInvisible()) {
+        for (Item item : RepositoryFactory.getRepositoryItem().getItemInvisible()) {
             player.getInventory().setItemInvisible(item);
         }
     }
@@ -37,28 +38,28 @@ public class MapGameTest {
 
     @Test
     public void mostrarOsItensVisiveisNoMapaSIZETRUE(){
-        Scenery nextScenery = (Scenery) RepositoryMapGame.getInstance().get("farol");
+        Scenery nextScenery = (Scenery) RepositoryFactory.getRepositoryMapGame().get("farol");
         player.setCurrentMap(nextScenery);
         assertEquals(1, player.getCurrentMap().getItemVisible().size());
     }
 
     @Test
     public void mostrarOsItensVisiveisNoMapaSIZEFALSE(){
-        Scenery nextScenery = (Scenery) RepositoryMapGame.getInstance().get("farol");
+        Scenery nextScenery = (Scenery) RepositoryFactory.getRepositoryMapGame().get("farol");
         player.setCurrentMap(nextScenery);
         assertNotEquals(player.getCurrentMap().getItemVisible().size(), 0);
     }
 
     @Test
     public void pegarOsItensInVisiveisNoMapaSIZETRUE(){
-        Scenery nextScenery = (Scenery) RepositoryMapGame.getInstance().get("praia");
+        Scenery nextScenery = (Scenery) RepositoryFactory.getRepositoryMapGame().get("praia");
         player.setCurrentMap(nextScenery);
         assertEquals(player.getCurrentMap().getItemInvisible().size(), 1);
     }
 
     @Test
     public void pegarOsItensInVisiveisNoMapaSIZEFALSE(){
-        Scenery nextScenery = (Scenery) RepositoryMapGame.getInstance().get("praia");
+        Scenery nextScenery = (Scenery) RepositoryFactory.getRepositoryMapGame().get("praia");
         player.setCurrentMap(nextScenery);
         assertNotEquals(player.getCurrentMap().getItemInvisible().size(), 0);
     }

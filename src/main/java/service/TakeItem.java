@@ -2,8 +2,9 @@ package service;
 
 import model.builder.item.Item;
 import model.Player;
+import model.interfaces.Command;
 
-public final class TakeItem {
+public final class TakeItem implements Command {
 
     private final Player player;
     private final Item item;
@@ -17,6 +18,11 @@ public final class TakeItem {
         addItemInventory();
         removeItemCurrentMap();
         return true;
+    }
+
+    @Override
+    public String getName() {
+        return "take";
     }
 
     private void addItemInventory() {

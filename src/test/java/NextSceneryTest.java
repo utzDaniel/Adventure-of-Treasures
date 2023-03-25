@@ -4,6 +4,7 @@ import model.Player;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import repository.RepositoryFactory;
 import repository.RepositoryMapGame;
 import service.NextScenery;
 import view.InterfaceGame;
@@ -17,7 +18,7 @@ public class NextSceneryTest {
 
     @Before
     public void inicialize() {
-        RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
+        RepositoryMapGame createMapGame = RepositoryFactory.getRepositoryMapGame();
         player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
         player.setCurrentMap(createMapGame.get("cais"));

@@ -7,6 +7,7 @@ import model.builder.map.Room;
 import model.builder.map.Scenery;
 import org.junit.Before;
 import org.junit.Test;
+import repository.RepositoryFactory;
 import repository.RepositoryMapGame;
 import service.NextDoor;
 import view.InterfaceGame;
@@ -24,8 +25,8 @@ public class NextDoorTest {
     @Before
     public void inicialize() {
         player = Player.getInstance();
-        Scenery village = (Scenery) RepositoryMapGame.getInstance().get("vila");
-        Room temple = (Room) RepositoryMapGame.getInstance().get("templo");
+        Scenery village = (Scenery) RepositoryFactory.getRepositoryMapGame().get("vila");
+        Room temple = (Room) RepositoryFactory.getRepositoryMapGame().get("templo");
         templeDoor = temple.getDoor(new Coordinate(380,530)).get();
         vilaDoor = village.getDoor(new Coordinate(370,150)).get();
         player.setCurrentMap(village);

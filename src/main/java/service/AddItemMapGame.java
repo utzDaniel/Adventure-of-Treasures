@@ -3,7 +3,6 @@ package service;
 import exception.MapGameException;
 import model.Area;
 import model.Coordinate;
-import model.Player;
 import model.builder.item.Item;
 import model.builder.map.MapGame;
 
@@ -14,10 +13,10 @@ public class AddItemMapGame {
     private int areaTraveled = 1;
     private final MapGame mapGame;
 
-    public AddItemMapGame(Item item,Coordinate coordinate) {
+    public AddItemMapGame(MapGame mapGame, Item item, Coordinate coordinate) {
         this.item = item;
         this.coordinate = coordinate;
-        this.mapGame = Player.getInstance().getCurrentMap();
+        this.mapGame = mapGame;
     }
 
     public boolean run() {

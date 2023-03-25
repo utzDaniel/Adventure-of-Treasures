@@ -4,6 +4,7 @@ import model.Player;
 import model.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
+import repository.RepositoryFactory;
 import repository.RepositoryMapGame;
 
 import static org.junit.Assert.assertEquals;
@@ -14,7 +15,7 @@ public class WalkTest {
 
     @Before
     public void iniciacaoDoPlayerParaTeste() {
-        RepositoryMapGame createMapGame = RepositoryMapGame.getInstance();
+        RepositoryMapGame createMapGame = RepositoryFactory.getRepositoryMapGame();
         player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
         player.setCurrentMap(createMapGame.get("cais"));
@@ -57,7 +58,7 @@ public class WalkTest {
 
     @Test
     public void naoAndarPlayer() {
-        player.setCurrentMap( RepositoryMapGame.getInstance().get("cais"));
+        player.setCurrentMap(RepositoryFactory.getRepositoryMapGame().get("cais"));
         player.setLocation(new Coordinate(10, 10));
         int positionY = player.getLocation().getY();
         player.walk(Direction.SUL.getLabel());

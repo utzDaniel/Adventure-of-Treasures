@@ -1,10 +1,10 @@
 package util;
 
-public final class UtilCombinable {
+public final class CombinableUtil {
 
     private final int combine;
 
-    public UtilCombinable(int combine) {
+    public CombinableUtil(int combine) {
         this.combine = combine;
     }
 

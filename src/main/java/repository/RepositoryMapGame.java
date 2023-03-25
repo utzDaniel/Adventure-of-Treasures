@@ -7,24 +7,14 @@ import util.FileUtil;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class RepositoryMapGame implements Repository<MapGame> {
-
-    private static RepositoryMapGame repositoryMapGame;
     private final Map<String, MapGame> mapGame;
 
-    private RepositoryMapGame() {
+    RepositoryMapGame() {
         this.mapGame = new HashMap<>();
         createMapGame();
-    }
-
-    public static synchronized RepositoryMapGame getInstance() {
-        if (Objects.isNull(repositoryMapGame)) {
-            repositoryMapGame = new RepositoryMapGame();
-        }
-        return repositoryMapGame;
     }
 
     private void createMapGame() {

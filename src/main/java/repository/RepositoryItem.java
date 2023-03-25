@@ -8,26 +8,16 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class RepositoryItem implements Repository<Item> {
-
-    private static RepositoryItem repositoryItem;
     private final Map<String, Item> itens;
 
-    private RepositoryItem() {
+    RepositoryItem() {
         this.itens = new HashMap<>();
         createItens();
     }
 
-    public static synchronized RepositoryItem getInstance() {
-        if (Objects.isNull(repositoryItem)) {
-            repositoryItem = new RepositoryItem();
-        }
-        return repositoryItem;
-    }
-    
     private void createItens() {
         String filename = "item/item.csv";
         var file = new FileUtil<Item>(filename);

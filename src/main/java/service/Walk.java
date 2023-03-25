@@ -4,10 +4,11 @@ import exception.MoveException;
 import model.Coordinate;
 import model.Player;
 import model.enums.MovePlayer;
+import model.interfaces.Command;
 
 import java.util.Arrays;
 
-public final class Walk {
+public final class Walk implements Command {
 
     private final String direction;
     private final Player player;
@@ -20,12 +21,18 @@ public final class Walk {
         this.coordinate = player.getLocation();
     }
 
-    public void run() {
+    public boolean run() {
         this.move = getMovePlayer();
         updateImagePlayer();
         updateDirectionPlayer();
         updateCoordinate();
         if (validCoordinate()) updateLocationPlayer();
+        return validCoordinate();
+    }
+
+    @Override
+    public String getName() {
+        return "walk";
     }
 
     private MovePlayer getMovePlayer() {

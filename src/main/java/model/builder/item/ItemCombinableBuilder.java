@@ -1,6 +1,6 @@
 package model.builder.item;
 
-import util.UtilCombinable;
+import util.CombinableUtil;
 
 public class ItemCombinableBuilder extends ItemBuilder {
 
@@ -16,7 +16,7 @@ public class ItemCombinableBuilder extends ItemBuilder {
     }
 
     public ItemCombinableBuilder combine(int combine) {
-        this.itemCombinable.setUtilCombinable(new UtilCombinable(combine));
+        this.itemCombinable.setUtilCombinable(new CombinableUtil(combine));
         return this;
     }
 
