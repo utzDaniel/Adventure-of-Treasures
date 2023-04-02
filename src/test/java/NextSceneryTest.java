@@ -1,13 +1,12 @@
-import model.enums.Direction;
-import model.builder.map.MapGame;
-import model.Player;
+import rules.enums.Direction;
+import backend.model.builder.map.MapGame;
+import backend.model.Player;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import repository.RepositoryFactory;
-import repository.RepositoryMapGame;
-import service.NextScenery;
-import view.InterfaceGame;
+import backend.repository.RepositoryFactory;
+import rules.service.NextScenery;
+import frontend.view.InterfaceGame;
 
 import static org.junit.Assert.assertEquals;
 
@@ -18,10 +17,10 @@ public class NextSceneryTest {
 
     @Before
     public void inicialize() {
-        RepositoryMapGame createMapGame = RepositoryFactory.getRepositoryMapGame();
+        var repositoryMapGame = RepositoryFactory.getRepositoryMapGame();
         player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
-        player.setCurrentMap(createMapGame.get("cais"));
+        player.setCurrentMap(repositoryMapGame.get("cais"));
         nextScenery = new NextScenery(new InterfaceGame());
     }
 

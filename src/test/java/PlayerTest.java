@@ -1,15 +1,14 @@
-import model.Coordinate;
-import model.Player;
-import model.builder.item.Item;
-import model.builder.item.ItemCombinableBuilder;
-import model.builder.item.ItemEquipableBuilder;
-import model.builder.item.ItemUsableBuilder;
-import model.enums.Direction;
+import backend.model.Coordinate;
+import backend.model.Player;
+import backend.model.builder.item.Item;
+import backend.model.builder.item.ItemCombinableBuilder;
+import backend.model.builder.item.ItemEquipableBuilder;
+import backend.model.builder.item.ItemUsableBuilder;
+import rules.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
-import repository.RepositoryFactory;
-import repository.RepositoryItem;
-import repository.RepositoryMapGame;
+import backend.repository.RepositoryFactory;
+import rules.interfaces.ICoordinate;
 
 import static org.junit.Assert.*;
 
@@ -19,11 +18,15 @@ public class PlayerTest {
 
     @Before
     public void iniciacaoDoPlayerParaTeste() {
-        RepositoryMapGame createMapGame = RepositoryFactory.getRepositoryMapGame();
+        var repositoryMapGame = RepositoryFactory.getRepositoryMapGame();
         player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
-        player.setCurrentMap(createMapGame.get("cais"));
-        for (Item item : RepositoryFactory.getRepositoryItem().getItemInvisible()) {
+        player.setCurrentMap(repositoryMapGame.get("cais"));
+        for (Item item : RepositoryFactory.getRepositoryItem()
+                .getAll().stream()
+                .filter(Item::isInvisible)
+                .filter(item -> !item.getName().equals("chave"))
+                .toList()) {
             player.getInventory().setItemInvisible(item);
         }
     }
@@ -32,10 +35,10 @@ public class PlayerTest {
     public void testarPegarItem() {
         int size = player.getInventory().getItemVisible().size();
         player.getInventory().addItem(ItemEquipableBuilder.builder().equipped(false).name("asqe").description("utilizada para carregar mais coisas").weight(0)
-                .coordinate(new Coordinate(650, 220)).image(null).removable(true).visible(true).build());
+                .coordinate(ICoordinate.getInstance(650, 220)).image(null).removable(true).visible(true).build());
 
         player.takeItem(ItemUsableBuilder.builder().localUse("praia").name("aq1a4e").description("ferramenta usada para cavar").weight(0)
-                .coordinate(new Coordinate(200, 280)).image(null).removable(true).visible(true).build());
+                .coordinate(ICoordinate.getInstance(200, 280)).image(null).removable(true).visible(true).build());
 
         assertEquals(player.getInventory().getItemVisible().size(), size + 2);
     }
@@ -43,14 +46,14 @@ public class PlayerTest {
     @Test
     public void validarCapacidadeMaximaDoInventory() {
         assertTrue(player.takeItem(ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(0)
-                .coordinate(new Coordinate(200, 280)).image(null).removable(true).visible(true).build()));
+                .coordinate(ICoordinate.getInstance(200, 280)).image(null).removable(true).visible(true).build()));
     }
 
 
     @Test
     public void buscarPeloNomeDoItem() {
         player.getInventory().addItem(ItemEquipableBuilder.builder().equipped(false).name("mochila22").description("utilizada para carregar mais coisas").weight(0)
-                .coordinate(new Coordinate(650, 220)).image(null).removable(true).visible(true).build());
+                .coordinate(ICoordinate.getInstance(650, 220)).image(null).removable(true).visible(true).build());
         assertNotNull(player.getInventory().getItem("mochila22"));
     }
 
@@ -63,7 +66,7 @@ public class PlayerTest {
     public void buscarListaDeItensVisivelNoInventario() {
         int size = player.getInventory().getItemVisible().size();
         player.getInventory().addItem(ItemEquipableBuilder.builder().equipped(false).name("m1154h").description("utilizada para carregar mais coisas").weight(0)
-                .coordinate(new Coordinate(650, 220)).image(null).removable(true).visible(true).build());
+                .coordinate(ICoordinate.getInstance(650, 220)).image(null).removable(true).visible(true).build());
         assertEquals(size + 1, player.getInventory().getItemVisible().size());
     }
 
@@ -75,7 +78,7 @@ public class PlayerTest {
     @Test
     public void atualizarOTamanhoDoInventarioAoAdicionarItemNovo() {
         Item item = ItemCombinableBuilder.builder().combine(3).name("faca").description("serve para cortar algo").weight(1)
-                .coordinate(new Coordinate(420, 130)).image(null).removable(true).visible(true).build();
+                .coordinate(ICoordinate.getInstance(420, 130)).image(null).removable(true).visible(true).build();
         int tamanhoAnterior = player.getInventory().getCapacity();
         player.getInventory().updadeCapacity(item.getWeight());
         assertNotEquals(tamanhoAnterior, player.getInventory().getCapacity());

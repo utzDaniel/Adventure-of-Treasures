@@ -1,16 +1,15 @@
-import exception.InventoryException;
-import model.Coordinate;
-import model.Player;
-import model.builder.item.Item;
-import model.builder.item.ItemUsableBuilder;
-import model.builder.map.MapGame;
-import model.enums.Direction;
+import rules.exception.InventoryException;
+import backend.model.Coordinate;
+import backend.model.Player;
+import backend.model.builder.item.Item;
+import backend.model.builder.item.ItemUsableBuilder;
+import backend.model.builder.map.MapGame;
+import rules.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
-import repository.RepositoryFactory;
-import repository.RepositoryItem;
-import repository.RepositoryMapGame;
-import service.Take;
+import backend.repository.RepositoryFactory;
+import rules.interfaces.ICoordinate;
+import rules.service.Take;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -24,15 +23,19 @@ public class TakeTest {
 
     @Before
     public void inicialize() {
-        RepositoryMapGame createMapGame = RepositoryFactory.getRepositoryMapGame();
+        var repositoryMapGame = RepositoryFactory.getRepositoryMapGame();
         player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
-        player.setCurrentMap(createMapGame.get("cais"));
-        for (Item item : RepositoryFactory.getRepositoryItem().getItemInvisible()) {
+        player.setCurrentMap(repositoryMapGame.get("cais"));
+        for (Item item : RepositoryFactory.getRepositoryItem()
+                .getAll().stream()
+                .filter(Item::isInvisible)
+                .filter(item -> !item.getName().equals("chave"))
+                .toList()) {
             player.getInventory().setItemInvisible(item);
         }
         item = ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(0)
-                .coordinate(new Coordinate(340, 340)).image(null).removable(true).visible(true).build();
+                .coordinate(ICoordinate.getInstance(340, 340)).image(null).removable(true).visible(true).build();
         mapGame = player.getCurrentMap();
         mapGame.addItem(item, player.getLocation());
         take = new Take();
@@ -40,7 +43,7 @@ public class TakeTest {
 
     @Test
     public void testarItemValidoAFrente() {
-        player.setLocation(new Coordinate(item.getLocation().getX(), (item.getLocation().getY() - 10)));
+        player.setLocation(ICoordinate.getInstance(item.getLocation().getX(), (item.getLocation().getY() - 10)));
         player.setCurrentMap(mapGame);
         assertTrue(take.run());
     }
@@ -48,19 +51,19 @@ public class TakeTest {
     @Test(expected = InventoryException.class)
     public void testarItemValidoAFrenteSemCapacitadadeNoInventario() {
         Item item = ItemUsableBuilder.builder().localUse("praia").name("pa1487").description("ferramenta usada para cavar").weight(30)
-                .coordinate(new Coordinate(320, 320)).image(null).removable(true).visible(true).build();
-        player.setLocation(new Coordinate(320, 320));
+                .coordinate(ICoordinate.getInstance(320, 320)).image(null).removable(true).visible(true).build();
+        player.setLocation(ICoordinate.getInstance(320, 320));
         player.setDirection("oeste");
         mapGame.addItem(item, player.getLocation());
         player.setCurrentMap(mapGame);
         take.run();
         System.out.println(player.getLocation());
-        System.out.println(mapGame.getItem(new Coordinate(310,320)));
+        System.out.println(mapGame.getItem(ICoordinate.getInstance(310,320)));
     }
 
     @Test
     public void testarItemInvalidoAFrente() {
-        player.setLocation(new Coordinate(290, player.getLocation().getY()));
+        player.setLocation(ICoordinate.getInstance(290, player.getLocation().getY()));
         player.setCurrentMap(mapGame);
         assertFalse(take.run());
     }

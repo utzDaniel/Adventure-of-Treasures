@@ -1,16 +1,16 @@
-import exception.MapGameException;
-import model.Coordinate;
-import model.Door;
-import model.Player;
-import model.builder.map.MapGame;
-import model.builder.map.Room;
-import model.builder.map.Scenery;
+import rules.exception.MapGameException;
+import backend.model.Coordinate;
+import backend.model.Door;
+import backend.model.Player;
+import backend.model.builder.map.MapGame;
+import backend.model.builder.map.Room;
+import backend.model.builder.map.Scenery;
 import org.junit.Before;
 import org.junit.Test;
-import repository.RepositoryFactory;
-import repository.RepositoryMapGame;
-import service.NextDoor;
-import view.InterfaceGame;
+import backend.repository.RepositoryFactory;
+import rules.interfaces.ICoordinate;
+import rules.service.NextDoor;
+import frontend.view.InterfaceGame;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -27,16 +27,16 @@ public class NextDoorTest {
         player = Player.getInstance();
         Scenery village = (Scenery) RepositoryFactory.getRepositoryMapGame().get("vila");
         Room temple = (Room) RepositoryFactory.getRepositoryMapGame().get("templo");
-        templeDoor = temple.getDoor(new Coordinate(380,530)).get();
-        vilaDoor = village.getDoor(new Coordinate(370,150)).get();
+        templeDoor = temple.getDoor(ICoordinate.getInstance(380,530)).get();
+        vilaDoor = village.getDoor(ICoordinate.getInstance(370,150)).get();
         player.setCurrentMap(village);
-        player.setLocation(new Coordinate(370,150));
+        player.setLocation(ICoordinate.getInstance(370,150));
         nextDoor = new NextDoor(new InterfaceGame());
     }
 
     @Test
     public void testDoorNull(){
-        player.setLocation(new Coordinate(350, player.getLocation().getY()));
+        player.setLocation(ICoordinate.getInstance(350, player.getLocation().getY()));
         MapGame atualMap = player.getCurrentMap();
         nextDoor.run();
         assertEquals(atualMap, player.getCurrentMap());
@@ -46,7 +46,7 @@ public class NextDoorTest {
     public void testDoorFechada(){
         vilaDoor.setOpen(false);
         templeDoor.setOpen(false);
-        player.setLocation(new Coordinate(370,150));
+        player.setLocation(ICoordinate.getInstance(370,150));
         nextDoor.run();
     }
 
@@ -54,7 +54,7 @@ public class NextDoorTest {
     public void testDoorAberta(){
         vilaDoor.setOpen(true);
         MapGame atualMap = player.getCurrentMap();
-        player.setLocation(new Coordinate(370,150));
+        player.setLocation(ICoordinate.getInstance(370,150));
         nextDoor.run();
         assertNotEquals(atualMap.getName(), player.getCurrentMap().getName());
     }

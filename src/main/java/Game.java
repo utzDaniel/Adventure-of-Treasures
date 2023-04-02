@@ -1,31 +1,36 @@
-import controller.Keyboard;
-import model.Player;
-import model.Song;
-import model.SoundEffects;
-import model.builder.item.Item;
-import repository.RepositoryFactory;
-import view.InterfaceGame;
+import rules.controller.Keyboard;
+import frontend.view.InterfaceGame;
+import backend.repository.RepositoryFactory;
+import backend.model.Player;
+import frontend.model.Song;
+import frontend.model.SoundEffects;
+import backend.model.builder.item.Item;
 
 public class Game {
 
     private final Player player;
-    private final InterfaceGame interfaceGame;
-    private final Song song;
-    private final SoundEffects soundEffects;
 
     public Game() {
         player = Player.getInstance();
         initialPlayer();
-        interfaceGame = new InterfaceGame();
-        song = interfaceGame.getSong();
-        soundEffects = interfaceGame.getSoundEffects();
+        InterfaceGame interfaceGame = new InterfaceGame();
+        Song song = interfaceGame.getSong();
+        SoundEffects soundEffects = interfaceGame.getSoundEffects();
         song.play(player.getCurrentMap().getSong());
         new Keyboard(interfaceGame, song, soundEffects).run();
     }
 
     private void initialPlayer() {
-        player.setCurrentMap(RepositoryFactory.getRepositoryMapGame().get("cais"));
-        for (Item item : RepositoryFactory.getRepositoryItem().getItemInvisible()) {
+        var repositoryMapGame = RepositoryFactory.getRepositoryMapGame();
+        var repositoryItem = RepositoryFactory.getRepositoryItem();
+        player.setCurrentMap(repositoryMapGame.get("cais"));
+
+        //TODO não usar itens invisivel, resolver depois
+        for (Item item : repositoryItem
+                .getAll().stream()
+                .filter(Item::isInvisible)
+                .filter(item -> !item.getName().equals("chave"))
+                .toList()) {
             player.getInventory().setItemInvisible(item);
         }
     }

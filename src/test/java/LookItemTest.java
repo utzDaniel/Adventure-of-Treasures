@@ -1,12 +1,12 @@
-import exception.MoveException;
-import model.Coordinate;
-import model.Player;
-import model.builder.map.Scenery;
-import model.enums.Direction;
+import rules.exception.MoveException;
+import backend.model.Coordinate;
+import backend.model.Player;
+import backend.model.builder.map.Scenery;
+import rules.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
-import repository.RepositoryFactory;
-import repository.RepositoryMapGame;
+import backend.repository.RepositoryFactory;
+import rules.interfaces.ICoordinate;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -17,17 +17,17 @@ public class LookItemTest {
 
     @Before
     public void iniciacaoDoPlayerParaTeste() {
-        RepositoryMapGame createMapGame = RepositoryFactory.getRepositoryMapGame();
+        var repositoryMapGame = RepositoryFactory.getRepositoryMapGame();
         player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
-        player.setCurrentMap(createMapGame.get("cais"));
+        player.setCurrentMap(repositoryMapGame.get("cais"));
     }
 
     @Test(expected = MoveException.class)
     public void testarDirectionInvalida() {
         Scenery nextScenery = ((Scenery) player.getCurrentMap()).getExit("oeste");
         player.setCurrentMap(nextScenery);
-        player.setLocation(new Coordinate(210, 280));
+        player.setLocation(ICoordinate.getInstance(210, 280));
         player.setDirection("oest");
         player.lookItem();
     }
@@ -37,7 +37,7 @@ public class LookItemTest {
         Scenery nextScenery = ((Scenery) player.getCurrentMap()).getExit("oeste");
         player.setCurrentMap(nextScenery);
         player.setDirection(Direction.OESTE.getLabel());
-        player.setLocation(new Coordinate(210, 280));
+        player.setLocation(ICoordinate.getInstance(210, 280));
         assertNotNull(player.lookItem());
     }
 
@@ -46,7 +46,7 @@ public class LookItemTest {
         Scenery nextScenery = ((Scenery) player.getCurrentMap()).getExit("oeste");
         player.setCurrentMap(nextScenery);
         player.setDirection(Direction.OESTE.getLabel());
-        player.setLocation(new Coordinate(210, 270));
+        player.setLocation(ICoordinate.getInstance(210, 270));
         assertNull(player.lookItem());
     }
 

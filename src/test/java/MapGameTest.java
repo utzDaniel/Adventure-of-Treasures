@@ -1,12 +1,11 @@
-import model.Coordinate;
-import model.Player;
-import model.builder.item.Item;
-import model.builder.map.Scenery;
+import backend.model.Coordinate;
+import backend.model.Player;
+import backend.model.builder.item.Item;
+import backend.model.builder.map.Scenery;
 import org.junit.Before;
 import org.junit.Test;
-import repository.RepositoryFactory;
-import repository.RepositoryItem;
-import repository.RepositoryMapGame;
+import backend.repository.RepositoryFactory;
+import rules.interfaces.ICoordinate;
 
 import static org.junit.Assert.*;
 
@@ -17,22 +16,26 @@ public class MapGameTest {
     @Before
     public void crearCombination() {
         player = Player.getInstance();
-        RepositoryMapGame createMapGame = RepositoryFactory.getRepositoryMapGame();
-        player.setCurrentMap(createMapGame.get("cais"));
-        for (Item item : RepositoryFactory.getRepositoryItem().getItemInvisible()) {
+        var repositoryMapGame = RepositoryFactory.getRepositoryMapGame();
+        player.setCurrentMap(repositoryMapGame.get("cais"));
+        for (Item item : RepositoryFactory.getRepositoryItem()
+                .getAll().stream()
+                .filter(Item::isInvisible)
+                .filter(item -> !item.getName().equals("chave"))
+                .toList()) {
             player.getInventory().setItemInvisible(item);
         }
     }
 
     @Test
     public void testarSeOPlayerPodeMoverTRUE(){
-        Coordinate coordinate = new Coordinate(300, 470);
+        ICoordinate coordinate = ICoordinate.getInstance(300, 470);
         assertTrue(player.getCurrentMap().checkLimits(coordinate));
     }
 
     @Test
     public void testarSeOPlayerPodeMoverFALSE(){
-        Coordinate coordinate = new Coordinate(0, 0);
+        ICoordinate coordinate = ICoordinate.getInstance(0, 0);
         assertFalse(player.getCurrentMap().checkLimits(coordinate));
     }
 

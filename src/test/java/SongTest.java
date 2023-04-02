@@ -1,6 +1,6 @@
-import model.Song;
+import frontend.model.Song;
 import org.junit.Test;
-import settings.SettingsSong;
+import frontend.settings.SettingsSong;
 
 import static org.junit.Assert.*;
 

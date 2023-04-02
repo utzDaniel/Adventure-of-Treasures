@@ -1,10 +1,11 @@
-import exception.ButtonException;
-import model.Coordinate;
-import model.builder.item.*;
+import frontend.exception.ButtonException;
+import backend.model.builder.item.*;
+import backend.model.Coordinate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import view.ButtonAction;
+import frontend.view.ButtonAction;
+import rules.interfaces.ICoordinate;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -25,13 +26,13 @@ public class ButtonActionTest {
             buttonAction.create(s);
         }
         itens.add(ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(0)
-                .coordinate(new Coordinate(200, 280)).image(null).removable(true).visible(true).build());
+                .coordinate(ICoordinate.getInstance(200, 280)).image(null).removable(true).visible(true).build());
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila").description("utilizada para carregar mais coisas").weight(0)
-                .coordinate(new Coordinate(650, 220)).image(null).removable(true).visible(true).build());
+                .coordinate(ICoordinate.getInstance(650, 220)).image(null).removable(true).visible(true).build());
         itens.add(ItemCombinableBuilder.builder().combine(3).name("madeira").description("cabo de madeira velho").weight(0)
-                .coordinate(new Coordinate(410, 200)).image(null).removable(true).visible(true).build());
+                .coordinate(ICoordinate.getInstance(410, 200)).image(null).removable(true).visible(true).build());
         itens.add(ItemMissionBuilder.builder().mapGame("barco").name("tesouro").description("tesouro lendário dos templários").weight(0)
-                .coordinate(new Coordinate(620, 240)).image(null).removable(false).visible(true).build());
+                .coordinate(ICoordinate.getInstance(620, 240)).image(null).removable(false).visible(true).build());
     }
 
     @Test

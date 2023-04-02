@@ -1,12 +1,10 @@
-import model.Player;
-import model.builder.item.Item;
+import backend.model.Player;
+import backend.model.builder.item.Item;
 import org.junit.Before;
 import org.junit.Test;
-import repository.RepositoryFactory;
-import repository.RepositoryItem;
-import repository.RepositoryMapGame;
-import view.InterfaceGame;
-import view.InterfaceInventory;
+import backend.repository.RepositoryFactory;
+import frontend.view.InterfaceGame;
+import frontend.view.InterfaceInventory;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -20,9 +18,13 @@ public class InterfaceInventoryTest {
     @Before
     public void create() {
         player = Player.getInstance();
-        RepositoryMapGame createMapGame = RepositoryFactory.getRepositoryMapGame();
-        player.setCurrentMap(createMapGame.get("cais"));
-        for (Item item : RepositoryFactory.getRepositoryItem().getItemInvisible()) {
+        var repositoryMapGame = RepositoryFactory.getRepositoryMapGame();
+        player.setCurrentMap(repositoryMapGame.get("cais"));
+        for (Item item : RepositoryFactory.getRepositoryItem()
+                .getAll().stream()
+                .filter(Item::isInvisible)
+                .filter(item -> !item.getName().equals("chave"))
+                .toList()) {
             player.getInventory().setItemInvisible(item);
         }
         interfaceGame = new InterfaceGame();

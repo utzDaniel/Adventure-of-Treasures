@@ -1,9 +1,10 @@
-import model.Coordinate;
-import model.builder.item.Item;
-import model.builder.item.ItemUsableBuilder;
+import backend.model.Coordinate;
+import backend.model.builder.item.Item;
+import backend.model.builder.item.ItemUsableBuilder;
 import org.junit.Before;
 import org.junit.Test;
-import view.LabelInformation;
+import frontend.view.LabelInformation;
+import rules.interfaces.ICoordinate;
 
 import java.util.ArrayList;
 
@@ -22,7 +23,7 @@ public class LabelInformationTest {
             labelInformation.create(s);
         }
         item = ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(0)
-                .coordinate(new Coordinate(200,280)).image(null).removable(true).visible(true).build();
+                .coordinate(ICoordinate.getInstance(200,280)).image(null).removable(true).visible(true).build();
     }
 
     @Test

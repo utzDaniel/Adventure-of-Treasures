@@ -1,11 +1,11 @@
-import exception.MoveException;
-import model.Coordinate;
-import model.Player;
-import model.enums.Direction;
+import rules.exception.MoveException;
+import backend.model.Coordinate;
+import backend.model.Player;
+import rules.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
-import repository.RepositoryFactory;
-import repository.RepositoryMapGame;
+import backend.repository.RepositoryFactory;
+import rules.interfaces.ICoordinate;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,10 +15,10 @@ public class WalkTest {
 
     @Before
     public void iniciacaoDoPlayerParaTeste() {
-        RepositoryMapGame createMapGame = RepositoryFactory.getRepositoryMapGame();
+        var repositoryMapGame = RepositoryFactory.getRepositoryMapGame();
         player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
-        player.setCurrentMap(createMapGame.get("cais"));
+        player.setCurrentMap(repositoryMapGame.get("cais"));
     }
 
     @Test
@@ -59,7 +59,7 @@ public class WalkTest {
     @Test
     public void naoAndarPlayer() {
         player.setCurrentMap(RepositoryFactory.getRepositoryMapGame().get("cais"));
-        player.setLocation(new Coordinate(10, 10));
+        player.setLocation(ICoordinate.getInstance(10, 10));
         int positionY = player.getLocation().getY();
         player.walk(Direction.SUL.getLabel());
         assertEquals(positionY, player.getLocation().getY());

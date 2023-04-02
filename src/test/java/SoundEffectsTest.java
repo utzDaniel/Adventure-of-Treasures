@@ -1,7 +1,7 @@
-import model.SoundEffects;
+import frontend.model.SoundEffects;
 import org.junit.Before;
 import org.junit.Test;
-import settings.SettingsSoundEffects;
+import frontend.settings.SettingsSoundEffects;
 
 import static org.junit.Assert.*;
 

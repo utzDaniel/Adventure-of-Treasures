@@ -1,6 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
-import view.PanelInventory;
+import frontend.view.PanelInventory;
 
 import javax.swing.*;
 

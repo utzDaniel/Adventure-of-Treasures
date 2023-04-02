@@ -1,11 +1,12 @@
-import model.Coordinate;
-import model.Player;
-import model.builder.item.*;
+import backend.model.builder.item.*;
+import backend.model.Coordinate;
+import backend.model.Player;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import view.ButtonItem;
-import view.Colors;
+import frontend.view.ButtonItem;
+import frontend.view.Colors;
+import rules.interfaces.ICoordinate;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -23,13 +24,13 @@ public class ButtonItemTest {
     @Before
     public void create() {
         itens.add(ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(0)
-                .coordinate(new Coordinate(200, 280)).image(null).removable(true).visible(true).build());
+                .coordinate(ICoordinate.getInstance(200, 280)).image(null).removable(true).visible(true).build());
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila").description("utilizada para carregar mais coisas").weight(0)
-                .coordinate(new Coordinate(650, 220)).image(null).removable(true).visible(true).build());
+                .coordinate(ICoordinate.getInstance(650, 220)).image(null).removable(true).visible(true).build());
         itens.add(ItemCombinableBuilder.builder().combine(3).name("madeira").description("cabo de madeira velho").weight(0)
-                .coordinate(new Coordinate(410, 200)).image(null).removable(true).visible(true).build());
+                .coordinate(ICoordinate.getInstance(410, 200)).image(null).removable(true).visible(true).build());
         itens.add(ItemMissionBuilder.builder().mapGame("barco").name("tesouro").description("tesouro lendário dos templários").weight(0)
-                .coordinate(new Coordinate(620, 240)).image(null).removable(false).visible(true).build());
+                .coordinate(ICoordinate.getInstance(620, 240)).image(null).removable(false).visible(true).build());
         for (Item item : itens) {
             buttonItem.create(item);
         }

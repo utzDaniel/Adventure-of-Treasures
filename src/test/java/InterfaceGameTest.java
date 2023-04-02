@@ -1,16 +1,15 @@
-import model.Coordinate;
-import model.Player;
-import model.builder.item.Item;
-import model.builder.item.ItemEquipableBuilder;
+import backend.model.Coordinate;
+import backend.model.Player;
+import backend.model.builder.item.Item;
+import backend.model.builder.item.ItemEquipableBuilder;
 import org.junit.Before;
 import org.junit.Test;
-import repository.RepositoryFactory;
-import repository.RepositoryItem;
-import repository.RepositoryMapGame;
-import settings.SettingsJFrame;
-import settings.SettingsMapGame;
-import settings.SettingsPlayer;
-import view.InterfaceGame;
+import backend.repository.RepositoryFactory;
+import frontend.settings.SettingsJFrame;
+import frontend.settings.SettingsMapGame;
+import frontend.settings.SettingsPlayer;
+import frontend.view.InterfaceGame;
+import rules.interfaces.ICoordinate;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,9 +26,13 @@ public class InterfaceGameTest {
 
     @Before
     public void create() {
-        RepositoryMapGame createMapGame = RepositoryFactory.getRepositoryMapGame();
-        player.setCurrentMap(createMapGame.get("cais"));
-        for (Item item : RepositoryFactory.getRepositoryItem().getItemInvisible()) {
+        var repositoryMapGame = RepositoryFactory.getRepositoryMapGame();
+        player.setCurrentMap(repositoryMapGame.get("cais"));
+        for (Item item : RepositoryFactory.getRepositoryItem()
+                .getAll().stream()
+                .filter(Item::isInvisible)
+                .filter(item -> !item.getName().equals("chave"))
+                .toList()) {
             player.getInventory().setItemInvisible(item);
         }
         interfaceGame = new InterfaceGame();
@@ -92,9 +95,9 @@ public class InterfaceGameTest {
     public void validSetItensJLabel() {
         var itens = new ArrayList<Item>();
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila1").description("utilizada para carregar mais coisas").weight(0)
-                .coordinate(new Coordinate(650, 220)).image(null).removable(true).visible(true).build());
+                .coordinate(ICoordinate.getInstance(650, 220)).image(null).removable(true).visible(true).build());
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila2").description("utilizada para carregar mais coisas").weight(0)
-                .coordinate(new Coordinate(650, 220)).image(null).removable(true).visible(true).build());
+                .coordinate(ICoordinate.getInstance(650, 220)).image(null).removable(true).visible(true).build());
         int size = container.getComponentCount();
         interfaceGame.setItensJLabel(itens, 2);
         assertEquals(size + 2, container.getComponentCount());
@@ -104,9 +107,9 @@ public class InterfaceGameTest {
     public void validClearItensJLabel() {
         var itens = new ArrayList<Item>();
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila1").description("utilizada para carregar mais coisas").weight(0)
-                .coordinate(new Coordinate(650, 220)).image(null).removable(true).visible(true).build());
+                .coordinate(ICoordinate.getInstance(650, 220)).image(null).removable(true).visible(true).build());
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila2").description("utilizada para carregar mais coisas").weight(0)
-                .coordinate(new Coordinate(650, 220)).image(null).removable(true).visible(true).build());
+                .coordinate(ICoordinate.getInstance(650, 220)).image(null).removable(true).visible(true).build());
         int size = container.getComponentCount();
         interfaceGame.setItensJLabel(itens, 2);
         interfaceGame.clearJLabelItens();

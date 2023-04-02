@@ -1,10 +1,10 @@
-import exception.EventException;
-import model.Song;
-import model.SoundEffects;
+import frontend.exception.EventException;
+import frontend.model.Song;
+import frontend.model.SoundEffects;
 import org.junit.Before;
 import org.junit.Test;
-import view.EventsMenuBar;
-import view.MenuBar;
+import frontend.view.EventsMenuBar;
+import frontend.view.MenuBar;
 
 import javax.swing.*;
 
