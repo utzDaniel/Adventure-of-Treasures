@@ -1,3 +1,4 @@
+import frontend.model.JLabelFactory;
 import rules.enums.Direction;
 import backend.model.builder.map.MapGame;
 import backend.model.Player;
@@ -7,6 +8,9 @@ import org.junit.jupiter.api.Assertions;
 import backend.repository.RepositoryFactory;
 import rules.service.NextScenery;
 import frontend.view.InterfaceGame;
+
+import javax.swing.*;
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,7 +25,10 @@ public class NextSceneryTest {
         player = Player.getInstance();
         player.setDirection(Direction.SUL.getLabel());
         player.setCurrentMap(repositoryMapGame.get("cais"));
-        nextScenery = new NextScenery(new InterfaceGame());
+        var listJLabel = new ArrayList<JLabel>();
+        listJLabel.add(JLabelFactory.getPlayer());
+        listJLabel.add(JLabelFactory.getMapGame());
+        nextScenery = new NextScenery(new InterfaceGame(listJLabel));
     }
 
     @Test

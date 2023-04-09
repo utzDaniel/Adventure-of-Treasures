@@ -15,6 +15,12 @@ public class SettingsItem implements ISettingsJLabel {
         rectangle = new Rectangle(x, y, WIDTH, HEIGHT);
     }
 
+    public int labelHeight() {
+        return 100;
+    }
+    public int labelWidth() {
+        return 100;
+    }
     @Override
     public ImageIcon getIcon() {
         return null;

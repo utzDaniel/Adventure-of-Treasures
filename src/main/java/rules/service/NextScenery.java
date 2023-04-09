@@ -18,11 +18,12 @@ public class NextScenery {
     }
 
     public boolean run(String direction) {
+        //TODO não validou a direction e nem setDirection, e faltou o set icon player
         Scenery nextScenery = ((Scenery) this.player.getCurrentMap()).getExit(direction);
         if (Objects.isNull(nextScenery)) return false;
         this.player.setCurrentMap(nextScenery);
         newPosition(direction);
-        this.interfaceGame.getMapGameJLabel().setIcon(nextScenery.getImage());
+        this.interfaceGame.getMapGameJLabel().setIcon(nextScenery.getIcon());
         return true;
 
     }

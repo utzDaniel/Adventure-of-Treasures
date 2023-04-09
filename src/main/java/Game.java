@@ -1,10 +1,15 @@
-import rules.controller.Keyboard;
-import frontend.view.InterfaceGame;
-import backend.repository.RepositoryFactory;
 import backend.model.Player;
+import backend.model.builder.item.Item;
+import backend.repository.RepositoryFactory;
+import frontend.model.JLabelFactory;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
-import backend.model.builder.item.Item;
+import frontend.view.InterfaceGame;
+import rules.controller.Keyboard;
+
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Game {
 
@@ -13,7 +18,7 @@ public class Game {
     public Game() {
         player = Player.getInstance();
         initialPlayer();
-        InterfaceGame interfaceGame = new InterfaceGame();
+        InterfaceGame interfaceGame = new InterfaceGame(getComponents());
         Song song = interfaceGame.getSong();
         SoundEffects soundEffects = interfaceGame.getSoundEffects();
         song.play(player.getCurrentMap().getSong());
@@ -33,6 +38,14 @@ public class Game {
                 .toList()) {
             player.getInventory().setItemInvisible(item);
         }
+    }
+
+    private List<JLabel> getComponents() {
+        var listJLabel = new ArrayList<JLabel>();
+        listJLabel.add(JLabelFactory.getPlayer());
+        listJLabel.add(JLabelFactory.getMapGame());
+        return listJLabel;
+
     }
 
     public static void main(String[] args) {

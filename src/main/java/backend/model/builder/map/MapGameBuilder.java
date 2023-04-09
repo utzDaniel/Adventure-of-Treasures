@@ -24,7 +24,7 @@ abstract class MapGameBuilder implements IBuilderMapGame {
 
     @Override
     public IBuilderMapGame image(String filename) {
-        this.mapGame.setImage(new ImageIcon(filename));
+        this.mapGame.setIcon(new ImageIcon(filename));
         return this;
     }
 

@@ -1,3 +1,4 @@
+import frontend.model.JLabelFactory;
 import rules.exception.MapGameException;
 import backend.model.Coordinate;
 import backend.model.Door;
@@ -11,6 +12,9 @@ import backend.repository.RepositoryFactory;
 import rules.interfaces.ICoordinate;
 import rules.service.NextDoor;
 import frontend.view.InterfaceGame;
+
+import javax.swing.*;
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -31,7 +35,10 @@ public class NextDoorTest {
         vilaDoor = village.getDoor(ICoordinate.getInstance(370,150)).get();
         player.setCurrentMap(village);
         player.setLocation(ICoordinate.getInstance(370,150));
-        nextDoor = new NextDoor(new InterfaceGame());
+        var listJLabel = new ArrayList<JLabel>();
+        listJLabel.add(JLabelFactory.getPlayer());
+        listJLabel.add(JLabelFactory.getMapGame());
+        nextDoor = new NextDoor(new InterfaceGame(listJLabel));
     }
 
     @Test

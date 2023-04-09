@@ -43,7 +43,7 @@ public final class Walk implements Command {
 
     private void updateImagePlayer() {
         this.move.run();
-        this.player.getJLabel().setIcon(this.move.getImage());
+        this.player.setIcon(this.move.getImage());
     }
 
     private void updateCoordinate() {

@@ -1,13 +1,12 @@
 package backend.model;
 
+import backend.model.builder.item.Item;
+import backend.model.builder.map.MapGame;
 import rules.interfaces.ICoordinate;
 import rules.service.DropItem;
 import rules.service.LookItem;
 import rules.service.TakeItem;
 import rules.service.Walk;
-import backend.model.builder.item.Item;
-import backend.model.builder.map.MapGame;
-import frontend.settings.SettingsPlayer;
 
 import javax.swing.*;
 import java.util.Objects;
@@ -18,13 +17,13 @@ public final class Player {
     private String direction;
     private MapGame currentMapGame;
     private final Inventory inventory;
-    private final JLabel jLabel;
+    private ICoordinate coordinate;
+    private ImageIcon icon;
 
     private Player() {
         this.currentMapGame = null;
         this.inventory = new Inventory();
-        this.jLabel = new JLabel();
-        settingsPlayer();
+        this.coordinate = ICoordinate.getInstance(300, 470);
     }
 
     public static synchronized Player getInstance() {
@@ -34,24 +33,12 @@ public final class Player {
         return player;
     }
 
-    //TODO remover o JLabel, é resposabilidade da view
-    private void settingsPlayer() {
-        SettingsPlayer settingsPlayer = new SettingsPlayer();
-        this.jLabel.setIcon(settingsPlayer.getIcon());
-        this.jLabel.setName(settingsPlayer.getName());
-        this.jLabel.setBounds(settingsPlayer.getRectangle());
-    }
-
-    public JLabel getJLabel() {
-        return this.jLabel;
-    }
-
     public ICoordinate getLocation() {
-        return ICoordinate.getInstance(this.jLabel.getLocation());
+        return ICoordinate.getInstance(this.coordinate.getPoint());
     }
 
     public void setLocation(ICoordinate coordinate) {
-        this.jLabel.setLocation(coordinate.getPoint());
+        this.coordinate = ICoordinate.getInstance(coordinate.getPoint());
     }
 
     public String getDirection() {
@@ -88,5 +75,13 @@ public final class Player {
 
     public boolean dropItem(Item item) {
         return new DropItem(this, item).run();
+    }
+
+    public ImageIcon getIcon() {
+        return this.icon;
+    }
+
+    public void setIcon(ImageIcon icon) {
+        this.icon = icon;
     }
 }

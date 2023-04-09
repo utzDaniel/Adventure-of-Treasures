@@ -35,7 +35,7 @@ abstract class ItemBuilder implements IBuilderItem {
 
     @Override
     public IBuilderItem image(String filename) {
-        this.item.setImage(new ImageIcon(filename));
+        this.item.setIcon(new ImageIcon(filename));
         return this;
     }
 

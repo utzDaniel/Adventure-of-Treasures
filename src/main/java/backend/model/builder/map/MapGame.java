@@ -4,43 +4,28 @@ import backend.model.Area;
 import backend.model.Door;
 import backend.model.builder.item.Item;
 import backend.repository.RepositoryFactory;
-import frontend.settings.SettingsMapGame;
 import rules.exception.MoveException;
 import rules.interfaces.ICoordinate;
 import rules.service.AddItemMapGame;
 
 import javax.swing.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public abstract class MapGame {
     private String name;
     private String song;
-    private ImageIcon image;
+    private ImageIcon icon;
     private Area area;
     private Map<ICoordinate, Door> doors;
     private Map<ICoordinate, Item> itens;
-    private static final JLabel jLabel = new JLabel();
 
     protected MapGame() {
         this.doors = new HashMap<>();
         this.itens = new HashMap<>();
-        settingsMapGame();
-    }
-
-    //TODO remover o JLabel, é resposabilidade da view
-    public static JLabel getJLabel() {
-        if (Objects.isNull(jLabel.getName())) {
-            settingsMapGame();
-        }
-        return jLabel;
-    }
-
-    private static void settingsMapGame() {
-        SettingsMapGame settingsMapGame = new SettingsMapGame();
-        jLabel.setIcon(settingsMapGame.getIcon());
-        jLabel.setName(settingsMapGame.getName());
-        jLabel.setBounds(settingsMapGame.getRectangle());
     }
 
     public String getName() {
@@ -51,12 +36,12 @@ public abstract class MapGame {
         this.name = name;
     }
 
-    public ImageIcon getImage() {
-        return this.image;
+    public ImageIcon getIcon() {
+        return this.icon;
     }
 
-    protected void setImage(ImageIcon imagemIcon) {
-        this.image = imagemIcon;
+    protected void setIcon(ImageIcon imagemIcon) {
+        this.icon = imagemIcon;
     }
 
     public boolean checkLimits(ICoordinate coordinate) {
@@ -98,13 +83,13 @@ public abstract class MapGame {
                 activate = true;
             } else if (nameItem.equals("mapa")) {
                 MapGame praia = RepositoryFactory.getRepositoryMapGame().get("praia");
-                praia.setImage(new ImageIcon("src/main/resources/map/praiaM.png"));
+                praia.setIcon(new ImageIcon("src/main/resources/map/praiaM.png"));
             } else if (nameItem.equals("chave")) {
                 MapGame praia = RepositoryFactory.getRepositoryMapGame().get("praia");
-                praia.setImage(new ImageIcon("src/main/resources/map/praia.png"));
+                praia.setIcon(new ImageIcon("src/main/resources/map/praia.png"));
             } else if (nameItem.equals("escada")) {
                 MapGame templo = RepositoryFactory.getRepositoryMapGame().get("templo");
-                templo.setImage(new ImageIcon("src/main/resources/map/temploF.png"));
+                templo.setIcon(new ImageIcon("src/main/resources/map/temploF.png"));
             }
         } catch (Exception e) {
             throw new MoveException("Direção invalida!");
@@ -158,7 +143,7 @@ public abstract class MapGame {
     public String toString() {
         return "MapGame{" +
                 "name='" + this.name +
-                ", image=" + this.image +
+                ", image=" + this.icon +
                 ", area=" + this.area +
                 ", doors=" + this.doors +
                 ", itens=" + this.itens +

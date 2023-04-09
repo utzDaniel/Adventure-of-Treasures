@@ -1,11 +1,12 @@
 package frontend.view;
 
-import backend.model.Player;
+import backend.model.builder.item.Item;
+import backend.model.builder.map.MapGame;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
-import backend.model.builder.map.MapGame;
-import backend.model.builder.item.Item;
+import frontend.settings.SettingsItem;
 import frontend.settings.SettingsJFrame;
+import rules.model.IMovePlayerDTO;
 
 import javax.swing.*;
 import java.util.Arrays;
@@ -17,14 +18,16 @@ public class InterfaceGame {
     private final JFrame frame;
     private final Song song;
     private final SoundEffects soundEffects;
+    private final List<JLabel> components;
 
-    public InterfaceGame() {
+    public InterfaceGame(List<JLabel> components) {
+        this.components = components;
         frame = new JFrame();
         song = new Song();
         soundEffects = new SoundEffects();
         settingsFrame();
-        frame.getContentPane().add(Player.getInstance().getJLabel());
-        frame.getContentPane().add(MapGame.getJLabel());
+        if(Objects.nonNull(components)) components.forEach(jLabel -> frame.getContentPane().add(jLabel));
+        frame.getContentPane().add(components.get(1));
         //history();
     }
 
@@ -33,7 +36,33 @@ public class InterfaceGame {
     }
 
     public JLabel getMapGameJLabel() {
-        return MapGame.getJLabel();
+        return this.components.get(1);
+    }
+
+    public JLabel getPlayerJLabel() {
+        return this.components.get(0);
+    }
+
+    public void updateComponentsMove(IMovePlayerDTO movePlayerDTO) {
+        components.forEach(
+                jLabel -> {
+                    if (jLabel.getName().equals("player")) {
+                        jLabel.setIcon(movePlayerDTO.getIconPlayer());
+                        jLabel.setLocation(movePlayerDTO.getCoordinatePlayer().getPoint());
+                    }
+                    if (jLabel.getName().equals("mapa")) {
+                        jLabel.setIcon(movePlayerDTO.getIconMap());
+                    }
+                }
+        );
+        if (Objects.nonNull(movePlayerDTO.getSongMap())) {
+            this.song.play(movePlayerDTO.getSongMap());
+        }
+        if (Objects.nonNull(movePlayerDTO.getItens())) {
+            clearJLabelItens();
+            setItensJLabel(movePlayerDTO.getItens(), movePlayerDTO.getIndexItens());
+            getMapGameJLabel().repaint();
+        }
     }
 
     private void settingsFrame() {
@@ -64,8 +93,15 @@ public class InterfaceGame {
     }
 
     public void setItensJLabel(List<Item> itens, int index) {
-        itens.forEach(item ->
-            frame.getContentPane().add(item.getJLabel(), index));
+        SettingsItem settingsItem = new SettingsItem();
+        itens.forEach(item -> {
+            JLabel label = new JLabel(item.getIcon());
+            label.setName("item");
+            frame.getContentPane().add(label, index);
+            label.setBounds(item.getLocation().getX()-30,
+                    item.getLocation().getY()-10,
+                    settingsItem.labelWidth(), settingsItem.labelHeight());
+        });
     }
 
     public Song getSong() {

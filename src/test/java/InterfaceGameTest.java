@@ -1,7 +1,7 @@
-import backend.model.Coordinate;
 import backend.model.Player;
 import backend.model.builder.item.Item;
 import backend.model.builder.item.ItemEquipableBuilder;
+import frontend.model.JLabelFactory;
 import org.junit.Before;
 import org.junit.Test;
 import backend.repository.RepositoryFactory;
@@ -35,8 +35,10 @@ public class InterfaceGameTest {
                 .toList()) {
             player.getInventory().setItemInvisible(item);
         }
-        interfaceGame = new InterfaceGame();
-        frame = interfaceGame.getFrame();
+        var listJLabel = new ArrayList<JLabel>();
+        listJLabel.add(JLabelFactory.getPlayer());
+        listJLabel.add(JLabelFactory.getMapGame());
+        interfaceGame = new InterfaceGame(listJLabel); frame = interfaceGame.getFrame();
         container = frame.getContentPane();
     }
 
@@ -74,7 +76,7 @@ public class InterfaceGameTest {
     @Test
     public void validIconJLabelMapGame() {
         var icon = ((JLabel) container.getComponent(1)).getIcon();
-        assertEquals(player.getCurrentMap().getImage().toString(), icon.toString());
+        assertEquals(player.getCurrentMap().getIcon().toString(), icon.toString());
     }
 
     @Test

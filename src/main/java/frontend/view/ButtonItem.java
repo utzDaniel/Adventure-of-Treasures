@@ -30,7 +30,7 @@ public class ButtonItem {
         buttonItens[index] = new JButton();
         buttonItens[index].setActionCommand(item.getName());
         buttonItens[index].setName(item.getName());
-        buttonItens[index].setIcon(item.getImage());
+        buttonItens[index].setIcon(item.getIcon());
         buttonItens[index].setBackground(Colors.BROWN_2);
         buttonItens[index].setBounds(positionX, positionY, 37, 38);
     }

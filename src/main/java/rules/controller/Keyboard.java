@@ -1,11 +1,13 @@
 package rules.controller;
 
 import backend.model.Player;
+import backend.model.builder.item.Item;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
 import rules.exception.InventoryException;
 import rules.exception.MapGameException;
 import backend.model.builder.map.MapGame;
+import rules.model.MovePlayerDTO;
 import rules.service.NextDoor;
 import rules.service.NextScenery;
 import rules.service.Take;
@@ -14,6 +16,8 @@ import frontend.view.InterfaceInventory;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Keyboard {
@@ -46,7 +50,6 @@ public class Keyboard {
                 if (keyCode >= 37 && keyCode <= 40) {
                     movePlayer(keyCode);
                 } else if (keyCode == 97) {
-
                     if (player.getLocation().getX() == 710 && player.getLocation().getX() == 280
                             && Objects.nonNull(player.getInventory().getItem("tesouro")))
                         finish();
@@ -119,16 +122,22 @@ public class Keyboard {
                 sucess = new NextScenery(this.interfaceGame).run("leste");
             }
         }
+        String song = null;
+        List<Item> itens = null;
         if (sucess) {
-            this.song.play(this.player.getCurrentMap().getSong());
-            updateItensMapGame();
+            song = this.player.getCurrentMap().getSong();
+            itens = new ArrayList<>(this.player.getCurrentMap().getItemVisible());
         }
+        this.interfaceGame.updateComponentsMove(
+                new MovePlayerDTO(player.getCurrentMap().getIcon(),player.getIcon(), player.getLocation(), song, itens, 1)
+        );
     }
 
     private void updateItensMapGame() {
         this.interfaceGame.clearJLabelItens();
         this.interfaceGame.setItensJLabel(this.player.getCurrentMap().getItemVisible(), 1);
         this.interfaceGame.getMapGameJLabel().repaint();
+        this.interfaceGame.getPlayerJLabel().setLocation(player.getLocation().getPoint());
     }
 
     private void finish() {

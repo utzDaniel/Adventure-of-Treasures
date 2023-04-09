@@ -1,7 +1,6 @@
 package backend.model.builder.item;
 
 import frontend.interfaces.IAction;
-import frontend.settings.SettingsItem;
 import rules.interfaces.ICoordinate;
 
 import javax.swing.*;
@@ -11,39 +10,24 @@ public abstract class Item implements IAction {
     private String name;
     private String description;
     private int weight;
-    private final JLabel jLabel;
+    private ICoordinate coordinate;
+    private ImageIcon icon;
     private boolean removable;
     private boolean visible;
 
     protected Item() {
-        this.jLabel = new JLabel();
-        settingsItem();
-    }
-
-    //TODO remover o JLabel, é resposabilidade da view
-
-    private void settingsItem() {
-        SettingsItem settingsItem = new SettingsItem();
-        this.jLabel.setIcon(settingsItem.getIcon());
-        this.jLabel.setName(settingsItem.getName());
-        this.jLabel.setBounds(settingsItem.getRectangle());
-        this.jLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-    }
-
-    public JLabel getJLabel() {
-        return this.jLabel;
     }
 
     public ICoordinate getLocation() {
-        return ICoordinate.getInstance(this.jLabel.getLocation());
+        return ICoordinate.getInstance(this.coordinate.getPoint());
     }
 
     public void setLocation(ICoordinate coordinate) {
-        this.jLabel.setLocation(coordinate.getPoint());
+        this.coordinate = ICoordinate.getInstance(coordinate.getPoint());
     }
 
-    public Icon getImage() {
-        return this.jLabel.getIcon();
+    public ImageIcon getIcon() {
+        return this.icon;
     }
 
     public String getName() {
@@ -82,8 +66,8 @@ public abstract class Item implements IAction {
         this.weight = weight;
     }
 
-    protected void setImage(ImageIcon image) {
-        this.jLabel.setIcon(image);
+    protected void setIcon(ImageIcon icon) {
+        this.icon = icon;
     }
 
     protected void setRemovable(boolean removable) {
@@ -96,9 +80,9 @@ public abstract class Item implements IAction {
                 "name='" + this.name +
                 ", description='" + this.description +
                 ", weight=" + this.weight +
-                ", X=" + this.jLabel.getLocation().x +
-                ", Y=" + this.jLabel.getLocation().y +
-                ", image=" + this.jLabel.getIcon() +
+                ", X=" + this.coordinate.getX() +
+                ", Y=" + this.coordinate.getY() +
+                ", image=" + this.icon +
                 ", removable=" + this.removable +
                 ", visible=" + this.visible +
                 '}';

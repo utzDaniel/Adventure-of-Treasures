@@ -25,7 +25,7 @@ public class NextDoor {
         MapGame mapGame = player.getCurrentMap().getMapDoor(door.get());
         updatePositionPlayer(mapGame);
         player.setCurrentMap(mapGame);
-        interfaceGame.getMapGameJLabel().setIcon(mapGame.getImage());
+        interfaceGame.getMapGameJLabel().setIcon(mapGame.getIcon());
     }
 
     private void updatePositionPlayer(MapGame mapGame) {
