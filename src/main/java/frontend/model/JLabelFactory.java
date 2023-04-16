@@ -22,7 +22,7 @@ public final class JLabelFactory {
     }
 
     public static JLabel getInstance(Item item) {
-        var rectangle = new Rectangle(item.getLocation().getX() - 30, item.getLocation().getY() - 10, 100, 100);
+        var rectangle = new Rectangle(item.getLocation().getX(), item.getLocation().getY()-10, 100, 100);
         return create(item.getIcon(), "item", rectangle);
     }
 

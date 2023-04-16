@@ -22,6 +22,7 @@ public final class Player {
 
     private Player() {
         this.currentMapGame = null;
+        this.icon = new ImageIcon("src/main/resources/player/baixo_C.png");
         this.inventory = new Inventory();
         this.coordinate = ICoordinate.getInstance(300, 470);
     }
@@ -69,6 +70,7 @@ public final class Player {
         return new LookItem(this).run();
     }
 
+    //TODO ao pegar um item em um local que não deveria ter como o player passar, está podendeo passar. EX: pegar o item papel, na mesa
     public boolean takeItem(Item item) {
         return new TakeItem(this, item).run();
     }
