@@ -36,8 +36,8 @@ public class NextDoorTest {
         player.setCurrentMap(village);
         player.setLocation(ICoordinate.getInstance(370,150));
         var listJLabel = new ArrayList<JLabel>();
-        listJLabel.add(JLabelFactory.getPlayer());
-        listJLabel.add(JLabelFactory.getMapGame());
+        listJLabel.add(JLabelFactory.getInstance(player));
+        listJLabel.add(JLabelFactory.getInstance(player.getCurrentMap()));
         nextDoor = new NextDoor(new InterfaceGame(listJLabel));
     }
 

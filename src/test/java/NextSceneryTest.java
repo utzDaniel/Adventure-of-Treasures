@@ -26,8 +26,8 @@ public class NextSceneryTest {
         player.setDirection(Direction.SUL.getLabel());
         player.setCurrentMap(repositoryMapGame.get("cais"));
         var listJLabel = new ArrayList<JLabel>();
-        listJLabel.add(JLabelFactory.getPlayer());
-        listJLabel.add(JLabelFactory.getMapGame());
+        listJLabel.add(JLabelFactory.getInstance(player));
+        listJLabel.add(JLabelFactory.getInstance(player.getCurrentMap()));
         nextScenery = new NextScenery(new InterfaceGame(listJLabel));
     }
 

@@ -42,10 +42,10 @@ public class Game {
 
     private List<JLabel> getComponents() {
         var listJLabel = new ArrayList<JLabel>();
-        listJLabel.add(JLabelFactory.getPlayer());
-        listJLabel.add(JLabelFactory.getMapGame());
+        listJLabel.add(JLabelFactory.getInstance(this.player));
+        listJLabel.add(JLabelFactory.getInstance(this.player.getCurrentMap()));
+        listJLabel.addAll(JLabelFactory.getInstance(this.player.getCurrentMap().getItemVisible()));
         return listJLabel;
-
     }
 
     public static void main(String[] args) {

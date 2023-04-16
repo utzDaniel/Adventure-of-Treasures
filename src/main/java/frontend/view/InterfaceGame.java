@@ -1,10 +1,9 @@
 package frontend.view;
 
 import backend.model.builder.item.Item;
-import backend.model.builder.map.MapGame;
+import frontend.model.JLabelFactory;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
-import frontend.settings.SettingsItem;
 import frontend.settings.SettingsJFrame;
 import rules.model.IMovePlayerDTO;
 
@@ -27,6 +26,7 @@ public class InterfaceGame {
         soundEffects = new SoundEffects();
         settingsFrame();
         if(Objects.nonNull(components)) components.forEach(jLabel -> frame.getContentPane().add(jLabel));
+        frame.getContentPane().repaint();
         frame.getContentPane().add(components.get(1));
         //history();
     }
@@ -93,15 +93,8 @@ public class InterfaceGame {
     }
 
     public void setItensJLabel(List<Item> itens, int index) {
-        SettingsItem settingsItem = new SettingsItem();
-        itens.forEach(item -> {
-            JLabel label = new JLabel(item.getIcon());
-            label.setName("item");
-            frame.getContentPane().add(label, index);
-            label.setBounds(item.getLocation().getX()-30,
-                    item.getLocation().getY()-10,
-                    settingsItem.labelWidth(), settingsItem.labelHeight());
-        });
+        var jLabelList = JLabelFactory.getInstance(itens);
+        jLabelList.forEach(jLabel -> frame.getContentPane().add(jLabel, index));
     }
 
     public Song getSong() {

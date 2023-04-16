@@ -6,8 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import backend.repository.RepositoryFactory;
 import frontend.settings.SettingsJFrame;
-import frontend.settings.SettingsMapGame;
-import frontend.settings.SettingsPlayer;
 import frontend.view.InterfaceGame;
 import rules.interfaces.ICoordinate;
 
@@ -36,8 +34,8 @@ public class InterfaceGameTest {
             player.getInventory().setItemInvisible(item);
         }
         var listJLabel = new ArrayList<JLabel>();
-        listJLabel.add(JLabelFactory.getPlayer());
-        listJLabel.add(JLabelFactory.getMapGame());
+        listJLabel.add(JLabelFactory.getInstance(player));
+        listJLabel.add(JLabelFactory.getInstance(player.getCurrentMap()));
         interfaceGame = new InterfaceGame(listJLabel); frame = interfaceGame.getFrame();
         container = frame.getContentPane();
     }
@@ -68,9 +66,8 @@ public class InterfaceGameTest {
 
     @Test
     public void validIconJLabelPlayer() {
-        SettingsPlayer settingsPlayer = new SettingsPlayer();
         var icon = ((JLabel) container.getComponent(0)).getIcon();
-        assertEquals(settingsPlayer.getIcon().toString(), icon.toString());
+        assertEquals(player.getIcon().toString(), icon.toString());
     }
 
     @Test
@@ -81,16 +78,16 @@ public class InterfaceGameTest {
 
     @Test
     public void validWidthJLabelMapGame() {
-        SettingsMapGame settingsMapGame = new SettingsMapGame();
+        var jLabel = JLabelFactory.getInstance(player.getCurrentMap());
         var width = container.getComponent(1).getWidth();
-        assertEquals(settingsMapGame.getRectangle().width, width);
+        assertEquals(jLabel.getWidth(), width);
     }
 
     @Test
     public void validHeightJLabelMapGame() {
-        SettingsMapGame settingsMapGame = new SettingsMapGame();
+        var jLabel = JLabelFactory.getInstance(player.getCurrentMap());
         var height = container.getComponent(1).getHeight();
-        assertEquals(settingsMapGame.getRectangle().height, height);
+        assertEquals(jLabel.getHeight(), height);
     }
 
     @Test
