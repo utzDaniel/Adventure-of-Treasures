@@ -8,23 +8,24 @@ import java.awt.*;
 
 public final class ButtonItemFactory {
 
+    private static final int BUTTON_PER_LINE = 6;
+    private static final int DISTANCE_PER_BUTTON = 53;
+    private static final int POSITION_STARTING_Y = 14;
+    private static final int POSITION_STARTING_X = 16;
+
+
     private static int calcY(int index) {
-        var y = 14;
-        int mult = index / 6;
-        if (index % 6 == 0)
-            y = index <= 5 ? 14 + 55 * mult : 14 + 51 * mult;
-        return y;
+        int mult = index / BUTTON_PER_LINE;
+        return POSITION_STARTING_Y + mult * DISTANCE_PER_BUTTON;
     }
 
     private static int calcX(int index) {
-        var x = 17 + index * 53;
-        if (index % 6 == 0)
-            x = 17;
-        return x;
+        int mult = index % BUTTON_PER_LINE;
+        return POSITION_STARTING_X + mult * DISTANCE_PER_BUTTON;
     }
 
     public static JButton getInstance(Item item, int index) {
-        var rectangle = new Rectangle(calcX(index), calcY(index), 37, 38);
+        var rectangle = new Rectangle(calcX(index), calcY(index), 40, 40);
         return create(item, rectangle);
     }
 
