@@ -3,7 +3,7 @@ package frontend.view;
 import backend.model.Player;
 import backend.model.builder.item.Item;
 import backend.model.builder.item.ItemCombinable;
-import frontend.model.ButtonItemFactory;
+import frontend.model.component.JButtonFactory;
 
 import javax.swing.*;
 import java.util.Arrays;
@@ -15,11 +15,12 @@ public class ButtonItem {
     private final JButton[] buttonItens;
 
     public ButtonItem() {
-        buttonItens = new JButton[24];
+        int MAX_BUTTON = 24;
+        buttonItens = new JButton[MAX_BUTTON];
     }
 
     public void create(Item item) {
-        buttonItens[index] = ButtonItemFactory.getInstance(item, index);
+        buttonItens[index] = JButtonFactory.getInstance(item, index);
         isEnableIButtonItensNotCombinable = false;
         index++;
     }

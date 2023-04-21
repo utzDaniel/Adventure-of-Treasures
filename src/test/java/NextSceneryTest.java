@@ -1,4 +1,4 @@
-import frontend.model.JLabelFactory;
+import frontend.model.component.JLabelFactory;
 import rules.enums.Direction;
 import backend.model.builder.map.MapGame;
 import backend.model.Player;

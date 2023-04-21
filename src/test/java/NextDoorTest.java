@@ -1,6 +1,5 @@
-import frontend.model.JLabelFactory;
+import frontend.model.component.JLabelFactory;
 import rules.exception.MapGameException;
-import backend.model.Coordinate;
 import backend.model.Door;
 import backend.model.Player;
 import backend.model.builder.map.MapGame;

@@ -1,4 +1,3 @@
-import backend.model.Coordinate;
 import backend.model.builder.item.Item;
 import backend.model.builder.item.ItemUsableBuilder;
 import org.junit.Before;

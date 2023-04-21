@@ -1,6 +1,6 @@
 import backend.model.Player;
 import backend.model.builder.item.Item;
-import frontend.model.JLabelFactory;
+import frontend.model.component.JLabelFactory;
 import org.junit.Before;
 import org.junit.Test;
 import backend.repository.RepositoryFactory;

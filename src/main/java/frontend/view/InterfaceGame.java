@@ -1,10 +1,9 @@
 package frontend.view;
 
 import backend.model.builder.item.Item;
-import frontend.model.JLabelFactory;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
-import frontend.settings.SettingsJFrame;
+import frontend.model.component.*;
 import rules.model.IMovePlayerDTO;
 
 import javax.swing.*;
@@ -21,11 +20,11 @@ public class InterfaceGame {
 
     public InterfaceGame(List<JLabel> components) {
         this.components = components;
-        frame = new JFrame();
+        frame = JFrameFactory.getInstance();
         song = new Song();
         soundEffects = new SoundEffects();
         settingsFrame();
-        if(Objects.nonNull(components)) components.forEach(jLabel -> frame.getContentPane().add(jLabel));
+        if (Objects.nonNull(components)) components.forEach(jLabel -> frame.getContentPane().add(jLabel));
         frame.getContentPane().repaint();
         frame.getContentPane().add(components.get(1));
         //history();
@@ -66,23 +65,23 @@ public class InterfaceGame {
     }
 
     private void settingsFrame() {
-        SettingsJFrame settingsJFrame = new SettingsJFrame();
-        frame.setTitle(settingsJFrame.getTitulo());
-        frame.setDefaultCloseOperation(settingsJFrame.closeOperation());
-        frame.setSize(settingsJFrame.getWidth(), settingsJFrame.getHeight());
-        frame.setLocationRelativeTo(settingsJFrame.getLocationRelativeTo());
-        frame.setLayout(settingsJFrame.getLayout());
-        frame.setResizable(settingsJFrame.getResizable());
-        frame.getContentPane().setLayout(settingsJFrame.getLayout());
+        var visible = true;
         createJMenuBar();
-        frame.setVisible(settingsJFrame.isVisible());
+        frame.setVisible(visible);
     }
 
     private void createJMenuBar() {
-        MenuBar menuBar = new MenuBar(frame.getContentPane(), song, soundEffects);
-        frame.setJMenuBar(menuBar.getMenubar());
+        var menuBar = JMenuBarFactory.getInstance();
+        var events = new EventsMenuBar(frame.getContentPane(), song, soundEffects);
         List.of("Historia", "Comandos", "Ajuda", "Musica", "Efeitos", "Sair")
-                .forEach(menuBar::createNavigation);
+                .forEach(name -> {
+                    var menu = JMenuFactory.getInstance(name);
+                    menuBar.add(menu);
+                    var item = JMenuItemFactory.getInstance(name);
+                    item.addActionListener(e -> events.action(name));
+                    menu.add(item);
+                });
+        frame.setJMenuBar(menuBar);
     }
 
     public void clearJLabelItens() {

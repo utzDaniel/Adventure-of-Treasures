@@ -3,26 +3,27 @@ package frontend.view;
 import frontend.exception.EventException;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
+import frontend.model.component.JOptionPaneFactory;
 
 import java.awt.*;
 
 public class EventsMenuBar {
 
-    private final PopupMenuBarMessage popupMenuMessage;
+    private final Container container;
     private final Song song;
     private final SoundEffects soundEffects;
 
-    public EventsMenuBar(Container contentPane, Song song, SoundEffects soundEffects) {
-        this.popupMenuMessage = new PopupMenuBarMessage(contentPane);
+    public EventsMenuBar(Container container, Song song, SoundEffects soundEffects) {
+        this.container = container;
         this.song = song;
         this.soundEffects = soundEffects;
     }
 
-    public void event(String name) {
+    public void action(String name) {
         switch (name) {
-            case "Historia" -> popupMenuMessage.history();
-            case "Comandos" -> popupMenuMessage.command();
-            case "Ajuda" -> popupMenuMessage.help();
+            case "Historia" -> JOptionPaneFactory.openHistory(container);
+            case "Comandos" -> JOptionPaneFactory.openCommand(container);
+            case "Ajuda" -> JOptionPaneFactory.openHelp(container);
             case "Musica" -> song.onPlayer();//TODO Tentar remover esse evento daqui
             case "Efeitos" -> soundEffects.onPlayer();//TODO Tentar remover esse evento daqui
             case "Sair" -> System.exit(0);

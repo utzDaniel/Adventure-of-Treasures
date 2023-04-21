@@ -1,11 +1,11 @@
 import backend.model.Player;
 import backend.model.builder.item.Item;
 import backend.model.builder.item.ItemEquipableBuilder;
-import frontend.model.JLabelFactory;
+import frontend.model.component.JFrameFactory;
+import frontend.model.component.JLabelFactory;
 import org.junit.Before;
 import org.junit.Test;
 import backend.repository.RepositoryFactory;
-import frontend.settings.SettingsJFrame;
 import frontend.view.InterfaceGame;
 import rules.interfaces.ICoordinate;
 
@@ -36,26 +36,24 @@ public class InterfaceGameTest {
         var listJLabel = new ArrayList<JLabel>();
         listJLabel.add(JLabelFactory.getInstance(player));
         listJLabel.add(JLabelFactory.getInstance(player.getCurrentMap()));
-        interfaceGame = new InterfaceGame(listJLabel); frame = interfaceGame.getFrame();
+        interfaceGame = new InterfaceGame(listJLabel);
+        frame = interfaceGame.getFrame();
         container = frame.getContentPane();
     }
 
     @Test
     public void validTitleFrame() {
-        SettingsJFrame settingsJFrame = new SettingsJFrame();
-        assertEquals(settingsJFrame.getTitulo(), frame.getTitle());
+        assertEquals(JFrameFactory.getInstance().getTitle(), frame.getTitle());
     }
 
     @Test
     public void validWidthFrame() {
-        SettingsJFrame settingsJFrame = new SettingsJFrame();
-        assertEquals(settingsJFrame.getWidth(), frame.getWidth());
+        assertEquals(JFrameFactory.getInstance().getWidth(), frame.getWidth());
     }
 
     @Test
     public void validHeightFrame() {
-        SettingsJFrame settingsJFrame = new SettingsJFrame();
-        assertEquals(settingsJFrame.getHeight(), frame.getHeight());
+        assertEquals(JFrameFactory.getInstance().getHeight(), frame.getHeight());
     }
 
     @Test

@@ -1,12 +1,11 @@
-import rules.exception.ItemEquipableException;
-import backend.model.Coordinate;
 import backend.model.Player;
 import backend.model.builder.item.Item;
 import backend.model.builder.item.ItemEquipable;
 import backend.model.builder.item.ItemEquipableBuilder;
+import backend.repository.RepositoryFactory;
 import org.junit.Before;
 import org.junit.Test;
-import backend.repository.RepositoryFactory;
+import rules.exception.ItemEquipableException;
 import rules.interfaces.ICoordinate;
 import rules.service.Equip;
 import rules.service.Unequip;
@@ -146,22 +145,22 @@ public class EquipableTest {
 
     @Test
     public void validarItemEquip() {
-        assertTrue(new Equip((ItemEquipable)itens.get(0)).run());
+        assertTrue(new Equip((ItemEquipable) itens.get(0)).run());
     }
 
     @Test(expected = ItemEquipableException.class)
     public void itemEquipInvalido() {
-        assertFalse(new Equip((ItemEquipable)itens.get(1)).run());
+        assertFalse(new Equip((ItemEquipable) itens.get(1)).run());
     }
 
 
     @Test
     public void validarItemUnequip() {
-        assertTrue(new Unequip((ItemEquipable)itens.get(0)).run());
+        assertTrue(new Unequip((ItemEquipable) itens.get(0)).run());
     }
 
     @Test(expected = ItemEquipableException.class)
     public void itemUnequipInvalido() {
-        assertFalse(new Unequip((ItemEquipable)itens.get(1)).run());
+        assertFalse(new Unequip((ItemEquipable) itens.get(1)).run());
     }
 }

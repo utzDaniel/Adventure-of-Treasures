@@ -1,7 +1,7 @@
 package frontend.view;
 
 import backend.model.builder.item.*;
-import frontend.model.ButtonActionFactory;
+import frontend.model.component.JButtonFactory;
 
 import javax.swing.*;
 import java.util.Arrays;
@@ -13,12 +13,13 @@ public class ButtonAction {
     private final JButton[] buttonActions;
 
     public ButtonAction() {
-        this.buttonActions = new JButton[6];
+        int MAX_BUTTON = 6;
+        this.buttonActions = new JButton[MAX_BUTTON];
         this.index = 0;
     }
 
     public void create(String name) {
-        this.buttonActions[index] = ButtonActionFactory.getInstance(name);
+        this.buttonActions[index] = JButtonFactory.getInstance(name);
         update();
     }
 

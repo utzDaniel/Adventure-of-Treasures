@@ -1,16 +1,15 @@
-import frontend.exception.ButtonException;
 import backend.model.builder.item.*;
-import backend.model.Coordinate;
+import frontend.exception.ButtonException;
+import frontend.view.ButtonAction;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import frontend.view.ButtonAction;
 import rules.interfaces.ICoordinate;
 
 import javax.swing.*;
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ButtonActionTest {
 

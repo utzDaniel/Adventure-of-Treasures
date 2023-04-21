@@ -1,61 +1,68 @@
 import frontend.exception.EventException;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
+import frontend.model.component.JMenuBarFactory;
+import frontend.model.component.JMenuFactory;
+import frontend.model.component.JMenuItemFactory;
+import frontend.view.EventsMenuBar;
 import org.junit.Before;
 import org.junit.Test;
-import frontend.view.EventsMenuBar;
-import frontend.view.MenuBar;
 
 import javax.swing.*;
+import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class MenuBarTest {
 
-    private MenuBar menuBar;
+    private JMenuBar menuBar;
     private final JFrame frame = new JFrame();
     private final Song song = new Song();
     private final SoundEffects soundEffects = new SoundEffects();
-    private final String [] navigation =
-            {"Historia","Comandos","Ajuda","Musica",
+    private final String[] navigation =
+            {"Historia", "Comandos", "Ajuda", "Musica",
                     "Efeitos", "Sair"};
 
     @Before
-    public void create(){
-        menuBar = new MenuBar(frame.getContentPane(), song, soundEffects);
-        for (String s : navigation) {
-            menuBar.createNavigation(s);
-        }
+    public void create() {
+        menuBar = JMenuBarFactory.getInstance();
+        var events = new EventsMenuBar(frame.getContentPane(), song, soundEffects);
+        List.of("Historia", "Comandos", "Ajuda", "Musica", "Efeitos", "Sair")
+                .forEach(name -> {
+                    var menu = JMenuFactory.getInstance(name);
+                    menuBar.add(menu);
+                    var item = JMenuItemFactory.getInstance(name);
+                    item.addActionListener(e -> events.action(name));
+                    menu.add(item);
+                });
     }
 
     @Test
-    public void createAllNavigationValid(){
-        assertEquals(navigation.length,
-                menuBar.getMenubar().getMenuCount());
+    public void createAllNavigationValid() {
+        assertEquals(navigation.length, menuBar.getMenuCount());
     }
 
     @Test
-    public void validAllNameElements(){
+    public void validAllNameElements() {
         String name;
         for (int i = 0; i < navigation.length; i++) {
-            name = ((JMenuItem) menuBar.getMenubar().getSubElements()[i]).getText();
+            name = ((JMenuItem) menuBar.getSubElements()[i]).getText();
             assertEquals(name, navigation[i]);
         }
     }
 
     @Test
-    public void validAllEvent(){
+    public void validAllEvent() {
         int size;
         for (int i = 0; i < navigation.length; i++) {
-            size = ((JMenuItem) menuBar.getMenubar().getSubElements()[i])
-                    .getMouseListeners().length;
+            size = ((JMenuItem) menuBar.getSubElements()[i]).getMouseListeners().length;
             assertEquals(1, size);
         }
     }
 
-    @Test (expected = EventException.class)
-    public void invalidAllEvent(){
+    @Test(expected = EventException.class)
+    public void invalidAllEvent() {
         EventsMenuBar eventsFrame = new EventsMenuBar(frame.getContentPane(), song, soundEffects);
-        eventsFrame.event("test");
+        eventsFrame.action("test");
     }
 }

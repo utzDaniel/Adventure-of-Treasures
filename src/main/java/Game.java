@@ -1,7 +1,7 @@
 import backend.model.Player;
 import backend.model.builder.item.Item;
 import backend.repository.RepositoryFactory;
-import frontend.model.JLabelFactory;
+import frontend.model.component.JLabelFactory;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
 import frontend.view.InterfaceGame;

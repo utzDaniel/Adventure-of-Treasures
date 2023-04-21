@@ -1,60 +1,73 @@
 package frontend.view;
 
+import frontend.model.component.JLabelFactory;
+import frontend.model.component.JPanelFactory;
+
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class PanelInventory {
 
-    private final JPanel panelMain;
-    private final JLabel labelSideEast;
+    private JPanel panelMain;
+    private JLabel labelEast;
     private final JButton button;
 
-    public PanelInventory(JLabel labelSideEast) {
-        this.labelSideEast = labelSideEast;
-        button = new JButton("SAIR");
-        panelMain = new JPanel();
+    public PanelInventory() {
+        button = new JButton();
+        labelEast = new JLabel();
     }
 
     public void create() {
-        panelMain.setBackground(Colors.BROWN_1);
-        panelMain.setName("painel");
-        panelMain.setBorder(new EmptyBorder(8, 10, 10, 10));
-        panelMain.setLayout(new BorderLayout(6, 6));
-        panelMain.setBounds(50, 50, 706, 500);//816 660
+        panelMain = JPanelFactory.getInstance("principal");
         setNorthPanel();
+        setEastPanel();
         setSouthPanel();
         setWestPanel();
-        setEastPanel();
-        labelSideEast.setIcon(new ImageIcon("src/main/resources/inventario/icons.png"));
     }
 
     private void setNorthPanel() {
-        JLabel label = new JLabel();
-        label.setIcon(new ImageIcon("src/main/resources/inventario/top.png"));
-        label.setBounds(300, 0, 100, 100);
-        panelMain.add(label, BorderLayout.NORTH);
-    }
-
-    private void setSouthPanel() {
-        button.setBackground(Colors.RED);
-        button.setForeground(Colors.SILVER);
-        panelMain.add(button, BorderLayout.SOUTH);
-    }
-
-    private void setWestPanel() {
-        JLabel label = new JLabel();
-        label.setLayout(new BorderLayout(8, 8));
-        label.setIcon(new ImageIcon("src/main/resources/inventario/player.png"));
-        label.setBounds(0, 100, 100, 100);
-        panelMain.add(label, BorderLayout.WEST);
+        var name = "norte";
+        var panel = JPanelFactory.getInstance(name);
+        var label = JLabelFactory.getInstance(name);
+        panel.add(label, BorderLayout.CENTER);
+        panelMain.add(panel, BorderLayout.NORTH);
     }
 
     private void setEastPanel() {
-        JPanel eastPanel = new JPanel();
-        eastPanel.setLayout(new BorderLayout(8, 8));
-        eastPanel.add(labelSideEast, BorderLayout.NORTH);
-        panelMain.add(eastPanel, BorderLayout.EAST);
+        var name = "leste";
+        var panel = JPanelFactory.getInstance(name);
+        labelEast = JLabelFactory.getInstance(name);
+        panel.add(labelEast, BorderLayout.CENTER);
+        panelMain.add(panel, BorderLayout.EAST);
+    }
+
+    private void setSouthPanel() {
+
+        //TODO criar uma generico ComponentsFactory
+        button.setText("SAIR");
+        button.setBackground(Colors.RED);
+        button.setForeground(Colors.SILVER);
+        button.setAlignmentX(0.0f);
+        button.setAlignmentY(0.0f);
+        button.setBounds(0, 0, 0, 0);
+        button.setBorder(BorderFactory.createEmptyBorder(8, 0, 8, 0));
+        button.setLayout(new BorderLayout(0, 0));
+        button.setHorizontalAlignment(SwingConstants.CENTER);
+        button.setVerticalAlignment(SwingConstants.CENTER);
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+
+        var name = "sul";
+        var panel = JPanelFactory.getInstance(name);
+        panel.add(button, BorderLayout.CENTER);
+        panelMain.add(panel, BorderLayout.SOUTH);
+    }
+
+    private void setWestPanel() {
+        var name = "oeste";
+        var panel = JPanelFactory.getInstance(name);
+        var label = JLabelFactory.getInstance(name);
+        panel.add(label, BorderLayout.CENTER);
+        panelMain.add(panel, BorderLayout.WEST);
     }
 
     public JButton getButton() {
@@ -63,5 +76,9 @@ public class PanelInventory {
 
     public JPanel getPanel() {
         return panelMain;
+    }
+
+    public JLabel getLabel() {
+        return labelEast;
     }
 }

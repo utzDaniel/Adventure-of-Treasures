@@ -28,8 +28,8 @@ public class InterfaceInventory {
 
     public void open() {
         this.player.getInventory().setOpenInventory();
-        labelSideEast = new JLabel();
-        panelInventory = new PanelInventory(labelSideEast);
+        this.panelInventory = new PanelInventory();
+        this.labelSideEast = panelInventory.getLabel();
         items = new ArrayList<>();
         buttonItem = new ButtonItem();
         labelInformation = new LabelInformation();
@@ -43,7 +43,7 @@ public class InterfaceInventory {
         setItens();
         setInfoItens();
         setButtonsActions();
-        interfaceGame.getFrame().getContentPane().add(panelInventory.getPanel(), 0);
+        interfaceGame.getFrame().add(panelInventory.getPanel());
         interfaceGame.getFrame().setVisible(true);
     }
 

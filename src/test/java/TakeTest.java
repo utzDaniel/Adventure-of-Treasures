@@ -57,8 +57,6 @@ public class TakeTest {
         mapGame.addItem(item, player.getLocation());
         player.setCurrentMap(mapGame);
         take.run();
-        System.out.println(player.getLocation());
-        System.out.println(mapGame.getItem(ICoordinate.getInstance(310,320)));
     }
 
     @Test
