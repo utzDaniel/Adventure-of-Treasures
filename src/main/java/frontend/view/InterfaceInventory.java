@@ -29,6 +29,7 @@ public class InterfaceInventory {
     public void open() {
         this.player.getInventory().setOpenInventory();
         this.panelInventory = new PanelInventory();
+        panelInventory.create();
         this.labelSideEast = panelInventory.getLabel();
         items = new ArrayList<>();
         buttonItem = new ButtonItem();
@@ -38,7 +39,6 @@ public class InterfaceInventory {
     }
 
     private void setSettings(){
-        panelInventory.create();
         panelInventory.getButton().addActionListener(e -> quit());
         setItens();
         setInfoItens();
@@ -65,7 +65,7 @@ public class InterfaceInventory {
         String capicadade = String.format("Capacidade do inventario %d/%d",player.getInventory().getCapacity(),player.getInventory().getMaxCapacity());
         List.of(capicadade,"Nome: ","Peso: ","Descrição: ").forEach(labelInformation::create);
         Arrays.stream(labelInformation.getInfoLabel())
-                .forEach(jLabel -> labelSideEast.add(jLabel, BorderLayout.NORTH, 0));
+                .forEach(jLabel -> labelSideEast.add(jLabel));
     }
 
     private void setButtonsActions() {

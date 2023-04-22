@@ -30,7 +30,7 @@ final class JButtonActionFactory {
     }
 
     private static int calculateYPosition(int type) {
-        return type == 1 ? 320 : 360;
+        return type == 1 ? 352 : 392;
     }
 
     private static int calculateXPosition(int type, int index) {

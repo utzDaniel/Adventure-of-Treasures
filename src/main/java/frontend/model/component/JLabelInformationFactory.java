@@ -32,7 +32,7 @@ final class JLabelInformationFactory {
     }
 
     private static int calculateYPosition(int index) {
-        var positionStartingY = 222;
+        var positionStartingY = 254;
         return positionStartingY + index * 20;
     }
 

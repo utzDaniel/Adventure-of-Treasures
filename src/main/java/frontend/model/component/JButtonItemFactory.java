@@ -22,7 +22,7 @@ final class JButtonItemFactory {
     }
 
     private static int calculateYPosition(int index) {
-        var positionStartingY = 14;
+        var positionStartingY = 46;
         int multiplier = index / BUTTON_PER_LINE;
         return positionStartingY + multiplier * DISTANCE_PER_BUTTON;
     }

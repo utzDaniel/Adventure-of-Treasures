@@ -1,15 +1,15 @@
-import backend.model.Coordinate;
 import backend.model.builder.item.Item;
 import backend.model.builder.item.ItemCombinableBuilder;
-import rules.enums.ItemsCombination;
 import org.junit.Before;
 import org.junit.Test;
+import rules.enums.ItemsCombination;
 import rules.interfaces.ICoordinate;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+
 
 public class ItemsCombinationTest {
     private final List<Item> itens = new ArrayList<>();

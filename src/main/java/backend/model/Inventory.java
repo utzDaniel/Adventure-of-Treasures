@@ -1,6 +1,7 @@
 package backend.model;
 
 import backend.model.builder.item.Item;
+import backend.repository.RepositoryFactory;
 import rules.service.AddItemInventory;
 import rules.service.RemoveItem;
 
@@ -19,6 +20,11 @@ public final class Inventory {
         this.maxCapacity = 10;
         this.isInventory = false;
         this.itens = new HashMap<>();
+        RepositoryFactory.getRepositoryItem().getAll().forEach(
+                item -> {
+                    this.itens.put(item.getName(),item);
+                }
+        );
     }
 
     public int getCapacity() {

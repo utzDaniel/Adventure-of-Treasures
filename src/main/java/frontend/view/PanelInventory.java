@@ -14,7 +14,6 @@ public class PanelInventory {
 
     public PanelInventory() {
         button = new JButton();
-        labelEast = new JLabel();
     }
 
     public void create() {
@@ -29,7 +28,25 @@ public class PanelInventory {
         var name = "norte";
         var panel = JPanelFactory.getInstance(name);
         var label = JLabelFactory.getInstance(name);
-        panel.add(label, BorderLayout.CENTER);
+
+        //TODO criar uma generico ComponentsFactory
+        button.setName("sair");
+        button.setIcon(new ImageIcon("src/main/resources/inventario/botao_fechar.png"));
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setFocusPainted(false);
+        button.setBorderPainted(false);
+        button.setAlignmentX(0.0f);
+        button.setAlignmentY(0.0f);
+        button.setBounds(0, 0, 0, 0);
+        button.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        button.setLayout(new BorderLayout(0, 0));
+        button.setHorizontalAlignment(SwingConstants.RIGHT);
+        button.setVerticalAlignment(SwingConstants.TOP);
+        button.setHorizontalTextPosition(SwingConstants.RIGHT);
+
+        panel.add(label, BorderLayout.WEST);
+        panel.add(button, BorderLayout.EAST);
         panelMain.add(panel, BorderLayout.NORTH);
     }
 
@@ -42,23 +59,10 @@ public class PanelInventory {
     }
 
     private void setSouthPanel() {
-
-        //TODO criar uma generico ComponentsFactory
-        button.setText("SAIR");
-        button.setBackground(Colors.RED);
-        button.setForeground(Colors.SILVER);
-        button.setAlignmentX(0.0f);
-        button.setAlignmentY(0.0f);
-        button.setBounds(0, 0, 0, 0);
-        button.setBorder(BorderFactory.createEmptyBorder(8, 0, 8, 0));
-        button.setLayout(new BorderLayout(0, 0));
-        button.setHorizontalAlignment(SwingConstants.CENTER);
-        button.setVerticalAlignment(SwingConstants.CENTER);
-        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        //TODO colocar futuramento os log aqui com uma JLabel
 
         var name = "sul";
         var panel = JPanelFactory.getInstance(name);
-        panel.add(button, BorderLayout.CENTER);
         panelMain.add(panel, BorderLayout.SOUTH);
     }
 

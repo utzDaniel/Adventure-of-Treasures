@@ -7,8 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class JPanelFactory {
-
-    private static final Color color = Colors.BROWN_1;
     private JPanelFactory() {
     }
 
@@ -30,9 +28,9 @@ public class JPanelFactory {
         var width = 794 - x * 2;
         var height = 600 - y * 2;
         jPanel.setName("painel_principal");
-        jPanel.setBackground(color);
-        jPanel.setBorder(null);
+        jPanel.setBackground(Colors.BROWN_1);
         jPanel.setLayout(new BorderLayout(0, 0));
+        jPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         jPanel.setBounds(x, y, width, height);
         return jPanel;
     }
@@ -40,7 +38,7 @@ public class JPanelFactory {
     private static JPanel northPanel() {
         var jPanel = new JPanel();
         jPanel.setName("painel_norte");
-        jPanel.setBackground(color);
+        jPanel.setOpaque(false);
         jPanel.setLayout(new BorderLayout(0, 0));
         jPanel.setBounds(0, 0, 0, 61);
         return jPanel;
@@ -49,7 +47,7 @@ public class JPanelFactory {
     private static JPanel eastPanel() {
         var jPanel = new JPanel();
         jPanel.setName("painel_leste");
-        jPanel.setBackground(color);
+        jPanel.setOpaque(false);
         jPanel.setLayout(new BorderLayout(0, 0));
         jPanel.setBounds(0, 0, 0, 0);
         return jPanel;
@@ -58,7 +56,7 @@ public class JPanelFactory {
     private static JPanel southPanel() {
         var jPanel = new JPanel();
         jPanel.setName("painel_sul");
-        jPanel.setBackground(color);
+        jPanel.setOpaque(false);
         jPanel.setLayout(new BorderLayout(0, 0));
         jPanel.setBounds(0, 0, 0, 32);
         return jPanel;
@@ -67,7 +65,7 @@ public class JPanelFactory {
     private static JPanel westPanel() {
         var jPanel = new JPanel();
         jPanel.setName("painel_oeste");
-        jPanel.setBackground(color);
+        jPanel.setOpaque(false);
         jPanel.setLayout(new BorderLayout(0, 0));
         jPanel.setBounds(0, 0, 0, 0);
         return jPanel;
