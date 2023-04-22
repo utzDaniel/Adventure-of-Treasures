@@ -38,7 +38,7 @@ final class JLabelInventoryFactory {
         label.setName("label_leste");
         label.setIcon(new ImageIcon("src/main/resources/inventario/icons.png"));
         label.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 19));
-        label.setLayout(new BorderLayout(0, 0));
+        label.setLayout(null);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setVerticalAlignment(SwingConstants.CENTER);
         label.setHorizontalTextPosition(SwingConstants.CENTER);

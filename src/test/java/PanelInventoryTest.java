@@ -36,7 +36,6 @@ public class PanelInventoryTest {
     @Test
     public void validIconNorthPanel() {
         var label = (JLabel)((JPanel) panelInventory.getPanel().getComponents()[0]).getComponents()[0];
-        System.out.println();
         var icon = new ImageIcon("src/main/resources/inventario/top.png");
         assertEquals(icon.toString(), label.getIcon().toString());
     }

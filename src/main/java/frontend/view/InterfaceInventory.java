@@ -1,11 +1,10 @@
 package frontend.view;
 
 import backend.model.Player;
-import backend.model.interfaces.ICombinable;
 import backend.model.builder.item.Item;
+import backend.model.interfaces.ICombinable;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,7 +37,7 @@ public class InterfaceInventory {
         setSettings();
     }
 
-    private void setSettings(){
+    private void setSettings() {
         panelInventory.getButton().addActionListener(e -> quit());
         setItens();
         setInfoItens();
@@ -62,14 +61,14 @@ public class InterfaceInventory {
     }
 
     private void setInfoItens() {
-        String capicadade = String.format("Capacidade do inventario %d/%d",player.getInventory().getCapacity(),player.getInventory().getMaxCapacity());
-        List.of(capicadade,"Nome: ","Peso: ","Descrição: ").forEach(labelInformation::create);
+        String capicadade = String.format("Capacidade do inventario %d/%d", player.getInventory().getCapacity(), player.getInventory().getMaxCapacity());
+        List.of(capicadade, "Nome: ", "Peso: ", "Descrição: ").forEach(labelInformation::create);
         Arrays.stream(labelInformation.getInfoLabel())
                 .forEach(jLabel -> labelSideEast.add(jLabel));
     }
 
     private void setButtonsActions() {
-        List.of("usar","equipar","combinar","remover","cancelar","confirmar").forEach(buttonAction::create);
+        List.of("usar", "equipar", "combinar", "remover", "cancelar", "confirmar").forEach(buttonAction::create);
         JButton[] buttons = buttonAction.getButtonActions();
         Arrays.stream(buttons).limit(4).forEach(jButton -> {
             jButton.addActionListener(e -> setConfirm(e.getActionCommand()));
@@ -90,7 +89,7 @@ public class InterfaceInventory {
         buttonAction.visibleCancelAndConfirm(command);
         if (command.equals("combinar")) {
             Item item = buttonAction.getUseItem();
-            addListItem((ICombinable)item);
+            addListItem((ICombinable) item);
             buttonItem.enableIButtonItensNotCombinable();
             buttonItem.selectButtonItem(item);
             if (items.size() > 1) {
@@ -112,16 +111,16 @@ public class InterfaceInventory {
         Item item = buttonAction.getUseItem();
         success = switch (command) {
             case "remover" -> player.dropItem(item);
-            case "usar", "equipar" ->  item.action();
+            case "usar", "equipar" -> item.action();
             case "combinar" -> item.action(items);
             default -> false;
         };
-        if(command.equals("usar") && success) updateItensMapGame();
+        if (command.equals("usar") && success) updateItensMapGame();
         playEffects(command, success, item.getEffect());//TODO item.getEffect() resolver depois
         setActionCancel();
     }
 
-    private void playEffects (String command, boolean success, String itemEffect){
+    private void playEffects(String command, boolean success, String itemEffect) {
         String commandEffect;
         if (success) {
             commandEffect = command;
@@ -140,7 +139,7 @@ public class InterfaceInventory {
         removeItens();
         labelInformation.resetText(player.getInventory().getCapacity(), player.getInventory().getMaxCapacity());
         items.clear();
-        interfaceGame.getFrame().repaint();
+        this.labelSideEast.repaint();
     }
 
     private void updateItensMapGame() {
