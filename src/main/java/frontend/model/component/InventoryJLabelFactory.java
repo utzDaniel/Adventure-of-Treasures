@@ -5,9 +5,9 @@ import frontend.exception.LabelException;
 import javax.swing.*;
 import java.awt.*;
 
-final class JLabelInventoryFactory {
+final class InventoryJLabelFactory {
 
-    private JLabelInventoryFactory() {
+    private InventoryJLabelFactory() {
     }
 
     static JLabel getInstance(String name) {

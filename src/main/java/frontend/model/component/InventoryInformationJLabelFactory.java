@@ -5,11 +5,11 @@ import frontend.view.Colors;
 import javax.swing.*;
 import java.awt.*;
 
-final class JLabelInformationFactory {
+final class InventoryInformationJLabelFactory {
 
     //TODO colocar variaveis globais EX: textSize, fontName
 
-    private JLabelInformationFactory() {
+    private InventoryInformationJLabelFactory() {
     }
 
     static JLabel getInstance(String name, int index) {

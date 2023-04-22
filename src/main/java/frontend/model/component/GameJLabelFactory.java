@@ -9,9 +9,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-final class JLabelGameFactory {
+final class GameJLabelFactory {
 
-    private JLabelGameFactory() {
+    private GameJLabelFactory() {
     }
 
     static JLabel getInstance(Player player) {
@@ -30,7 +30,7 @@ final class JLabelGameFactory {
         return create(mapGame.getIcon(), "mapa", rectangle);
     }
 
-    static JLabel getInstance(Item item) {
+     static JLabel getInstance(Item item) {
         var width = 100;
         var height = 100;
         var rectangle = new Rectangle(item.getLocation().getX(), item.getLocation().getY() - 10, width, height);

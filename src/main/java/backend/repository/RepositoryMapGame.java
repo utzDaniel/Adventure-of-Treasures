@@ -20,9 +20,9 @@ public final class RepositoryMapGame implements Repository<MapGame> {
 
     private void createMapGame() {
         String filename = "map/map.csv";
-        var filee = new FileUtil<MapGame>(filename);
+        var file = new FileUtil<MapGame>(filename);
         try {
-            this.mapGame.putAll(filee.readFile(new MapGameMapper()).stream().collect(Collectors.toMap(MapGame::getName, mapGame1 -> mapGame1)));
+            this.mapGame.putAll(file.readFile(new MapGameMapper()).stream().collect(Collectors.toMap(MapGame::getName, mapGame1 -> mapGame1)));
         } catch (IOException e) {
             System.exit(0);
         }

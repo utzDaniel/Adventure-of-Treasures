@@ -6,11 +6,11 @@ import frontend.view.Colors;
 import javax.swing.*;
 import java.awt.*;
 
-final class JButtonActionFactory {
+final class InventoryJButtonActionFactory {
     private static final int HEIGHT = 30;
     private static final String[] NAMES = {"usar", "equipar", "combinar", "remover", "cancelar", "confirmar"};
 
-    private JButtonActionFactory() {
+    private InventoryJButtonActionFactory() {
     }
 
     static JButton getInstance(String name) {

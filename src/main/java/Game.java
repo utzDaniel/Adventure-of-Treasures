@@ -1,9 +1,9 @@
 import backend.model.Player;
 import backend.model.builder.item.Item;
 import backend.repository.RepositoryFactory;
-import frontend.model.component.JLabelFactory;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
+import frontend.model.component.ComponentFactory;
 import frontend.view.InterfaceGame;
 import rules.controller.Keyboard;
 
@@ -42,9 +42,9 @@ public class Game {
 
     private List<JLabel> getComponents() {
         var listJLabel = new ArrayList<JLabel>();
-        listJLabel.add(JLabelFactory.getInstance(this.player));
-        listJLabel.add(JLabelFactory.getInstance(this.player.getCurrentMap()));
-        listJLabel.addAll(JLabelFactory.getInstance(this.player.getCurrentMap().getItemVisible()));
+        listJLabel.add(ComponentFactory.getJLabel(this.player));
+        listJLabel.add(ComponentFactory.getJLabel(this.player.getCurrentMap()));
+        listJLabel.addAll(ComponentFactory.getJLabel(this.player.getCurrentMap().getItemVisible()));
         return listJLabel;
     }
 

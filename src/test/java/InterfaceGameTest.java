@@ -1,12 +1,11 @@
 import backend.model.Player;
 import backend.model.builder.item.Item;
 import backend.model.builder.item.ItemEquipableBuilder;
-import frontend.model.component.JFrameFactory;
-import frontend.model.component.JLabelFactory;
+import backend.repository.RepositoryFactory;
+import frontend.model.component.ComponentFactory;
+import frontend.view.InterfaceGame;
 import org.junit.Before;
 import org.junit.Test;
-import backend.repository.RepositoryFactory;
-import frontend.view.InterfaceGame;
 import rules.interfaces.ICoordinate;
 
 import javax.swing.*;
@@ -34,8 +33,8 @@ public class InterfaceGameTest {
             player.getInventory().setItemInvisible(item);
         }
         var listJLabel = new ArrayList<JLabel>();
-        listJLabel.add(JLabelFactory.getInstance(player));
-        listJLabel.add(JLabelFactory.getInstance(player.getCurrentMap()));
+        listJLabel.add(ComponentFactory.getJLabel(player));
+        listJLabel.add(ComponentFactory.getJLabel(player.getCurrentMap()));
         interfaceGame = new InterfaceGame(listJLabel);
         frame = interfaceGame.getFrame();
         container = frame.getContentPane();
@@ -43,17 +42,17 @@ public class InterfaceGameTest {
 
     @Test
     public void validTitleFrame() {
-        assertEquals(JFrameFactory.getInstance().getTitle(), frame.getTitle());
+        assertEquals(ComponentFactory.getJFrame().getTitle(), frame.getTitle());
     }
 
     @Test
     public void validWidthFrame() {
-        assertEquals(JFrameFactory.getInstance().getWidth(), frame.getWidth());
+        assertEquals(ComponentFactory.getJFrame().getWidth(), frame.getWidth());
     }
 
     @Test
     public void validHeightFrame() {
-        assertEquals(JFrameFactory.getInstance().getHeight(), frame.getHeight());
+        assertEquals(ComponentFactory.getJFrame().getHeight(), frame.getHeight());
     }
 
     @Test
@@ -76,14 +75,14 @@ public class InterfaceGameTest {
 
     @Test
     public void validWidthJLabelMapGame() {
-        var jLabel = JLabelFactory.getInstance(player.getCurrentMap());
+        var jLabel = ComponentFactory.getJLabel(player.getCurrentMap());
         var width = container.getComponent(1).getWidth();
         assertEquals(jLabel.getWidth(), width);
     }
 
     @Test
     public void validHeightJLabelMapGame() {
-        var jLabel = JLabelFactory.getInstance(player.getCurrentMap());
+        var jLabel = ComponentFactory.getJLabel(player.getCurrentMap());
         var height = container.getComponent(1).getHeight();
         assertEquals(jLabel.getHeight(), height);
     }

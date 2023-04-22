@@ -1,13 +1,13 @@
-import frontend.model.component.JLabelFactory;
-import rules.enums.Direction;
-import backend.model.builder.map.MapGame;
 import backend.model.Player;
+import backend.model.builder.map.MapGame;
+import backend.repository.RepositoryFactory;
+import frontend.model.component.ComponentFactory;
+import frontend.view.InterfaceGame;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import backend.repository.RepositoryFactory;
+import rules.enums.Direction;
 import rules.service.NextScenery;
-import frontend.view.InterfaceGame;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -26,8 +26,8 @@ public class NextSceneryTest {
         player.setDirection(Direction.SUL.getLabel());
         player.setCurrentMap(repositoryMapGame.get("cais"));
         var listJLabel = new ArrayList<JLabel>();
-        listJLabel.add(JLabelFactory.getInstance(player));
-        listJLabel.add(JLabelFactory.getInstance(player.getCurrentMap()));
+        listJLabel.add(ComponentFactory.getJLabel(player));
+        listJLabel.add(ComponentFactory.getJLabel(player.getCurrentMap()));
         nextScenery = new NextScenery(new InterfaceGame(listJLabel));
     }
 

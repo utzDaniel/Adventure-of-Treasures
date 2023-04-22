@@ -6,11 +6,11 @@ import frontend.view.Colors;
 import javax.swing.*;
 import java.awt.*;
 
-public class JPanelFactory {
-    private JPanelFactory() {
+final class InventoryJPanelFactory {
+    private InventoryJPanelFactory() {
     }
 
-    public static JPanel getInstance(String name) {
+    static JPanel getInstance(String name) {
         return switch (name) {
             case "principal" -> mainPanel();
             case "norte" -> northPanel();

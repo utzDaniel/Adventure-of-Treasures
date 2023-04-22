@@ -23,7 +23,7 @@ public class PanelInventoryTest {
 
     @Test
     public void validNameButton() {
-        assertEquals("SAIR", panelInventory.getButton().getText());
+        assertEquals("sair", panelInventory.getButton().getName());
     }
 
     @Test

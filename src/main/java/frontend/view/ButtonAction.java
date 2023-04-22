@@ -1,7 +1,7 @@
 package frontend.view;
 
 import backend.model.builder.item.*;
-import frontend.model.component.JButtonFactory;
+import frontend.model.component.ComponentFactory;
 
 import javax.swing.*;
 import java.util.Arrays;
@@ -19,7 +19,7 @@ public class ButtonAction {
     }
 
     public void create(String name) {
-        this.buttonActions[index] = JButtonFactory.getInstance(name);
+        this.buttonActions[index] = ComponentFactory.getJButton(name);
         update();
     }
 

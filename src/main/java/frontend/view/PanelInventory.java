@@ -1,7 +1,6 @@
 package frontend.view;
 
-import frontend.model.component.JLabelFactory;
-import frontend.model.component.JPanelFactory;
+import frontend.model.component.ComponentFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +16,8 @@ public class PanelInventory {
     }
 
     public void create() {
-        panelMain = JPanelFactory.getInstance("principal");
+        var name = "principal";
+        panelMain = ComponentFactory.getJPanel(name);
         setNorthPanel();
         setEastPanel();
         setSouthPanel();
@@ -26,8 +26,8 @@ public class PanelInventory {
 
     private void setNorthPanel() {
         var name = "norte";
-        var panel = JPanelFactory.getInstance(name);
-        var label = JLabelFactory.getInstance(name);
+        var panel = ComponentFactory.getJPanel(name);
+        var label = ComponentFactory.getJLabel(name);
 
         //TODO criar uma generico ComponentsFactory
         button.setName("sair");
@@ -52,8 +52,8 @@ public class PanelInventory {
 
     private void setEastPanel() {
         var name = "leste";
-        var panel = JPanelFactory.getInstance(name);
-        labelEast = JLabelFactory.getInstance(name);
+        var panel = ComponentFactory.getJPanel(name);
+        labelEast = ComponentFactory.getJLabel(name);
         panel.add(labelEast, BorderLayout.CENTER);
         panelMain.add(panel, BorderLayout.EAST);
     }
@@ -62,14 +62,14 @@ public class PanelInventory {
         //TODO colocar futuramento os log aqui com uma JLabel
 
         var name = "sul";
-        var panel = JPanelFactory.getInstance(name);
+        var panel = ComponentFactory.getJPanel(name);
         panelMain.add(panel, BorderLayout.SOUTH);
     }
 
     private void setWestPanel() {
         var name = "oeste";
-        var panel = JPanelFactory.getInstance(name);
-        var label = JLabelFactory.getInstance(name);
+        var panel = ComponentFactory.getJPanel(name);
+        var label = ComponentFactory.getJLabel(name);
         panel.add(label, BorderLayout.CENTER);
         panelMain.add(panel, BorderLayout.WEST);
     }

@@ -1,7 +1,7 @@
 package frontend.view;
 
 import backend.model.builder.item.Item;
-import frontend.model.component.JLabelFactory;
+import frontend.model.component.ComponentFactory;
 
 import javax.swing.*;
 
@@ -16,7 +16,7 @@ public class LabelInformation {
     }
 
     public void create(String info) {
-        infoLabel[this.index] = JLabelFactory.getInstance(info, this.index);
+        infoLabel[this.index] = ComponentFactory.getJLabel(info, this.index);
         this.index++;
     }
 

@@ -6,12 +6,12 @@ import frontend.view.Colors;
 import javax.swing.*;
 import java.awt.*;
 
-final class JButtonItemFactory {
+final class InventoryJButtonItemFactory {
 
     private static final int BUTTON_PER_LINE = 6;
     private static final int DISTANCE_PER_BUTTON = 53;
 
-    private JButtonItemFactory() {
+    private InventoryJButtonItemFactory() {
     }
 
     static JButton getInstance(Item item, int index) {

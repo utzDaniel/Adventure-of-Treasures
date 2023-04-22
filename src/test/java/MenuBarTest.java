@@ -1,9 +1,7 @@
 import frontend.exception.EventException;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
-import frontend.model.component.JMenuBarFactory;
-import frontend.model.component.JMenuFactory;
-import frontend.model.component.JMenuItemFactory;
+import frontend.model.component.ComponentFactory;
 import frontend.view.EventsMenuBar;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,13 +23,13 @@ public class MenuBarTest {
 
     @Before
     public void create() {
-        menuBar = JMenuBarFactory.getInstance();
+        menuBar = ComponentFactory.getJMenuBar();
         var events = new EventsMenuBar(frame.getContentPane(), song, soundEffects);
         List.of("Historia", "Comandos", "Ajuda", "Musica", "Efeitos", "Sair")
                 .forEach(name -> {
-                    var menu = JMenuFactory.getInstance(name);
+                    var menu = ComponentFactory.getJMenu(name);
                     menuBar.add(menu);
-                    var item = JMenuItemFactory.getInstance(name);
+                    var item = ComponentFactory.getJMenuItem(name);
                     item.addActionListener(e -> events.action(name));
                     menu.add(item);
                 });

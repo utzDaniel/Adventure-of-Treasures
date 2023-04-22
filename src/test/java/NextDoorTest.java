@@ -1,16 +1,16 @@
-import frontend.model.component.JLabelFactory;
-import rules.exception.MapGameException;
 import backend.model.Door;
 import backend.model.Player;
 import backend.model.builder.map.MapGame;
 import backend.model.builder.map.Room;
 import backend.model.builder.map.Scenery;
+import backend.repository.RepositoryFactory;
+import frontend.model.component.ComponentFactory;
+import frontend.view.InterfaceGame;
 import org.junit.Before;
 import org.junit.Test;
-import backend.repository.RepositoryFactory;
+import rules.exception.MapGameException;
 import rules.interfaces.ICoordinate;
 import rules.service.NextDoor;
-import frontend.view.InterfaceGame;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -35,8 +35,8 @@ public class NextDoorTest {
         player.setCurrentMap(village);
         player.setLocation(ICoordinate.getInstance(370,150));
         var listJLabel = new ArrayList<JLabel>();
-        listJLabel.add(JLabelFactory.getInstance(player));
-        listJLabel.add(JLabelFactory.getInstance(player.getCurrentMap()));
+        listJLabel.add(ComponentFactory.getJLabel(player));
+        listJLabel.add(ComponentFactory.getJLabel(player.getCurrentMap()));
         nextDoor = new NextDoor(new InterfaceGame(listJLabel));
     }
 

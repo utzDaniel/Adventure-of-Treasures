@@ -1,11 +1,11 @@
 import backend.model.Player;
 import backend.model.builder.item.Item;
-import frontend.model.component.JLabelFactory;
-import org.junit.Before;
-import org.junit.Test;
 import backend.repository.RepositoryFactory;
+import frontend.model.component.ComponentFactory;
 import frontend.view.InterfaceGame;
 import frontend.view.InterfaceInventory;
+import org.junit.Before;
+import org.junit.Test;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -32,8 +32,8 @@ public class InterfaceInventoryTest {
             player.getInventory().setItemInvisible(item);
         }
         var listJLabel = new ArrayList<JLabel>();
-        listJLabel.add(JLabelFactory.getInstance(player));
-        listJLabel.add(JLabelFactory.getInstance(player.getCurrentMap()));
+        listJLabel.add(ComponentFactory.getJLabel(player));
+        listJLabel.add(ComponentFactory.getJLabel(player.getCurrentMap()));
         interfaceGame = new InterfaceGame(listJLabel);
         interfaceInventory = new InterfaceInventory(interfaceGame);
     }

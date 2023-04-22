@@ -3,7 +3,7 @@ package frontend.view;
 import backend.model.builder.item.Item;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
-import frontend.model.component.*;
+import frontend.model.component.ComponentFactory;
 import rules.model.IMovePlayerDTO;
 
 import javax.swing.*;
@@ -20,13 +20,12 @@ public class InterfaceGame {
 
     public InterfaceGame(List<JLabel> components) {
         this.components = components;
-        frame = JFrameFactory.getInstance();
+        frame = ComponentFactory.getJFrame();
         song = new Song();
         soundEffects = new SoundEffects();
         settingsFrame();
         if (Objects.nonNull(components)) components.forEach(jLabel -> frame.getContentPane().add(jLabel));
         frame.getContentPane().repaint();
-        frame.getContentPane().add(components.get(1));
         //history();
     }
 
@@ -71,13 +70,13 @@ public class InterfaceGame {
     }
 
     private void createJMenuBar() {
-        var menuBar = JMenuBarFactory.getInstance();
+        var menuBar = ComponentFactory.getJMenuBar();
         var events = new EventsMenuBar(frame.getContentPane(), song, soundEffects);
         List.of("Historia", "Comandos", "Ajuda", "Musica", "Efeitos", "Sair")
                 .forEach(name -> {
-                    var menu = JMenuFactory.getInstance(name);
+                    var menu = ComponentFactory.getJMenu(name);
                     menuBar.add(menu);
-                    var item = JMenuItemFactory.getInstance(name);
+                    var item = ComponentFactory.getJMenuItem(name);
                     item.addActionListener(e -> events.action(name));
                     menu.add(item);
                 });
@@ -92,7 +91,7 @@ public class InterfaceGame {
     }
 
     public void setItensJLabel(List<Item> itens, int index) {
-        var jLabelList = JLabelFactory.getInstance(itens);
+        var jLabelList = ComponentFactory.getJLabel(itens);
         jLabelList.forEach(jLabel -> frame.getContentPane().add(jLabel, index));
     }
 

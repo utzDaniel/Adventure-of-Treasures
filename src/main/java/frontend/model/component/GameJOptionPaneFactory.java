@@ -3,9 +3,9 @@ package frontend.model.component;
 import javax.swing.*;
 import java.awt.*;
 
-public final class JOptionPaneFactory {
+public final class GameJOptionPaneFactory {
 
-    private JOptionPaneFactory() {
+    private GameJOptionPaneFactory() {
     }
 
     public static void openHistory(Container container) {
