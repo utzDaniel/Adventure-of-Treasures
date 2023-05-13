@@ -7,7 +7,7 @@ import frontend.model.component.GameJOptionPaneFactory;
 
 import java.awt.*;
 
-public class EventsMenuBar {
+public final class EventsMenuBar {
 
     private final Container container;
     private final Song song;
@@ -24,8 +24,8 @@ public class EventsMenuBar {
             case "Historia" -> GameJOptionPaneFactory.openHistory(container);
             case "Comandos" -> GameJOptionPaneFactory.openCommand(container);
             case "Ajuda" -> GameJOptionPaneFactory.openHelp(container);
-            case "Musica" -> song.onPlayer();//TODO Tentar remover esse evento daqui
-            case "Efeitos" -> soundEffects.onPlayer();//TODO Tentar remover esse evento daqui
+            case "Musica" -> song.onPlayer();// TODO Tentar remover esse evento daqui
+            case "Efeitos" -> soundEffects.onPlayer();// TODO Tentar remover esse evento daqui
             case "Sair" -> System.exit(0);
             default -> throw new EventException("Nome do evento não encontrado");
         }

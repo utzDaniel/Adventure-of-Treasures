@@ -11,8 +11,8 @@ public class LabelInformation {
     private final JLabel[] infoLabel;
 
     public LabelInformation() {
-        this.infoLabel = new JLabel[4];
-        this.index = 0;
+        int MAX_LABEL = 4;
+        this.infoLabel = new JLabel[MAX_LABEL];
     }
 
     public void create(String info) {
@@ -20,18 +20,21 @@ public class LabelInformation {
         this.index++;
     }
 
-
     public void updateText(Item item) {
-        this.infoLabel[1].setText("Nome: " + item.getName());
-        this.infoLabel[2].setText("Peso: " + item.getWeight());
-        this.infoLabel[3].setText("<html>Descrição: " + item.getDescription() + "</html>");
+        this.infoLabel[1].setText(String.format("%s: %s",this.infoLabel[1].getName(), item.getName()));
+        this.infoLabel[2].setText(String.format("%s: %s",this.infoLabel[2].getName(), item.getWeight()));
+        this.infoLabel[3].setText(String.format("<html>%s: %s</html>",this.infoLabel[3].getName(), item.getDescription()));
     }
 
-    public void resetText(int capacity, int maxCapacity) {
-        this.infoLabel[0].setText(String.format("Capacidade do inventario %d/%d", capacity, maxCapacity));
-        this.infoLabel[1].setText("Nome: ");
-        this.infoLabel[2].setText("Peso: ");
-        this.infoLabel[3].setText("Descrição: ");
+    public void updateTextCapacity(int capacity, int maxCapacity) {
+        var space = this.infoLabel[0].getName().lastIndexOf(" ");
+        var text = String.format("%s %d/%d",this.infoLabel[0].getName().substring(0, space), capacity, maxCapacity);
+        this.infoLabel[0].setText(text);
+        this.infoLabel[0].setName(text);
+    }
+
+    public void resetText() {
+        for (JLabel jLabel : this.infoLabel) jLabel.setText(jLabel.getName());
     }
 
     public JLabel[] getInfoLabel() {

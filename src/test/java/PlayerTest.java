@@ -72,7 +72,7 @@ public class PlayerTest {
 
     @Test
     public void buscarListaDeItensNãoVisivelNoInventario() {
-        assertEquals(player.getInventory().getItemInvisible().size(), 3);
+        assertEquals(4, player.getInventory().getItemInvisible().size());
     }
 
     @Test

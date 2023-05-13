@@ -43,6 +43,7 @@ public class ButtonItem {
         return buttons;
     }
 
+    // TODO resolver de outra forma o instanceof
     public void enableIButtonItensNotCombinable() {
         if (!isEnableIButtonItensNotCombinable) {
             Arrays.stream(getButtonItens()).forEach(jButton -> {

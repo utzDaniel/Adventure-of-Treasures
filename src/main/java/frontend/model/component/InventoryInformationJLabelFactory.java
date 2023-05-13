@@ -18,6 +18,7 @@ final class InventoryInformationJLabelFactory {
         var rectangle = new Rectangle(x, calculateYPosition(index), width, calculateHeight(name));
         var jLabel = defaultSettings();
         jLabel.setText(name);
+        jLabel.setName(name);
         jLabel.setBounds(rectangle);
         jLabel.setHorizontalAlignment(selectHorizontalAlignment(name));
         return jLabel;

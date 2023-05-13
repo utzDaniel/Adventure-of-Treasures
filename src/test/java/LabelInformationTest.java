@@ -14,7 +14,7 @@ public class LabelInformationTest {
     private final LabelInformation labelInformation = new LabelInformation();
     private Item item;
     private final String [] label =
-            {"Capacidade do inventario 0/10","Nome: ","Peso: ","Descrição: "};
+            {"Capacidade do inventario 0/10","Nome","Peso","Descrição"};
 
     @Before
     public void create(){
@@ -43,9 +43,9 @@ public class LabelInformationTest {
     public void validUpdateText(){
         var labelItem = new ArrayList<String>();
         labelItem.add(label[0]);
-        labelItem.add(label[1] + item.getName());
-        labelItem.add(label[2] + item.getWeight());
-        labelItem.add("<html>"+label[3] + item.getDescription()+"</html>");
+        labelItem.add(label[1] +": "+ item.getName());
+        labelItem.add(label[2] +": "+ item.getWeight());
+        labelItem.add("<html>"+label[3] +": "+ item.getDescription()+"</html>");
         labelInformation.updateText(item);
         for (int i = 0; i < labelInformation.getInfoLabel().length; i++) {
             assertEquals(labelItem.get(i),labelInformation.getInfoLabel()[i].getText());
@@ -54,7 +54,7 @@ public class LabelInformationTest {
     @Test
     public void validResetText(){
         labelInformation.updateText(item);
-        labelInformation.resetText(0,10);
+        labelInformation.resetText();
         String name;
         for (int i = 0; i < label.length; i++) {
             name = labelInformation.getInfoLabel()[i].getText();

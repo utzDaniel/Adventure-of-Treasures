@@ -3,6 +3,7 @@ package frontend.view;
 import backend.model.Player;
 import backend.model.builder.item.Item;
 import backend.model.interfaces.ICombinable;
+import frontend.model.component.ComponentFactory;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -28,72 +29,72 @@ public class InterfaceInventory {
     public void open() {
         this.player.getInventory().setOpenInventory();
         this.panelInventory = new PanelInventory();
-        panelInventory.create();
-        this.labelSideEast = panelInventory.getLabel();
-        items = new ArrayList<>();
-        buttonItem = new ButtonItem();
-        labelInformation = new LabelInformation();
-        buttonAction = new ButtonAction();
+        this.panelInventory.create();
+        this.labelSideEast = this.panelInventory.getLabel();
+        this.items = new ArrayList<>();
+        this.buttonItem = new ButtonItem();
+        this.labelInformation = new LabelInformation();
+        this.buttonAction = new ButtonAction();
         setSettings();
     }
 
     private void setSettings() {
-        panelInventory.getButton().addActionListener(e -> quit());
+        this.panelInventory.getButton().addActionListener(e -> quit());
         setItens();
         setInfoItens();
         setButtonsActions();
-        interfaceGame.getFrame().add(panelInventory.getPanel());
-        interfaceGame.getFrame().setVisible(true);
+        this.interfaceGame.getFrame().add(this.panelInventory.getPanel(), 1);
+        this.panelInventory.getPanel().requestFocus();
+        this.interfaceGame.getFrame().setVisible(true);
     }
 
     private void removeItens() {
-        buttonItem.remove(labelSideEast);
+        this.buttonItem.remove(this.labelSideEast);
         setItens();
     }
 
     private void setItens() {
-        player.getInventory().getItemVisible().forEach(item -> {
-            buttonItem.create(item);
-            buttonItem.getLast().addActionListener(e ->
-                    actionButtonItem(item));
-            labelSideEast.add(buttonItem.getLast());
+        this.player.getInventory().getItemVisible().forEach(item -> {
+            this.buttonItem.create(item);
+            this.buttonItem.getLast().addActionListener(e -> actionButtonItem(item));
+            this.labelSideEast.add(this.buttonItem.getLast());
         });
     }
 
     private void setInfoItens() {
-        String capicadade = String.format("Capacidade do inventario %d/%d", player.getInventory().getCapacity(), player.getInventory().getMaxCapacity());
-        List.of(capicadade, "Nome: ", "Peso: ", "Descrição: ").forEach(labelInformation::create);
-        Arrays.stream(labelInformation.getInfoLabel())
-                .forEach(jLabel -> labelSideEast.add(jLabel));
+        String capicadade = String.format("Capacidade do inventario %d/%d", this.player.getInventory().getCapacity(), this.player.getInventory().getMaxCapacity());
+        List.of(capicadade, "Nome", "Peso", "Descrição").forEach(this.labelInformation::create);
+        Arrays.stream(this.labelInformation.getInfoLabel())
+                .forEach(jLabel -> this.labelSideEast.add(jLabel));
     }
 
     private void setButtonsActions() {
         List.of("usar", "equipar", "combinar", "remover", "cancelar", "confirmar").forEach(buttonAction::create);
-        JButton[] buttons = buttonAction.getButtonActions();
+        JButton[] buttons = this.buttonAction.getButtonActions();
         Arrays.stream(buttons).limit(4).forEach(jButton -> {
             jButton.addActionListener(e -> setConfirm(e.getActionCommand()));
-            labelSideEast.add(jButton);
+            this.labelSideEast.add(jButton);
         });
         buttons[4].addActionListener(e -> setActionCancel());
-        labelSideEast.add(buttons[4]);
+        this.labelSideEast.add(buttons[4]);
         buttons[5].addActionListener(e -> setActionConfirm(e.getActionCommand()));
-        labelSideEast.add(buttons[5]);
+        this.labelSideEast.add(buttons[5]);
     }
 
     private void actionButtonItem(Item item) {
-        buttonAction.setUseItem(item);
-        labelInformation.updateText(item);
+        this.buttonAction.setUseItem(item);
+        this.labelInformation.updateText(item);
     }
 
     private void setConfirm(String command) {
-        buttonAction.visibleCancelAndConfirm(command);
+        this.buttonAction.visibleCancelAndConfirm(command);
         if (command.equals("combinar")) {
-            Item item = buttonAction.getUseItem();
+            Item item = this.buttonAction.getUseItem();
             addListItem((ICombinable) item);
-            buttonItem.enableIButtonItensNotCombinable();
-            buttonItem.selectButtonItem(item);
-            if (items.size() > 1) {
-                buttonAction.visibleConfirmCombine(command);
+            this.buttonItem.enableIButtonItensNotCombinable();
+            this.buttonItem.selectButtonItem(item);
+            if (this.items.size() > 1) {
+                this.buttonAction.visibleConfirmCombine(command);
             }
         }
     }
@@ -108,14 +109,30 @@ public class InterfaceInventory {
 
     private void setActionConfirm(String command) {
         boolean success;
-        Item item = buttonAction.getUseItem();
+        Item item = this.buttonAction.getUseItem();
         success = switch (command) {
-            case "remover" -> player.dropItem(item);
+            case "remover" -> this.player.dropItem(item);
             case "usar", "equipar" -> item.action();
-            case "combinar" -> item.action(items);
+            case "combinar" -> item.action(this.items);
             default -> false;
         };
-        if (command.equals("usar") && success) updateItensMapGame();
+        if(success)
+            this.labelInformation.updateTextCapacity(this.player.getInventory().getCapacity(), this.player.getInventory().getMaxCapacity());
+
+        if(success && command.equals("remover")){
+            this.interfaceGame.getFrame().getContentPane().add(ComponentFactory.getJLabel(item), 1);
+        }
+
+        if (command.equals("usar") && success) {//usar pá
+            this.interfaceGame.getMapGameJLabel().setIcon(this.player.getCurrentMap().getIcon());
+            this.panelInventory.getPanel().requestFocus();
+        }
+
+        if (command.equals("combinar") && success) {//combinar papel e livro, na praia
+            this.interfaceGame.getMapGameJLabel().setIcon(this.player.getCurrentMap().getIcon());
+            this.panelInventory.getPanel().requestFocus();
+        }
+
         playEffects(command, success, item.getEffect());//TODO item.getEffect() resolver depois
         setActionCancel();
     }
@@ -125,34 +142,26 @@ public class InterfaceInventory {
         if (success) {
             commandEffect = command;
             if (command.equals("remover")) {
-                updateItensMapGame();
                 itemEffect = null;
             }
         } else {
             commandEffect = "erro";
         }
-        interfaceGame.playEffects(commandEffect, itemEffect);
+        this.interfaceGame.playEffects(commandEffect, itemEffect);
     }
 
     private void setActionCancel() {
-        buttonAction.invisible();
-        removeItens();
-        labelInformation.resetText(player.getInventory().getCapacity(), player.getInventory().getMaxCapacity());
-        items.clear();
-        this.labelSideEast.repaint();
-    }
-
-    private void updateItensMapGame() {
-        interfaceGame.clearJLabelItens();
-        interfaceGame.setItensJLabel(player.getCurrentMap().getItemVisible(), 2);
-        interfaceGame.getMapGameJLabel().repaint();
-        interfaceGame.getMapGameJLabel().setIcon(player.getCurrentMap().getIcon());
+        this.buttonAction.invisible();
+        this.labelInformation.resetText();
+        removeItens();//Limpar itens combinaveis selecionados
+        this.items.clear();//Limpar itens combinaveis
+        this.labelSideEast.repaint();//Atualizar os itens combinaveis
     }
 
     public void quit() {
         this.player.getInventory().setOpenInventory();
-        interfaceGame.getFrame().getContentPane().remove(panelInventory.getPanel());
-        interfaceGame.getFrame().repaint();
+        this.interfaceGame.getFrame().getContentPane().remove(this.panelInventory.getPanel());
+        this.interfaceGame.getFrame().repaint();
         this.interfaceGame.getFrame().requestFocus();
     }
 }
