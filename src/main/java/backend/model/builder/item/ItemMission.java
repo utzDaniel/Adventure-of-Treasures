@@ -9,7 +9,7 @@ public final class ItemMission extends Item implements IMission {
 
     private String mapGame;
 
-    protected ItemMission() {
+    ItemMission() {
     }
 
     @Override

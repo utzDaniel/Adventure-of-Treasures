@@ -12,7 +12,7 @@ import java.util.Objects;
 import static java.lang.Boolean.parseBoolean;
 import static java.lang.Integer.parseInt;
 
-public class MapGameFactory {
+public final class MapGameFactory {
     private String[] dados;
 
     public MapGame create(String[] dados) {

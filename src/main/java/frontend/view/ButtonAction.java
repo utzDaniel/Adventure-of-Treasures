@@ -6,7 +6,7 @@ import frontend.model.component.ComponentFactory;
 import javax.swing.*;
 import java.util.Arrays;
 
-public class ButtonAction {
+public final class ButtonAction {
 
     private int index;
     private Item item;

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class SceneryBuilder extends MapGameBuilder {
+public final class SceneryBuilder extends MapGameBuilder {
 
     private final Scenery scenery;
     private final Map<String, String> exits;

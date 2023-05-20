@@ -3,6 +3,7 @@ package frontend.model.component;
 import backend.model.Player;
 import backend.model.builder.item.Item;
 import backend.model.builder.map.MapGame;
+import rules.interfaces.IItemDTO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,14 +31,14 @@ final class GameJLabelFactory {
         return create(mapGame.getIcon(), "mapa", rectangle);
     }
 
-     static JLabel getInstance(Item item) {
+     static JLabel getInstance(IItemDTO item) {
         var width = 100;
         var height = 100;
-        var rectangle = new Rectangle(item.getLocation().getX(), item.getLocation().getY() - 10, width, height);
-        return create(item.getIcon(), "item", rectangle);
+        var rectangle = new Rectangle(item.getCoordinate().getX(), item.getCoordinate().getY() - 10, width, height);
+        return create(new ImageIcon(item.getIcon()), "item", rectangle);
     }
 
-    static List<JLabel> getInstance(List<Item> itens) {
+    static List<JLabel> getInstance(List<IItemDTO> itens) {
         var listJLabel = new ArrayList<JLabel>();
         itens.forEach(item -> listJLabel.add(getInstance(item)));
         return listJLabel;

@@ -1,6 +1,6 @@
 package backend.model.builder.map;
 
-public class Room extends MapGame {
+public final class Room extends MapGame {
 
     public Room () {}
 

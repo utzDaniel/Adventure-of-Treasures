@@ -2,7 +2,7 @@ package backend.model.builder.map;
 
 import java.util.HashMap;
 
-public class RoomBuilder extends MapGameBuilder {
+public final class RoomBuilder extends MapGameBuilder {
 
     private final Room room;
     private RoomBuilder() {

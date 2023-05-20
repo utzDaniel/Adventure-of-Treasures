@@ -8,7 +8,7 @@ import frontend.model.component.ComponentFactory;
 import javax.swing.*;
 import java.util.Arrays;
 
-public class ButtonItem {
+public final class ButtonItem {
 
     private int index;
     private boolean isEnableIButtonItensNotCombinable;

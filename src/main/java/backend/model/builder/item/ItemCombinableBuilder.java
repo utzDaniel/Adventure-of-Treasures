@@ -2,7 +2,7 @@ package backend.model.builder.item;
 
 import rules.util.CombinableUtil;
 
-public class ItemCombinableBuilder extends ItemBuilder {
+public final class ItemCombinableBuilder extends ItemBuilder {
 
     private final ItemCombinable itemCombinable;
 

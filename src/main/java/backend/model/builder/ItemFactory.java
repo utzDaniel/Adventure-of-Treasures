@@ -7,7 +7,7 @@ import rules.interfaces.ICoordinate;
 import static java.lang.Boolean.parseBoolean;
 import static java.lang.Integer.parseInt;
 
-public class ItemFactory {
+public final class ItemFactory {
 
     private String[] dados;
 

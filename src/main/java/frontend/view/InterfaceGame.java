@@ -4,14 +4,16 @@ import backend.model.builder.item.Item;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
 import frontend.model.component.ComponentFactory;
-import rules.model.IMovePlayerDTO;
+import rules.interfaces.IItemDTO;
+import rules.interfaces.IMovePlayerDTO;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class InterfaceGame {
+public final class InterfaceGame {
 
     private final JFrame frame;
     private final Song song;
@@ -45,11 +47,11 @@ public class InterfaceGame {
         components.forEach(
                 jLabel -> {
                     if (jLabel.getName().equals("player")) {
-                        jLabel.setIcon(movePlayerDTO.getIconPlayer());
-                        jLabel.setLocation(movePlayerDTO.getCoordinatePlayer().getPoint());
+                        jLabel.setIcon(new ImageIcon(movePlayerDTO.getIconPlayer()));
+                        jLabel.setLocation(new Point(movePlayerDTO.getCoordinatePlayer().getX(), movePlayerDTO.getCoordinatePlayer().getY()));
                     }
                     if (jLabel.getName().equals("mapa")) {
-                        jLabel.setIcon(movePlayerDTO.getIconMap());
+                        jLabel.setIcon(new ImageIcon(movePlayerDTO.getIconMap()));
                     }
                 }
         );
@@ -90,7 +92,7 @@ public class InterfaceGame {
         frame.getContentPane().repaint();
     }
 
-    public void setItensJLabel(List<Item> itens, int index) {
+    public void setItensJLabel(List<IItemDTO> itens, int index) {
         var jLabelList = ComponentFactory.getJLabel(itens);
         jLabelList.forEach(jLabel -> frame.getContentPane().add(jLabel, index));
     }

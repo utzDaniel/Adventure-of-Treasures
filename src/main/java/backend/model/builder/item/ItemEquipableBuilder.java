@@ -1,6 +1,6 @@
 package backend.model.builder.item;
 
-public class ItemEquipableBuilder extends ItemBuilder {
+public final class ItemEquipableBuilder extends ItemBuilder {
 
     private final ItemEquipable itemEquipable;
 

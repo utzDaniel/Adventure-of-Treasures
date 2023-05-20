@@ -1,6 +1,6 @@
 package frontend.settings;
 
-public class SettingsSoundEffects {
+public final class SettingsSoundEffects {
 
     private static boolean onPlayer = true;
 

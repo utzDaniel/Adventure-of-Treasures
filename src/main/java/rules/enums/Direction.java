@@ -1,8 +1,14 @@
 package rules.enums;
 
+import backend.enums.MovePlayer;
+import rules.exception.MoveException;
+
+import javax.sql.rowset.serial.SerialJavaObject;
+import java.util.Arrays;
+
 public enum Direction {
-    NORTE("norte",38),SUL("sul",40),
-    OESTE("oeste",37),LESTE("leste",39);
+    NORTE("norte", 38), SUL("sul", 40),
+    OESTE("oeste", 37), LESTE("leste", 39);
 
     private final String label;
 
@@ -12,12 +18,24 @@ public enum Direction {
         return label;
     }
 
-    public int getKeyCode() {
-        return keyCode;
-    }
-
     Direction(String label, int keyCode) {
         this.label = label;
         this.keyCode = keyCode;
+    }
+
+    public static boolean containsKeyCode(int keyCode) {
+        return Arrays.stream(Direction.values())
+                .anyMatch(direction -> direction.isKeyCode(keyCode));
+    }
+
+    public static String getLabel(int keyCode) {
+        return Arrays.stream(Direction.values())
+                .filter(direction -> direction.isKeyCode(keyCode))
+                .findFirst().map(Direction::getLabel)
+                .orElseThrow(() -> new MoveException("Direção invalida!"));
+    }
+
+    public boolean isKeyCode(int keyCode) {
+        return this.keyCode == keyCode;
     }
 }

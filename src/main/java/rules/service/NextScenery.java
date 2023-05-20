@@ -10,11 +10,11 @@ import java.util.Objects;
 public class NextScenery {
 
     private final Player player;
-    private final InterfaceGame interfaceGame;
+    private final ICoordinate coordinate;
 
-    public NextScenery(InterfaceGame interfaceGame) {
+    public NextScenery(ICoordinate coordinate) {
         this.player = Player.getInstance();
-        this.interfaceGame = interfaceGame;
+        this.coordinate = coordinate;
     }
 
     public boolean run(String direction) {
@@ -23,7 +23,6 @@ public class NextScenery {
         if (Objects.isNull(nextScenery)) return false;
         this.player.setCurrentMap(nextScenery);
         newPosition(direction);
-        this.interfaceGame.getMapGameJLabel().setIcon(nextScenery.getIcon());
         return true;
 
     }
@@ -31,9 +30,9 @@ public class NextScenery {
     private void newPosition(String direction) {
         ICoordinate coordinate = this.player.getLocation();
         switch (direction) {
-            case "norte" -> coordinate.setY(this.interfaceGame.getMapGameJLabel().getHeight() - 70);
+            case "norte" -> coordinate.setY(this.coordinate.getY() - 70);
             case "sul" -> coordinate.setY(10);
-            case "oeste" -> coordinate.setX(this.interfaceGame.getMapGameJLabel().getWidth() - 50);
+            case "oeste" -> coordinate.setX(this.coordinate.getX() - 50);
             case "leste" -> coordinate.setX(10);
         }
         this.player.setLocation(coordinate);

@@ -19,11 +19,11 @@ public abstract class Item implements IAction {
     }
 
     public ICoordinate getLocation() {
-        return ICoordinate.getInstance(this.coordinate.getPoint());
+        return ICoordinate.getInstance(this.coordinate);
     }
 
     public void setLocation(ICoordinate coordinate) {
-        this.coordinate = ICoordinate.getInstance(coordinate.getPoint());
+        this.coordinate = ICoordinate.getInstance(coordinate);
     }
 
     public ImageIcon getIcon() {

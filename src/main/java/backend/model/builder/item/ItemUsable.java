@@ -8,7 +8,7 @@ import rules.service.Use;
 
 import java.util.List;
 
-public class ItemUsable extends Item implements IUsable {
+public final class ItemUsable extends Item implements IUsable {
 
     /*
      * separa em duas classe pois, posso ter item usavel no player (poção)
@@ -19,10 +19,10 @@ public class ItemUsable extends Item implements IUsable {
     private String localUse;
     private String effect;
 
-    protected ItemUsable() {
+    ItemUsable() {
     }
 
-    protected void setLocalUse(String localUse) {
+    void setLocalUse(String localUse) {
         this.localUse = localUse;
     }
 
@@ -47,7 +47,7 @@ public class ItemUsable extends Item implements IUsable {
         return this.effect;
     }
 
-    protected void setEffect(String filename) {
+    void setEffect(String filename) {
         this.effect = filename;
     }
 

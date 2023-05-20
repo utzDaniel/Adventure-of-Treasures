@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Scenery extends MapGame {
+public final class Scenery extends MapGame {
 
     private Map<String, String> exits;
 
@@ -19,7 +19,7 @@ public class Scenery extends MapGame {
                 ? null : (Scenery) RepositoryFactory.getRepositoryMapGame().get(this.exits.get(direction));
     }
 
-    protected void setExits(Map<String, String> exits) {
+    void setExits(Map<String, String> exits) {
         this.exits = exits;
     }
 

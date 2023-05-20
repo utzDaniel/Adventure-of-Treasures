@@ -1,3 +1,4 @@
+import backend.model.Coordinate;
 import backend.model.Player;
 import backend.model.builder.map.MapGame;
 import backend.repository.RepositoryFactory;
@@ -28,7 +29,7 @@ public class NextSceneryTest {
         var listJLabel = new ArrayList<JLabel>();
         listJLabel.add(ComponentFactory.getJLabel(player));
         listJLabel.add(ComponentFactory.getJLabel(player.getCurrentMap()));
-        nextScenery = new NextScenery(new InterfaceGame(listJLabel));
+        nextScenery = new NextScenery(new Coordinate(810,662));
     }
 
     @Test

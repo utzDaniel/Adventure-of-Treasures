@@ -7,16 +7,16 @@ import rules.service.Unequip;
 
 import java.util.List;
 
-public class ItemEquipable extends Item implements IEquipable {
+public final class ItemEquipable extends Item implements IEquipable {
 
     private boolean equipped;
     //    private Room room;
     private String effect;
 
-    protected ItemEquipable() {
+    ItemEquipable() {
     }
 
-    protected void setEquipped(boolean equipped) {
+    void setEquipped(boolean equipped) {
         this.equipped = equipped;
     }
 
@@ -47,7 +47,7 @@ public class ItemEquipable extends Item implements IEquipable {
     public String getEffect() {
         return this.effect;
     }
-    protected void setEffect(String filename) {
+    void setEffect(String filename) {
         this.effect = filename;
     }
 

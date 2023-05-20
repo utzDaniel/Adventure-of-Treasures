@@ -4,7 +4,7 @@ import frontend.settings.SettingsSong;
 
 import java.util.Objects;
 
-public class Song extends MusicPlayer {
+public final class Song extends MusicPlayer {
 
     @Override
     public void play(String song) {

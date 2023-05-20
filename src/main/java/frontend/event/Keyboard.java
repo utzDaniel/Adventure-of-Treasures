@@ -1,19 +1,26 @@
-package rules.controller;
+package frontend.event;
 
 import backend.model.Player;
 import backend.model.builder.item.Item;
+import backend.model.builder.map.MapGame;
+import backend.model.dto.ItemDTO;
+import backend.model.dto.MovePlayerDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
-import rules.exception.InventoryException;
-import rules.exception.MapGameException;
-import backend.model.builder.map.MapGame;
-import rules.model.MovePlayerDTO;
-import rules.service.NextDoor;
-import rules.service.NextScenery;
-import rules.service.Take;
+import frontend.util.JsonConverter;
 import frontend.view.InterfaceGame;
 import frontend.view.InterfaceInventory;
+import rules.enums.Direction;
+import rules.exception.InventoryException;
+import rules.exception.MapGameException;
+import rules.interfaces.ICoordinate;
+import rules.interfaces.IItemDTO;
+import rules.model.EventAction;
+import rules.service.NextDoor;
+import rules.service.Take;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -45,11 +52,27 @@ public class Keyboard {
             }
 
             @Override
-            public void keyPressed(KeyEvent e) {
-                int keyCode = e.getKeyCode();
-                if (keyCode >= 37 && keyCode <= 40) {
-                    movePlayer(keyCode);
+            public void keyPressed(KeyEvent event) {
+
+                var keyCode = event.getKeyCode();
+
+                if (Direction.containsKeyCode(keyCode)) {
+
+                    var width = interfaceGame.getMapGameJLabel().getWidth();
+                    var height = interfaceGame.getMapGameJLabel().getHeight();
+
+                    try {
+                        var jsonReq = JsonConverter.getJson(ICoordinate.getInstance(width, height));
+                        var jsonRes = new EventAction().run(keyCode, jsonReq);
+                        var movePlayerDTO = JsonConverter.getObjetc(jsonRes, MovePlayerDTO.class);
+
+                        interfaceGame.updateComponentsMove(movePlayerDTO);
+
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
+                    }
                 } else if (keyCode == 97) {
+
                     if (player.getLocation().getX() == 710 && player.getLocation().getX() == 280
                             && Objects.nonNull(player.getInventory().getItem("tesouro")))
                         finish();
@@ -85,6 +108,7 @@ public class Keyboard {
                         inventory.open();
                     }
                 }
+
             }
 
             @Override
@@ -95,49 +119,11 @@ public class Keyboard {
         });
     }
 
-    private void movePlayer(int keyCode) {
-        boolean sucess = false;
-        if (keyCode == 38) {
-            if (player.getLocation().getY()  > 0) {
-                player.walk("norte");
-            } else {
-                sucess = new NextScenery(this.interfaceGame).run("norte");
-            }
-        } else if (keyCode == 40) {
-            if (player.getLocation().getY()  < this.interfaceGame.getMapGameJLabel().getHeight() - 50) {
-                player.walk("sul");
-            } else {
-                sucess = new NextScenery(this.interfaceGame).run("sul");
-            }
-        } else if (keyCode == 37) {
-            if (player.getLocation().getX() > 0) {
-                player.walk("oeste");
-            } else {
-                sucess = new NextScenery(this.interfaceGame).run("oeste");
-            }
-        } else if (keyCode == 39) {
-            if (player.getLocation().getX() < this.interfaceGame.getMapGameJLabel().getWidth() - 30) {
-                player.walk("leste");
-            } else {
-                sucess = new NextScenery(this.interfaceGame).run("leste");
-            }
-        }
-        String song = null;
-        List<Item> itens = null;
-        if (sucess) {
-            song = this.player.getCurrentMap().getSong();
-            itens = new ArrayList<>(this.player.getCurrentMap().getItemVisible());
-        }
-        this.interfaceGame.updateComponentsMove(
-                new MovePlayerDTO(player.getCurrentMap().getIcon(),player.getIcon(), player.getLocation(), song, itens, 1)
-        );
-    }
-
     private void updateItensMapGame() {
         this.interfaceGame.clearJLabelItens();
-        this.interfaceGame.setItensJLabel(this.player.getCurrentMap().getItemVisible(), 1);
+        this.interfaceGame.setItensJLabel(getIItemDTO(this.player.getCurrentMap().getItemVisible()), 1);
         this.interfaceGame.getMapGameJLabel().repaint();
-        this.interfaceGame.getPlayerJLabel().setLocation(player.getLocation().getPoint());
+        this.interfaceGame.getPlayerJLabel().setLocation(new Point(player.getLocation().getX(), player.getLocation().getY()));
     }
 
     private void finish() {
@@ -154,5 +140,11 @@ public class Keyboard {
                     case "finish" -> "finish.wav";
                     default -> "erro.wav";
                 };
+    }
+
+    private List<IItemDTO> getIItemDTO(List<Item> itens) {
+        return new ArrayList<>(itens.stream()
+                .map(item -> new ItemDTO(item.getIcon().toString(), item.getLocation()))
+                .toList());
     }
 }

@@ -5,15 +5,15 @@ import rules.util.CombinableUtil;
 
 import java.util.List;
 
-public class ItemCombinable extends Item implements ICombinable {
+public final class ItemCombinable extends Item implements ICombinable {
 
     private CombinableUtil combinableUtil;
     private String effect;
 
-    protected ItemCombinable() {
+    ItemCombinable() {
     }
 
-    protected void setUtilCombinable(CombinableUtil combinableUtil) {
+    void setUtilCombinable(CombinableUtil combinableUtil) {
         this.combinableUtil = combinableUtil;
     }
 
@@ -25,7 +25,7 @@ public class ItemCombinable extends Item implements ICombinable {
     public String getEffect() {
         return this.effect;
     }
-    protected void setEffect(String filename) {
+    void setEffect(String filename) {
         this.effect = filename;
     }
 

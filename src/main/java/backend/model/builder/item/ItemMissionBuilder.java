@@ -1,6 +1,6 @@
 package backend.model.builder.item;
 
-public class ItemMissionBuilder extends ItemBuilder {
+public final class ItemMissionBuilder extends ItemBuilder {
 
     private final ItemMission itemMission;
 

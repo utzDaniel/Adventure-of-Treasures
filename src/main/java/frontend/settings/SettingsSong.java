@@ -1,6 +1,6 @@
 package frontend.settings;
 
-public class SettingsSong {
+public final class SettingsSong {
 
     private static boolean onPlayer = false;
 

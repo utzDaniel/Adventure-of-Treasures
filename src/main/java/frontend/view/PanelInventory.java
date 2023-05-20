@@ -5,7 +5,7 @@ import frontend.model.component.ComponentFactory;
 import javax.swing.*;
 import java.awt.*;
 
-public class PanelInventory {
+public final class PanelInventory {
 
     private JPanel panelMain;
     private JLabel labelEast;

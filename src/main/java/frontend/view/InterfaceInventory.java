@@ -2,6 +2,7 @@ package frontend.view;
 
 import backend.model.Player;
 import backend.model.builder.item.Item;
+import backend.model.dto.ItemDTO;
 import backend.model.interfaces.ICombinable;
 import frontend.model.component.ComponentFactory;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class InterfaceInventory {
+public final class InterfaceInventory {
 
     private final InterfaceGame interfaceGame;
     private final Player player;
@@ -120,7 +121,7 @@ public class InterfaceInventory {
             this.labelInformation.updateTextCapacity(this.player.getInventory().getCapacity(), this.player.getInventory().getMaxCapacity());
 
         if(success && command.equals("remover")){
-            this.interfaceGame.getFrame().getContentPane().add(ComponentFactory.getJLabel(item), 1);
+            this.interfaceGame.getFrame().getContentPane().add(ComponentFactory.getJLabel(new ItemDTO(item.getIcon().toString(), item.getLocation())), 1);
         }
 
         if (command.equals("usar") && success) {//usar pá

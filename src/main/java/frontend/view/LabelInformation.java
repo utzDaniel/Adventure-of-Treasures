@@ -5,7 +5,7 @@ import frontend.model.component.ComponentFactory;
 
 import javax.swing.*;
 
-public class LabelInformation {
+public final class LabelInformation {
 
     private int index;
     private final JLabel[] infoLabel;

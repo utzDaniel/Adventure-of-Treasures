@@ -2,7 +2,7 @@ package frontend.model;
 
 import frontend.settings.SettingsSoundEffects;
 
-public class SoundEffects extends MusicPlayer {
+public final class SoundEffects extends MusicPlayer {
 
     @Override
     public void play(String effect) {

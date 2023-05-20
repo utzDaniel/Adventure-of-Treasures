@@ -1,11 +1,13 @@
 import backend.model.Player;
 import backend.model.builder.item.Item;
+import backend.model.dto.ItemDTO;
 import backend.repository.RepositoryFactory;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
 import frontend.model.component.ComponentFactory;
 import frontend.view.InterfaceGame;
-import rules.controller.Keyboard;
+import frontend.event.Keyboard;
+import rules.interfaces.IItemDTO;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -44,8 +46,14 @@ public class Game {
         var listJLabel = new ArrayList<JLabel>();
         listJLabel.add(ComponentFactory.getJLabel(this.player));
         listJLabel.add(ComponentFactory.getJLabel(this.player.getCurrentMap()));
-        listJLabel.addAll(ComponentFactory.getJLabel(this.player.getCurrentMap().getItemVisible()));
+        listJLabel.addAll(ComponentFactory.getJLabel(getIItemDTO(this.player.getCurrentMap().getItemVisible())));
         return listJLabel;
+    }
+
+    private List<IItemDTO> getIItemDTO(List<Item> itens) {
+        return new ArrayList<>(itens.stream()
+                .map(item -> new ItemDTO(item.getIcon().toString(), item.getLocation()))
+                .toList());
     }
 
     public static void main(String[] args) {
