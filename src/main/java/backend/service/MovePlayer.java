@@ -1,6 +1,6 @@
 package backend.service;
 
-import backend.model.Coordinate;
+import backend.model.dto.CoordinateDTO;
 import backend.model.Player;
 import backend.model.builder.item.Item;
 import backend.model.dto.ItemDTO;
@@ -8,7 +8,7 @@ import backend.model.dto.MovePlayerDTO;
 import backend.util.JsonConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import rules.interfaces.ICoordinate;
-import rules.interfaces.IItemDTO;
+import rules.interfaces.IItem;
 import rules.service.NextScenery;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class MovePlayer {
 
     public String run(String direction, String json) {
         try {
-            ICoordinate coordinate = JsonConverter.getObjetc(json, Coordinate.class);
+            ICoordinate coordinate = JsonConverter.getObjetc(json, CoordinateDTO.class);
             var movePlayerDTO = getMovePlayerDTO(direction, coordinate);
             return JsonConverter.getJson(movePlayerDTO);
         } catch (JsonProcessingException e) {
@@ -64,7 +64,7 @@ public class MovePlayer {
         }
 
         String song = null;
-        List<IItemDTO> itensDTO = null;
+        List<IItem> itensDTO = null;
 
         if (sucess) {
             song = this.player.getCurrentMap().getSong();

@@ -1,21 +1,18 @@
 package rules.service;
 
-import rules.exception.MapGameException;
 import backend.model.Door;
 import backend.model.Player;
 import backend.model.builder.map.MapGame;
-import frontend.view.InterfaceGame;
+import rules.exception.MapGameException;
 
 import java.util.Optional;
 
 public class NextDoor {
 
     private final Player player;
-    private final InterfaceGame interfaceGame;
 
-    public NextDoor(InterfaceGame interfaceGame) {
+    public NextDoor() {
         this.player = Player.getInstance();
-        this.interfaceGame = interfaceGame;
     }
 
     public void run() {
@@ -25,7 +22,6 @@ public class NextDoor {
         MapGame mapGame = player.getCurrentMap().getMapDoor(door.get());
         updatePositionPlayer(mapGame);
         player.setCurrentMap(mapGame);
-        interfaceGame.getMapGameJLabel().setIcon(mapGame.getIcon());
     }
 
     private void updatePositionPlayer(MapGame mapGame) {

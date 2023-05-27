@@ -1,4 +1,3 @@
-import backend.model.Coordinate;
 import backend.model.Door;
 import backend.model.builder.map.MapGame;
 import backend.model.builder.map.RoomBuilder;

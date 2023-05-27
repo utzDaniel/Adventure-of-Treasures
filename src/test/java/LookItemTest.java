@@ -1,5 +1,4 @@
 import rules.exception.MoveException;
-import backend.model.Coordinate;
 import backend.model.Player;
 import backend.model.builder.map.Scenery;
 import rules.enums.Direction;

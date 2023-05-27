@@ -1,5 +1,4 @@
 import rules.exception.InventoryException;
-import backend.model.Coordinate;
 import backend.model.Player;
 import backend.model.builder.item.Item;
 import backend.model.builder.item.ItemUsableBuilder;
@@ -9,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import backend.repository.RepositoryFactory;
 import rules.interfaces.ICoordinate;
-import rules.service.Take;
+import backend.service.Take;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

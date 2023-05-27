@@ -7,7 +7,7 @@ import frontend.model.SoundEffects;
 import frontend.model.component.ComponentFactory;
 import frontend.view.InterfaceGame;
 import frontend.event.Keyboard;
-import rules.interfaces.IItemDTO;
+import rules.interfaces.IItem;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class Game {
         return listJLabel;
     }
 
-    private List<IItemDTO> getIItemDTO(List<Item> itens) {
+    private List<IItem> getIItemDTO(List<Item> itens) {
         return new ArrayList<>(itens.stream()
                 .map(item -> new ItemDTO(item.getIcon().toString(), item.getLocation()))
                 .toList());

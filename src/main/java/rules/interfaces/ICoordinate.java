@@ -1,11 +1,11 @@
 package rules.interfaces;
 
-import backend.model.Coordinate;
+import backend.model.dto.CoordinateDTO;
 
 public interface ICoordinate {
 
     static ICoordinate getInstance(int x, int y) {
-        return new Coordinate(x, y);
+        return new CoordinateDTO(x, y);
     }
 
     static ICoordinate getInstance(ICoordinate coordinate) {

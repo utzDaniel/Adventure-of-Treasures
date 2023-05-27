@@ -1,5 +1,4 @@
 import rules.exception.InventoryException;
-import backend.model.Coordinate;
 import backend.model.Player;
 import backend.model.builder.item.Item;
 import backend.model.builder.item.ItemEquipableBuilder;

@@ -1,9 +1,8 @@
-import backend.model.Coordinate;
+import backend.model.dto.CoordinateDTO;
 import backend.model.Player;
 import backend.model.builder.map.MapGame;
 import backend.repository.RepositoryFactory;
 import frontend.model.component.ComponentFactory;
-import frontend.view.InterfaceGame;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -29,7 +28,7 @@ public class NextSceneryTest {
         var listJLabel = new ArrayList<JLabel>();
         listJLabel.add(ComponentFactory.getJLabel(player));
         listJLabel.add(ComponentFactory.getJLabel(player.getCurrentMap()));
-        nextScenery = new NextScenery(new Coordinate(810,662));
+        nextScenery = new NextScenery(new CoordinateDTO(810,662));
     }
 
     @Test

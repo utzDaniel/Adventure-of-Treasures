@@ -2,34 +2,32 @@ package backend.model.dto;
 
 import rules.interfaces.ICoordinate;
 import rules.interfaces.IItem;
-import rules.interfaces.IMovePlayer;
+import rules.interfaces.ITake;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MovePlayerDTO implements IMovePlayer {
+public class TakeDTO implements ITake {
 
     private String iconMap;
     private String iconPlayer;
     private CoordinateDTO coordinatePlayer;
-    private String songMap;
+    private String effects;
     private List<ItemDTO> itens;
-    private int indexItens;
 
-    public MovePlayerDTO() {
+    public TakeDTO() {
     }
 
-    public MovePlayerDTO(String iconMap, String iconPlayer, ICoordinate coordinatePlayer, String songMap, List<IItem> itens, int indexItens) {
+    public TakeDTO(String iconMap, String iconPlayer, ICoordinate coordinatePlayer, String effects, List<IItem> itens) {
         this.iconMap = iconMap;
         this.iconPlayer = iconPlayer;
-        this.coordinatePlayer = new CoordinateDTO(coordinatePlayer.getX(),coordinatePlayer.getY());
-        this.songMap = songMap;
+        this.coordinatePlayer = new CoordinateDTO(coordinatePlayer.getX(), coordinatePlayer.getY());
+        this.effects = effects;
         if (Objects.nonNull(itens))
             this.itens = new ArrayList<>(itens.stream()
                     .map(item -> new ItemDTO(item.getIcon(), item.getCoordinate()))
                     .toList());
-        this.indexItens = indexItens;
     }
 
     @Override
@@ -48,8 +46,8 @@ public class MovePlayerDTO implements IMovePlayer {
     }
 
     @Override
-    public String getSongMap() {
-        return this.songMap;
+    public String getEffects() {
+        return this.effects;
     }
 
     @Override
@@ -60,8 +58,4 @@ public class MovePlayerDTO implements IMovePlayer {
                 .toList());
     }
 
-    @Override
-    public int getIndexItens() {
-        return this.indexItens;
-    }
 }

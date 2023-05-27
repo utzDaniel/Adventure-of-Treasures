@@ -1,9 +1,7 @@
 package rules.enums;
 
-import backend.enums.MovePlayer;
 import rules.exception.MoveException;
 
-import javax.sql.rowset.serial.SerialJavaObject;
 import java.util.Arrays;
 
 public enum Direction {

@@ -3,7 +3,6 @@ import backend.model.builder.item.Item;
 import backend.model.builder.item.ItemCombinableBuilder;
 import backend.model.builder.item.ItemMissionBuilder;
 import backend.model.builder.item.ItemUsableBuilder;
-import backend.model.Coordinate;
 import backend.model.Player;
 import backend.model.builder.map.Room;
 import backend.model.builder.map.Scenery;

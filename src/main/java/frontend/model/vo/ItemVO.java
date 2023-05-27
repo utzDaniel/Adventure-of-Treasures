@@ -1,18 +1,18 @@
-package backend.model.dto;
+package frontend.model.vo;
 
 import rules.interfaces.ICoordinate;
 import rules.interfaces.IItem;
 
-public class ItemDTO implements IItem {
+public class ItemVO implements IItem {
     private String icon;
-    private CoordinateDTO coordinate;
+    private CoordinateVO coordinate;
 
-    public ItemDTO() {
+    public ItemVO() {
     }
 
-    public ItemDTO(String icon, ICoordinate coordinate) {
+    public ItemVO(String icon, ICoordinate coordinate) {
         this.icon = icon;
-        this.coordinate = new CoordinateDTO(coordinate.getX(),coordinate.getY());
+        this.coordinate = new CoordinateVO(coordinate.getX(),coordinate.getY());
     }
 
     @Override

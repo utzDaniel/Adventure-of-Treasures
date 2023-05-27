@@ -37,7 +37,8 @@ public class NextDoorTest {
         var listJLabel = new ArrayList<JLabel>();
         listJLabel.add(ComponentFactory.getJLabel(player));
         listJLabel.add(ComponentFactory.getJLabel(player.getCurrentMap()));
-        nextDoor = new NextDoor(new InterfaceGame(listJLabel));
+        //nextDoor = new NextDoor(new InterfaceGame(listJLabel));
+        nextDoor = new NextDoor();
     }
 
     @Test

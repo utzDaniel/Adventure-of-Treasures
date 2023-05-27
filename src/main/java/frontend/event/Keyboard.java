@@ -1,37 +1,29 @@
 package frontend.event;
 
-import backend.model.Player;
-import backend.model.builder.item.Item;
-import backend.model.builder.map.MapGame;
-import backend.model.dto.ItemDTO;
-import backend.model.dto.MovePlayerDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
+import frontend.model.vo.MovePlayerVO;
+import frontend.model.vo.OpenInventoryVO;
+import frontend.model.vo.OpenVO;
+import frontend.model.vo.TakeVO;
 import frontend.util.JsonConverter;
 import frontend.view.InterfaceGame;
 import frontend.view.InterfaceInventory;
 import rules.enums.Direction;
-import rules.exception.InventoryException;
-import rules.exception.MapGameException;
 import rules.interfaces.ICoordinate;
-import rules.interfaces.IItemDTO;
 import rules.model.EventAction;
-import rules.service.NextDoor;
-import rules.service.Take;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Keyboard {
 
     private final Song song;
     private final InterfaceGame interfaceGame;
-    private final Player player;
     private final SoundEffects soundEffects;
     private final InterfaceInventory inventory;
 
@@ -39,7 +31,6 @@ public class Keyboard {
     public Keyboard(InterfaceGame interfaceGame, Song song, SoundEffects soundEffects) {
         this.song = song;
         this.interfaceGame = interfaceGame;
-        this.player = Player.getInstance();
         this.soundEffects = soundEffects;
         inventory = new InterfaceInventory(interfaceGame);
     }
@@ -64,49 +55,70 @@ public class Keyboard {
                     try {
                         var jsonReq = JsonConverter.getJson(ICoordinate.getInstance(width, height));
                         var jsonRes = new EventAction().run(keyCode, jsonReq);
-                        var movePlayerDTO = JsonConverter.getObjetc(jsonRes, MovePlayerDTO.class);
+                        var movePlayerVO = JsonConverter.getObjetc(jsonRes, MovePlayerVO.class);
 
-                        interfaceGame.updateComponentsMove(movePlayerDTO);
+                        interfaceGame.updateComponentsMove(movePlayerVO);
 
                     } catch (JsonProcessingException e) {
                         e.printStackTrace();
                     }
+
+                    //ENTRA NA PORTA
                 } else if (keyCode == 97) {
 
-                    if (player.getLocation().getX() == 710 && player.getLocation().getX() == 280
-                            && Objects.nonNull(player.getInventory().getItem("tesouro")))
-                        finish();
                     try {
-                        MapGame atual = player.getCurrentMap();
-                        new NextDoor(interfaceGame).run();
-                        if (atual != player.getCurrentMap())
-                            updateItensMapGame();
-                    } catch (MapGameException ex) {
-                        //TODO porta fechada
-                        soundEffects.play(commandEffects("erro"));
+                        var jsonRes = new EventAction().run(keyCode, null);
+                        var openVO = JsonConverter.getObjetc(jsonRes, OpenVO.class);
+
+                        if (Objects.isNull(openVO.getSongMap())) updateItensMapGame(openVO);
+
+                        else if (openVO.getSongMap().equals("finish")) finish("finish");
+
+                        else if (openVO.getSongMap().equals("erro"))
+                            soundEffects.play(commandEffects("erro"));
+                        else
+                            updateItensMapGame(openVO);
+
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
                     }
 
-
+                    //PEGAR ITEM
                 } else if (keyCode == 98) {
 
                     try {
-                        if (new Take().run()) {
-                            soundEffects.play(commandEffects("pegar"));
-                            updateItensMapGame();
+                        var jsonRes = new EventAction().run(keyCode, null);
+                        var takeVO = JsonConverter.getObjetc(jsonRes, TakeVO.class);
+
+                        if (Objects.nonNull(takeVO.getEffects())) {
+                            if (takeVO.getEffects().equals("erro"))
+                                soundEffects.play(commandEffects("erro"));
+                            else {
+                                soundEffects.play(commandEffects(takeVO.getEffects()));
+                                updateItensMapGame(takeVO);
+                            }
                         }
 
-                    } catch (InventoryException ex) {
-                        //TODO inventario cheio
-                        soundEffects.play(commandEffects("erro"));
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
                     }
 
-
+                    //INVENTARIO
                 } else if (keyCode == 99) {
-                    if (player.getInventory().openInventory()) {
-                        inventory.quit();
-                    } else {
-                        inventory.open();
+
+                    try {
+                        var jsonRes = new EventAction().run(keyCode, null);
+                        var openInventoryVO = JsonConverter.getObjetc(jsonRes, OpenInventoryVO.class);
+
+                        if (openInventoryVO.isOpen()) {
+                            inventory.quit();
+                        } else {
+                            inventory.open();
+                        }
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
                     }
+
                 }
 
             }
@@ -119,16 +131,27 @@ public class Keyboard {
         });
     }
 
-    private void updateItensMapGame() {
+    private void updateItensMapGame(OpenVO openVO) {
+        this.interfaceGame.getMapGameJLabel().setIcon(new ImageIcon(openVO.getIconMap()));
         this.interfaceGame.clearJLabelItens();
-        this.interfaceGame.setItensJLabel(getIItemDTO(this.player.getCurrentMap().getItemVisible()), 1);
+        this.interfaceGame.setItensJLabel(openVO.getItens(), 1);
         this.interfaceGame.getMapGameJLabel().repaint();
-        this.interfaceGame.getPlayerJLabel().setLocation(new Point(player.getLocation().getX(), player.getLocation().getY()));
+        this.interfaceGame.getPlayerJLabel().setLocation(new Point(openVO.getCoordinatePlayer().getX(),
+                openVO.getCoordinatePlayer().getY()));
     }
 
-    private void finish() {
+    private void updateItensMapGame(TakeVO takeVO) {
+        this.interfaceGame.getMapGameJLabel().setIcon(new ImageIcon(takeVO.getIconMap()));
+        this.interfaceGame.clearJLabelItens();
+        this.interfaceGame.setItensJLabel(takeVO.getItens(), 1);
+        this.interfaceGame.getMapGameJLabel().repaint();
+        this.interfaceGame.getPlayerJLabel().setLocation(new Point(takeVO.getCoordinatePlayer().getX(),
+                takeVO.getCoordinatePlayer().getY()));
+    }
+
+    private void finish(String song) {
         this.song.closePlay();
-        this.soundEffects.play(commandEffects("finish"));
+        this.soundEffects.play(commandEffects(song));
         System.exit(0);
     }
 
@@ -140,11 +163,5 @@ public class Keyboard {
                     case "finish" -> "finish.wav";
                     default -> "erro.wav";
                 };
-    }
-
-    private List<IItemDTO> getIItemDTO(List<Item> itens) {
-        return new ArrayList<>(itens.stream()
-                .map(item -> new ItemDTO(item.getIcon().toString(), item.getLocation()))
-                .toList());
     }
 }

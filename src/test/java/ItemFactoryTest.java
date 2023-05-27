@@ -1,5 +1,4 @@
 import backend.model.builder.item.*;
-import backend.model.Coordinate;
 import backend.mapper.ItemMapper;
 import org.junit.Before;
 import org.junit.Test;
