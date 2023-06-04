@@ -113,7 +113,7 @@ public class Keyboard {
                         if (openInventoryVO.isOpen()) {
                             inventory.quit();
                         } else {
-                            inventory.open();
+                            inventory.open(openInventoryVO);
                         }
                     } catch (JsonProcessingException e) {
                         e.printStackTrace();

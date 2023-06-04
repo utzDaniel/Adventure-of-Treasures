@@ -22,7 +22,7 @@ public final class Inventory {
         this.maxCapacity = 10;
         this.isInventory = false;
         this.itens = new HashMap<>();
-        //RepositoryFactory.getRepositoryItem().getAll().forEach(item -> itens.put(item.getName(),item));
+        RepositoryFactory.getRepositoryItem().getAll().forEach(item -> itens.put(item.getName(),item));
     }
 
     public int getCapacity() {

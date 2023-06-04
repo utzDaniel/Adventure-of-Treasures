@@ -2,6 +2,7 @@ package backend.model;
 
 import backend.model.builder.item.Item;
 import backend.model.builder.map.MapGame;
+import backend.repository.RepositoryFactory;
 import rules.interfaces.ICoordinate;
 import rules.service.DropItem;
 import rules.service.LookItem;
@@ -75,7 +76,9 @@ public final class Player {
         return new TakeItem(this, item).run();
     }
 
-    public boolean dropItem(Item item) {
+    public boolean dropItem(String name) {
+        Item item = this.getInventory().getItemVisible().stream()
+                .filter(item1 -> item1.getName().equals(name)).findFirst().get();
         return new DropItem(this, item).run();
     }
 

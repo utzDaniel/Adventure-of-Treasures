@@ -1,7 +1,6 @@
 package frontend.model.component;
 
 import backend.model.Player;
-import backend.model.builder.item.Item;
 import backend.model.builder.map.MapGame;
 import rules.interfaces.IItem;
 
@@ -83,7 +82,7 @@ public final class ComponentFactory {
         return InventoryJButtonActionFactory.getInstance(name);
     }
 
-    public static JButton getJButton(Item item, int index) {
+    public static JButton getJButton(IItem item, int index) {
         return InventoryJButtonItemFactory.getInstance(item, index);
     }
 }

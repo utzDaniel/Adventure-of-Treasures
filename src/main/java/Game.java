@@ -2,11 +2,11 @@ import backend.model.Player;
 import backend.model.builder.item.Item;
 import backend.model.dto.ItemDTO;
 import backend.repository.RepositoryFactory;
+import frontend.event.Keyboard;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
 import frontend.model.component.ComponentFactory;
 import frontend.view.InterfaceGame;
-import frontend.event.Keyboard;
 import rules.interfaces.IItem;
 
 import javax.swing.*;
@@ -52,7 +52,8 @@ public class Game {
 
     private List<IItem> getIItemDTO(List<Item> itens) {
         return new ArrayList<>(itens.stream()
-                .map(item -> new ItemDTO(item.getIcon().toString(), item.getLocation()))
+                .map(item -> new ItemDTO(item.getIcon().toString(), item.getLocation(), item.getName(),
+                        item.getDescription(), item.getEffect(), item.getWeight(), item.getClass().getName(), item.equipped()))
                 .toList());
     }
 

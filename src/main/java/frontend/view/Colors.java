@@ -12,5 +12,6 @@ public final class Colors {
     public static Color GREY = new Color(194, 194, 194);
     public static Color SILVER = new Color(253, 247, 224);
     public static Color WHITE = new Color(255, 255, 255);
+    public static Color DEFAULT_BACKGROUND = new Color(83, 68, 61);
 
 }

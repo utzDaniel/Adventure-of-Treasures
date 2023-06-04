@@ -1,10 +1,11 @@
 package frontend.view;
 
 import backend.model.Player;
-import backend.model.builder.item.Item;
-import backend.model.dto.ItemDTO;
 import backend.model.interfaces.ICombinable;
 import frontend.model.component.ComponentFactory;
+import frontend.model.vo.ItemVO;
+import frontend.model.vo.OpenInventoryVO;
+import rules.interfaces.IItem;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public final class InterfaceInventory {
         this.player = Player.getInstance();
     }
 
-    public void open() {
+    public void open(OpenInventoryVO openInventoryVO) {
         this.player.getInventory().setOpenInventory();
         this.panelInventory = new PanelInventory();
         this.panelInventory.create();
@@ -36,12 +37,12 @@ public final class InterfaceInventory {
         this.buttonItem = new ButtonItem();
         this.labelInformation = new LabelInformation();
         this.buttonAction = new ButtonAction();
-        setSettings();
+        setSettings(openInventoryVO);
     }
 
-    private void setSettings() {
+    private void setSettings(OpenInventoryVO openInventoryVO) {
         this.panelInventory.getButton().addActionListener(e -> quit());
-        setItens();
+        setItens(openInventoryVO);
         setInfoItens();
         setButtonsActions();
         this.interfaceGame.getFrame().add(this.panelInventory.getPanel(), 1);
@@ -49,13 +50,8 @@ public final class InterfaceInventory {
         this.interfaceGame.getFrame().setVisible(true);
     }
 
-    private void removeItens() {
-        this.buttonItem.remove(this.labelSideEast);
-        setItens();
-    }
-
-    private void setItens() {
-        this.player.getInventory().getItemVisible().forEach(item -> {
+    private void setItens(OpenInventoryVO openInventoryVO) {
+        openInventoryVO.getItens().forEach(item -> {
             this.buttonItem.create(item);
             this.buttonItem.getLast().addActionListener(e -> actionButtonItem(item));
             this.labelSideEast.add(this.buttonItem.getLast());
@@ -82,7 +78,7 @@ public final class InterfaceInventory {
         this.labelSideEast.add(buttons[5]);
     }
 
-    private void actionButtonItem(Item item) {
+    private void actionButtonItem(IItem item) {
         this.buttonAction.setUseItem(item);
         this.labelInformation.updateText(item);
     }
@@ -90,7 +86,7 @@ public final class InterfaceInventory {
     private void setConfirm(String command) {
         this.buttonAction.visibleCancelAndConfirm(command);
         if (command.equals("combinar")) {
-            Item item = this.buttonAction.getUseItem();
+            IItem item = this.buttonAction.getUseItem();
             addListItem((ICombinable) item);
             this.buttonItem.enableIButtonItensNotCombinable();
             this.buttonItem.selectButtonItem(item);
@@ -110,18 +106,20 @@ public final class InterfaceInventory {
 
     private void setActionConfirm(String command) {
         boolean success;
-        Item item = this.buttonAction.getUseItem();
+        IItem item = this.buttonAction.getUseItem();
         success = switch (command) {
-            case "remover" -> this.player.dropItem(item);
-            case "usar", "equipar" -> item.action();
-            case "combinar" -> item.action(this.items);
+            case "remover" -> this.player.dropItem(item.getName());
+//            case "usar", "equipar" -> item.action();
+//            case "combinar" -> item.action(this.items);
             default -> false;
         };
-        if(success)
+        if (success)
             this.labelInformation.updateTextCapacity(this.player.getInventory().getCapacity(), this.player.getInventory().getMaxCapacity());
 
-        if(success && command.equals("remover")){
-            this.interfaceGame.getFrame().getContentPane().add(ComponentFactory.getJLabel(new ItemDTO(item.getIcon().toString(), item.getLocation())), 1);
+        if (success && command.equals("remover")) {
+            this.interfaceGame.getFrame().getContentPane().add(ComponentFactory.getJLabel(
+                    new ItemVO(item.getIcon().toString(), item.getCoordinate(), item.getName(), item.getDescription(),
+                            item.getEffect(), item.getWeight(), item.getSpecialization(), item.isEquipped())), 1);
         }
 
         if (command.equals("usar") && success) {//usar pá
@@ -154,7 +152,7 @@ public final class InterfaceInventory {
     private void setActionCancel() {
         this.buttonAction.invisible();
         this.labelInformation.resetText();
-        removeItens();//Limpar itens combinaveis selecionados
+        this.buttonItem.defaultJButtonSelected();
         this.items.clear();//Limpar itens combinaveis
         this.labelSideEast.repaint();//Atualizar os itens combinaveis
     }

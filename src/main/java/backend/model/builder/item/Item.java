@@ -87,4 +87,8 @@ public abstract class Item implements IAction {
                 ", visible=" + this.visible +
                 '}';
     }
+
+    public boolean equipped(){
+        return this instanceof ItemEquipable ? ((ItemEquipable) this).isEquipped() : false;
+    }
 }

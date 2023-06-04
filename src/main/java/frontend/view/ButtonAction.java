@@ -2,6 +2,7 @@ package frontend.view;
 
 import backend.model.builder.item.*;
 import frontend.model.component.ComponentFactory;
+import rules.interfaces.IItem;
 
 import javax.swing.*;
 import java.util.Arrays;
@@ -9,7 +10,7 @@ import java.util.Arrays;
 public final class ButtonAction {
 
     private int index;
-    private Item item;
+    private IItem item;
     private final JButton[] buttonActions;
 
     public ButtonAction() {
@@ -60,21 +61,21 @@ public final class ButtonAction {
                     jButton.setEnabled(false);
                     jButton.setBackground(Colors.GREY);
                 });
-        if (item instanceof ItemUsable) {
+        if (item.getSpecialization().contains("ItemUsable")) {
             this.buttonActions[0].setBackground(Colors.BLUE);
             this.buttonActions[0].setEnabled(true);
         }
-        if (item instanceof ItemEquipable) {
+        if (item.getSpecialization().contains("ItemEquipable")) {
             this.buttonActions[1].setBackground(Colors.BLUE);
             this.buttonActions[1].setEnabled(true);
-            remove = ((ItemEquipable) item).isEquipped();
+            remove = item.isEquipped();
             setTextEquipable(remove);
         }
-        if (item instanceof ItemCombinable) {
+        if (item.getSpecialization().contains("ItemCombinable")) {
             this.buttonActions[2].setBackground(Colors.BLUE);
             this.buttonActions[2].setEnabled(true);
         }
-        if (!(item instanceof ItemMission) && !remove) {
+        if (!(item.getSpecialization().contains("ItemMission")) && !remove) {
             this.buttonActions[3].setBackground(Colors.BLUE);
             this.buttonActions[3].setEnabled(true);
         }
@@ -88,11 +89,11 @@ public final class ButtonAction {
         return this.buttonActions;
     }
 
-    public Item getUseItem() {
+    public IItem getUseItem() {
         return this.item;
     }
 
-    public void setUseItem(Item item) {
+    public void setUseItem(IItem item) {
         invisibleCancelAndConfirm();
         this.item = item;
         validEnable();

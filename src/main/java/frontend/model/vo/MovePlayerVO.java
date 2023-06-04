@@ -1,5 +1,6 @@
 package frontend.model.vo;
 
+import backend.model.builder.item.ItemEquipable;
 import rules.interfaces.ICoordinate;
 import rules.interfaces.IItem;
 import rules.interfaces.IMovePlayer;
@@ -23,11 +24,12 @@ public class MovePlayerVO implements IMovePlayer {
     public MovePlayerVO(String iconMap, String iconPlayer, ICoordinate coordinatePlayer, String songMap, List<IItem> itens, int indexItens) {
         this.iconMap = iconMap;
         this.iconPlayer = iconPlayer;
-        this.coordinatePlayer = new CoordinateVO(coordinatePlayer.getX(),coordinatePlayer.getY());
+        this.coordinatePlayer = new CoordinateVO(coordinatePlayer.getX(), coordinatePlayer.getY());
         this.songMap = songMap;
         if (Objects.nonNull(itens))
             this.itens = new ArrayList<>(itens.stream()
-                    .map(item -> new ItemVO(item.getIcon(), item.getCoordinate()))
+                    .map(item -> new ItemVO(item.getIcon(), item.getCoordinate(), item.getName(), item.getDescription(),
+                            item.getEffect(), item.getWeight(), item.getSpecialization(), item.isEquipped()))
                     .toList());
         this.indexItens = indexItens;
     }
@@ -56,7 +58,8 @@ public class MovePlayerVO implements IMovePlayer {
     public List<IItem> getItens() {
         if (Objects.isNull(itens)) return null;
         return new ArrayList<>(this.itens.stream()
-                .map(item -> new ItemVO(item.getIcon(), item.getCoordinate()))
+                .map(item -> new ItemVO(item.getIcon(), item.getCoordinate(), item.getName(), item.getDescription(),
+                        item.getEffect(), item.getWeight(), item.getSpecialization(), item.isEquipped()))
                 .toList());
     }
 

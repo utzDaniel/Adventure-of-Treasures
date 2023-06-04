@@ -1,7 +1,7 @@
 package frontend.model.component;
 
-import backend.model.builder.item.Item;
 import frontend.view.Colors;
+import rules.interfaces.IItem;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +14,7 @@ final class InventoryJButtonItemFactory {
     private InventoryJButtonItemFactory() {
     }
 
-    static JButton getInstance(Item item, int index) {
+    static JButton getInstance(IItem item, int index) {
         var width = 40;
         var height = 40;
         var rectangle = new Rectangle(calculateXPosition(index), calculateYPosition(index), width, height);
@@ -33,17 +33,17 @@ final class InventoryJButtonItemFactory {
         return positionStartingX + multiplier * DISTANCE_PER_BUTTON;
     }
 
-    private static JButton create(Item item, Rectangle rectangle) {
+    private static JButton create(IItem item, Rectangle rectangle) {
         var jButton = defaultSettings(item);
         jButton.setBounds(rectangle);
         return jButton;
     }
 
-    private static JButton defaultSettings(Item item) {
+    private static JButton defaultSettings(IItem item) {
         var jButton = new JButton();
         jButton.setActionCommand(item.getName());
         jButton.setName(item.getName());
-        jButton.setIcon(item.getIcon());
+        jButton.setIcon(new ImageIcon(item.getIcon()));
         jButton.setBackground(Colors.BROWN_2);
         return jButton;
     }

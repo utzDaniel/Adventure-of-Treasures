@@ -26,7 +26,8 @@ public class TakeVO implements ITake {
         this.effects = effects;
         if (Objects.nonNull(itens))
             this.itens = new ArrayList<>(itens.stream()
-                    .map(item -> new ItemVO(item.getIcon(), item.getCoordinate()))
+                    .map(item -> new ItemVO(item.getIcon(), item.getCoordinate(), item.getName(), item.getDescription(),
+                            item.getEffect(), item.getWeight(), item.getSpecialization(), item.isEquipped()))
                     .toList());
     }
 
@@ -54,7 +55,8 @@ public class TakeVO implements ITake {
     public List<IItem> getItens() {
         if (Objects.isNull(itens)) return null;
         return new ArrayList<>(this.itens.stream()
-                .map(item -> new ItemVO(item.getIcon(), item.getCoordinate()))
+                .map(item -> new ItemVO(item.getIcon(), item.getCoordinate(), item.getName(), item.getDescription(),
+                        item.getEffect(),item.getWeight(), item.getSpecialization(), item.isEquipped()))
                 .toList());
     }
 

@@ -22,11 +22,12 @@ public class OpenVO implements IOpen {
     public OpenVO(String iconMap, String iconPlayer, ICoordinate coordinatePlayer, String songMap, List<IItem> itens) {
         this.iconMap = iconMap;
         this.iconPlayer = iconPlayer;
-        this.coordinatePlayer = new CoordinateVO(coordinatePlayer.getX(),coordinatePlayer.getY());
+        this.coordinatePlayer = new CoordinateVO(coordinatePlayer.getX(), coordinatePlayer.getY());
         this.songMap = songMap;
         if (Objects.nonNull(itens))
             this.itens = new ArrayList<>(itens.stream()
-                    .map(item -> new ItemVO(item.getIcon(), item.getCoordinate()))
+                    .map(item -> new ItemVO(item.getIcon(), item.getCoordinate(), item.getName(), item.getDescription(),
+                            item.getEffect(), item.getWeight(), item.getSpecialization(), item.isEquipped()))
                     .toList());
     }
 
@@ -54,7 +55,8 @@ public class OpenVO implements IOpen {
     public List<IItem> getItens() {
         if (Objects.isNull(itens)) return null;
         return new ArrayList<>(this.itens.stream()
-                .map(item -> new ItemVO(item.getIcon(), item.getCoordinate()))
+                .map(item -> new ItemVO(item.getIcon(), item.getCoordinate(), item.getName(), item.getDescription(),
+                        item.getEffect(), item.getWeight(), item.getSpecialization(), item.isEquipped()))
                 .toList());
     }
 

@@ -1,8 +1,8 @@
 package backend.service;
 
-import backend.model.dto.CoordinateDTO;
 import backend.model.Player;
 import backend.model.builder.item.Item;
+import backend.model.dto.CoordinateDTO;
 import backend.model.dto.ItemDTO;
 import backend.model.dto.MovePlayerDTO;
 import backend.util.JsonConverter;
@@ -70,7 +70,8 @@ public class MovePlayer {
             song = this.player.getCurrentMap().getSong();
             List<Item> itens = new ArrayList<>(this.player.getCurrentMap().getItemVisible());
             itensDTO = new ArrayList<>(itens.stream()
-                    .map(item -> new ItemDTO(item.getIcon().toString(), item.getLocation()))
+                    .map(item -> new ItemDTO(item.getIcon().toString(), item.getLocation(), item.getName(),
+                            item.getDescription(), item.getEffect(), item.getWeight(), item.getClass().getName(), item.equipped()))
                     .toList());
         }
 

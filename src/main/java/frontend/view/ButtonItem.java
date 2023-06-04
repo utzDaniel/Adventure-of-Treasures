@@ -4,6 +4,7 @@ import backend.model.Player;
 import backend.model.builder.item.Item;
 import backend.model.builder.item.ItemCombinable;
 import frontend.model.component.ComponentFactory;
+import rules.interfaces.IItem;
 
 import javax.swing.*;
 import java.util.Arrays;
@@ -16,36 +17,38 @@ public final class ButtonItem {
 
     public ButtonItem() {
         int MAX_BUTTON = 24;
-        buttonItens = new JButton[MAX_BUTTON];
+        this.buttonItens = new JButton[MAX_BUTTON];
+        this.isEnableIButtonItensNotCombinable = false;
+    }
+    public void create(IItem item) {
+        this.buttonItens[this.index] = ComponentFactory.getJButton(item, this.index);
+        this.index++;
     }
 
-    public void create(Item item) {
-        buttonItens[index] = ComponentFactory.getJButton(item, index);
-        isEnableIButtonItensNotCombinable = false;
-        index++;
-    }
-
-    public void remove(JLabel labelSideEast) {
-        Arrays.stream(buttonItens).limit(index)
-                .forEach(labelSideEast::remove);
-        index = 0;
+    public void defaultJButtonSelected() {
+        Arrays.stream(this.buttonItens).limit(this.index)
+                .forEach(jButton -> {
+                    jButton.setBackground(Colors.DEFAULT_BACKGROUND);
+                    jButton.setEnabled(true);
+                });
+        this.isEnableIButtonItensNotCombinable = false;
     }
 
     public JButton getLast() {
-        if (index == 0)
+        if (this.index == 0)
             return null;
-        return buttonItens[index - 1];
+        return this.buttonItens[index - 1];
     }
 
     public JButton[] getButtonItens() {
-        JButton[] buttons = new JButton[index];
-        System.arraycopy(buttonItens, 0, buttons, 0, index);
+        JButton[] buttons = new JButton[this.index];
+        System.arraycopy(this.buttonItens, 0, buttons, 0, this.index);
         return buttons;
     }
 
     // TODO resolver de outra forma o instanceof
     public void enableIButtonItensNotCombinable() {
-        if (!isEnableIButtonItensNotCombinable) {
+        if (!this.isEnableIButtonItensNotCombinable) {
             Arrays.stream(getButtonItens()).forEach(jButton -> {
                 Item item = Player.getInstance().getInventory().getItem(jButton.getName());
                 if (!(item instanceof ItemCombinable)) {
@@ -53,11 +56,11 @@ public final class ButtonItem {
                     jButton.setBackground(Colors.GREY);
                 }
             });
-            isEnableIButtonItensNotCombinable = true;
+            this.isEnableIButtonItensNotCombinable = true;
         }
     }
 
-    public void selectButtonItem(Item item) {
+    public void selectButtonItem(IItem item) {
         Arrays.stream(getButtonItens())
                 .filter(jButton -> jButton.getName().equals(item.getName()))
                 .findFirst().ifPresent(jButton -> jButton.setBackground(Colors.GREEN));

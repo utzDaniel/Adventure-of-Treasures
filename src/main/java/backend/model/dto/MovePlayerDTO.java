@@ -23,11 +23,12 @@ public class MovePlayerDTO implements IMovePlayer {
     public MovePlayerDTO(String iconMap, String iconPlayer, ICoordinate coordinatePlayer, String songMap, List<IItem> itens, int indexItens) {
         this.iconMap = iconMap;
         this.iconPlayer = iconPlayer;
-        this.coordinatePlayer = new CoordinateDTO(coordinatePlayer.getX(),coordinatePlayer.getY());
+        this.coordinatePlayer = new CoordinateDTO(coordinatePlayer.getX(), coordinatePlayer.getY());
         this.songMap = songMap;
         if (Objects.nonNull(itens))
             this.itens = new ArrayList<>(itens.stream()
-                    .map(item -> new ItemDTO(item.getIcon(), item.getCoordinate()))
+                    .map(item -> new ItemDTO(item.getIcon(), item.getCoordinate(), item.getName(), item.getDescription(),
+                            item.getEffect(), item.getWeight(), item.getSpecialization(), item.isEquipped()))
                     .toList());
         this.indexItens = indexItens;
     }
@@ -56,7 +57,8 @@ public class MovePlayerDTO implements IMovePlayer {
     public List<IItem> getItens() {
         if (Objects.isNull(itens)) return null;
         return new ArrayList<>(this.itens.stream()
-                .map(item -> new ItemDTO(item.getIcon(), item.getCoordinate()))
+                .map(item -> new ItemDTO(item.getIcon(), item.getCoordinate(), item.getName(), item.getDescription(),
+                        item.getEffect(), item.getWeight(), item.getSpecialization(), item.isEquipped()))
                 .toList());
     }
 

@@ -1,7 +1,7 @@
 package frontend.view;
 
-import backend.model.builder.item.Item;
 import frontend.model.component.ComponentFactory;
+import rules.interfaces.IItem;
 
 import javax.swing.*;
 
@@ -20,15 +20,15 @@ public final class LabelInformation {
         this.index++;
     }
 
-    public void updateText(Item item) {
-        this.infoLabel[1].setText(String.format("%s: %s",this.infoLabel[1].getName(), item.getName()));
-        this.infoLabel[2].setText(String.format("%s: %s",this.infoLabel[2].getName(), item.getWeight()));
-        this.infoLabel[3].setText(String.format("<html>%s: %s</html>",this.infoLabel[3].getName(), item.getDescription()));
+    public void updateText(IItem item) {
+        this.infoLabel[1].setText(String.format("%s: %s", this.infoLabel[1].getName(), item.getName()));
+        this.infoLabel[2].setText(String.format("%s: %s", this.infoLabel[2].getName(), item.getWeight()));
+        this.infoLabel[3].setText(String.format("<html>%s: %s</html>", this.infoLabel[3].getName(), item.getDescription()));
     }
 
     public void updateTextCapacity(int capacity, int maxCapacity) {
         var space = this.infoLabel[0].getName().lastIndexOf(" ");
-        var text = String.format("%s %d/%d",this.infoLabel[0].getName().substring(0, space), capacity, maxCapacity);
+        var text = String.format("%s %d/%d", this.infoLabel[0].getName().substring(0, space), capacity, maxCapacity);
         this.infoLabel[0].setText(text);
         this.infoLabel[0].setName(text);
     }

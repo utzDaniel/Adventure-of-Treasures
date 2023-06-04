@@ -7,7 +7,6 @@ import frontend.view.ButtonItem;
 import frontend.view.Colors;
 import rules.interfaces.ICoordinate;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
@@ -64,7 +63,7 @@ public class ButtonItemTest {
     @Test
     @DisplayName("Verificar se todos os 4 botões foram removido do JLabel")
     public void validRemoveAllButton() {
-        buttonItem.remove(new JLabel());
+        buttonItem.defaultJButtonSelected();
         assertEquals(0, buttonItem.getButtonItens().length);
     }
 
