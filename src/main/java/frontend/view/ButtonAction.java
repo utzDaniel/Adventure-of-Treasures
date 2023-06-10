@@ -1,8 +1,7 @@
 package frontend.view;
 
-import backend.model.builder.item.*;
 import frontend.model.component.ComponentFactory;
-import rules.interfaces.IItem;
+import backend.controller.interfaces.IItem;
 
 import javax.swing.*;
 import java.util.Arrays;

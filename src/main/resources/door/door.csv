@@ -1,0 +1,15 @@
+mapGameKey;mapGame;positionX;positionY;open
+1;barco;300;520;true
+2;dentro do farol;270;240;true
+3;farol;720;260;true
+4;alojamento;140;380;true
+4;enfermaria;720;310;true
+4;templo;370;150;false
+5;vila;500;510;true
+6;vila;380;530;false
+6;topo do templo;260;190;false
+6;porao do templo;90;240;false
+7;templo;250;180;false
+8;templo;100;150;false
+9;vila;370;510;true
+10;cais;70;320;true

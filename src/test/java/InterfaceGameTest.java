@@ -1,12 +1,12 @@
-import backend.model.Player;
-import backend.model.builder.item.Item;
-import backend.model.builder.item.ItemEquipableBuilder;
-import backend.repository.RepositoryFactory;
+import backend.service.model.Player;
+import backend.service.model.builder.Item;
+import backend.service.model.builder.ItemEquipableBuilder;
+import backend.repository.factory.RepositoryFactory;
 import frontend.model.component.ComponentFactory;
 import frontend.view.InterfaceGame;
 import org.junit.Before;
 import org.junit.Test;
-import rules.interfaces.ICoordinate;
+import backend.controller.interfaces.ICoordinate;
 
 import javax.swing.*;
 import java.awt.*;

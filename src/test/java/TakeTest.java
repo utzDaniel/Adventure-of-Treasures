@@ -1,14 +1,14 @@
-import rules.exception.InventoryException;
-import backend.model.Player;
-import backend.model.builder.item.Item;
-import backend.model.builder.item.ItemUsableBuilder;
-import backend.model.builder.map.MapGame;
-import rules.enums.Direction;
+import backend.exception.InventoryException;
+import backend.service.model.Player;
+import backend.service.model.builder.Item;
+import backend.service.model.builder.ItemUsableBuilder;
+import backend.service.model.builder.MapGame;
+import backend.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
-import backend.repository.RepositoryFactory;
-import rules.interfaces.ICoordinate;
-import backend.service.Take;
+import backend.repository.factory.RepositoryFactory;
+import backend.controller.interfaces.ICoordinate;
+import backend.service.component.Take;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

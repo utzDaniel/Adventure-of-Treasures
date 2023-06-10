@@ -3,8 +3,8 @@ package frontend.view;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
 import frontend.model.component.ComponentFactory;
-import rules.interfaces.IItem;
-import rules.interfaces.IMovePlayer;
+import backend.controller.interfaces.IItem;
+import backend.controller.interfaces.IMovePlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -112,12 +112,10 @@ public final class InterfaceGame {
     }
 
     private String commandEffects(String command) {
-        return "src/main/resources/audio/effects/" +
+        return String.format("src/main/resources/audio/effects/%s.wav",
                 switch (command) {
-                    case "pegar" -> "pegar.wav";
-                    case "remover" -> "remover.wav";
-                    case "finish" -> "finish.wav";
-                    default -> "erro.wav";
-                };
+                    case "pegar", "remover ", "finish" -> command;
+                    default -> "erro";
+                });
     }
 }

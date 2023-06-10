@@ -1,6 +1,6 @@
-import backend.model.Player;
-import backend.model.builder.item.Item;
-import backend.repository.RepositoryFactory;
+import backend.service.model.Player;
+import backend.service.model.builder.Item;
+import backend.repository.factory.RepositoryFactory;
 import frontend.model.component.ComponentFactory;
 import frontend.view.InterfaceGame;
 import frontend.view.InterfaceInventory;

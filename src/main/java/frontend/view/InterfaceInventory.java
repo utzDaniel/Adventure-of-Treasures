@@ -1,11 +1,11 @@
 package frontend.view;
 
-import backend.model.Player;
-import backend.model.interfaces.ICombinable;
+import backend.service.model.Player;
+import backend.service.interfaces.ICombinable;
 import frontend.model.component.ComponentFactory;
 import frontend.model.vo.ItemVO;
 import frontend.model.vo.OpenInventoryVO;
-import rules.interfaces.IItem;
+import backend.controller.interfaces.IItem;
 
 import javax.swing.*;
 import java.util.ArrayList;

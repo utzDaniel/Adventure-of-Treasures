@@ -1,6 +1,6 @@
 package frontend.model.vo;
 
-import rules.interfaces.ICoordinate;
+import backend.controller.interfaces.ICoordinate;
 
 import java.awt.*;
 import java.util.Objects;

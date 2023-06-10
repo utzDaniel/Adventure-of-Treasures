@@ -1,7 +1,7 @@
 package frontend.model.vo;
 
-import rules.interfaces.ICoordinate;
-import rules.interfaces.IItem;
+import backend.controller.interfaces.ICoordinate;
+import backend.controller.interfaces.IItem;
 
 public class ItemVO implements IItem {
     private String icon;

@@ -1,7 +1,7 @@
 package frontend.model.component;
 
 import frontend.view.Colors;
-import rules.interfaces.IItem;
+import backend.controller.interfaces.IItem;
 
 import javax.swing.*;
 import java.awt.*;

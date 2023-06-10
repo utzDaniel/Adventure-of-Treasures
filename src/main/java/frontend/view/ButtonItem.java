@@ -1,10 +1,8 @@
 package frontend.view;
 
-import backend.model.Player;
-import backend.model.builder.item.Item;
-import backend.model.builder.item.ItemCombinable;
+import backend.service.model.Player;
 import frontend.model.component.ComponentFactory;
-import rules.interfaces.IItem;
+import backend.controller.interfaces.IItem;
 
 import javax.swing.*;
 import java.util.Arrays;
@@ -50,8 +48,8 @@ public final class ButtonItem {
     public void enableIButtonItensNotCombinable() {
         if (!this.isEnableIButtonItensNotCombinable) {
             Arrays.stream(getButtonItens()).forEach(jButton -> {
-                Item item = Player.getInstance().getInventory().getItem(jButton.getName());
-                if (!(item instanceof ItemCombinable)) {
+                IItemDomain item = Player.getInstance().getInventory().getItem(jButton.getName());
+                if (!(item.getSpecialization().contains("ItemCombinable"))) {
                     jButton.setEnabled(false);
                     jButton.setBackground(Colors.GREY);
                 }

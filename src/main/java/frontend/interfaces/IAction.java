@@ -1,6 +1,6 @@
 package frontend.interfaces;
 
-import backend.model.interfaces.ICombinable;
+import backend.service.interfaces.ICombinable;
 
 import java.util.List;
 

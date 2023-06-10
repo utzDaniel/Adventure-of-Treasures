@@ -1,13 +1,13 @@
-import backend.model.dto.CoordinateDTO;
-import backend.model.Player;
-import backend.model.builder.map.MapGame;
-import backend.repository.RepositoryFactory;
+import backend.dto.CoordinateDTO;
+import backend.service.model.Player;
+import backend.service.model.builder.MapGame;
+import backend.repository.factory.RepositoryFactory;
 import frontend.model.component.ComponentFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import rules.enums.Direction;
-import rules.service.NextScenery;
+import backend.enums.Direction;
+import backend.service.component.NextScenery;
 
 import javax.swing.*;
 import java.util.ArrayList;

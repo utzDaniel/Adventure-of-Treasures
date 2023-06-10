@@ -1,8 +1,8 @@
 package frontend.model.vo;
 
-import rules.interfaces.ICoordinate;
-import rules.interfaces.IItem;
-import rules.interfaces.IOpen;
+import backend.controller.interfaces.ICoordinate;
+import backend.controller.interfaces.IItem;
+import backend.controller.interfaces.IOpen;
 
 import java.util.ArrayList;
 import java.util.List;

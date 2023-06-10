@@ -1,12 +1,12 @@
-import backend.model.Door;
-import backend.model.builder.map.MapGame;
-import backend.model.builder.map.RoomBuilder;
-import backend.model.builder.map.SceneryBuilder;
-import backend.mapper.MapGameMapper;
+import backend.service.model.Door;
+import backend.service.model.builder.MapGame;
+import backend.service.model.builder.RoomBuilder;
+import backend.service.model.builder.SceneryBuilder;
+import backend.service.mapper.MapGameMapper;
 import org.junit.Before;
 import org.junit.Test;
-import backend.util.FileUtil;
-import rules.interfaces.ICoordinate;
+import backend.repository.util.FileUtil;
+import backend.controller.interfaces.ICoordinate;
 
 import java.io.IOException;
 import java.util.ArrayList;

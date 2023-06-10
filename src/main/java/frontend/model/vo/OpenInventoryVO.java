@@ -1,7 +1,7 @@
 package frontend.model.vo;
 
-import rules.interfaces.IItem;
-import rules.interfaces.IOpenInventory;
+import backend.controller.interfaces.IItem;
+import backend.controller.interfaces.IOpenInventory;
 
 import java.util.ArrayList;
 import java.util.List;

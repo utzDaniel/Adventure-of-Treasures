@@ -1,9 +1,9 @@
-import backend.model.builder.item.*;
-import backend.mapper.ItemMapper;
+import backend.service.mapper.ItemMapper;
+import backend.service.model.builder.*;
 import org.junit.Before;
 import org.junit.Test;
-import backend.util.FileUtil;
-import rules.interfaces.ICoordinate;
+import backend.repository.util.FileUtil;
+import backend.controller.interfaces.ICoordinate;
 
 import java.io.IOException;
 import java.util.ArrayList;

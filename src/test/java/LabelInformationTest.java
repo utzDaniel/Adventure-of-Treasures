@@ -1,9 +1,9 @@
-import backend.model.builder.item.Item;
-import backend.model.builder.item.ItemUsableBuilder;
+import backend.service.model.builder.Item;
+import backend.service.model.builder.ItemUsableBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import frontend.view.LabelInformation;
-import rules.interfaces.ICoordinate;
+import backend.controller.interfaces.ICoordinate;
 
 import java.util.ArrayList;
 

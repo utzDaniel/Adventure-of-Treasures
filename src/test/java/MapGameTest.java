@@ -1,10 +1,10 @@
-import backend.model.Player;
-import backend.model.builder.item.Item;
-import backend.model.builder.map.Scenery;
+import backend.service.model.Player;
+import backend.service.model.builder.Item;
+import backend.service.model.builder.Scenery;
 import org.junit.Before;
 import org.junit.Test;
-import backend.repository.RepositoryFactory;
-import rules.interfaces.ICoordinate;
+import backend.repository.factory.RepositoryFactory;
+import backend.controller.interfaces.ICoordinate;
 
 import static org.junit.Assert.*;
 

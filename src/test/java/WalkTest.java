@@ -1,10 +1,10 @@
-import rules.exception.MoveException;
-import backend.model.Player;
-import rules.enums.Direction;
+import backend.exception.MoveException;
+import backend.service.model.Player;
+import backend.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
-import backend.repository.RepositoryFactory;
-import rules.interfaces.ICoordinate;
+import backend.repository.factory.RepositoryFactory;
+import backend.controller.interfaces.ICoordinate;
 
 import static org.junit.Assert.assertEquals;
 

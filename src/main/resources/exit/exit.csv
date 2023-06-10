@@ -1,0 +1,9 @@
+mapGameKey;direction;mapGame
+1;norte;floresta
+1;oeste;farol
+1;leste;praia
+2;leste;cais
+3;oeste;cais
+4;norte;vila
+4;sul;cais
+5;sul;floresta

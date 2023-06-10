@@ -1,16 +1,15 @@
-import backend.model.Door;
-import backend.model.Player;
-import backend.model.builder.map.MapGame;
-import backend.model.builder.map.Room;
-import backend.model.builder.map.Scenery;
-import backend.repository.RepositoryFactory;
+import backend.service.model.Door;
+import backend.service.model.Player;
+import backend.service.model.builder.MapGame;
+import backend.service.model.builder.Room;
+import backend.service.model.builder.Scenery;
+import backend.repository.factory.RepositoryFactory;
 import frontend.model.component.ComponentFactory;
-import frontend.view.InterfaceGame;
 import org.junit.Before;
 import org.junit.Test;
-import rules.exception.MapGameException;
-import rules.interfaces.ICoordinate;
-import rules.service.NextDoor;
+import backend.exception.MapGameException;
+import backend.controller.interfaces.ICoordinate;
+import backend.service.component.NextDoor;
 
 import javax.swing.*;
 import java.util.ArrayList;

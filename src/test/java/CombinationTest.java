@@ -1,13 +1,13 @@
-import rules.exception.ItemCombinableException;
-import backend.model.Player;
-import backend.model.builder.item.Item;
-import backend.model.builder.item.ItemCombinableBuilder;
-import backend.model.interfaces.ICombinable;
+import backend.exception.ItemCombinableException;
+import backend.service.model.Player;
+import backend.service.model.builder.Item;
+import backend.service.model.builder.ItemCombinableBuilder;
+import backend.service.interfaces.ICombinable;
 import org.junit.Before;
 import org.junit.Test;
-import backend.repository.RepositoryFactory;
-import rules.interfaces.ICoordinate;
-import rules.service.Combination;
+import backend.repository.factory.RepositoryFactory;
+import backend.controller.interfaces.ICoordinate;
+import backend.service.component.Combination;
 
 import java.util.ArrayList;
 

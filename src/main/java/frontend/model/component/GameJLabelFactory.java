@@ -1,8 +1,8 @@
 package frontend.model.component;
 
-import backend.model.Player;
-import backend.model.builder.map.MapGame;
-import rules.interfaces.IItem;
+import backend.service.model.Player;
+import backend.service.model.builder.MapGame;
+import backend.controller.interfaces.IItem;
 
 import javax.swing.*;
 import java.awt.*;

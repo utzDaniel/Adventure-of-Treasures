@@ -10,9 +10,9 @@ import frontend.model.vo.TakeVO;
 import frontend.util.JsonConverter;
 import frontend.view.InterfaceGame;
 import frontend.view.InterfaceInventory;
-import rules.enums.Direction;
-import rules.interfaces.ICoordinate;
-import rules.model.EventAction;
+import backend.enums.Direction;
+import backend.controller.interfaces.ICoordinate;
+import backend.controller.model.EventAction;
 
 import javax.swing.*;
 import java.awt.*;
@@ -156,12 +156,10 @@ public class Keyboard {
     }
 
     private String commandEffects(String command) {
-        return "src/main/resources/audio/effects/" +
+        return String.format("src/main/resources/audio/effects/%s.wav",
                 switch (command) {
-                    case "pegar" -> "pegar.wav";
-                    case "remover" -> "remover.wav";
-                    case "finish" -> "finish.wav";
-                    default -> "erro.wav";
-                };
+                    case "pegar", "remover ", "finish" -> command;
+                    default -> "erro";
+                });
     }
 }

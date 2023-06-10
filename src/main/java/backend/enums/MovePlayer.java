@@ -1,6 +1,6 @@
 package backend.enums;
 
-import rules.interfaces.ICoordinate;
+import backend.controller.interfaces.ICoordinate;
 
 import javax.swing.*;
 

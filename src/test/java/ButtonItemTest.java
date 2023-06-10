@@ -1,11 +1,11 @@
-import backend.model.builder.item.*;
-import backend.model.Player;
+import backend.service.model.Player;
+import backend.service.model.builder.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import frontend.view.ButtonItem;
 import frontend.view.Colors;
-import rules.interfaces.ICoordinate;
+import backend.controller.interfaces.ICoordinate;
 
 import java.util.ArrayList;
 
