@@ -1,13 +1,14 @@
 package backend.service.model.builder;
 
-import backend.service.model.Door;
-import backend.service.interfaces.IBuilderMapGame;
-import backend.repository.factory.RepositoryFactory;
 import backend.controller.interfaces.ICoordinate;
+import backend.service.interfaces.IBuilderMapGame;
+import backend.service.model.Door;
 
 import javax.swing.*;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 abstract class MapGameBuilder implements IBuilderMapGame {
 
@@ -34,18 +35,16 @@ abstract class MapGameBuilder implements IBuilderMapGame {
     }
 
     @Override
-    public IBuilderMapGame doors(Door door) {
-        if (Objects.nonNull(door))
-            this.doors.put(door.getCoordinate(), door);
+    public IBuilderMapGame doors(List<Door> doors) {
+        if (Objects.nonNull(doors) && doors.size() > 0)
+            this.doors.putAll(getMapDoors(doors));
         return this;
     }
 
     @Override
-    public IBuilderMapGame itens(String name) {
-        if (Objects.isNull(name))
-            return this;
-        Item item = RepositoryFactory.getRepositoryItem().get(name);
-        this.itens.put(item.getLocation(), item);
+    public IBuilderMapGame itens(List<Item> itens) {
+        if (Objects.nonNull(itens) && itens.size() > 0)
+            this.itens.putAll(getMapItem(itens));
         return this;
     }
 
@@ -61,5 +60,15 @@ abstract class MapGameBuilder implements IBuilderMapGame {
         this.mapGame.setDoors(doors);
         this.mapGame.setItens(itens);
         return this.mapGame;
+    }
+
+    Map<? extends ICoordinate, Item> getMapItem(List<Item> itens) {
+        return itens.stream()
+                .collect(Collectors.toMap(Item::getLocation, item1 -> item1));
+    }
+
+    private Map<? extends ICoordinate, Door> getMapDoors(List<Door> doors) {
+        return doors.stream()
+                .collect(Collectors.toMap(Door::getCoordinate, door1 -> door1));
     }
 }

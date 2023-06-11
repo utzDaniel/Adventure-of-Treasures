@@ -4,6 +4,7 @@ import backend.controller.interfaces.ICoordinate;
 import backend.enums.MovePlayer;
 import backend.exception.MoveException;
 import backend.service.model.Player;
+import backend.service.model.builder.Item;
 
 import java.util.Arrays;
 
@@ -19,7 +20,7 @@ public final class LookItem {
         this.coordinate = player.getLocation();
     }
 
-    public IItemDomain run() {
+    public Item run() {
         ICoordinate coordinate = lookToDirection();
         updateCoordinate(coordinate);
         return getItem();
@@ -36,7 +37,7 @@ public final class LookItem {
         this.coordinate.move(coordinate);
     }
 
-    private IItemDomain getItem() {
+    private Item getItem() {
         return this.player.getCurrentMap().getItem(this.coordinate);
     }
 }

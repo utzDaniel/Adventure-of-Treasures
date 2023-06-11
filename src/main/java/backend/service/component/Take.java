@@ -56,7 +56,7 @@ public class Take {
     }
 
     private boolean take() {
-        IItemDomain item = this.player.lookItem();
+        Item item = this.player.lookItem();
         if (Objects.isNull(item)) return false;
         player.takeItem(item);
         return true;

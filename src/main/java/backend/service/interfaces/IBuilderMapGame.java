@@ -1,7 +1,10 @@
 package backend.service.interfaces;
 
 import backend.service.model.Door;
+import backend.service.model.builder.Item;
 import backend.service.model.builder.MapGame;
+
+import java.util.List;
 
 public interface IBuilderMapGame {
 
@@ -11,9 +14,9 @@ public interface IBuilderMapGame {
 
     IBuilderMapGame limits(int[][] limits);
 
-    IBuilderMapGame doors(Door door);
+    IBuilderMapGame doors(List<Door> door);
 
-    IBuilderMapGame itens(String item);
+    IBuilderMapGame itens(List<Item> item);
     public IBuilderMapGame song(String filename);
 
     MapGame build();

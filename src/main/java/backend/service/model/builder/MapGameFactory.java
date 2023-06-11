@@ -1,39 +1,38 @@
 package backend.service.model.builder;
 
-import backend.service.model.Door;
+import backend.repository.factory.RepositoryFactory;
+import backend.repository.interfaces.IMapGameEntity;
 import backend.service.interfaces.IBuilderMapGame;
-import backend.controller.interfaces.ICoordinate;
+import backend.service.model.Door;
+import backend.service.model.DoorFactory;
+import backend.service.model.Exit;
+import backend.service.model.ExitFactory;
 
-import java.util.Objects;
-
-import static java.lang.Boolean.parseBoolean;
-import static java.lang.Integer.parseInt;
+import java.util.List;
 
 public final class MapGameFactory {
-    private String[] dados;
+    private IMapGameEntity mapGameEntity;
 
-    public MapGame create(String[] dados) {
-        this.dados = dados;
+    public MapGame create(IMapGameEntity mapGameEntity) {
+        this.mapGameEntity = mapGameEntity;
         return type();
     }
 
     private MapGame type() {
-        return dados[0].equals("0000") ? createRoom() : createScenery();
+        return isScenery() ? createScenery() : createRoom();
+    }
+
+    private boolean isScenery() {
+        return mapGameEntity.exitsKey() != -1;
     }
 
     private IBuilderMapGame inicial(IBuilderMapGame mapGame) {
-        return mapGame.name(dados[1])
-                .image(dados[2])
-                .doors(createDoor(dados[7]))
-                .doors(createDoor(dados[8]))
-                .doors(createDoor(dados[9]))
-                .doors(createDoor(dados[10]))
-                .itens(dados[11])
-                .itens(dados[12])
-                .itens(dados[13])
-                .itens(dados[14])
-                .song(dados[15])
-                .limits(createLimits(dados[16]));
+        return mapGame.name(mapGameEntity.name())
+                .image(mapGameEntity.imagemIcon())
+                .doors(getDoors())
+                .itens(getItens())
+                .song(mapGameEntity.song())
+                .limits(mapGameEntity.limits());
     }
 
     private MapGame createRoom() {
@@ -45,34 +44,29 @@ public final class MapGameFactory {
     private MapGame createScenery() {
         return inicial(SceneryBuilder
                 .builder()
-                .exits("norte", dados[3])
-                .exits("sul", dados[4])
-                .exits("oeste", dados[5])
-                .exits("leste", dados[6]))
+                .exits(getExits()))
                 .build();
     }
 
-    private Door createDoor(String dados) {
-        if (Objects.isNull(dados)) return null;
-        var dadosDoor = dados.split(",");
-        var mapGame = dadosDoor[0].trim();
-        var x = parseInt(dadosDoor[1].trim());
-        var y = parseInt(dadosDoor[2].trim());
-        var open = parseBoolean(dadosDoor[3].trim());
-        return new Door(mapGame, ICoordinate.getInstance(x, y), open);
+    private List<Item> getItens() {
+        return RepositoryFactory.getRepositoryItem().getAll()
+                .stream().filter(itemEntity -> itemEntity.mapGameKey() == mapGameEntity.itensKey())
+                .map(itemEntity -> new ItemFactory().create(itemEntity))
+                .toList();
     }
 
-    private int[][] createLimits(String dados) {
-        int[][] limits = new int[56][78];
-        int j = 0, k = 0;
-        for (int i = 0; i < dados.length(); i++) {
-            if (i != 0 && i % 78 == 0) {
-                j++;
-                k = 0;
-            }
-            limits[j][k] = parseInt(String.valueOf(dados.charAt(i)));
-            k++;
-        }
-        return limits;
+    private List<Exit> getExits() {
+        return RepositoryFactory.getRepositoryExit().getAll()
+                .stream().filter(exitEntity -> exitEntity.mapGameKey() == mapGameEntity.exitsKey())
+                .map(exitEntity -> new ExitFactory().create(exitEntity))
+                .toList();
     }
+
+    private List<Door> getDoors() {
+        return RepositoryFactory.getRepositoryDoor().getAll()
+                .stream().filter(doorEntity -> doorEntity.mapGameKey() == mapGameEntity.doorsKey())
+                .map(doorEntity -> new DoorFactory().create(doorEntity))
+                .toList();
+    }
+
 }

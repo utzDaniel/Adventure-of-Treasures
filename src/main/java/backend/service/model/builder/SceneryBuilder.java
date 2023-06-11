@@ -1,17 +1,20 @@
 package backend.service.model.builder;
 
+import backend.service.model.Exit;
+
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.Objects;
 
 public final class SceneryBuilder extends MapGameBuilder {
 
     private final Scenery scenery;
-    private final Map<String, String> exits;
+    List<Exit> exits;
 
     public SceneryBuilder() {
         this.scenery = new Scenery();
-        this.exits = new HashMap<>();
+        this.exits = new ArrayList<>();
         super.mapGame = this.scenery;
         super.doors = new HashMap<>();
         super.itens = new HashMap<>();
@@ -21,9 +24,9 @@ public final class SceneryBuilder extends MapGameBuilder {
         return new SceneryBuilder();
     }
 
-    public SceneryBuilder exits(String direction, String scenery) {
-        if(Objects.nonNull(scenery))
-            this.exits.put(direction,scenery);
+    public SceneryBuilder exits(List<Exit> exits) {
+        if (Objects.nonNull(exits) && exits.size() != 0)
+            this.exits.addAll(exits);
         return this;
     }
 

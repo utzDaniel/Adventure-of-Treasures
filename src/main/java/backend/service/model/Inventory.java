@@ -2,6 +2,7 @@ package backend.service.model;
 
 import backend.service.component.AddItemInventory;
 import backend.service.component.RemoveItem;
+import backend.service.model.builder.Item;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +14,7 @@ public final class Inventory {
     private int capacity;
     private int maxCapacity;
     private boolean isInventory;
-    private final Map<String, IItemDomain> itens;
+    private final Map<String, Item> itens;
 
     public Inventory() {
         this.capacity = 0;
@@ -39,35 +40,35 @@ public final class Inventory {
         this.maxCapacity += updade;
     }
 
-    public void removeItem(IItemDomain item) {
+    public void removeItem(Item item) {
         new RemoveItem(this, item).run();
     }
 
-    public void addItem(IItemDomain item) {
+    public void addItem(Item item) {
         new AddItemInventory(this, item).run();
     }
 
-    public IItemDomain getItem(String nameItem) {
+    public Item getItem(String nameItem) {
         return this.itens.get(nameItem);
     }
 
-    public Map<String, IItemDomain> getMapItem() {
+    public Map<String, Item> getMapItem() {
         return this.itens;
     }
 
-    public List<IItemDomain> getItemVisible() {
+    public List<Item> getItemVisible() {
         return this.itens.values().stream()
-                .filter(IItemDomain::isVisible)
+                .filter(Item::isVisible)
                 .collect(Collectors.toList());
     }
 
-    public void setItemInvisible(IItemDomain item) {
+    public void setItemInvisible(Item item) {
         this.itens.put(item.getName(), item);
     }
 
-    public List<IItemDomain> getItemInvisible() {
+    public List<Item> getItemInvisible() {
         return this.itens.values().stream()
-                .filter(IItemDomain::isInvisible)
+                .filter(Item::isInvisible)
                 .collect(Collectors.toList());
     }
 

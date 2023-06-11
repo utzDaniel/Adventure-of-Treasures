@@ -2,13 +2,14 @@ package backend.service.component;
 
 import backend.service.interfaces.Command;
 import backend.service.model.Player;
+import backend.service.model.builder.Item;
 
 public final class TakeItem implements Command {
 
     private final Player player;
-    private final IItemDomain item;
+    private final Item item;
 
-    public TakeItem(Player player, IItemDomain item) {
+    public TakeItem(Player player, Item item) {
         this.player = player;
         this.item = item;
     }

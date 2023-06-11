@@ -1,25 +1,26 @@
 package backend.service.model.builder;
 
-import backend.repository.factory.RepositoryFactory;
+import backend.service.model.Exit;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class Scenery extends MapGame {
 
-    private Map<String, String> exits;
+    private List<Exit> exits;
 
     public Scenery() {
-        this.exits = new HashMap<>();
+        this.exits = new ArrayList<>();
     }
 
-    public Scenery getExit(String direction) {
-        return Objects.isNull(this.exits.get(direction))
-                ? null : (Scenery) RepositoryFactory.getRepositoryMapGame().get(this.exits.get(direction));
+    public MapGame getExit(String direction) {
+        return exits.stream()
+                .filter(exit -> exit.getDirection().equals(direction))
+                .map(Exit::getMapGame)
+                .findFirst().orElse(null);
     }
 
-    void setExits(Map<String, String> exits) {
+    void setExits(List<Exit> exits) {
         this.exits = exits;
     }
 

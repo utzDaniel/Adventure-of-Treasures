@@ -1,8 +1,10 @@
 package backend.service.component;
 
 import backend.exception.ItemCombinableException;
+import backend.service.interfaces.ICombinable;
 import backend.service.model.Player;
 import backend.enums.ItemsCombination;
+import backend.service.model.builder.Item;
 
 import java.util.List;
 import java.util.Objects;
@@ -10,10 +12,10 @@ import java.util.Objects;
 public final class Combination {
 
     private final Player player;
-    private final List<ICombinableDomain> itens;
-    private IItemDomain newItem;
+    private final List<ICombinable> itens;
+    private Item newItem;
 
-    public Combination(List<ICombinableDomain> itensCombination) {
+    public Combination(List<ICombinable> itensCombination) {
         this.player = Player.getInstance();
         this.itens = itensCombination;
         newItem = null;
@@ -59,7 +61,7 @@ public final class Combination {
 
     private void removeAllItemCombine() {
         this.itens.forEach(itensCombinable ->
-                this.player.getInventory().removeItem((IItemDomain) itensCombinable));
+                this.player.getInventory().removeItem((Item) itensCombinable));
 
     }
 

@@ -1,6 +1,7 @@
 package backend.service.model;
 
 import backend.controller.interfaces.ICoordinate;
+import backend.service.model.builder.Item;
 import backend.service.model.builder.MapGame;
 import backend.service.component.DropItem;
 import backend.service.component.LookItem;
@@ -65,17 +66,17 @@ public final class Player {
         new Walk(this, direction).run();
     }
 
-    public IItemDomain lookItem() {
+    public Item lookItem() {
         return new LookItem(this).run();
     }
 
     //TODO ao pegar um item em um local que não deveria ter como o player passar, está podendeo passar. EX: pegar o item papel, na mesa
-    public boolean takeItem(IItemDomain item) {
+    public boolean takeItem(Item item) {
         return new TakeItem(this, item).run();
     }
 
     public boolean dropItem(String name) {
-        IItemDomain item = this.getInventory().getItemVisible().stream()
+        Item item = this.getInventory().getItemVisible().stream()
                 .filter(item1 -> item1.getName().equals(name)).findFirst().get();
         return new DropItem(this, item).run();
     }

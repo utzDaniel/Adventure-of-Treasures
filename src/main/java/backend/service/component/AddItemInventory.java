@@ -2,13 +2,14 @@ package backend.service.component;
 
 import backend.exception.InventoryException;
 import backend.service.model.Inventory;
+import backend.service.model.builder.Item;
 
 public final class AddItemInventory {
 
     private final Inventory inventory;
-    private final IItemDomain item;
+    private final Item item;
 
-    public AddItemInventory(Inventory inventory, IItemDomain item) {
+    public AddItemInventory(Inventory inventory, Item item) {
         this.inventory = inventory;
         this.item = item;
     }

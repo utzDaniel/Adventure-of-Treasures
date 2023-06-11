@@ -31,7 +31,6 @@ public final class RepositoryItem implements IRepository<IItemEntity, String> {
         }
     }
 
-    //TODO por name ou mapGameKey??
     @Override
     public IItemEntity get(String name) {
         return this.itens.get(name);
