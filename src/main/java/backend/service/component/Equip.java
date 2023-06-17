@@ -1,7 +1,7 @@
 package backend.service.component;
 
-import backend.exception.ItemEquipableException;
-import backend.enums.ItemsEquipable;
+import backend.controller.exception.ItemEquipableException;
+import backend.service.enums.ItemsEquipable;
 import backend.service.interfaces.IEquipable;
 
 import java.util.Arrays;

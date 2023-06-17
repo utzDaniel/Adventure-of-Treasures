@@ -1,8 +1,7 @@
 package backend.service.model.builder;
 
+import backend.service.interfaces.ICoordinate;
 import frontend.interfaces.IAction;
-import backend.controller.interfaces.ICoordinate;
-import backend.service.interfaces.IItem;
 
 import javax.swing.*;
 
@@ -77,16 +76,18 @@ public abstract class Item implements IAction {
 
     @Override
     public String toString() {
-        return "Item{" +
-                "name='" + this.name +
-                ", description='" + this.description +
-                ", weight=" + this.weight +
-                ", X=" + this.coordinate.getX() +
-                ", Y=" + this.coordinate.getY() +
-                ", image=" + this.icon +
-                ", removable=" + this.removable +
-                ", visible=" + this.visible +
-                '}';
+        return """
+                {
+                    "name": "%s",
+                    "description": "%s",
+                    "weight": %d,
+                    "coordinate": %s,
+                    "imagemIcon": "%s",
+                    "remove": %b,
+                    "visible": %b,
+                }
+                """.formatted(this.name, this.description, this.weight, this.coordinate.toString(),
+                this.icon.toString(), this.removable, this.visible);
     }
 
     public boolean equipped() {

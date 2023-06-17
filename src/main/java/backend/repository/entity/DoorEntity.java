@@ -3,7 +3,8 @@ package backend.repository.entity;
 import backend.repository.interfaces.IDoorEntity;
 
 public record DoorEntity(
-        int mapGameKey,
+        int id,
+        int idMapGame,
         String mapGame,
         int positionX,
         int positionY,
@@ -14,12 +15,13 @@ public record DoorEntity(
     public String toString() {
         return """
                 {
-                    "mapGameKey": "%d",
+                    "id": %d,
+                    "idMapGame": "%d",
                     "mapGame": "%s",
                     "positionX": %d,
                     "positionY": %d,
                     "open": %b
                 }
-                """.formatted(this.mapGameKey, this.mapGame, this.positionX, this.positionY, this.open);
+                """.formatted(this.id,this.idMapGame, this.mapGame, this.positionX, this.positionY, this.open);
     }
 }

@@ -4,7 +4,7 @@ import backend.service.interfaces.ICombinable;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
 import frontend.model.component.ComponentFactory;
-import backend.controller.interfaces.IItem;
+import backend.controller.interfaces.IItemDTO;
 
 import javax.swing.*;
 import java.util.Arrays;
@@ -20,7 +20,7 @@ public final class ButtonItem {
         this.buttonItens = new JButton[MAX_BUTTON];
         this.isEnableIButtonItensNotCombinable = false;
     }
-    public void create(IItem item) {
+    public void create(IItemDTO item) {
         this.buttonItens[this.index] = ComponentFactory.getJButton(item, this.index);
         this.index++;
     }
@@ -60,9 +60,9 @@ public final class ButtonItem {
         }
     }
 
-    public void selectButtonItem(IItem item) {
+    public void selectButtonItem(IItemDTO item) {
         Arrays.stream(getButtonItens())
-                .filter(jButton -> jButton.getName().equals(item.getName()))
+                .filter(jButton -> jButton.getName().equals(item.name()))
                 .findFirst().ifPresent(jButton -> jButton.setBackground(Colors.GREEN));
     }
 }

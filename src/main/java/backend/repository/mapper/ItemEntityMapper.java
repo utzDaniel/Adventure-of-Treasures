@@ -14,21 +14,22 @@ public final class ItemEntityMapper implements Function<String, IItemEntity> {
         var dadosLinha = l.split(";");
         return new ItemEntity(
                 stringToInt(dadosLinha[0].trim()),
-                tratarString(dadosLinha[1].trim()),
+                stringToInt(dadosLinha[1].trim()),
                 tratarString(dadosLinha[2].trim()),
-                stringToInt(dadosLinha[3].trim()),
+                tratarString(dadosLinha[3].trim()),
                 stringToInt(dadosLinha[4].trim()),
                 stringToInt(dadosLinha[5].trim()),
-                tratarString(dadosLinha[6].trim()),
-                stringToInt(dadosLinha[7].trim()),
-                stringToBoolean(dadosLinha[8].trim()),
-                tratarString(dadosLinha[9].trim()),
+                stringToInt(dadosLinha[6].trim()),
+                tratarString(dadosLinha[7].trim()),
+                stringToInt(dadosLinha[8].trim()),
+                stringToBoolean(dadosLinha[9].trim()),
                 tratarString(dadosLinha[10].trim()),
-                stringToBoolean(dadosLinha[11].trim()),
+                tratarString(dadosLinha[11].trim()),
                 stringToBoolean(dadosLinha[12].trim()),
-                tratarString(dadosLinha[13].trim()),
+                stringToBoolean(dadosLinha[13].trim()),
                 tratarString(dadosLinha[14].trim()),
-                tratarString(dadosLinha[15].trim())
+                tratarString(dadosLinha[15].trim()),
+                tratarString(dadosLinha[16].trim())
         );
     }
 

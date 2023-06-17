@@ -1,5 +1,7 @@
 package backend.service.model.builder;
 
+import backend.controller.exception.MapGameException;
+import backend.service.infra.Cache;
 import backend.service.model.Exit;
 
 import java.util.ArrayList;
@@ -14,10 +16,11 @@ public final class Scenery extends MapGame {
     }
 
     public MapGame getExit(String direction) {
-        return exits.stream()
-                .filter(exit -> exit.getDirection().equals(direction))
-                .map(Exit::getMapGame)
-                .findFirst().orElse(null);
+        var mapGame = exits.stream()
+                .filter(exit -> exit.direction().equals(direction))
+                .map(Exit::mapGame)
+                .findFirst().orElseThrow(() -> new MapGameException("Exit map não encontrado"));
+        return Cache.getMapGame(mapGame);
     }
 
     void setExits(List<Exit> exits) {
@@ -26,8 +29,11 @@ public final class Scenery extends MapGame {
 
     @Override
     public String toString() {
-        return "Scenery{" +
-                "exits=" + this.exits +
-                "} " + super.toString();
+        return """
+                MapGame: %s
+                {
+                    "exits": "%s"
+                }
+                """.formatted(super.toString(), this.exits);
     }
 }

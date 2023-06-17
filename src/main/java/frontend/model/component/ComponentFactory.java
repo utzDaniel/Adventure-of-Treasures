@@ -2,7 +2,7 @@ package frontend.model.component;
 
 import backend.service.model.Player;
 import backend.service.model.builder.MapGame;
-import backend.controller.interfaces.IItem;
+import backend.controller.interfaces.IItemDTO;
 
 import javax.swing.*;
 import java.util.List;
@@ -62,11 +62,11 @@ public final class ComponentFactory {
         return GameJLabelFactory.getInstance(player);
     }
 
-    public static JLabel getJLabel(IItem item) {
+    public static JLabel getJLabel(IItemDTO item) {
         return GameJLabelFactory.getInstance(item);
     }
 
-    public static List<JLabel> getJLabel(List<IItem> item) {
+    public static List<JLabel> getJLabel(List<IItemDTO> item) {
         return GameJLabelFactory.getInstance(item);
     }
 
@@ -82,7 +82,7 @@ public final class ComponentFactory {
         return InventoryJButtonActionFactory.getInstance(name);
     }
 
-    public static JButton getJButton(IItem item, int index) {
+    public static JButton getJButton(IItemDTO item, int index) {
         return InventoryJButtonItemFactory.getInstance(item, index);
     }
 }

@@ -1,14 +1,17 @@
-import backend.exception.InventoryException;
+import backend.controller.exception.InventoryException;
+import backend.service.component.AddItemMapGame;
+import backend.service.component.ServiceDropItem;
+import backend.service.component.take.TakeItem;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
 import backend.service.model.builder.ItemEquipableBuilder;
 import backend.service.model.builder.ItemMissionBuilder;
 import backend.service.model.builder.ItemUsableBuilder;
-import backend.enums.Direction;
+import backend.service.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
 import backend.repository.factory.RepositoryFactory;
-import backend.controller.interfaces.ICoordinate;
+import backend.service.interfaces.ICoordinate;
 
 import static org.junit.Assert.assertTrue;
 
@@ -29,25 +32,31 @@ public class RemoveItemTest {
                 .toList()) {
             player.getInventory().setItemInvisible(item);
         }
-        player.getInventory().addItem(ItemEquipableBuilder.builder().equipped(false).name("mochila").description("utilizada para carregar mais coisas").weight(0)
-                .coordinate(ICoordinate.getInstance(650, 220)).image(null).removable(true).visible(true).build());
+        var item = ItemEquipableBuilder.builder().equipped(false).name("mochila").description("utilizada para carregar mais coisas").weight(0)
+                .coordinate(ICoordinate.getInstance(650, 220)).image(null).removable(true).visible(true).build();
+        new AddItemInventory(player.getInventory(), item).run();
     }
 
     @Test
     public void removerItemPorItemDentroDoInventario() {
         Item item = ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(0)
                 .coordinate(ICoordinate.getInstance(200, 280)).image(null).removable(true).visible(true).build();
-        player.takeItem(item);
-        assertTrue(player.dropItem(item));
+        new TakeItem(this.player, item).run();
+        assertTrue(new ServiceDropItem().run(player,item.getName()));
     }
 
     @Test(expected = InventoryException.class)
     public void naoRemoverItemNotRemovePorItemDentroDoInventario() {
         Item item = ItemMissionBuilder.builder().mapGame("barco").name("tesouro").description("tesouro lendário dos templários").weight(0)
                 .coordinate(ICoordinate.getInstance(620, 240)).image(null).removable(false).build();
-        player.getCurrentMap().addItem(item, player.getLocation());
-        player.takeItem(item);
-        player.dropItem(item);
+
+        var mapGame = this.player.getCurrentMap();
+        var coordinate = this.player.getLocation();
+        if (new AddItemMapGame(mapGame, item, coordinate).run()) {
+            mapGame.addItem(item);
+        }
+        new TakeItem(this.player, item).run();
+        new ServiceDropItem().run(player,item.getName());
     }
 
 }

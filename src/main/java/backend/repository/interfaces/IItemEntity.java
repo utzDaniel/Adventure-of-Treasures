@@ -2,7 +2,8 @@ package backend.repository.interfaces;
 
 public interface IItemEntity {
 
-    int mapGameKey();
+    int id();
+    int idMapGame();
     String name();
 
     String description();

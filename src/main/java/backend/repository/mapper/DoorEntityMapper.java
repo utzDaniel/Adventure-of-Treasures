@@ -14,10 +14,11 @@ public final class DoorEntityMapper implements Function<String, IDoorEntity> {
         var dadosLinha = l.split(";");
         return new DoorEntity(
                 stringToInt(dadosLinha[0].trim()),
-                tratarString(dadosLinha[1].trim()),
-                stringToInt(dadosLinha[2].trim()),
+                stringToInt(dadosLinha[1].trim()),
+                tratarString(dadosLinha[2].trim()),
                 stringToInt(dadosLinha[3].trim()),
-                stringToBoolean(dadosLinha[4].trim())
+                stringToInt(dadosLinha[4].trim()),
+                stringToBoolean(dadosLinha[5].trim())
         );
     }
 

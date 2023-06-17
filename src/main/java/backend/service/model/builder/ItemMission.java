@@ -38,7 +38,11 @@ public final class ItemMission extends Item implements IMission {
 
     @Override
     public String toString() {
-        return "ItemMission{" +
-                "mapGame='" + this.mapGame + "} " + super.toString();
+        return """
+                Item: %s
+                {
+                    "mapGame": "%s"
+                }
+                """.formatted(super.toString(), this.mapGame);
     }
 }

@@ -1,6 +1,6 @@
 package frontend.model.vo;
 
-import backend.controller.interfaces.ICoordinate;
+import backend.service.interfaces.ICoordinate;
 
 import java.awt.*;
 import java.util.Objects;
@@ -21,7 +21,7 @@ public final class CoordinateVO implements ICoordinate {
     }
 
     @Override
-    public int getX() {
+    public int x() {
         return this.x;
     }
 
@@ -36,7 +36,7 @@ public final class CoordinateVO implements ICoordinate {
     }
 
     @Override
-    public int getY() {
+    public int y() {
         return this.y;
     }
 
@@ -52,8 +52,8 @@ public final class CoordinateVO implements ICoordinate {
 
     @Override
     public void move(ICoordinate coordinate) {
-        this.x += coordinate.getX();
-        this.y += coordinate.getY();
+        this.x += coordinate.x();
+        this.y += coordinate.y();
     }
 
     @Override

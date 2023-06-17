@@ -1,14 +1,14 @@
 package frontend.model.vo;
 
-import backend.controller.interfaces.ICoordinate;
-import backend.controller.interfaces.IItem;
-import backend.controller.interfaces.IMovePlayer;
+import backend.service.interfaces.ICoordinate;
+import backend.controller.interfaces.IItemDTO;
+import backend.controller.interfaces.IMoveResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MovePlayerVO implements IMovePlayer {
+public class MovePlayerVO implements IMoveResponse {
 
     private String iconMap;
     private String iconPlayer;
@@ -20,50 +20,50 @@ public class MovePlayerVO implements IMovePlayer {
     public MovePlayerVO() {
     }
 
-    public MovePlayerVO(String iconMap, String iconPlayer, ICoordinate coordinatePlayer, String songMap, List<IItem> itens, int indexItens) {
+    public MovePlayerVO(String iconMap, String iconPlayer, ICoordinate coordinatePlayer, String songMap, List<IItemDTO> itens, int indexItens) {
         this.iconMap = iconMap;
         this.iconPlayer = iconPlayer;
-        this.coordinatePlayer = new CoordinateVO(coordinatePlayer.getX(), coordinatePlayer.getY());
+        this.coordinatePlayer = new CoordinateVO(coordinatePlayer.x(), coordinatePlayer.y());
         this.songMap = songMap;
         if (Objects.nonNull(itens))
             this.itens = new ArrayList<>(itens.stream()
-                    .map(item -> new ItemVO(item.getIcon(), item.getCoordinate(), item.getName(), item.getDescription(),
-                            item.getEffect(), item.getWeight(), item.getSpecialization(), item.isEquipped()))
+                    .map(item -> new ItemVO(item.icon(), item.coordinate(), item.name(), item.description(),
+                            item.effect(), item.weight(), item.specialization(), item.isEquipped()))
                     .toList());
         this.indexItens = indexItens;
     }
 
     @Override
-    public String getIconMap() {
+    public String iconMap() {
         return this.iconMap;
     }
 
     @Override
-    public String getIconPlayer() {
+    public String iconPlayer() {
         return this.iconPlayer;
     }
 
     @Override
-    public ICoordinate getCoordinatePlayer() {
+    public ICoordinate coordinatePlayer() {
         return this.coordinatePlayer;
     }
 
     @Override
-    public String getSongMap() {
+    public String songMap() {
         return this.songMap;
     }
 
     @Override
-    public List<IItem> getItens() {
+    public List<IItemDTO> itens() {
         if (Objects.isNull(itens)) return null;
         return new ArrayList<>(this.itens.stream()
-                .map(item -> new ItemVO(item.getIcon(), item.getCoordinate(), item.getName(), item.getDescription(),
-                        item.getEffect(), item.getWeight(), item.getSpecialization(), item.isEquipped()))
+                .map(item -> new ItemVO(item.icon(), item.coordinate(), item.name(), item.description(),
+                        item.effect(), item.weight(), item.specialization(), item.isEquipped()))
                 .toList());
     }
 
     @Override
-    public int getIndexItens() {
+    public int indexItens() {
         return this.indexItens;
     }
 }

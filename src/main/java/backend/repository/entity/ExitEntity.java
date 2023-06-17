@@ -3,7 +3,8 @@ package backend.repository.entity;
 import backend.repository.interfaces.IExitEntity;
 
 public record ExitEntity(
-        int mapGameKey,
+        int id,
+        int idMapGame,
         String direction,
         String mapGame
 ) implements IExitEntity {
@@ -12,10 +13,11 @@ public record ExitEntity(
     public String toString() {
         return """
                 {
-                    "mapGameKey": "%d",
+                    "id": "%d",
+                    "idMapGame": "%d",
                     "direction": %s,
                     "mapGame": %s
                 }
-                """.formatted(this.mapGameKey, this.direction, this.mapGame);
+                """.formatted(this.id, this.idMapGame,this.direction, this.mapGame);
     }
 }

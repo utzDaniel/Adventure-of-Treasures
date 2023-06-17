@@ -2,8 +2,8 @@ import backend.service.model.builder.Item;
 import backend.service.model.builder.ItemCombinableBuilder;
 import org.junit.Before;
 import org.junit.Test;
-import backend.enums.ItemsCombination;
-import backend.controller.interfaces.ICoordinate;
+import backend.service.enums.ItemsCombination;
+import backend.service.interfaces.ICoordinate;
 
 import java.util.ArrayList;
 import java.util.List;

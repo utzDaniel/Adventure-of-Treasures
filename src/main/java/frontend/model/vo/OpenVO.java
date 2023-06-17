@@ -1,14 +1,14 @@
 package frontend.model.vo;
 
-import backend.controller.interfaces.ICoordinate;
-import backend.controller.interfaces.IItem;
-import backend.controller.interfaces.IOpen;
+import backend.service.interfaces.ICoordinate;
+import backend.controller.interfaces.IItemDTO;
+import backend.controller.interfaces.IOpenResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class OpenVO implements IOpen {
+public class OpenVO implements IOpenResponse {
 
     private String iconMap;
     private String iconPlayer;
@@ -19,15 +19,15 @@ public class OpenVO implements IOpen {
     public OpenVO() {
     }
 
-    public OpenVO(String iconMap, String iconPlayer, ICoordinate coordinatePlayer, String songMap, List<IItem> itens) {
+    public OpenVO(String iconMap, String iconPlayer, ICoordinate coordinatePlayer, String songMap, List<IItemDTO> itens) {
         this.iconMap = iconMap;
         this.iconPlayer = iconPlayer;
-        this.coordinatePlayer = new CoordinateVO(coordinatePlayer.getX(), coordinatePlayer.getY());
+        this.coordinatePlayer = new CoordinateVO(coordinatePlayer.x(), coordinatePlayer.y());
         this.songMap = songMap;
         if (Objects.nonNull(itens))
             this.itens = new ArrayList<>(itens.stream()
-                    .map(item -> new ItemVO(item.getIcon(), item.getCoordinate(), item.getName(), item.getDescription(),
-                            item.getEffect(), item.getWeight(), item.getSpecialization(), item.isEquipped()))
+                    .map(item -> new ItemVO(item.icon(), item.coordinate(), item.name(), item.description(),
+                            item.effect(), item.weight(), item.specialization(), item.isEquipped()))
                     .toList());
     }
 
@@ -52,11 +52,11 @@ public class OpenVO implements IOpen {
     }
 
     @Override
-    public List<IItem> getItens() {
+    public List<IItemDTO> getItens() {
         if (Objects.isNull(itens)) return null;
         return new ArrayList<>(this.itens.stream()
-                .map(item -> new ItemVO(item.getIcon(), item.getCoordinate(), item.getName(), item.getDescription(),
-                        item.getEffect(), item.getWeight(), item.getSpecialization(), item.isEquipped()))
+                .map(item -> new ItemVO(item.icon(), item.coordinate(), item.name(), item.description(),
+                        item.effect(), item.weight(), item.specialization(), item.isEquipped()))
                 .toList());
     }
 

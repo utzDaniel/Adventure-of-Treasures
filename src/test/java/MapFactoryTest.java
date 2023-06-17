@@ -2,13 +2,10 @@ import backend.service.model.Door;
 import backend.service.model.builder.MapGame;
 import backend.service.model.builder.RoomBuilder;
 import backend.service.model.builder.SceneryBuilder;
-import backend.service.mapper.MapGameMapper;
 import org.junit.Before;
 import org.junit.Test;
-import backend.repository.util.FileUtil;
-import backend.controller.interfaces.ICoordinate;
+import backend.service.interfaces.ICoordinate;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
@@ -21,16 +18,16 @@ public class MapFactoryTest {
 
     @Before
     public void create() {
-        mapGames = new ArrayList<>();
-        createMapGame();
-        mapGamesFile = new ArrayList<>();
-        String filename = "map/map.csv";
-        var filee = new FileUtil<MapGame>(filename);
-        try {
-            mapGamesFile = (ArrayList<MapGame>) filee.readFile(new MapGameMapper());
-        } catch (IOException e) {
-            System.exit(0);
-        }
+//        mapGames = new ArrayList<>();
+//        createMapGame();
+//        mapGamesFile = new ArrayList<>();
+//        String filename = "map/map.csv";
+//        var filee = new FileUtil<MapGame>(filename);
+//        try {
+//            mapGamesFile = (ArrayList<MapGame>) filee.readFile(new MapGameMapper());
+//        } catch (IOException e) {
+//            System.exit(0);
+//        }
     }
 
     @Test

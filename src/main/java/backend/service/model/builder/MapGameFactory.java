@@ -23,7 +23,7 @@ public final class MapGameFactory {
     }
 
     private boolean isScenery() {
-        return mapGameEntity.exitsKey() != -1;
+        return !getExits().isEmpty();
     }
 
     private IBuilderMapGame inicial(IBuilderMapGame mapGame) {
@@ -50,23 +50,26 @@ public final class MapGameFactory {
 
     private List<Item> getItens() {
         return RepositoryFactory.getRepositoryItem().getAll()
-                .stream().filter(itemEntity -> itemEntity.mapGameKey() == mapGameEntity.itensKey())
+                .stream().filter(item -> isValid(item.idMapGame()) && item.idMapGame() == mapGameEntity.id())
                 .map(itemEntity -> new ItemFactory().create(itemEntity))
                 .toList();
     }
 
     private List<Exit> getExits() {
         return RepositoryFactory.getRepositoryExit().getAll()
-                .stream().filter(exitEntity -> exitEntity.mapGameKey() == mapGameEntity.exitsKey())
+                .stream().filter(exit -> isValid(exit.idMapGame()) && exit.idMapGame() == mapGameEntity.id())
                 .map(exitEntity -> new ExitFactory().create(exitEntity))
                 .toList();
     }
 
     private List<Door> getDoors() {
         return RepositoryFactory.getRepositoryDoor().getAll()
-                .stream().filter(doorEntity -> doorEntity.mapGameKey() == mapGameEntity.doorsKey())
+                .stream().filter(door -> isValid(door.idMapGame()) && door.idMapGame() == mapGameEntity.id())
                 .map(doorEntity -> new DoorFactory().create(doorEntity))
                 .toList();
     }
 
+    private boolean isValid(int key) {
+        return key != -1;
+    }
 }

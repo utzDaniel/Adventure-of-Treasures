@@ -24,8 +24,11 @@ public final class DropItem {
     }
 
     private void addItemCurrentMap() {
-        this.player.getCurrentMap().
-                addItem(this.item, this.player.getLocation());
+        var mapGame = this.player.getCurrentMap();
+        var coordinate = this.player.getLocation();
+        if (new AddItemMapGame(mapGame, this.item, coordinate).run()) {
+            mapGame.addItem(this.item);
+        }
     }
 
 }

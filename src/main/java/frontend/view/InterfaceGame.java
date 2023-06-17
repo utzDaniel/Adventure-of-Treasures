@@ -3,8 +3,8 @@ package frontend.view;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
 import frontend.model.component.ComponentFactory;
-import backend.controller.interfaces.IItem;
-import backend.controller.interfaces.IMovePlayer;
+import backend.controller.interfaces.IItemDTO;
+import backend.controller.interfaces.IMoveResponse;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,24 +42,24 @@ public final class InterfaceGame {
         return this.components.get(0);
     }
 
-    public void updateComponentsMove(IMovePlayer movePlayerVO) {
+    public void updateComponentsMove(IMoveResponse movePlayerVO) {
         components.forEach(
                 jLabel -> {
                     if (jLabel.getName().equals("player")) {
-                        jLabel.setIcon(new ImageIcon(movePlayerVO.getIconPlayer()));
-                        jLabel.setLocation(new Point(movePlayerVO.getCoordinatePlayer().getX(), movePlayerVO.getCoordinatePlayer().getY()));
+                        jLabel.setIcon(new ImageIcon(movePlayerVO.iconPlayer()));
+                        jLabel.setLocation(new Point(movePlayerVO.coordinatePlayer().x(), movePlayerVO.coordinatePlayer().y()));
                     }
                     if (jLabel.getName().equals("mapa")) {
-                        jLabel.setIcon(new ImageIcon(movePlayerVO.getIconMap()));
+                        jLabel.setIcon(new ImageIcon(movePlayerVO.iconMap()));
                     }
                 }
         );
-        if (Objects.nonNull(movePlayerVO.getSongMap())) {
-            this.song.play(movePlayerVO.getSongMap());
+        if (Objects.nonNull(movePlayerVO.songMap())) {
+            this.song.play(movePlayerVO.songMap());
         }
-        if (Objects.nonNull(movePlayerVO.getItens())) {
+        if (Objects.nonNull(movePlayerVO.itens())) {
             clearJLabelItens();
-            setItensJLabel(movePlayerVO.getItens(), movePlayerVO.getIndexItens());
+            setItensJLabel(movePlayerVO.itens(), movePlayerVO.indexItens());
             getMapGameJLabel().repaint();
         }
     }
@@ -91,7 +91,7 @@ public final class InterfaceGame {
         frame.getContentPane().repaint();
     }
 
-    public void setItensJLabel(List<IItem> itens, int index) {
+    public void setItensJLabel(List<IItemDTO> itens, int index) {
         var jLabelList = ComponentFactory.getJLabel(itens);
         jLabelList.forEach(jLabel -> frame.getContentPane().add(jLabel, index));
     }

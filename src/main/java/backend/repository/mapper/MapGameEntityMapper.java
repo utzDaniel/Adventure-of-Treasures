@@ -13,13 +13,11 @@ public final class MapGameEntityMapper implements Function<String, IMapGameEntit
     public IMapGameEntity apply(String l) {
         var dadosLinha = l.split(";");
         return new MapGameEntity(
-                tratarString(dadosLinha[0].trim()),
+                stringToInt(dadosLinha[0].trim()),
                 tratarString(dadosLinha[1].trim()),
-                stringToInt(dadosLinha[2].trim()),
-                stringToInt(dadosLinha[3].trim()),
-                stringToInt(dadosLinha[4].trim()),
-                tratarString(dadosLinha[5].trim()),
-                createLimits(dadosLinha[6].trim())
+                tratarString(dadosLinha[2].trim()),
+                tratarString(dadosLinha[3].trim()),
+                createLimits(dadosLinha[4].trim())
         );
     }
 

@@ -1,8 +1,8 @@
 package backend.service.component;
 
-import backend.exception.ItemUsableException;
+import backend.controller.exception.ItemUsableException;
 import backend.service.model.Player;
-import backend.enums.ItemsUsable;
+import backend.service.enums.ItemsUsable;
 import backend.service.interfaces.IUsable;
 
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-import backend.exception.ItemUsableException;
+import backend.controller.exception.ItemUsableException;
 import backend.service.model.builder.Item;
 import backend.service.model.builder.ItemCombinableBuilder;
 import backend.service.model.builder.ItemMissionBuilder;
@@ -11,7 +11,7 @@ import backend.service.interfaces.IUsable;
 import org.junit.Before;
 import org.junit.Test;
 import backend.repository.factory.RepositoryFactory;
-import backend.controller.interfaces.ICoordinate;
+import backend.service.interfaces.ICoordinate;
 import backend.service.component.Combination;
 import backend.service.component.Use;
 

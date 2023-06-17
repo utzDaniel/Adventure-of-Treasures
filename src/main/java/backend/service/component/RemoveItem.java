@@ -1,6 +1,6 @@
 package backend.service.component;
 
-import backend.exception.InventoryException;
+import backend.controller.exception.InventoryException;
 import backend.service.interfaces.IMission;
 import backend.service.model.Inventory;
 import backend.service.model.builder.Item;
@@ -27,8 +27,7 @@ public final class RemoveItem {
     }
 
     private void removeItem() {
-        this.inventory.getMapItem()
-                .remove(this.item.getName());
+        this.inventory.removeItem(this.item);
 
     }
 

@@ -4,7 +4,7 @@ import frontend.view.ButtonAction;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import backend.controller.interfaces.ICoordinate;
+import backend.service.interfaces.ICoordinate;
 
 import javax.swing.*;
 import java.util.ArrayList;

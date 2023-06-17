@@ -2,15 +2,10 @@ package backend.repository.interfaces;
 
 public interface IMapGameEntity {
 
+    int id();
     String name();
 
     String imagemIcon();
-
-    int exitsKey();
-
-    int doorsKey();
-
-    int itensKey();
 
     String song();
 

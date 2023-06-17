@@ -1,6 +1,6 @@
 package backend.service.model;
 
-import backend.controller.interfaces.ICoordinate;
+import backend.service.interfaces.ICoordinate;
 
 public final class Door {
 
@@ -40,10 +40,12 @@ public final class Door {
 
     @Override
     public String toString() {
-        return "Door{" +
-                "mapGame='" + this.mapGame +
-                ", coordinate=" + this.coordinate +
-                ", open=" + this.open +
-                '}';
+        return """
+                {
+                    "mapGame": "%s",
+                    "coordinate": %s,
+                    "open": %b
+                }
+                """.formatted(this.mapGame, this.coordinate.toString(), this.open);
     }
 }

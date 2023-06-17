@@ -12,8 +12,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
-public final class RepositoryItem implements IRepository<IItemEntity, String> {
-    private final Map<String, IItemEntity> itens;
+public final class RepositoryItem implements IRepository<IItemEntity, Integer> {
+    private final Map<Integer, IItemEntity> itens;
 
     RepositoryItem() {
         this.itens = new HashMap<>();
@@ -25,15 +25,15 @@ public final class RepositoryItem implements IRepository<IItemEntity, String> {
         var file = new FileUtil<IItemEntity>(filename);
         try {
             this.itens.putAll(file.readFile(new ItemEntityMapper()).stream()
-                    .collect(Collectors.toMap(IItemEntity::name, item1 -> item1)));
+                    .collect(Collectors.toMap(IItemEntity::id, item1 -> item1)));
         } catch (IOException e) {
             System.exit(0);
         }
     }
 
     @Override
-    public IItemEntity get(String name) {
-        return this.itens.get(name);
+    public IItemEntity get(Integer id) {
+        return this.itens.get(id);
     }
 
     @Override

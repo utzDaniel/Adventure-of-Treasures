@@ -1,7 +1,7 @@
 package frontend.view;
 
 import frontend.model.component.ComponentFactory;
-import backend.controller.interfaces.IItem;
+import backend.controller.interfaces.IItemDTO;
 
 import javax.swing.*;
 import java.util.Arrays;
@@ -9,7 +9,7 @@ import java.util.Arrays;
 public final class ButtonAction {
 
     private int index;
-    private IItem item;
+    private IItemDTO item;
     private final JButton[] buttonActions;
 
     public ButtonAction() {
@@ -60,21 +60,21 @@ public final class ButtonAction {
                     jButton.setEnabled(false);
                     jButton.setBackground(Colors.GREY);
                 });
-        if (item.getSpecialization().contains("ItemUsable")) {
+        if (item.specialization().contains("ItemUsable")) {
             this.buttonActions[0].setBackground(Colors.BLUE);
             this.buttonActions[0].setEnabled(true);
         }
-        if (item.getSpecialization().contains("ItemEquipable")) {
+        if (item.specialization().contains("ItemEquipable")) {
             this.buttonActions[1].setBackground(Colors.BLUE);
             this.buttonActions[1].setEnabled(true);
             remove = item.isEquipped();
             setTextEquipable(remove);
         }
-        if (item.getSpecialization().contains("ItemCombinable")) {
+        if (item.specialization().contains("ItemCombinable")) {
             this.buttonActions[2].setBackground(Colors.BLUE);
             this.buttonActions[2].setEnabled(true);
         }
-        if (!(item.getSpecialization().contains("ItemMission")) && !remove) {
+        if (!(item.specialization().contains("ItemMission")) && !remove) {
             this.buttonActions[3].setBackground(Colors.BLUE);
             this.buttonActions[3].setEnabled(true);
         }
@@ -88,11 +88,11 @@ public final class ButtonAction {
         return this.buttonActions;
     }
 
-    public IItem getUseItem() {
+    public IItemDTO getUseItem() {
         return this.item;
     }
 
-    public void setUseItem(IItem item) {
+    public void setUseItem(IItemDTO item) {
         invisibleCancelAndConfirm();
         this.item = item;
         validEnable();

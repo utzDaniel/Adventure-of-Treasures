@@ -1,11 +1,11 @@
 package backend.controller.model;
 
-import backend.service.component.MovePlayer;
-import backend.service.component.OpenInventory;
-import backend.enums.Direction;
+import backend.service.move.MovePlayer;
+import backend.service.component.openInventory.OpenInventory;
+import backend.service.enums.Direction;
 import backend.controller.interfaces.IEventAction;
-import backend.service.component.Open;
-import backend.service.component.Take;
+import backend.service.component.open.Open;
+import backend.service.component.take.Take;
 
 public class EventAction implements IEventAction {
 

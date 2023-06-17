@@ -1,7 +1,6 @@
 package backend.service.interfaces;
 
 import backend.service.model.builder.Item;
-import backend.controller.interfaces.ICoordinate;
 
 public interface IBuilderItem {
 

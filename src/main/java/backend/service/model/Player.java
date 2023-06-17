@@ -1,12 +1,7 @@
 package backend.service.model;
 
-import backend.controller.interfaces.ICoordinate;
-import backend.service.model.builder.Item;
+import backend.service.interfaces.ICoordinate;
 import backend.service.model.builder.MapGame;
-import backend.service.component.DropItem;
-import backend.service.component.LookItem;
-import backend.service.component.TakeItem;
-import backend.service.component.Walk;
 
 import javax.swing.*;
 import java.util.Objects;
@@ -60,25 +55,6 @@ public final class Player {
 
     public Inventory getInventory() {
         return this.inventory;
-    }
-
-    public void walk(String direction) {
-        new Walk(this, direction).run();
-    }
-
-    public Item lookItem() {
-        return new LookItem(this).run();
-    }
-
-    //TODO ao pegar um item em um local que não deveria ter como o player passar, está podendeo passar. EX: pegar o item papel, na mesa
-    public boolean takeItem(Item item) {
-        return new TakeItem(this, item).run();
-    }
-
-    public boolean dropItem(String name) {
-        Item item = this.getInventory().getItemVisible().stream()
-                .filter(item1 -> item1.getName().equals(name)).findFirst().get();
-        return new DropItem(this, item).run();
     }
 
     public ImageIcon getIcon() {

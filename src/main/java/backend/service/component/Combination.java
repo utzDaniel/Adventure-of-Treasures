@@ -1,9 +1,9 @@
 package backend.service.component;
 
-import backend.exception.ItemCombinableException;
+import backend.controller.exception.ItemCombinableException;
 import backend.service.interfaces.ICombinable;
 import backend.service.model.Player;
-import backend.enums.ItemsCombination;
+import backend.service.enums.ItemsCombination;
 import backend.service.model.builder.Item;
 
 import java.util.List;
@@ -55,13 +55,12 @@ public final class Combination {
 
     private void updateMap() {
         if (newItem.getName().equals("mapa")) {
-            this.player.getCurrentMap().activate(newItem.getName());
+            new ActivateMapGame().run(newItem.getName());
         }
     }
 
     private void removeAllItemCombine() {
-        this.itens.forEach(itensCombinable ->
-                this.player.getInventory().removeItem((Item) itensCombinable));
+        this.itens.forEach(itensCombinable -> new RemoveItem(this.player.getInventory(), (Item) itensCombinable).run());
 
     }
 

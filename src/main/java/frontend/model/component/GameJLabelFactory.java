@@ -2,7 +2,7 @@ package frontend.model.component;
 
 import backend.service.model.Player;
 import backend.service.model.builder.MapGame;
-import backend.controller.interfaces.IItem;
+import backend.controller.interfaces.IItemDTO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +17,7 @@ final class GameJLabelFactory {
     static JLabel getInstance(Player player) {
         var width = 32;
         var height = 47;
-        var rectangle = new Rectangle(player.getLocation().getX(), player.getLocation().getY(), width, height);
+        var rectangle = new Rectangle(player.getLocation().x(), player.getLocation().y(), width, height);
         return create(player.getIcon(), "player", rectangle);
     }
 
@@ -30,14 +30,14 @@ final class GameJLabelFactory {
         return create(mapGame.getIcon(), "mapa", rectangle);
     }
 
-     static JLabel getInstance(IItem item) {
+     static JLabel getInstance(IItemDTO item) {
         var width = 100;
         var height = 100;
-        var rectangle = new Rectangle(item.getCoordinate().getX(), item.getCoordinate().getY() - 10, width, height);
-        return create(new ImageIcon(item.getIcon()), "item", rectangle);
+        var rectangle = new Rectangle(item.coordinate().x(), item.coordinate().y() - 10, width, height);
+        return create(new ImageIcon(item.icon()), "item", rectangle);
     }
 
-    static List<JLabel> getInstance(List<IItem> itens) {
+    static List<JLabel> getInstance(List<IItemDTO> itens) {
         var listJLabel = new ArrayList<JLabel>();
         itens.forEach(item -> listJLabel.add(getInstance(item)));
         return listJLabel;

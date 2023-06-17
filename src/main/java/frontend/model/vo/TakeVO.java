@@ -1,14 +1,14 @@
 package frontend.model.vo;
 
-import backend.controller.interfaces.ICoordinate;
-import backend.controller.interfaces.IItem;
-import backend.controller.interfaces.ITake;
+import backend.service.interfaces.ICoordinate;
+import backend.controller.interfaces.IItemDTO;
+import backend.controller.interfaces.ITakeResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class TakeVO implements ITake {
+public class TakeVO implements ITakeResponse {
 
     private String iconMap;
     private String iconPlayer;
@@ -19,15 +19,15 @@ public class TakeVO implements ITake {
     public TakeVO() {
     }
 
-    public TakeVO(String iconMap, String iconPlayer, ICoordinate coordinatePlayer, String effects, List<IItem> itens) {
+    public TakeVO(String iconMap, String iconPlayer, ICoordinate coordinatePlayer, String effects, List<IItemDTO> itens) {
         this.iconMap = iconMap;
         this.iconPlayer = iconPlayer;
-        this.coordinatePlayer = new CoordinateVO(coordinatePlayer.getX(), coordinatePlayer.getY());
+        this.coordinatePlayer = new CoordinateVO(coordinatePlayer.x(), coordinatePlayer.y());
         this.effects = effects;
         if (Objects.nonNull(itens))
             this.itens = new ArrayList<>(itens.stream()
-                    .map(item -> new ItemVO(item.getIcon(), item.getCoordinate(), item.getName(), item.getDescription(),
-                            item.getEffect(), item.getWeight(), item.getSpecialization(), item.isEquipped()))
+                    .map(item -> new ItemVO(item.icon(), item.coordinate(), item.name(), item.description(),
+                            item.effect(), item.weight(), item.specialization(), item.isEquipped()))
                     .toList());
     }
 
@@ -52,11 +52,11 @@ public class TakeVO implements ITake {
     }
 
     @Override
-    public List<IItem> getItens() {
+    public List<IItemDTO> getItens() {
         if (Objects.isNull(itens)) return null;
         return new ArrayList<>(this.itens.stream()
-                .map(item -> new ItemVO(item.getIcon(), item.getCoordinate(), item.getName(), item.getDescription(),
-                        item.getEffect(),item.getWeight(), item.getSpecialization(), item.isEquipped()))
+                .map(item -> new ItemVO(item.icon(), item.coordinate(), item.name(), item.description(),
+                        item.effect(),item.weight(), item.specialization(), item.isEquipped()))
                 .toList());
     }
 

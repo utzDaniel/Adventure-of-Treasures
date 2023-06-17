@@ -9,7 +9,7 @@ public final class ItemUsableBuilder extends ItemBuilder {
         super.item = this.itemUsable;
     }
 
-    static public ItemUsableBuilder builder() {
+    public static ItemUsableBuilder builder() {
         return new ItemUsableBuilder();
     }
 

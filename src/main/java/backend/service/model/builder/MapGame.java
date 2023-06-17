@@ -1,11 +1,8 @@
 package backend.service.model.builder;
 
+import backend.service.interfaces.ICoordinate;
 import backend.service.model.Area;
 import backend.service.model.Door;
-import backend.repository.factory.RepositoryFactory;
-import backend.exception.MoveException;
-import backend.controller.interfaces.ICoordinate;
-import backend.service.component.AddItemMapGame;
 
 import javax.swing.*;
 import java.util.HashMap;
@@ -43,8 +40,8 @@ public abstract class MapGame {
         this.icon = imagemIcon;
     }
 
-    public boolean checkLimits(ICoordinate coordinate) {
-        return this.area.isBlock(coordinate);
+    public Area getArea() {
+        return this.area;
     }
 
     protected void setLimits(int[][] limits) {
@@ -67,55 +64,24 @@ public abstract class MapGame {
         this.doors = doors;
     }
 
-    public MapGame getMapDoor(Door door) {
-        return RepositoryFactory.getRepositoryMapGame().get(door.getMapGame());
-    }
-
-    //TODO resolver isso depois
-    public boolean activate(String nameItem) {
-        boolean activate = false;
-        try {
-            if (nameItem.equals("tocha")) {
-                MapGame templo = RepositoryFactory.getRepositoryMapGame().get("templo");
-                Door openDoor = templo.getDoor(ICoordinate.getInstance(90, 240)).get();
-                openDoor.setOpen(!openDoor.isOpen());
-                activate = true;
-            } else if (nameItem.equals("mapa")) {
-                MapGame praia = RepositoryFactory.getRepositoryMapGame().get("praia");
-                praia.setIcon(new ImageIcon("src/main/resources/map/praiaM.png"));
-            } else if (nameItem.equals("chave")) {
-                MapGame praia = RepositoryFactory.getRepositoryMapGame().get("praia");
-                praia.setIcon(new ImageIcon("src/main/resources/map/praia.png"));
-            } else if (nameItem.equals("escada")) {
-                MapGame templo = RepositoryFactory.getRepositoryMapGame().get("templo");
-                templo.setIcon(new ImageIcon("src/main/resources/map/temploF.png"));
-            }
-        } catch (Exception e) {
-            throw new MoveException("Direção invalida!");
-        }
-        return activate;
-    }
-
     public Item getItem(ICoordinate coordinate) {
         return this.itens.get(coordinate);
     }
 
     public void removeItem(Item item) {
         this.itens.remove(item.getLocation());
+        //TODO ao pegar um item em um local que não deveria ter como o player passar, está podendeo passar. EX: pegar o item papel, na mesa
         this.area.unlock(item.getLocation());
     }
 
-    public void addItem(Item item, ICoordinate coordinate) {
-        if (new AddItemMapGame(this, item, coordinate).run()) {
-            this.itens.put(item.getLocation(), item);
-            this.area.block(item.getLocation());
-        }
+    public void addItem(Item item) {
+        this.itens.put(item.getLocation(), item);
+        this.area.block(item.getLocation());
     }
 
     protected void setItens(Map<ICoordinate, Item> itens) {
         this.itens = itens;
-        this.itens.keySet()
-                .forEach(c -> this.area.block(c));
+        this.itens.keySet().forEach(c -> this.area.block(c));
     }
 
     public List<Item> getItemVisible() {
@@ -140,13 +106,16 @@ public abstract class MapGame {
 
     @Override
     public String toString() {
-        return "MapGame{" +
-                "name='" + this.name +
-                ", image=" + this.icon +
-                ", area=" + this.area +
-                ", doors=" + this.doors +
-                ", itens=" + this.itens +
-                ", song=" + this.song +
-                '}';
+        return """
+                {
+                    "name": "%s",
+                    "icon": "%s",
+                    "area": %s,
+                    "doors": %s,
+                    "itens": %s,
+                    "song": "%s"
+                }
+                """.formatted(this.name, this.icon.toString(), this.area, this.doors.values(),
+                this.itens.values(), this.song);
     }
 }

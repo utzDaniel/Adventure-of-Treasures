@@ -1,14 +1,15 @@
-import backend.exception.InventoryException;
+import backend.controller.exception.InventoryException;
+import backend.service.component.AddItemMapGame;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
 import backend.service.model.builder.ItemUsableBuilder;
 import backend.service.model.builder.MapGame;
-import backend.enums.Direction;
+import backend.service.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
 import backend.repository.factory.RepositoryFactory;
-import backend.controller.interfaces.ICoordinate;
-import backend.service.component.Take;
+import backend.service.interfaces.ICoordinate;
+import backend.service.component.take.Take;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -36,13 +37,18 @@ public class TakeTest {
         item = ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(0)
                 .coordinate(ICoordinate.getInstance(340, 340)).image(null).removable(true).visible(true).build();
         mapGame = player.getCurrentMap();
-        mapGame.addItem(item, player.getLocation());
+        var mapGame = this.player.getCurrentMap();
+        var coordinate = this.player.getLocation();
+        if (new AddItemMapGame(mapGame, item, coordinate).run()) {
+            mapGame.addItem(item);
+        }
+
         take = new Take();
     }
 
     @Test
     public void testarItemValidoAFrente() {
-        player.setLocation(ICoordinate.getInstance(item.getLocation().getX(), (item.getLocation().getY() - 10)));
+        player.setLocation(ICoordinate.getInstance(item.getLocation().x(), (item.getLocation().y() - 10)));
         player.setCurrentMap(mapGame);
         assertTrue(take.run());
     }
@@ -53,14 +59,18 @@ public class TakeTest {
                 .coordinate(ICoordinate.getInstance(320, 320)).image(null).removable(true).visible(true).build();
         player.setLocation(ICoordinate.getInstance(320, 320));
         player.setDirection("oeste");
-        mapGame.addItem(item, player.getLocation());
+        var mapGame = this.player.getCurrentMap();
+        var coordinate = this.player.getLocation();
+        if (new AddItemMapGame(mapGame, item, coordinate).run()) {
+            mapGame.addItem(item);
+        }
         player.setCurrentMap(mapGame);
         take.run();
     }
 
     @Test
     public void testarItemInvalidoAFrente() {
-        player.setLocation(ICoordinate.getInstance(290, player.getLocation().getY()));
+        player.setLocation(ICoordinate.getInstance(290, player.getLocation().y()));
         player.setCurrentMap(mapGame);
         assertFalse(take.run());
     }

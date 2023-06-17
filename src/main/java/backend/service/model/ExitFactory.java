@@ -2,7 +2,7 @@ package backend.service.model;
 
 import backend.repository.interfaces.IExitEntity;
 
-public class ExitFactory {
+public final class ExitFactory {
 
     private IExitEntity exitEntity;
 
@@ -12,8 +12,8 @@ public class ExitFactory {
     }
 
     private Exit run() {
-        var mapGame = exitEntity.mapGame();
         var direction = exitEntity.direction();
-        return new Exit(mapGame, direction);
+        var mapGame = exitEntity.mapGame();
+        return new Exit(direction, mapGame);
     }
 }

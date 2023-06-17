@@ -10,8 +10,8 @@ import frontend.model.vo.TakeVO;
 import frontend.util.JsonConverter;
 import frontend.view.InterfaceGame;
 import frontend.view.InterfaceInventory;
-import backend.enums.Direction;
-import backend.controller.interfaces.ICoordinate;
+import backend.service.enums.Direction;
+import backend.service.interfaces.ICoordinate;
 import backend.controller.model.EventAction;
 
 import javax.swing.*;
@@ -136,8 +136,8 @@ public class Keyboard {
         this.interfaceGame.clearJLabelItens();
         this.interfaceGame.setItensJLabel(openVO.getItens(), 1);
         this.interfaceGame.getMapGameJLabel().repaint();
-        this.interfaceGame.getPlayerJLabel().setLocation(new Point(openVO.getCoordinatePlayer().getX(),
-                openVO.getCoordinatePlayer().getY()));
+        this.interfaceGame.getPlayerJLabel().setLocation(new Point(openVO.getCoordinatePlayer().x(),
+                openVO.getCoordinatePlayer().y()));
     }
 
     private void updateItensMapGame(TakeVO takeVO) {
@@ -145,8 +145,8 @@ public class Keyboard {
         this.interfaceGame.clearJLabelItens();
         this.interfaceGame.setItensJLabel(takeVO.getItens(), 1);
         this.interfaceGame.getMapGameJLabel().repaint();
-        this.interfaceGame.getPlayerJLabel().setLocation(new Point(takeVO.getCoordinatePlayer().getX(),
-                takeVO.getCoordinatePlayer().getY()));
+        this.interfaceGame.getPlayerJLabel().setLocation(new Point(takeVO.getCoordinatePlayer().x(),
+                takeVO.getCoordinatePlayer().y()));
     }
 
     private void finish(String song) {

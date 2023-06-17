@@ -1,9 +1,9 @@
 package frontend.model.vo;
 
-import backend.controller.interfaces.ICoordinate;
-import backend.controller.interfaces.IItem;
+import backend.service.interfaces.ICoordinate;
+import backend.controller.interfaces.IItemDTO;
 
-public class ItemVO implements IItem {
+public class ItemVO implements IItemDTO {
     private String icon;
     private CoordinateVO coordinate;
     private String name;
@@ -18,7 +18,7 @@ public class ItemVO implements IItem {
 
     public ItemVO(String icon, ICoordinate coordinate, String name, String description, String effect, int weight, String specialization,  boolean equipped) {
         this.icon = icon;
-        this.coordinate = new CoordinateVO(coordinate.getX(), coordinate.getY());
+        this.coordinate = new CoordinateVO(coordinate.x(), coordinate.y());
         this.name = name;
         this.description = description;
         this.effect = effect;
@@ -28,37 +28,37 @@ public class ItemVO implements IItem {
     }
 
     @Override
-    public String getIcon() {
+    public String icon() {
         return this.icon;
     }
 
     @Override
-    public ICoordinate getCoordinate() {
+    public ICoordinate coordinate() {
         return this.coordinate;
     }
 
     @Override
-    public String getName() {
+    public String name() {
         return this.name;
     }
 
     @Override
-    public String getDescription() {
+    public String description() {
         return this.description;
     }
 
     @Override
-    public String getEffect() {
+    public String effect() {
         return this.effect;
     }
 
     @Override
-    public int getWeight() {
+    public int weight() {
         return this.weight;
     }
 
     @Override
-    public String getSpecialization() {
+    public String specialization() {
         return this.specialization;
     }
 

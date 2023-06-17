@@ -1,15 +1,16 @@
 package backend;
 
+import backend.controller.interfaces.IItemDTO;
+import backend.service.mapper.ItemDTOMapper;
+import backend.repository.factory.RepositoryFactory;
+import backend.service.infra.Cache;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
-import backend.dto.ItemDTO;
-import backend.repository.factory.RepositoryFactory;
 import frontend.event.Keyboard;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
 import frontend.model.component.ComponentFactory;
 import frontend.view.InterfaceGame;
-import backend.controller.interfaces.IItem;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -30,18 +31,17 @@ public class Game {
     }
 
     private void initialPlayer() {
-        var repositoryMapGame = RepositoryFactory.getRepositoryMapGame();
         var repositoryItem = RepositoryFactory.getRepositoryItem();
-        player.setCurrentMap(repositoryMapGame.get("cais"));
+        player.setCurrentMap(Cache.getMapGame("cais"));
 
         //TODO não usar itens invisivel, resolver depois
-        for (Item item : repositoryItem
-                .getAll().stream()
-                .filter(Item::isInvisible)
-                .filter(item -> !item.getName().equals("chave"))
-                .toList()) {
-            player.getInventory().setItemInvisible(item);
-        }
+//        for (Item item : repositoryItem
+//                .getAll().stream()
+//                .filter(Item::isInvisible)
+//                .filter(item -> !item.getName().equals("chave"))
+//                .toList()) {
+//            player.getInventory().setItemInvisible(item);
+//        }
     }
 
     private List<JLabel> getComponents() {
@@ -52,10 +52,9 @@ public class Game {
         return listJLabel;
     }
 
-    private List<IItem> getIItemDTO(List<Item> itens) {
+    private List<IItemDTO> getIItemDTO(List<Item> itens) {
         return new ArrayList<>(itens.stream()
-                .map(item -> new ItemDTO(item.getIcon().toString(), item.getLocation(), item.getName(),
-                        item.getDescription(), item.getEffect(), item.getWeight(), item.getClass().getName(), item.equipped()))
+                .map(item -> new ItemDTOMapper().apply(item))
                 .toList());
     }
 

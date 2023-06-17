@@ -25,15 +25,15 @@ public final class RepositoryExit implements IRepository<IExitEntity, Integer> {
         try {
             this.exit.putAll(
                     file.readFile(new ExitEntityMapper()).stream()
-                            .collect(Collectors.toMap(IExitEntity::mapGameKey, exit1 -> exit1)));
+                            .collect(Collectors.toMap(IExitEntity::id, exit1 -> exit1)));
         } catch (IOException e) {
             System.exit(0);
         }
     }
 
     @Override
-    public IExitEntity get(Integer mapGameKey) {
-        return this.exit.get(mapGameKey);
+    public IExitEntity get(Integer id) {
+        return this.exit.get(id);
     }
 
     @Override

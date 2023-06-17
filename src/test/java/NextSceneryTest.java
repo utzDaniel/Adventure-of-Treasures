@@ -1,4 +1,4 @@
-import backend.dto.CoordinateDTO;
+import backend.service.model.Coordinate;
 import backend.service.model.Player;
 import backend.service.model.builder.MapGame;
 import backend.repository.factory.RepositoryFactory;
@@ -6,8 +6,8 @@ import frontend.model.component.ComponentFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import backend.enums.Direction;
-import backend.service.component.NextScenery;
+import backend.service.enums.Direction;
+import backend.service.move.NextScenery;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class NextSceneryTest {
         var listJLabel = new ArrayList<JLabel>();
         listJLabel.add(ComponentFactory.getJLabel(player));
         listJLabel.add(ComponentFactory.getJLabel(player.getCurrentMap()));
-        nextScenery = new NextScenery(new CoordinateDTO(810,662));
+        nextScenery = new NextScenery(new Coordinate(810,662));
     }
 
     @Test

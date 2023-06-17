@@ -1,6 +1,6 @@
 package backend.service.model;
 
-import backend.controller.interfaces.ICoordinate;
+import backend.service.interfaces.ICoordinate;
 
 public final class Area {
 
@@ -37,23 +37,25 @@ public final class Area {
     }
 
     private static int x(ICoordinate coordinate) {
-        return coordinate.getX() / Area.STEP;
+        return coordinate.x() / Area.STEP;
     }
 
     private static int y(ICoordinate coordinate) {
-        return coordinate.getY() / Area.STEP;
+        return coordinate.y() / Area.STEP;
     }
 
     @Override
     public String toString() {
-        return "Area{" +
-                "limits=" + limits() +
-                '}';
+        return """
+                {
+                    "limits": "%s"
+                }
+                """.formatted(this.limits());
     }
 
     private String limits() {
         StringBuilder str = new StringBuilder();
-        for (int[] limit : limits) {
+        for (int[] limit : this.limits) {
             for (int i : limit) {
                 str.append(i);
             }

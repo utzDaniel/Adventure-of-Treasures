@@ -3,8 +3,8 @@ package backend.service.component;
 import backend.service.model.Area;
 import backend.service.model.builder.Item;
 import backend.service.model.builder.MapGame;
-import backend.exception.MapGameException;
-import backend.controller.interfaces.ICoordinate;
+import backend.controller.exception.MapGameException;
+import backend.service.interfaces.ICoordinate;
 
 public class AddItemMapGame {
 
@@ -58,7 +58,8 @@ public class AddItemMapGame {
     }
 
     private boolean checkCoordinateValid() {
-        return this.mapGame.checkLimits(this.coordinate);
+        var area = this.mapGame.getArea();
+        return area.isBlock(this.coordinate);
     }
 
     private boolean isAreaTraveledComplete() {

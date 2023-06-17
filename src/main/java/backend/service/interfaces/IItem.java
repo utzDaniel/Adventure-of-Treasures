@@ -1,7 +1,5 @@
 package backend.service.interfaces;
 
-import backend.controller.interfaces.ICoordinate;
-
 import javax.swing.*;
 
 public interface IItem {

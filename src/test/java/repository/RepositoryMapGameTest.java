@@ -19,29 +19,29 @@ public class RepositoryMapGameTest {
     @Before
     public void create() {
         mapGame = new ArrayList<>();
-        mapGame.add(new MapGameEntity("cais", "src/main/resources/map/cais.png", 1, 1,
+        mapGame.add(new MapGameEntity(1,"cais", "src/main/resources/map/cais.png", 1, 1,
                 -1, "src/main/resources/audio/scenery/cais.wav", limitsPier()));
-        mapGame.add(new MapGameEntity("farol", "src/main/resources/map/farol.png", 2, 2,
+        mapGame.add(new MapGameEntity(2,"farol", "src/main/resources/map/farol.png", 2, 2,
                 1, "src/main/resources/audio/scenery/farol.wav", limitsLighthouse()));
-        mapGame.add(new MapGameEntity("dentro do farol", "src/main/resources/map/dentro-do-farol.png", -1,
+        mapGame.add(new MapGameEntity(3,"dentro do farol", "src/main/resources/map/dentro-do-farol.png", -1,
                 3, 2, null, limitsLighthouseRoom()));
-        mapGame.add(new MapGameEntity("praia", "src/main/resources/map/praia.png", 3, -1,
+        mapGame.add(new MapGameEntity(4,"praia", "src/main/resources/map/praia.png", 3, -1,
                 3, "src/main/resources/audio/scenery/praia.wav", limitsBeach()));
-        mapGame.add(new MapGameEntity("floresta", "src/main/resources/map/floresta.png", 4, -1,
+        mapGame.add(new MapGameEntity(5,"floresta", "src/main/resources/map/floresta.png", 4, -1,
                 4, null, limitsForest()));
-        mapGame.add(new MapGameEntity("vila", "src/main/resources/map/vila.png", 5, 4, -1,
+        mapGame.add(new MapGameEntity(6,"vila", "src/main/resources/map/vila.png", 5, 4, -1,
                 "src/main/resources/audio/scenery/vila.wav", limitsVillage()));
-        mapGame.add(new MapGameEntity("alojamento", "src/main/resources/map/alojamento.png", -1,
+        mapGame.add(new MapGameEntity(7,"alojamento", "src/main/resources/map/alojamento.png", -1,
                 5, 5, null, limitsAccommodation()));
-        mapGame.add(new MapGameEntity("templo", "src/main/resources/map/templo.png", -1,
+        mapGame.add(new MapGameEntity(8,"templo", "src/main/resources/map/templo.png", -1,
                 6, 6, "src/main/resources/audio/scenery/templo.wav", limitsTemple()));
-        mapGame.add(new MapGameEntity("topo do templo", "src/main/resources/map/topo-do-templo.png", -1,
+        mapGame.add(new MapGameEntity(9,"topo do templo", "src/main/resources/map/topo-do-templo.png", -1,
                 7, 7, null, limitsTopTemple()));
-        mapGame.add(new MapGameEntity("porao do templo", "src/main/resources/map/porao.png", -1,
+        mapGame.add(new MapGameEntity(10,"porao do templo", "src/main/resources/map/porao.png", -1,
                 8, 8, null, limitsBasement()));
-        mapGame.add(new MapGameEntity("enfermaria", "src/main/resources/map/enfermaria.png", -1,
+        mapGame.add(new MapGameEntity(11,"enfermaria", "src/main/resources/map/enfermaria.png", -1,
                 9, 9, null, limitsNursery()));
-        mapGame.add(new MapGameEntity("barco", "src/main/resources/map/barco.png", -1,
+        mapGame.add(new MapGameEntity(12,"barco", "src/main/resources/map/barco.png", -1,
                 10, 10, null, limitsBoat()));
 
         mapGameFile = RepositoryFactory.getRepositoryMapGame().getAll();

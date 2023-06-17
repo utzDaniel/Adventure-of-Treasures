@@ -7,9 +7,9 @@ import backend.repository.factory.RepositoryFactory;
 import frontend.model.component.ComponentFactory;
 import org.junit.Before;
 import org.junit.Test;
-import backend.exception.MapGameException;
-import backend.controller.interfaces.ICoordinate;
-import backend.service.component.NextDoor;
+import backend.controller.exception.MapGameException;
+import backend.service.interfaces.ICoordinate;
+import backend.service.component.open.OpenDoor;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class NextDoorTest {
     private Player player;
     private Door templeDoor;
     private Door vilaDoor;
-    private NextDoor nextDoor;
+    private OpenDoor nextDoor;
 
     @Before
     public void inicialize() {
@@ -37,12 +37,12 @@ public class NextDoorTest {
         listJLabel.add(ComponentFactory.getJLabel(player));
         listJLabel.add(ComponentFactory.getJLabel(player.getCurrentMap()));
         //nextDoor = new NextDoor(new InterfaceGame(listJLabel));
-        nextDoor = new NextDoor();
+        nextDoor = new OpenDoor(null);
     }
 
     @Test
     public void testDoorNull(){
-        player.setLocation(ICoordinate.getInstance(350, player.getLocation().getY()));
+        player.setLocation(ICoordinate.getInstance(350, player.getLocation().y()));
         MapGame atualMap = player.getCurrentMap();
         nextDoor.run();
         assertEquals(atualMap, player.getCurrentMap());

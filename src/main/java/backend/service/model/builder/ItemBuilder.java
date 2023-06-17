@@ -1,7 +1,7 @@
 package backend.service.model.builder;
 
 import backend.service.interfaces.IBuilderItem;
-import backend.controller.interfaces.ICoordinate;
+import backend.service.interfaces.ICoordinate;
 
 import javax.swing.*;
 

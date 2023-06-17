@@ -13,7 +13,7 @@ public final class RepositoryFactory {
     private RepositoryFactory() {
     }
 
-    public static synchronized IRepository<IItemEntity, String> getRepositoryItem() {
+    public static synchronized IRepository<IItemEntity, Integer> getRepositoryItem() {
         if (Objects.isNull(repositoryItem)) {
             repositoryItem = new RepositoryItem();
         }

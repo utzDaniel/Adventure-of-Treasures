@@ -19,14 +19,14 @@ public class RepositoryExitTest {
     @Before
     public void create() {
         exits = new ArrayList<>();
-        exits.add(new ExitEntity(1, "norte", "floresta"));
-        exits.add(new ExitEntity(1, "oeste", "farol"));
-        exits.add(new ExitEntity(1, "leste", "praia"));
-        exits.add(new ExitEntity(2, "leste", "cais"));
-        exits.add(new ExitEntity(3, "oeste", "cais"));
-        exits.add(new ExitEntity(4, "norte", "vila"));
-        exits.add(new ExitEntity(4, "sul", "cais"));
-        exits.add(new ExitEntity(5, "sul", "floresta"));
+        exits.add(new ExitEntity(1,1, "norte", "floresta"));
+        exits.add(new ExitEntity(2,1, "oeste", "farol"));
+        exits.add(new ExitEntity(3,1, "leste", "praia"));
+        exits.add(new ExitEntity(4,2, "leste", "cais"));
+        exits.add(new ExitEntity(5,4, "oeste", "cais"));
+        exits.add(new ExitEntity(6,5, "norte", "vila"));
+        exits.add(new ExitEntity(7,5, "sul", "cais"));
+        exits.add(new ExitEntity(8,6, "sul", "floresta"));
 
         exitsFile = RepositoryFactory.getRepositoryExit().getAll();
     }

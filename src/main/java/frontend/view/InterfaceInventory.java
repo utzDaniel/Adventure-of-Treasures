@@ -1,11 +1,12 @@
 package frontend.view;
 
+import backend.service.component.ServiceDropItem;
 import backend.service.model.Player;
 import backend.service.interfaces.ICombinable;
 import frontend.model.component.ComponentFactory;
 import frontend.model.vo.ItemVO;
 import frontend.model.vo.OpenInventoryVO;
-import backend.controller.interfaces.IItem;
+import backend.controller.interfaces.IItemDTO;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -78,7 +79,7 @@ public final class InterfaceInventory {
         this.labelSideEast.add(buttons[5]);
     }
 
-    private void actionButtonItem(IItem item) {
+    private void actionButtonItem(IItemDTO item) {
         this.buttonAction.setUseItem(item);
         this.labelInformation.updateText(item);
     }
@@ -86,7 +87,7 @@ public final class InterfaceInventory {
     private void setConfirm(String command) {
         this.buttonAction.visibleCancelAndConfirm(command);
         if (command.equals("combinar")) {
-            IItem item = this.buttonAction.getUseItem();
+            IItemDTO item = this.buttonAction.getUseItem();
             addListItem((ICombinable) item);
             this.buttonItem.enableIButtonItensNotCombinable();
             this.buttonItem.selectButtonItem(item);
@@ -106,9 +107,9 @@ public final class InterfaceInventory {
 
     private void setActionConfirm(String command) {
         boolean success;
-        IItem item = this.buttonAction.getUseItem();
+        IItemDTO item = this.buttonAction.getUseItem();
         success = switch (command) {
-            case "remover" -> this.player.dropItem(item.getName());
+            case "remover" -> new ServiceDropItem().run(player,item.name());
 //            case "usar", "equipar" -> item.action();
 //            case "combinar" -> item.action(this.items);
             default -> false;
@@ -118,8 +119,8 @@ public final class InterfaceInventory {
 
         if (success && command.equals("remover")) {
             this.interfaceGame.getFrame().getContentPane().add(ComponentFactory.getJLabel(
-                    new ItemVO(item.getIcon().toString(), item.getCoordinate(), item.getName(), item.getDescription(),
-                            item.getEffect(), item.getWeight(), item.getSpecialization(), item.isEquipped())), 1);
+                    new ItemVO(item.icon().toString(), item.coordinate(), item.name(), item.description(),
+                            item.effect(), item.weight(), item.specialization(), item.isEquipped())), 1);
         }
 
         if (command.equals("usar") && success) {//usar pá
@@ -132,7 +133,7 @@ public final class InterfaceInventory {
             this.panelInventory.getPanel().requestFocus();
         }
 
-        playEffects(command, success, item.getEffect());//TODO item.getEffect() resolver depois
+        playEffects(command, success, item.effect());//TODO item.getEffect() resolver depois
         setActionCancel();
     }
 

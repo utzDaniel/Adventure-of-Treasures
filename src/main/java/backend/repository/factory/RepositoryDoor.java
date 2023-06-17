@@ -25,15 +25,15 @@ public final class RepositoryDoor implements IRepository<IDoorEntity, Integer> {
         try {
             this.door.putAll(
                     file.readFile(new DoorEntityMapper()).stream()
-                            .collect(Collectors.toMap(IDoorEntity::mapGameKey, door1 -> door1)));
+                            .collect(Collectors.toMap(IDoorEntity::id, door1 -> door1)));
         } catch (IOException e) {
             System.exit(0);
         }
     }
 
     @Override
-    public IDoorEntity get(Integer mapGameKey) {
-        return this.door.get(mapGameKey);
+    public IDoorEntity get(Integer id) {
+        return this.door.get(id);
     }
 
     @Override

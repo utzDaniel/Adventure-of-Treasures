@@ -3,7 +3,8 @@ package backend.repository.entity;
 import backend.repository.interfaces.IItemEntity;
 
 public record ItemEntity(
-        int mapGameKey,
+        int id,
+        int idMapGame,
         String name,
         String description,
         int weight,
@@ -34,7 +35,8 @@ public record ItemEntity(
     public String toString() {
         return """
                 {
-                    "mapGameKey": "%d",
+                    "id": "%d",
+                    "idMapGame": "%d",
                     "name": "%s",
                     "description": "%s",
                     "weight": %d,
@@ -51,7 +53,7 @@ public record ItemEntity(
                     "effectsEquipped": "%s",
                     "effectsUse": "%s"
                 }
-                """.formatted(this.mapGameKey, this.name, this.description, this.weight, this.positionX, this.positionY,
+                """.formatted(this.id, this.idMapGame, this.name, this.description, this.weight, this.positionX, this.positionY,
                 this.imagemIcon, this.combine, this.equipped, this.mapGame, this.localUse, this.remove, this.visible,
                 this.effectsCombine, this.effectsEquipped, this.effectsUse);
 

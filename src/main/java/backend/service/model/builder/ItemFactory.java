@@ -1,6 +1,6 @@
 package backend.service.model.builder;
 
-import backend.controller.interfaces.ICoordinate;
+import backend.service.interfaces.ICoordinate;
 import backend.repository.interfaces.IItemEntity;
 import backend.service.interfaces.IBuilderItem;
 

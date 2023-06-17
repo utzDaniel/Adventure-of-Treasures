@@ -10,7 +10,6 @@ import java.util.List;
 public final class ItemEquipable extends Item implements IEquipable {
 
     private boolean equipped;
-    //    private Room room;
     private String effect;
 
     ItemEquipable() {
@@ -47,6 +46,7 @@ public final class ItemEquipable extends Item implements IEquipable {
     public String getEffect() {
         return this.effect;
     }
+
     void setEffect(String filename) {
         this.effect = filename;
     }
@@ -58,17 +58,13 @@ public final class ItemEquipable extends Item implements IEquipable {
 
     @Override
     public String toString() {
-        return "ItemEquipable{" +
-                "equipped=" + this.equipped +
-                ", effect='" + this.effect +"} "+ super.toString();
+        return """
+                Item: %s
+                {
+                    "equipped": %b,
+                    "effect": "%s"
+                }
+                """.formatted(super.toString(), this.equipped, this.effect);
     }
 
-
-    //    public void setRoom(Room room) {
-//        this.room = room;
-//    }
-//
-//    public Room getRoom() {
-//        return this.room;
-//    }
 }

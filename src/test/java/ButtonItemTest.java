@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import frontend.view.ButtonItem;
 import frontend.view.Colors;
-import backend.controller.interfaces.ICoordinate;
+import backend.service.interfaces.ICoordinate;
 
 import java.util.ArrayList;
 
@@ -98,7 +98,7 @@ public class ButtonItemTest {
         var enableIButton = new ArrayList<Boolean>();
         itens.forEach(item -> {
             enableIButton.add(item instanceof ItemCombinable);
-            player.getInventory().addItem(item);
+            new AddItemInventory(player.getInventory(), item).run();
         });
         buttonItem.enableIButtonItensNotCombinable();
         for (int i = 0; i < itens.size(); i++) {

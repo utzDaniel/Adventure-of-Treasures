@@ -2,10 +2,17 @@ package backend.service.model.builder;
 
 public final class Room extends MapGame {
 
-    public Room () {}
+    public Room () {
+        //private
+    }
 
     @Override
     public String toString() {
-        return "Room{} " + super.toString();
+        return """
+                MapGame: %s
+                {
+                
+                }
+                """.formatted(super.toString());
     }
 }

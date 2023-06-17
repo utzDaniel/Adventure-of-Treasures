@@ -1,7 +1,7 @@
 package frontend.view;
 
 import frontend.model.component.ComponentFactory;
-import backend.controller.interfaces.IItem;
+import backend.controller.interfaces.IItemDTO;
 
 import javax.swing.*;
 
@@ -20,10 +20,10 @@ public final class LabelInformation {
         this.index++;
     }
 
-    public void updateText(IItem item) {
-        this.infoLabel[1].setText(String.format("%s: %s", this.infoLabel[1].getName(), item.getName()));
-        this.infoLabel[2].setText(String.format("%s: %s", this.infoLabel[2].getName(), item.getWeight()));
-        this.infoLabel[3].setText(String.format("<html>%s: %s</html>", this.infoLabel[3].getName(), item.getDescription()));
+    public void updateText(IItemDTO item) {
+        this.infoLabel[1].setText(String.format("%s: %s", this.infoLabel[1].getName(), item.name()));
+        this.infoLabel[2].setText(String.format("%s: %s", this.infoLabel[2].getName(), item.weight()));
+        this.infoLabel[3].setText(String.format("<html>%s: %s</html>", this.infoLabel[3].getName(), item.description()));
     }
 
     public void updateTextCapacity(int capacity, int maxCapacity) {

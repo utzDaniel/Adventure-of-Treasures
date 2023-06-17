@@ -1,9 +1,9 @@
 package backend.service.model;
 
-import backend.controller.interfaces.ICoordinate;
+import backend.service.interfaces.ICoordinate;
 import backend.repository.interfaces.IDoorEntity;
 
-public class DoorFactory {
+public final class DoorFactory {
 
     private IDoorEntity doorEntity;
 

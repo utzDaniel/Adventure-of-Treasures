@@ -1,7 +1,5 @@
 package backend.service.model;
 
-import backend.service.component.AddItemInventory;
-import backend.service.component.RemoveItem;
 import backend.service.model.builder.Item;
 
 import java.util.HashMap;
@@ -40,20 +38,17 @@ public final class Inventory {
         this.maxCapacity += updade;
     }
 
-    public void removeItem(Item item) {
-        new RemoveItem(this, item).run();
-    }
-
-    public void addItem(Item item) {
-        new AddItemInventory(this, item).run();
-    }
-
     public Item getItem(String nameItem) {
         return this.itens.get(nameItem);
     }
 
-    public Map<String, Item> getMapItem() {
-        return this.itens;
+    public void addItem(Item item) {
+        this.itens.put(item.getName(), item);
+        this.updadeCapacity(item.getWeight());
+    }
+
+    public void removeItem(Item item) {
+        this.itens.remove(item.getName());
     }
 
     public List<Item> getItemVisible() {
@@ -73,7 +68,7 @@ public final class Inventory {
     }
 
     public boolean openInventory() {
-        return isInventory;
+        return this.isInventory;
     }
 
     public void setOpenInventory() {

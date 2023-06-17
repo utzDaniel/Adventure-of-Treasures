@@ -4,7 +4,7 @@ import backend.service.model.builder.Scenery;
 import org.junit.Before;
 import org.junit.Test;
 import backend.repository.factory.RepositoryFactory;
-import backend.controller.interfaces.ICoordinate;
+import backend.service.interfaces.ICoordinate;
 
 import static org.junit.Assert.*;
 
@@ -29,13 +29,17 @@ public class MapGameTest {
     @Test
     public void testarSeOPlayerPodeMoverTRUE(){
         ICoordinate coordinate = ICoordinate.getInstance(300, 470);
-        assertTrue(player.getCurrentMap().checkLimits(coordinate));
+        var area = player.getCurrentMap().getArea();
+        var result = area.isBlock(coordinate);
+        assertTrue(result);
     }
 
     @Test
     public void testarSeOPlayerPodeMoverFALSE(){
         ICoordinate coordinate = ICoordinate.getInstance(0, 0);
-        assertFalse(player.getCurrentMap().checkLimits(coordinate));
+        var area = player.getCurrentMap().getArea();
+        var result = area.isBlock(coordinate);
+        assertFalse(result);
     }
 
     @Test

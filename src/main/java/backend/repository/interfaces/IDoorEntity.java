@@ -2,7 +2,8 @@ package backend.repository.interfaces;
 
 public interface IDoorEntity {
 
-    int mapGameKey();
+    int id();
+    int idMapGame();
     String mapGame();
 
     int positionX();

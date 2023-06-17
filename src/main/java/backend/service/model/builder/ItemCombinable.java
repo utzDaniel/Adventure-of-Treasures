@@ -20,10 +20,12 @@ public final class ItemCombinable extends Item implements ICombinable {
     public int getCombine() {
         return this.combine;
     }
+
     @Override
     public String getEffect() {
         return this.effect;
     }
+
     void setEffect(String filename) {
         this.effect = filename;
     }
@@ -40,8 +42,12 @@ public final class ItemCombinable extends Item implements ICombinable {
 
     @Override
     public String toString() {
-        return "ItemCombinable{" +
-                "combine=" + this.combine +
-                ", effect='" + this.effect +"} "+ super.toString();
+        return """
+                Item: %s
+                {
+                    "combine": %d,
+                    "effect": "%s"
+                }
+                """.formatted(super.toString(), this.combine, this.effect);
     }
 }
