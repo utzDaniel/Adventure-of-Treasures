@@ -49,10 +49,10 @@ public final class MovePlayer {
 
     private Exception isExeption(String direction, ICoordinate coordinate) {
         try {
-            if (isWalk(direction, coordinate)) {
+            if (isWalk(direction, coordinate))
                 new Walk(this.player, direction).run();
-            }
-            new NextScenery(coordinate).run(direction);
+            else
+                new NextScenery(coordinate).run(direction);
         } catch (Exception e) {
             return e;
         }
