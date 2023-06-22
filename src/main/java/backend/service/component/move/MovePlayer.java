@@ -1,21 +1,19 @@
-package backend.service.move;
+package backend.service.component.move;
 
-import backend.service.enums.MovePlayer;
-import backend.service.interfaces.Command;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.Player;
 
 import java.util.Arrays;
 import java.util.Optional;
 
-public final class Walk implements Command {
+public final class MovePlayer {
 
     private final String direction;
     private final Player player;
     private final ICoordinate coordinate;
-    private MovePlayer move;
+    private backend.service.enums.MovePlayer move;
 
-    public Walk(Player player, String direction) {
+    public MovePlayer(Player player, String direction) {
         this.direction = direction;
         this.player = player;
         this.coordinate = player.getLocation();
@@ -30,13 +28,13 @@ public final class Walk implements Command {
         return validCoordinate();
     }
 
-    @Override
+
     public String getName() {
         return "walk";
     }
 
-    private Optional<MovePlayer> getMovePlayer() {
-        return Arrays.stream(MovePlayer.values())
+    private Optional<backend.service.enums.MovePlayer> getMovePlayer() {
+        return Arrays.stream(backend.service.enums.MovePlayer.values())
                 .filter(movePlayer -> movePlayer.getDirection().equals(this.direction))
                 .findFirst();
     }

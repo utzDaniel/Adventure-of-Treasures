@@ -15,12 +15,11 @@ public final class Scenery extends MapGame {
         this.exits = new ArrayList<>();
     }
 
-    public MapGame getExit(String direction) {
-        var mapGame = exits.stream()
+    public String getExit(String direction) {
+        return exits.stream()
                 .filter(exit -> exit.direction().equals(direction))
                 .map(Exit::mapGame)
-                .findFirst().orElseThrow(() -> new MapGameException("Exit map não encontrado"));
-        return Cache.getMapGame(mapGame);
+                .findFirst().get();
     }
 
     void setExits(List<Exit> exits) {

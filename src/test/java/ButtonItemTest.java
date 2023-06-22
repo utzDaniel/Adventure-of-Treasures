@@ -3,8 +3,8 @@ import backend.service.model.builder.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import frontend.view.ButtonItem;
-import frontend.view.Colors;
+import frontend.service.ButtonItem;
+import frontend.service.Colors;
 import backend.service.interfaces.ICoordinate;
 
 import java.util.ArrayList;

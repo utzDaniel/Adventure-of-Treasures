@@ -1,4 +1,4 @@
-package frontend.view;
+package frontend.service;
 
 import backend.service.interfaces.ICombinable;
 import backend.service.model.Player;

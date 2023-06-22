@@ -2,9 +2,8 @@ package backend.controller.interfaces;
 
 import java.util.List;
 
-public interface ITakeResponse {
+public interface ITakeResponse extends IResponse {
 
-    IMessage message();
     String iconMap();
 
     String iconPlayer();

@@ -2,9 +2,8 @@ package backend.controller.interfaces;
 
 import java.util.List;
 
-public interface IMoveResponse {
+public interface IMoveResponse extends IResponse {
 
-    IMessage message();
     String iconMap();
 
     String songMap();

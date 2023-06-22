@@ -1,9 +1,8 @@
 package backend.service.component.open;
 
-import backend.controller.exception.DoorExeption;
 import backend.controller.interfaces.IItemDTO;
 import backend.controller.interfaces.IOpenResponse;
-import backend.controller.util.JsonConverter;
+import backend.controller.interfaces.IResponse;
 import backend.service.dto.response.OpenResponse;
 import backend.service.factory.MessageFactory;
 import backend.service.infra.Cache;
@@ -13,7 +12,6 @@ import backend.service.model.Door;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
 import backend.service.model.builder.MapGame;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -23,14 +21,9 @@ public final class Open {
     private final Player player = Player.getInstance();
 
     //TODO deixar o conversão para o controller
-    public String run() {
-        try {
-            ICoordinate coordinate = player.getLocation();
-            var openResponse = getOpenResponse(coordinate);
-            return JsonConverter.getJson(openResponse);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+    public IResponse run() {
+        ICoordinate coordinate = player.getLocation();
+        return getOpenResponse(coordinate);
     }
 
     private IOpenResponse getOpenResponse(ICoordinate coordinate) {
@@ -44,7 +37,7 @@ public final class Open {
         var message = new MessageFactory().create(exeption);
 
         if (message.sucess()) {
-            message = new MessageFactory().create("Porta aberta!","");
+            message = new MessageFactory().create("Porta aberta!", "");
             MapGame mapGame = Cache.getMapGame(door.getMapGame());
             updatePositionPlayer(mapGame);
             player.setCurrentMap(mapGame);

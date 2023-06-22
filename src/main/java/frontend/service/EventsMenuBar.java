@@ -1,4 +1,4 @@
-package frontend.view;
+package frontend.service;
 
 import frontend.exception.EventException;
 import frontend.model.Song;

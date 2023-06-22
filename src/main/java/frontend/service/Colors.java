@@ -1,4 +1,4 @@
-package frontend.view;
+package frontend.service;
 
 import java.awt.*;
 

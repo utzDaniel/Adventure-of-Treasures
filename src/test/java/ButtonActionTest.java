@@ -1,6 +1,6 @@
 import backend.service.model.builder.*;
 import frontend.exception.ButtonException;
-import frontend.view.ButtonAction;
+import frontend.service.ButtonAction;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;

@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import backend.service.enums.Direction;
-import backend.service.move.NextScenery;
+import backend.service.component.move.MoveScenery;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 public class NextSceneryTest {
 
     private Player player;
-    private NextScenery nextScenery;
+    private MoveScenery moveScenery;
 
     @Before
     public void inicialize() {
@@ -28,42 +28,42 @@ public class NextSceneryTest {
         var listJLabel = new ArrayList<JLabel>();
         listJLabel.add(ComponentFactory.getJLabel(player));
         listJLabel.add(ComponentFactory.getJLabel(player.getCurrentMap()));
-        nextScenery = new NextScenery(new Coordinate(810,662));
+        moveScenery = new MoveScenery(new Coordinate(810,662));
     }
 
     @Test
     public void testSceneryNull(){
         MapGame atualMap = player.getCurrentMap();
-        nextScenery.run("sul");
+        moveScenery.run("sul");
         assertEquals(atualMap, player.getCurrentMap());
     }
 
     @Test
     public void testSceneryDirectionNorte(){
         MapGame atualMap = player.getCurrentMap();
-        nextScenery.run("norte");
+        moveScenery.run("norte");
         Assertions.assertNotEquals(atualMap, player.getCurrentMap());
     }
 
     @Test
     public void testSceneryDirectionLeste(){
         MapGame atualMap = player.getCurrentMap();
-        nextScenery.run("leste");
+        moveScenery.run("leste");
         Assertions.assertNotEquals(atualMap, player.getCurrentMap());
     }
 
     @Test
     public void testSceneryDirectionOeste(){
         MapGame atualMap = player.getCurrentMap();
-        nextScenery.run("oeste");
+        moveScenery.run("oeste");
         Assertions.assertNotEquals(atualMap, player.getCurrentMap());
     }
 
     @Test
     public void testEntrarDoorESair(){
         MapGame atualMap = player.getCurrentMap();
-        nextScenery.run("norte");
-        nextScenery.run("sul");
+        moveScenery.run("norte");
+        moveScenery.run("sul");
         assertEquals(atualMap, player.getCurrentMap());
     }
 }

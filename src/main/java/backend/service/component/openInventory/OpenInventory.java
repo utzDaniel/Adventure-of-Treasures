@@ -2,12 +2,12 @@ package backend.service.component.openInventory;
 
 import backend.controller.interfaces.IInventoryResponse;
 import backend.controller.interfaces.IItemDTO;
-import backend.controller.util.JsonConverter;
+import backend.controller.interfaces.IResponse;
 import backend.service.dto.response.InventoryResponse;
+import backend.service.factory.MessageFactory;
 import backend.service.mapper.ItemDTOMapper;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.ArrayList;
 
@@ -19,13 +19,8 @@ public final class OpenInventory {
         this.player = Player.getInstance();
     }
 
-    public String run() {
-        try {
-            var inventoryResponse = getInventoryResponse();
-            return JsonConverter.getJson(inventoryResponse);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+    public IResponse run() {
+        return getInventoryResponse();
     }
 
     private IInventoryResponse getInventoryResponse() {
@@ -36,7 +31,8 @@ public final class OpenInventory {
         var itensDTO = new ArrayList<IItemDTO>(itens.stream()
                 .map(item -> new ItemDTOMapper().apply(item))
                 .toList());
-        return new InventoryResponse(open, capacity, maxCapacity, itensDTO);
+        var message = new MessageFactory().create("sucess", "");
+        return new InventoryResponse(message, open, capacity, maxCapacity, itensDTO);
     }
 
 }

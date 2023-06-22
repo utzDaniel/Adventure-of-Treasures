@@ -2,7 +2,7 @@ import backend.service.model.builder.Item;
 import backend.service.model.builder.ItemUsableBuilder;
 import org.junit.Before;
 import org.junit.Test;
-import frontend.view.LabelInformation;
+import frontend.service.LabelInformation;
 import backend.service.interfaces.ICoordinate;
 
 import java.util.ArrayList;

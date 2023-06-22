@@ -3,7 +3,7 @@ import backend.service.model.builder.Item;
 import backend.service.model.builder.ItemEquipableBuilder;
 import backend.repository.factory.RepositoryFactory;
 import frontend.model.component.ComponentFactory;
-import frontend.view.InterfaceGame;
+import frontend.service.InterfaceGame;
 import org.junit.Before;
 import org.junit.Test;
 import backend.service.interfaces.ICoordinate;

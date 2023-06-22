@@ -1,12 +1,12 @@
-package frontend.view;
+package frontend.service;
 
-import backend.service.component.ServiceDropItem;
-import backend.service.model.Player;
-import backend.service.interfaces.ICombinable;
-import frontend.model.component.ComponentFactory;
-import frontend.model.vo.ItemVO;
-import frontend.model.vo.OpenInventoryVO;
+import backend.controller.interfaces.IInventoryResponse;
 import backend.controller.interfaces.IItemDTO;
+import backend.service.component.ServiceDropItem;
+import backend.service.interfaces.ICombinable;
+import backend.service.model.Player;
+import frontend.model.component.ComponentFactory;
+import frontend.model.view.Item;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public final class InterfaceInventory {
         this.player = Player.getInstance();
     }
 
-    public void open(OpenInventoryVO openInventoryVO) {
+    public void open(IInventoryResponse inventory) {
         this.player.getInventory().setOpenInventory();
         this.panelInventory = new PanelInventory();
         this.panelInventory.create();
@@ -38,12 +38,12 @@ public final class InterfaceInventory {
         this.buttonItem = new ButtonItem();
         this.labelInformation = new LabelInformation();
         this.buttonAction = new ButtonAction();
-        setSettings(openInventoryVO);
+        setSettings(inventory);
     }
 
-    private void setSettings(OpenInventoryVO openInventoryVO) {
+    private void setSettings(IInventoryResponse inventory) {
         this.panelInventory.getButton().addActionListener(e -> quit());
-        setItens(openInventoryVO);
+        setItens(inventory);
         setInfoItens();
         setButtonsActions();
         this.interfaceGame.getFrame().add(this.panelInventory.getPanel(), 1);
@@ -51,8 +51,8 @@ public final class InterfaceInventory {
         this.interfaceGame.getFrame().setVisible(true);
     }
 
-    private void setItens(OpenInventoryVO openInventoryVO) {
-        openInventoryVO.getItens().forEach(item -> {
+    private void setItens(IInventoryResponse inventory) {
+        inventory.itens().forEach(item -> {
             this.buttonItem.create(item);
             this.buttonItem.getLast().addActionListener(e -> actionButtonItem(item));
             this.labelSideEast.add(this.buttonItem.getLast());
@@ -109,7 +109,7 @@ public final class InterfaceInventory {
         boolean success;
         IItemDTO item = this.buttonAction.getUseItem();
         success = switch (command) {
-            case "remover" -> new ServiceDropItem().run(player,item.name());
+            case "remover" -> new ServiceDropItem().run(player, item.name());
 //            case "usar", "equipar" -> item.action();
 //            case "combinar" -> item.action(this.items);
             default -> false;
@@ -119,8 +119,8 @@ public final class InterfaceInventory {
 
         if (success && command.equals("remover")) {
             this.interfaceGame.getFrame().getContentPane().add(ComponentFactory.getJLabel(
-                    new ItemVO(item.icon().toString(), item.coordinate(), item.name(), item.description(),
-                            item.effect(), item.weight(), item.specialization(), item.isEquipped())), 1);
+                    new Item(item.name(), item.description(), item.icon().toString(), item.weight(), item.coordinate(),
+                            item.effect(), item.specialization(), item.isEquipped())), 1);
         }
 
         if (command.equals("usar") && success) {//usar pá

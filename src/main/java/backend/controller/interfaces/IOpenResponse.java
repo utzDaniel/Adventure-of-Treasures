@@ -2,9 +2,7 @@ package backend.controller.interfaces;
 
 import java.util.List;
 
-public interface IOpenResponse{
-
-    IMessage message();
+public interface IOpenResponse extends IResponse {
 
     String iconMap();
 

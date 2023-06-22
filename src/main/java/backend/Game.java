@@ -10,7 +10,7 @@ import frontend.event.Keyboard;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
 import frontend.model.component.ComponentFactory;
-import frontend.view.InterfaceGame;
+import frontend.service.InterfaceGame;
 
 import javax.swing.*;
 import java.util.ArrayList;

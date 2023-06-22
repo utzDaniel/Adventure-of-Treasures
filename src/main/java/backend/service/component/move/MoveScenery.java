@@ -1,27 +1,28 @@
-package backend.service.move;
+package backend.service.component.move;
 
-import backend.controller.exception.MapGameException;
+import backend.service.component.move.valid.MoveSceneryValidIsExistMap;
+import backend.service.infra.Cache;
 import backend.service.model.Player;
-import backend.service.model.builder.MapGame;
 import backend.service.model.builder.Scenery;
 import backend.service.interfaces.ICoordinate;
+import backend.service.component.move.valid.MoveSceneryValidIsExistName;
 
-import java.util.Objects;
-
-public final class NextScenery {
+public final class MoveScenery {
 
     private final Player player;
     private final ICoordinate coordinate;
 
-    public NextScenery(ICoordinate coordinate) {
+    public MoveScenery(ICoordinate coordinate) {
         this.player = Player.getInstance();
         this.coordinate = coordinate;
     }
 
     public void run(String direction) {
         //TODO não validou a direction e nem setDirection, e faltou o set icon player
-        MapGame nextScenery = ((Scenery) this.player.getCurrentMap()).getExit(direction);
-        if (Objects.isNull(nextScenery)) throw new MapGameException("Exit map não encontrado");
+        var nameScenery = ((Scenery) this.player.getCurrentMap()).getExit(direction);
+        new MoveSceneryValidIsExistName().valid(nameScenery);
+        var nextScenery = Cache.getMapGame(nameScenery);
+        new MoveSceneryValidIsExistMap().valid(nextScenery);
         this.player.setCurrentMap(nextScenery);
         newPosition(direction);
 

@@ -1,15 +1,14 @@
 package backend.service.component.take;
 
 import backend.controller.interfaces.IItemDTO;
+import backend.controller.interfaces.IResponse;
 import backend.controller.interfaces.ITakeResponse;
-import backend.controller.util.JsonConverter;
 import backend.service.dto.response.TakeResponse;
 import backend.service.enums.MovePlayer;
 import backend.service.factory.MessageFactory;
 import backend.service.mapper.ItemDTOMapper;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,13 +22,8 @@ public final class Take {
         this.player = Player.getInstance();
     }
 
-    public String run() {
-        try {
-            var takeResponse = getTakeResponse();
-            return JsonConverter.getJson(takeResponse);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+    public IResponse run() {
+        return getTakeResponse();
     }
 
     private ITakeResponse getTakeResponse() {
@@ -43,7 +37,7 @@ public final class Take {
         List<IItemDTO> itens = null;
 
         if (message.sucess()) {
-            message = new MessageFactory().create("Item adicionado a mochila!","pegar");
+            message = new MessageFactory().create("Item adicionado a mochila!", "pegar");
             effect = "pegar";
             List<Item> itensMap = new ArrayList<>(this.player.getCurrentMap().getItemVisible());
             itens = new ArrayList<>(itensMap.stream()

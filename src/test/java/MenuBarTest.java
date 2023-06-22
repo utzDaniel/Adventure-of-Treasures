@@ -2,7 +2,7 @@ import frontend.exception.EventException;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
 import frontend.model.component.ComponentFactory;
-import frontend.view.EventsMenuBar;
+import frontend.service.EventsMenuBar;
 import org.junit.Before;
 import org.junit.Test;
 

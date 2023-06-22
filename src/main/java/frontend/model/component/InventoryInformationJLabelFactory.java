@@ -1,6 +1,6 @@
 package frontend.model.component;
 
-import frontend.view.Colors;
+import frontend.service.Colors;
 
 import javax.swing.*;
 import java.awt.*;
