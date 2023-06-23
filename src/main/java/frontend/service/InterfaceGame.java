@@ -114,7 +114,7 @@ public final class InterfaceGame {
     private String commandEffects(String command) {
         return String.format("src/main/resources/audio/effects/%s.wav",
                 switch (command) {
-                    case "pegar", "remover ", "finish" -> command;
+                    case "pegar", "remover", "finish" -> command;
                     default -> "erro";
                 });
     }

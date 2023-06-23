@@ -42,7 +42,7 @@ public class Keyboard {
         interfaceGame.getFrame().addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-
+                //not implements
             }
 
             @Override
@@ -61,7 +61,8 @@ public class Keyboard {
 
                     var move = new MoveMapper().apply(moveRes);
 
-                    interfaceGame.updateComponentsMove(move);
+                    if(move.message().sucess())
+                        interfaceGame.updateComponentsMove(move);
 
 
                     //ENTRA NA PORTA
@@ -72,14 +73,15 @@ public class Keyboard {
 
                     var open = new OpenMapper().apply(openRes);
 
-                    if (Objects.isNull(open.songMap())) updateItensMapGame(open);
+                    if("finish".equalsIgnoreCase(open.songMap())) finish(open.songMap());
 
-                    else if (open.songMap().equals("finish")) finish("finish");
+                    if(Objects.nonNull(open.message())){
+                        if (open.message().sucess())
+                            updateItensMapGame(open);
+                        else if (Objects.nonNull(open.message().effect()))
+                            soundEffects.play(commandEffects(open.message().effect()));
+                    }
 
-                    else if (open.songMap().equals("erro"))
-                        soundEffects.play(commandEffects("erro"));
-                    else
-                        updateItensMapGame(open);
 
                     //PEGAR ITEM
                 } else if (keyCode == 98) {
@@ -88,14 +90,13 @@ public class Keyboard {
                     var takeRes = new EventAction().run(takeReq);
                     var take = new TakeMapper().apply(takeRes);
 
-                    if (Objects.nonNull(take.effect())) {
-                        if (take.effect().equals("erro"))
-                            soundEffects.play(commandEffects("erro"));
-                        else {
-                            soundEffects.play(commandEffects(take.effect()));
-                            updateItensMapGame(take);
-                        }
+
+                    var effect = take.message().effect();
+                    if (Objects.nonNull(effect) && !effect.isEmpty()) {
+                        soundEffects.play(commandEffects(effect));
                     }
+
+                    if(take.message().sucess()) updateItensMapGame(take);
 
                     //INVENTARIO
                 } else if (keyCode == 99) {
@@ -116,8 +117,7 @@ public class Keyboard {
 
             @Override
             public void keyReleased(KeyEvent e) {
-
-
+                // not implements
             }
         });
     }

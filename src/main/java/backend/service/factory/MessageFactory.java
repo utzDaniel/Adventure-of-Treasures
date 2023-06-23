@@ -12,7 +12,7 @@ public final class MessageFactory {
     }
 
     public IMessage create(Exception e) {
-        if (Objects.isNull(e)) return new Message(true, "null", "");
+        if (Objects.isNull(e)) return new Message(true, "null", null);
         var name = e.getClass().getSimpleName();
         return switch (name) {
             case "DoorExeption" -> msgDoorExeption(e.getMessage());
@@ -20,7 +20,7 @@ public final class MessageFactory {
             case "ItemException" -> msgItemException(e.getMessage());
             case "MapGameException" -> msgMapGameException(e.getMessage());
             case "MoveException" -> msgMoveException(e.getMessage());
-            default -> new Message(false, "Exception não mapeada", "");
+            default -> new Message(false, "Exception não mapeada", null);
         };
     }
 
@@ -41,11 +41,8 @@ public final class MessageFactory {
     }
 
     private IMessage msgDoorExeption(String text) {
-        var effect = "";
-        if (text.equalsIgnoreCase("Porta está fechada!")) {
-            effect = "erro";
-        } else if (text.equalsIgnoreCase("Porta não existe!"))
-            effect = null;
+        String effect = null;
+        if (text.equalsIgnoreCase("Porta está fechada!")) effect = "erro";
         return new Message(false, text, effect);
     }
 }

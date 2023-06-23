@@ -114,13 +114,9 @@ public final class InterfaceInventory {
 //            case "combinar" -> item.action(this.items);
             default -> false;
         };
-        if (success)
+        if (success){
             this.labelInformation.updateTextCapacity(this.player.getInventory().getCapacity(), this.player.getInventory().getMaxCapacity());
-
-        if (success && command.equals("remover")) {
-            this.interfaceGame.getFrame().getContentPane().add(ComponentFactory.getJLabel(
-                    new Item(item.name(), item.description(), item.icon().toString(), item.weight(), item.coordinate(),
-                            item.effect(), item.specialization(), item.isEquipped())), 1);
+            //TODO atualizar inventory e map
         }
 
         if (command.equals("usar") && success) {//usar pá
@@ -163,5 +159,6 @@ public final class InterfaceInventory {
         this.interfaceGame.getFrame().getContentPane().remove(this.panelInventory.getPanel());
         this.interfaceGame.getFrame().repaint();
         this.interfaceGame.getFrame().requestFocus();
+
     }
 }

@@ -10,8 +10,6 @@ public interface ITakeResponse extends IResponse {
 
     ICoordinateDTO coordinatePlayer();
 
-    String effect();
-
     List<IItemDTO> itens();
 
 }

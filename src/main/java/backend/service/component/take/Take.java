@@ -31,20 +31,18 @@ public final class Take {
         var iconMap = player.getCurrentMap().getIcon().toString();
         var iconPlayer = player.getIcon().toString();
         var coordinatePlayer = player.getLocation();
-        String effect = null;
         var exeption = isExeption(item);
         var message = new MessageFactory().create(exeption);
         List<IItemDTO> itens = null;
 
         if (message.sucess()) {
             message = new MessageFactory().create("Item adicionado a mochila!", "pegar");
-            effect = "pegar";
             List<Item> itensMap = new ArrayList<>(this.player.getCurrentMap().getItemVisible());
             itens = new ArrayList<>(itensMap.stream()
                     .map(item1 -> new ItemDTOMapper().apply(item1))
                     .toList());
         }
-        return new TakeResponse(message, iconMap, iconPlayer, coordinatePlayer, effect, itens);
+        return new TakeResponse(message, iconMap, iconPlayer, coordinatePlayer, itens);
     }
 
     private Exception isExeption(Item item) {

@@ -15,7 +15,6 @@ public final class TakeMapper implements Function<IResponse, ITakeResponse> {
                 takeResponse.iconMap(),
                 takeResponse.iconPlayer(),
                 takeResponse.coordinatePlayer(),
-                takeResponse.effect(),
                 takeResponse.itens());
     }
 }
