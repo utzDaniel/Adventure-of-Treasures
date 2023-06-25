@@ -3,6 +3,7 @@ package backend.controller.model;
 import backend.controller.interfaces.IEventAction;
 import backend.controller.interfaces.IRequest;
 import backend.controller.interfaces.IResponse;
+import backend.service.component.ServiceDropItem;
 import backend.service.component.move.Move;
 import backend.service.component.open.Open;
 import backend.service.component.openInventory.OpenInventory;
@@ -21,6 +22,8 @@ public class EventAction implements IEventAction {
             return new Take().run();
         } else if ("Inventory".equalsIgnoreCase(action)) {
             return new OpenInventory().run();
+        }else if ("Remover".equalsIgnoreCase(action)) {
+            return new ServiceDropItem().run(request);
         }
         return null;
     }

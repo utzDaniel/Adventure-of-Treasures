@@ -1,4 +1,4 @@
-package backend.controller.exception;
+package backend.service.exception;
 
 public class MoveException extends RuntimeException {
     public MoveException(String msg) {

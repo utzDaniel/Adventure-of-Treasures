@@ -20,6 +20,7 @@ public final class ButtonItem {
         this.buttonItens = new JButton[MAX_BUTTON];
         this.isEnableIButtonItensNotCombinable = false;
     }
+
     public void create(IItemDTO item) {
         this.buttonItens[this.index] = ComponentFactory.getJButton(item, this.index);
         this.index++;
@@ -64,5 +65,23 @@ public final class ButtonItem {
         Arrays.stream(getButtonItens())
                 .filter(jButton -> jButton.getName().equals(item.name()))
                 .findFirst().ifPresent(jButton -> jButton.setBackground(Colors.GREEN));
+    }
+
+    public void removeButtonItem(IItemDTO item) {
+        var index = 0;
+        for (int i = 0; i < this.buttonItens.length; i++) {
+            if (this.buttonItens[i].getName().equalsIgnoreCase(item.name())) {
+                buttonItens[i] = null;
+                index = i;
+                break;
+            }
+        }
+
+        for (int i = index; i < this.buttonItens.length - 1; i++) {
+            buttonItens[i] = buttonItens[i + 1];
+            buttonItens[i + 1] = null;
+        }
+
+        this.index--;
     }
 }

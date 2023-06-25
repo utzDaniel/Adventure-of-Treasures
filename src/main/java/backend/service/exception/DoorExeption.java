@@ -1,4 +1,4 @@
-package backend.controller.exception;
+package backend.service.exception;
 
 public class DoorExeption extends RuntimeException {
     public DoorExeption(String msg) {

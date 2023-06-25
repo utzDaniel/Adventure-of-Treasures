@@ -2,11 +2,16 @@ package frontend.service;
 
 import backend.controller.interfaces.IInventoryResponse;
 import backend.controller.interfaces.IItemDTO;
+import backend.controller.model.EventAction;
 import backend.service.component.ServiceDropItem;
 import backend.service.interfaces.ICombinable;
 import backend.service.model.Player;
+import frontend.mapper.DropItemMapper;
+import frontend.mapper.InventoryMapper;
 import frontend.model.component.ComponentFactory;
 import frontend.model.view.Item;
+import frontend.request.DropItemRequest;
+import frontend.request.InventoryRequest;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -109,12 +114,12 @@ public final class InterfaceInventory {
         boolean success;
         IItemDTO item = this.buttonAction.getUseItem();
         success = switch (command) {
-            case "remover" -> new ServiceDropItem().run(player, item.name());
+            case "remover" -> eventActionRemove(item.name());
 //            case "usar", "equipar" -> item.action();
 //            case "combinar" -> item.action(this.items);
             default -> false;
         };
-        if (success){
+        if (success) {
             this.labelInformation.updateTextCapacity(this.player.getInventory().getCapacity(), this.player.getInventory().getMaxCapacity());
             //TODO atualizar inventory e map
         }
@@ -129,7 +134,7 @@ public final class InterfaceInventory {
             this.panelInventory.getPanel().requestFocus();
         }
 
-        playEffects(command, success, item.effect());//TODO item.getEffect() resolver depois
+        //playEffects(command, success, item.effect());//TODO item.getEffect() resolver depois
         setActionCancel();
     }
 
@@ -159,6 +164,26 @@ public final class InterfaceInventory {
         this.interfaceGame.getFrame().getContentPane().remove(this.panelInventory.getPanel());
         this.interfaceGame.getFrame().repaint();
         this.interfaceGame.getFrame().requestFocus();
+    }
 
+    private boolean eventActionRemove(String name) {
+        //TODO remover depois o return boolean
+        var dropItemReq = new DropItemRequest("Remover", name);
+        var dropItemRes = new EventAction().run(dropItemReq);
+        var dropItem = new DropItemMapper().apply(dropItemRes);
+
+        if (dropItem.message().sucess()) {
+            this.interfaceGame.setItemJLabel(dropItem.item(), dropItem.indexItem());
+            this.labelInformation.updateTextCapacity(dropItem.capacity(), dropItem.maxCapacity());
+            for (int i = 0; i < this.labelSideEast.getComponents().length; i++) {
+                if(this.labelSideEast.getComponents()[i].getName().equalsIgnoreCase(dropItem.item().name())){
+                    this.labelSideEast.remove(i);
+                    break;
+                }
+            }
+            this.buttonItem.removeButtonItem(dropItem.item());
+        }
+        this.interfaceGame.playEffects(dropItem.message().effect(), null);
+        return true;
     }
 }

@@ -1,4 +1,4 @@
-import backend.controller.exception.InventoryException;
+import backend.service.exception.InventoryException;
 import backend.service.component.ServiceDropItem;
 import backend.service.component.take.TakeItem;
 import backend.service.model.Player;

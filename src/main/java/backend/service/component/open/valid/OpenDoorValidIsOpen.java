@@ -1,6 +1,6 @@
 package backend.service.component.open.valid;
 
-import backend.controller.exception.DoorExeption;
+import backend.service.exception.DoorExeption;
 import backend.service.interfaces.IOpenDoorValid;
 import backend.service.model.Door;
 

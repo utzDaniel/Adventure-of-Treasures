@@ -1,6 +1,6 @@
 package backend.service.component.move;
 
-import backend.controller.exception.MoveException;
+import backend.service.exception.MoveException;
 import backend.controller.interfaces.*;
 import backend.service.dto.response.MoveResponse;
 import backend.service.factory.MessageFactory;

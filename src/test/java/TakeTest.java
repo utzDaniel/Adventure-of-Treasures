@@ -1,4 +1,4 @@
-import backend.controller.exception.InventoryException;
+import backend.service.exception.InventoryException;
 import backend.service.component.AddItemMapGame;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;

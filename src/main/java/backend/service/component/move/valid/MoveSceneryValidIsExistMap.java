@@ -1,6 +1,6 @@
 package backend.service.component.move.valid;
 
-import backend.controller.exception.MapGameException;
+import backend.service.exception.MapGameException;
 import backend.service.model.builder.MapGame;
 
 import java.util.Objects;

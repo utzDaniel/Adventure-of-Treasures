@@ -1,6 +1,6 @@
 package backend.service.enums;
 
-import backend.controller.exception.ItemUsableException;
+import backend.service.exception.ItemUsableException;
 import backend.service.component.ActivateMapGame;
 import backend.service.model.Player;
 

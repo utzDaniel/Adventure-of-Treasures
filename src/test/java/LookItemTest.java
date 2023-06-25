@@ -1,11 +1,7 @@
-import backend.controller.exception.MoveException;
+import backend.service.exception.MoveException;
 import backend.service.model.Player;
-import backend.service.model.builder.Scenery;
-import backend.service.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
-import backend.repository.factory.RepositoryFactory;
-import backend.service.interfaces.ICoordinate;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;

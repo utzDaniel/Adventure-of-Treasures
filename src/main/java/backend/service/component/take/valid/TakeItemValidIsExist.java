@@ -1,6 +1,6 @@
 package backend.service.component.take.valid;
 
-import backend.controller.exception.ItemException;
+import backend.service.exception.ItemException;
 import backend.service.interfaces.ITakeItemValid;
 import backend.service.model.builder.Item;
 

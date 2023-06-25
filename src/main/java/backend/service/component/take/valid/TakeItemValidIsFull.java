@@ -1,7 +1,7 @@
 package backend.service.component.take.valid;
 
 
-import backend.controller.exception.InventoryException;
+import backend.service.exception.InventoryException;
 import backend.service.model.Inventory;
 import backend.service.model.builder.Item;
 

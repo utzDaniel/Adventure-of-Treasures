@@ -7,7 +7,7 @@ import backend.repository.factory.RepositoryFactory;
 import frontend.model.component.ComponentFactory;
 import org.junit.Before;
 import org.junit.Test;
-import backend.controller.exception.MapGameException;
+import backend.service.exception.MapGameException;
 import backend.service.interfaces.ICoordinate;
 import backend.service.component.open.OpenDoor;
 

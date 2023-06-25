@@ -1,7 +1,5 @@
 package backend.service.model.builder;
 
-import backend.controller.exception.MapGameException;
-import backend.service.infra.Cache;
 import backend.service.model.Exit;
 
 import java.util.ArrayList;

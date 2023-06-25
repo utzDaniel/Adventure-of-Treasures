@@ -1,6 +1,6 @@
 package backend.service.component;
 
-import backend.controller.exception.ItemCombinableException;
+import backend.service.exception.ItemCombinableException;
 import backend.service.interfaces.ICombinable;
 import backend.service.model.Player;
 import backend.service.enums.ItemsCombination;

@@ -1,6 +1,6 @@
 package backend.service.enums;
 
-import backend.controller.exception.MoveException;
+import backend.service.exception.MoveException;
 
 import java.util.Arrays;
 

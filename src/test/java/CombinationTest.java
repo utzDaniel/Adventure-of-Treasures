@@ -1,4 +1,4 @@
-import backend.controller.exception.ItemCombinableException;
+import backend.service.exception.ItemCombinableException;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
 import backend.service.model.builder.ItemCombinableBuilder;

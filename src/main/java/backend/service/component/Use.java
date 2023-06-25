@@ -1,6 +1,6 @@
 package backend.service.component;
 
-import backend.controller.exception.ItemUsableException;
+import backend.service.exception.ItemUsableException;
 import backend.service.model.Player;
 import backend.service.enums.ItemsUsable;
 import backend.service.interfaces.IUsable;

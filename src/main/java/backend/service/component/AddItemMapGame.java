@@ -3,7 +3,7 @@ package backend.service.component;
 import backend.service.model.Area;
 import backend.service.model.builder.Item;
 import backend.service.model.builder.MapGame;
-import backend.controller.exception.MapGameException;
+import backend.service.exception.MapGameException;
 import backend.service.interfaces.ICoordinate;
 
 public class AddItemMapGame {
@@ -36,7 +36,7 @@ public class AddItemMapGame {
                 if (checkLimitPosition()) continue;
                 this.areaTraveled++;
                 if (checkCoordinateValid()) return true;
-                if (isAreaTraveledComplete()) throw new MapGameException("Não é possivel drop esse item neste mapa!");
+                if (isAreaTraveledComplete()) throw new MapGameException("Não é possivel remover esse item neste mapa!");
             }
         }
         return false;

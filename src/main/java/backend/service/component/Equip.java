@@ -1,6 +1,6 @@
 package backend.service.component;
 
-import backend.controller.exception.ItemEquipableException;
+import backend.service.exception.ItemEquipableException;
 import backend.service.enums.ItemsEquipable;
 import backend.service.interfaces.IEquipable;
 

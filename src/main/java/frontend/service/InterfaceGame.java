@@ -96,6 +96,11 @@ public final class InterfaceGame {
         jLabelList.forEach(jLabel -> frame.getContentPane().add(jLabel, index));
     }
 
+    public void setItemJLabel(IItemDTO item, int index) {
+        var jLabel = ComponentFactory.getJLabel(item);
+        frame.getContentPane().add(jLabel, index);
+    }
+
     public Song getSong() {
         return song;
     }

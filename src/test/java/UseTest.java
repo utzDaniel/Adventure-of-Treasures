@@ -1,4 +1,4 @@
-import backend.controller.exception.ItemUsableException;
+import backend.service.exception.ItemUsableException;
 import backend.service.model.builder.Item;
 import backend.service.model.builder.ItemCombinableBuilder;
 import backend.service.model.builder.ItemMissionBuilder;

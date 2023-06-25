@@ -1,4 +1,4 @@
-import backend.controller.exception.MoveException;
+import backend.service.exception.MoveException;
 import backend.service.component.move.MovePlayer;
 import backend.service.model.Player;
 import backend.service.enums.Direction;

@@ -1,6 +1,6 @@
 package backend.service.model.builder;
 
-import backend.controller.exception.ItemUsableException;
+import backend.service.exception.ItemUsableException;
 import backend.service.component.RemoveItem;
 import backend.service.component.Use;
 import backend.service.interfaces.ICombinable;

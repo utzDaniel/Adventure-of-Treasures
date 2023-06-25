@@ -5,7 +5,7 @@ import backend.service.model.builder.ItemEquipableBuilder;
 import backend.repository.factory.RepositoryFactory;
 import org.junit.Before;
 import org.junit.Test;
-import backend.controller.exception.ItemEquipableException;
+import backend.service.exception.ItemEquipableException;
 import backend.service.interfaces.ICoordinate;
 import backend.service.component.Equip;
 import backend.service.component.Unequip;
