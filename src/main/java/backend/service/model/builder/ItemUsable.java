@@ -1,8 +1,7 @@
 package backend.service.model.builder;
 
-import backend.service.exception.ItemUsableException;
 import backend.service.component.RemoveItem;
-import backend.service.component.Use;
+import backend.service.component.use.Use;
 import backend.service.interfaces.ICombinable;
 import backend.service.interfaces.IUsable;
 import backend.service.model.Player;
@@ -28,15 +27,9 @@ public final class ItemUsable extends Item implements IUsable {
     }
 
     @Override
-    public boolean use() {
-        try {
-            new Use(this).run();
-            new RemoveItem(Player.getInstance().getInventory(), this).run();
-            return true;
-        } catch (ItemUsableException e) {
-            System.out.println(e.getMessage());
-        }
-        return false;
+    public void use() {
+        new Use(this).run();
+        new RemoveItem(Player.getInstance().getInventory(), this).run();
     }
 
     public String getLocalUse() {
@@ -54,7 +47,7 @@ public final class ItemUsable extends Item implements IUsable {
 
     @Override
     public boolean action() {
-        return this.use();
+        return false;
     }
 
     @Override

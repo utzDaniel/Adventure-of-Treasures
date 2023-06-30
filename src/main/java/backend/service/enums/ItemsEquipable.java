@@ -36,8 +36,8 @@ public enum ItemsEquipable {
         }
     };
 
-    static private final int UPDATE = 5;
-    static private final Player player = Player.getInstance();
+    private static  final int UPDATE = 5;
+    private static final Player player = Player.getInstance();
     private final String label;
 
     public abstract boolean equip();

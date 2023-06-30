@@ -1,4 +1,4 @@
-package backend.service.component;
+package backend.service.component.equip;
 
 import backend.service.exception.ItemEquipableException;
 import backend.service.interfaces.IEquipable;

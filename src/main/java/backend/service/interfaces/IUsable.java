@@ -2,7 +2,7 @@ package backend.service.interfaces;
 
 public interface IUsable extends IEffect {
 
-    boolean use();
+    void use();
 
     String getLocalUse();
 

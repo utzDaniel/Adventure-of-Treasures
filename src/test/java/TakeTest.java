@@ -1,5 +1,5 @@
 import backend.service.exception.InventoryException;
-import backend.service.component.AddItemMapGame;
+import backend.service.component.drop.AddItemMapGame;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
 import backend.service.model.builder.ItemUsableBuilder;

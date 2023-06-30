@@ -1,4 +1,4 @@
-package backend.service.component;
+package backend.service.component.use;
 
 import backend.service.exception.ItemUsableException;
 import backend.service.model.Player;

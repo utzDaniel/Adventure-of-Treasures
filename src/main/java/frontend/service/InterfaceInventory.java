@@ -2,21 +2,23 @@ package frontend.service;
 
 import backend.controller.interfaces.IInventoryResponse;
 import backend.controller.interfaces.IItemDTO;
+import backend.controller.interfaces.IUseItemResponse;
 import backend.controller.model.EventAction;
-import backend.service.component.ServiceDropItem;
 import backend.service.interfaces.ICombinable;
 import backend.service.model.Player;
 import frontend.mapper.DropItemMapper;
-import frontend.mapper.InventoryMapper;
-import frontend.model.component.ComponentFactory;
-import frontend.model.view.Item;
+import frontend.mapper.EquipItemMapper;
+import frontend.mapper.UseItemMapper;
 import frontend.request.DropItemRequest;
-import frontend.request.InventoryRequest;
+import frontend.request.EquipItemRequest;
+import frontend.request.UseItemRequest;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public final class InterfaceInventory {
 
@@ -28,6 +30,7 @@ public final class InterfaceInventory {
     private ButtonItem buttonItem;
     private LabelInformation labelInformation;
     private ButtonAction buttonAction;
+    private String iconMap;
 
     public InterfaceInventory(InterfaceGame interfaceGame) {
         this.interfaceGame = interfaceGame;
@@ -35,6 +38,7 @@ public final class InterfaceInventory {
     }
 
     public void open(IInventoryResponse inventory) {
+        this.iconMap = this.interfaceGame.getMapGameJLabel().getIcon().toString();
         this.player.getInventory().setOpenInventory();
         this.panelInventory = new PanelInventory();
         this.panelInventory.create();
@@ -51,7 +55,7 @@ public final class InterfaceInventory {
         setItens(inventory);
         setInfoItens();
         setButtonsActions();
-        this.interfaceGame.getFrame().add(this.panelInventory.getPanel(), 1);
+        this.interfaceGame.getFrame().add(this.panelInventory.getPanel(),-1);
         this.panelInventory.getPanel().requestFocus();
         this.interfaceGame.getFrame().setVisible(true);
     }
@@ -62,6 +66,12 @@ public final class InterfaceInventory {
             this.buttonItem.getLast().addActionListener(e -> actionButtonItem(item));
             this.labelSideEast.add(this.buttonItem.getLast());
         });
+    }
+
+    private void setItemEquip(IItemDTO item) {
+        this.buttonItem.create(item);
+        this.buttonItem.getLast().addActionListener(e -> actionButtonItem(item));
+        this.labelSideEast.add(this.buttonItem.getLast());
     }
 
     private void setInfoItens() {
@@ -115,21 +125,20 @@ public final class InterfaceInventory {
         IItemDTO item = this.buttonAction.getUseItem();
         success = switch (command) {
             case "remover" -> eventActionRemove(item.name());
-//            case "usar", "equipar" -> item.action();
+            case "equipar" -> eventActionEquip(item.name());
+            case "usar" -> eventActionUse(item.name());
 //            case "combinar" -> item.action(this.items);
             default -> false;
         };
-        if (success) {
-            this.labelInformation.updateTextCapacity(this.player.getInventory().getCapacity(), this.player.getInventory().getMaxCapacity());
-            //TODO atualizar inventory e map
-        }
 
-        if (command.equals("usar") && success) {//usar pá
-            this.interfaceGame.getMapGameJLabel().setIcon(this.player.getCurrentMap().getIcon());
-            this.panelInventory.getPanel().requestFocus();
-        }
+
+//        if (command.equals("usar") && success) {//usar pá
+//            this.interfaceGame.getMapGameJLabel().setIcon(this.player.getCurrentMap().getIcon());
+//            this.panelInventory.getPanel().requestFocus();
+//        }
 
         if (command.equals("combinar") && success) {//combinar papel e livro, na praia
+            this.labelInformation.updateTextCapacity(this.player.getInventory().getCapacity(), this.player.getInventory().getMaxCapacity());
             this.interfaceGame.getMapGameJLabel().setIcon(this.player.getCurrentMap().getIcon());
             this.panelInventory.getPanel().requestFocus();
         }
@@ -162,6 +171,7 @@ public final class InterfaceInventory {
     public void quit() {
         this.player.getInventory().setOpenInventory();
         this.interfaceGame.getFrame().getContentPane().remove(this.panelInventory.getPanel());
+        this.interfaceGame.getMapGameJLabel().setIcon(new ImageIcon(iconMap));
         this.interfaceGame.getFrame().repaint();
         this.interfaceGame.getFrame().requestFocus();
     }
@@ -176,7 +186,8 @@ public final class InterfaceInventory {
             this.interfaceGame.setItemJLabel(dropItem.item(), dropItem.indexItem());
             this.labelInformation.updateTextCapacity(dropItem.capacity(), dropItem.maxCapacity());
             for (int i = 0; i < this.labelSideEast.getComponents().length; i++) {
-                if(this.labelSideEast.getComponents()[i].getName().equalsIgnoreCase(dropItem.item().name())){
+                if (Objects.nonNull(this.labelSideEast.getComponents()[i].getName()) &&
+                        this.labelSideEast.getComponents()[i].getName().equalsIgnoreCase(dropItem.item().name())) {
                     this.labelSideEast.remove(i);
                     break;
                 }
@@ -184,6 +195,54 @@ public final class InterfaceInventory {
             this.buttonItem.removeButtonItem(dropItem.item());
         }
         this.interfaceGame.playEffects(dropItem.message().effect(), null);
+        return true;
+    }
+
+    private boolean eventActionUse(String name) {
+        var useItemReq = new UseItemRequest("Usar", name);
+        var useItemRes = new EventAction().run(useItemReq);
+        var useItem = new UseItemMapper().apply(useItemRes);
+
+        if (useItem.message().sucess()) {
+            iconMap = useItem.iconMap();
+            this.labelInformation.updateTextCapacity(useItem.capacity(), useItem.maxCapacity());
+            for (int i = 0; i < this.labelSideEast.getComponents().length; i++) {
+                if (Objects.nonNull(this.labelSideEast.getComponents()[i].getName()) &&
+                        this.labelSideEast.getComponents()[i].getName().equalsIgnoreCase(useItem.item().name())) {
+                    this.labelSideEast.remove(i);
+                    break;
+                }
+            }
+            this.buttonItem.removeButtonItem(useItem.item());
+            this.interfaceGame.playEffects("Usar", useItem.message().effect());
+        } else {
+            this.interfaceGame.playEffects(useItem.message().effect(), null);
+        }
+
+        return true;
+    }
+
+    private boolean eventActionEquip(String name) {
+        var equipItemReq = new EquipItemRequest("Equipar", name);
+        var equipItemRes = new EventAction().run(equipItemReq);
+        var equipItem = new EquipItemMapper().apply(equipItemRes);
+
+        if (equipItem.message().sucess()) {
+            this.labelInformation.updateTextCapacity(equipItem.capacity(), equipItem.maxCapacity());
+            for (int i = 0; i < this.labelSideEast.getComponents().length; i++) {
+                if (Objects.nonNull(this.labelSideEast.getComponents()[i].getName()) &&
+                        this.labelSideEast.getComponents()[i].getName().equalsIgnoreCase(equipItem.item().name())) {
+                    this.labelSideEast.remove(i);
+                    break;
+                }
+            }
+            this.buttonItem.removeButtonItem(equipItem.item());
+            this.setItemEquip(equipItem.item());
+            this.interfaceGame.playEffects("Equipar", equipItem.message().effect());
+        } else {
+            this.interfaceGame.playEffects(equipItem.message().effect(), null);
+        }
+
         return true;
     }
 }

@@ -1,9 +1,9 @@
 package backend.service.interfaces;
 
 public interface IEquipable extends IEffect {
-    boolean equip();
+    void equip();
 
-    boolean unequip();
+    void unequip();
 
     boolean isEquipped();
 

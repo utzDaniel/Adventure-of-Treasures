@@ -2,6 +2,7 @@ package backend.service.factory;
 
 import backend.controller.interfaces.IMessage;
 import backend.service.dto.Message;
+import backend.service.exception.ItemUsableException;
 
 import java.util.Objects;
 
@@ -20,8 +21,18 @@ public final class MessageFactory {
             case "ItemException" -> msgItemException(e.getMessage());
             case "MapGameException" -> msgMapGameException(e.getMessage());
             case "MoveException" -> msgMoveException(e.getMessage());
+            case "ItemEquipableException" -> msgItemEquipableException(e.getMessage());
+            case "ItemUsableException" -> msgItemUsableException(e.getMessage());
             default -> new Message(false, "Exception não mapeada", null);
         };
+    }
+
+    private IMessage msgItemEquipableException(String text) {
+        return new Message(false, text, "erro");
+    }
+
+    private IMessage msgItemUsableException(String text)  {
+        return new Message(false, text, "erro");
     }
 
     private IMessage msgMoveException(String text) {

@@ -1,5 +1,6 @@
-package backend.service.component;
+package backend.service.component.drop;
 
+import backend.service.component.RemoveItem;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
 

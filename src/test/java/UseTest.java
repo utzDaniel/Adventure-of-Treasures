@@ -13,7 +13,7 @@ import org.junit.Test;
 import backend.repository.factory.RepositoryFactory;
 import backend.service.interfaces.ICoordinate;
 import backend.service.component.Combination;
-import backend.service.component.Use;
+import backend.service.component.use.Use;
 
 import java.util.ArrayList;
 import java.util.List;

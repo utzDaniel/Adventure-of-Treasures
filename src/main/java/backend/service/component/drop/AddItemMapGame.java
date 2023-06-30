@@ -1,4 +1,4 @@
-package backend.service.component;
+package backend.service.component.drop;
 
 import backend.service.model.Area;
 import backend.service.model.builder.Item;

@@ -38,7 +38,7 @@ public enum ItemsUsable {
         }
     };
 
-    static private final Player player = Player.getInstance();
+    private static final Player player = Player.getInstance();
 
     private final String label;
 

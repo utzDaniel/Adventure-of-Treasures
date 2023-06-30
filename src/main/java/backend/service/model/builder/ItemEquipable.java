@@ -1,7 +1,7 @@
 package backend.service.model.builder;
 
-import backend.service.component.Equip;
-import backend.service.component.Unequip;
+import backend.service.component.equip.Equip;
+import backend.service.component.equip.Unequip;
 import backend.service.interfaces.ICombinable;
 import backend.service.interfaces.IEquipable;
 
@@ -20,15 +20,13 @@ public final class ItemEquipable extends Item implements IEquipable {
     }
 
     @Override
-    public boolean equip() {
+    public void equip() {
         this.equipped = new Equip(this).run();
-        return this.equipped;
     }
 
     @Override
-    public boolean unequip() {
+    public void unequip() {
         this.equipped = !new Unequip(this).run();
-        return !this.equipped;
     }
 
     @Override
@@ -38,8 +36,7 @@ public final class ItemEquipable extends Item implements IEquipable {
 
     @Override
     public boolean action() {
-        return this.isEquipped() ?
-                this.unequip() : this.equip();
+        return this.isEquipped();
     }
 
     @Override
