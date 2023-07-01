@@ -3,6 +3,7 @@ package backend.controller.model;
 import backend.controller.interfaces.IEventAction;
 import backend.controller.interfaces.IRequest;
 import backend.controller.interfaces.IResponse;
+import backend.service.component.combination.ServiceCombinationItem;
 import backend.service.component.use.ServiceUseItem;
 import backend.service.component.drop.ServiceDropItem;
 import backend.service.component.equip.ServiceEquipItem;
@@ -30,6 +31,8 @@ public class EventAction implements IEventAction {
             return new ServiceEquipItem().run(request);
         }else if ("Usar".equalsIgnoreCase(action)) {
             return new ServiceUseItem().run(request);
+        }else if ("Combinar".equalsIgnoreCase(action)) {
+            return new ServiceCombinationItem().run(request);
         }
         return null;
     }

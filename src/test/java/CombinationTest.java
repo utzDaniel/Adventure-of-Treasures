@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import backend.repository.factory.RepositoryFactory;
 import backend.service.interfaces.ICoordinate;
-import backend.service.component.Combination;
+import backend.service.component.combination.Combination;
 
 import java.util.ArrayList;
 

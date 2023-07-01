@@ -1,5 +1,7 @@
-package backend.service.component;
+package backend.service.component.combination;
 
+import backend.service.component.ActivateMapGame;
+import backend.service.component.RemoveItem;
 import backend.service.exception.ItemCombinableException;
 import backend.service.interfaces.ICombinable;
 import backend.service.model.Player;

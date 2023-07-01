@@ -23,10 +23,14 @@ public final class MessageFactory {
             case "MoveException" -> msgMoveException(e.getMessage());
             case "ItemEquipableException" -> msgItemEquipableException(e.getMessage());
             case "ItemUsableException" -> msgItemUsableException(e.getMessage());
+            case "ItemCombinableException" -> msgItemCombinableException(e.getMessage());
             default -> new Message(false, "Exception não mapeada", null);
         };
     }
 
+    private IMessage msgItemCombinableException(String text)  {
+        return new Message(false, text, "erro");
+    }
     private IMessage msgItemEquipableException(String text) {
         return new Message(false, text, "erro");
     }

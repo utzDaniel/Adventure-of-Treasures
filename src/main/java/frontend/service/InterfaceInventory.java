@@ -2,19 +2,18 @@ package frontend.service;
 
 import backend.controller.interfaces.IInventoryResponse;
 import backend.controller.interfaces.IItemDTO;
-import backend.controller.interfaces.IUseItemResponse;
 import backend.controller.model.EventAction;
-import backend.service.interfaces.ICombinable;
 import backend.service.model.Player;
+import frontend.mapper.CombinationItemMapper;
 import frontend.mapper.DropItemMapper;
 import frontend.mapper.EquipItemMapper;
 import frontend.mapper.UseItemMapper;
+import frontend.request.CombinationItemRequest;
 import frontend.request.DropItemRequest;
 import frontend.request.EquipItemRequest;
 import frontend.request.UseItemRequest;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +25,7 @@ public final class InterfaceInventory {
     private final Player player;
     private JLabel labelSideEast;
     private PanelInventory panelInventory;
-    private List<ICombinable> items;
+    private List<String> items;
     private ButtonItem buttonItem;
     private LabelInformation labelInformation;
     private ButtonAction buttonAction;
@@ -55,13 +54,21 @@ public final class InterfaceInventory {
         setItens(inventory);
         setInfoItens();
         setButtonsActions();
-        this.interfaceGame.getFrame().add(this.panelInventory.getPanel(),-1);
+        this.interfaceGame.getFrame().add(this.panelInventory.getPanel(), -1);
         this.panelInventory.getPanel().requestFocus();
         this.interfaceGame.getFrame().setVisible(true);
     }
 
     private void setItens(IInventoryResponse inventory) {
         inventory.itens().forEach(item -> {
+            this.buttonItem.create(item);
+            this.buttonItem.getLast().addActionListener(e -> actionButtonItem(item));
+            this.labelSideEast.add(this.buttonItem.getLast());
+        });
+    }
+
+    private void setItens(List<IItemDTO> itens) {
+        itens.forEach(item -> {
             this.buttonItem.create(item);
             this.buttonItem.getLast().addActionListener(e -> actionButtonItem(item));
             this.labelSideEast.add(this.buttonItem.getLast());
@@ -103,7 +110,7 @@ public final class InterfaceInventory {
         this.buttonAction.visibleCancelAndConfirm(command);
         if (command.equals("combinar")) {
             IItemDTO item = this.buttonAction.getUseItem();
-            addListItem((ICombinable) item);
+            addListItem(item.name());
             this.buttonItem.enableIButtonItensNotCombinable();
             this.buttonItem.selectButtonItem(item);
             if (this.items.size() > 1) {
@@ -112,52 +119,24 @@ public final class InterfaceInventory {
         }
     }
 
-    private void addListItem(ICombinable item) {
+    private void addListItem(String name) {
         var addItem = this.items.stream()
-                .anyMatch(item1 -> item1.getName().equals(item.getName()));
+                .anyMatch(item1 -> item1.equals(name));
         if (!addItem) {
-            this.items.add(item);
+            this.items.add(name);
         }
     }
 
     private void setActionConfirm(String command) {
-        boolean success;
         IItemDTO item = this.buttonAction.getUseItem();
-        success = switch (command) {
+        switch (command) {
             case "remover" -> eventActionRemove(item.name());
             case "equipar" -> eventActionEquip(item.name());
             case "usar" -> eventActionUse(item.name());
-//            case "combinar" -> item.action(this.items);
-            default -> false;
-        };
-
-
-//        if (command.equals("usar") && success) {//usar pá
-//            this.interfaceGame.getMapGameJLabel().setIcon(this.player.getCurrentMap().getIcon());
-//            this.panelInventory.getPanel().requestFocus();
-//        }
-
-        if (command.equals("combinar") && success) {//combinar papel e livro, na praia
-            this.labelInformation.updateTextCapacity(this.player.getInventory().getCapacity(), this.player.getInventory().getMaxCapacity());
-            this.interfaceGame.getMapGameJLabel().setIcon(this.player.getCurrentMap().getIcon());
-            this.panelInventory.getPanel().requestFocus();
+            case "combinar" -> eventActionCombination(this.items);
+            default -> System.err.println("comando invalido!");
         }
-
-        //playEffects(command, success, item.effect());//TODO item.getEffect() resolver depois
         setActionCancel();
-    }
-
-    private void playEffects(String command, boolean success, String itemEffect) {
-        String commandEffect;
-        if (success) {
-            commandEffect = command;
-            if (command.equals("remover")) {
-                itemEffect = null;
-            }
-        } else {
-            commandEffect = "erro";
-        }
-        this.interfaceGame.playEffects(commandEffect, itemEffect);
     }
 
     private void setActionCancel() {
@@ -176,8 +155,7 @@ public final class InterfaceInventory {
         this.interfaceGame.getFrame().requestFocus();
     }
 
-    private boolean eventActionRemove(String name) {
-        //TODO remover depois o return boolean
+    private void eventActionRemove(String name) {
         var dropItemReq = new DropItemRequest("Remover", name);
         var dropItemRes = new EventAction().run(dropItemReq);
         var dropItem = new DropItemMapper().apply(dropItemRes);
@@ -195,10 +173,9 @@ public final class InterfaceInventory {
             this.buttonItem.removeButtonItem(dropItem.item());
         }
         this.interfaceGame.playEffects(dropItem.message().effect(), null);
-        return true;
     }
 
-    private boolean eventActionUse(String name) {
+    private void eventActionUse(String name) {
         var useItemReq = new UseItemRequest("Usar", name);
         var useItemRes = new EventAction().run(useItemReq);
         var useItem = new UseItemMapper().apply(useItemRes);
@@ -218,11 +195,9 @@ public final class InterfaceInventory {
         } else {
             this.interfaceGame.playEffects(useItem.message().effect(), null);
         }
-
-        return true;
     }
 
-    private boolean eventActionEquip(String name) {
+    private void eventActionEquip(String name) {
         var equipItemReq = new EquipItemRequest("Equipar", name);
         var equipItemRes = new EventAction().run(equipItemReq);
         var equipItem = new EquipItemMapper().apply(equipItemRes);
@@ -242,7 +217,32 @@ public final class InterfaceInventory {
         } else {
             this.interfaceGame.playEffects(equipItem.message().effect(), null);
         }
+    }
 
-        return true;
+    private void eventActionCombination(List<String> items) {
+        var combinationItemReq = new CombinationItemRequest("Combinar", items);
+        var combinationItemRes = new EventAction().run(combinationItemReq);
+        var combinationItem = new CombinationItemMapper().apply(combinationItemRes);
+
+        if (combinationItem.message().sucess()) {
+            setActionCancel();
+            iconMap = combinationItem.iconMap();
+            this.labelInformation.updateTextCapacity(combinationItem.capacity(), combinationItem.maxCapacity());
+            for (int i = 0; i < this.labelSideEast.getComponents().length; i++) {
+                if (this.labelSideEast.getComponents()[i] instanceof JButton && Objects.nonNull(this.labelSideEast.getComponents()[i].getName())) {
+                    this.labelSideEast.remove(i);
+                }
+            }
+            this.buttonItem = new ButtonItem();
+            setItens(combinationItem.itens());
+            this.interfaceGame.playEffects("Combinar", combinationItem.message().effect());
+        } else {
+            this.interfaceGame.playEffects(combinationItem.message().effect(), null);
+        }
     }
 }
+/*
+ * Será que o front tem que saber se deve deletar? atualizar o mapa?
+ * Será que nao seria mais facil pra ele apenas atualizar os componentes do inventario?
+ * Acredito que tenha uma quebra de dependencia, por ter que saber o que fazer em caso de remover, equipar, usar e combinar
+ * */
