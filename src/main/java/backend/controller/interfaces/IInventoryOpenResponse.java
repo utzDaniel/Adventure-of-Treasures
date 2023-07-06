@@ -2,9 +2,7 @@ package backend.controller.interfaces;
 
 import java.util.List;
 
-public interface IInventoryResponse extends IResponse {
-
-    boolean isOpen();
+public interface IInventoryOpenResponse extends IResponse {
 
     int capacity();
 

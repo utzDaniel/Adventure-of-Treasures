@@ -2,11 +2,8 @@ package backend.service.model.builder;
 
 import backend.service.component.RemoveItem;
 import backend.service.component.use.Use;
-import backend.service.interfaces.ICombinable;
 import backend.service.interfaces.IUsable;
 import backend.service.model.Player;
-
-import java.util.List;
 
 public final class ItemUsable extends Item implements IUsable {
 
@@ -43,16 +40,6 @@ public final class ItemUsable extends Item implements IUsable {
 
     void setEffect(String filename) {
         this.effect = filename;
-    }
-
-    @Override
-    public boolean action() {
-        return false;
-    }
-
-    @Override
-    public boolean action(List<ICombinable> itens) {
-        return action();
     }
 
     @Override

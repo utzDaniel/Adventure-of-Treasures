@@ -1,6 +1,6 @@
 package frontend.request;
 
-import backend.controller.interfaces.IRequest;
+import backend.controller.interfaces.ITakeRequest;
 
-public record TakeRequest(String action) implements IRequest {
+public record TakeRequest(String action) implements ITakeRequest {
 }

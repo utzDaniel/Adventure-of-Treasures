@@ -2,8 +2,6 @@ package backend.service.model.builder;
 
 import backend.service.interfaces.ICombinable;
 
-import java.util.List;
-
 public final class ItemCombinable extends Item implements ICombinable {
 
     private int combine;
@@ -28,16 +26,6 @@ public final class ItemCombinable extends Item implements ICombinable {
 
     void setEffect(String filename) {
         this.effect = filename;
-    }
-
-    @Override
-    public boolean action() {
-        return false;
-    }
-
-    @Override
-    public boolean action(List<ICombinable> itensCombination) {
-        return this.combination(itensCombination);
     }
 
     @Override

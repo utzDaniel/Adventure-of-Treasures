@@ -11,8 +11,7 @@ public final class LabelInformation {
     private final JLabel[] infoLabel;
 
     public LabelInformation() {
-        int MAX_LABEL = 4;
-        this.infoLabel = new JLabel[MAX_LABEL];
+        this.infoLabel = new JLabel[4];
     }
 
     public void create(String info) {

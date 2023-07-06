@@ -32,8 +32,8 @@ public class InterfaceInventoryTest {
             player.getInventory().setItemInvisible(item);
         }
         var listJLabel = new ArrayList<JLabel>();
-        listJLabel.add(ComponentFactory.getJLabel(player));
-        listJLabel.add(ComponentFactory.getJLabel(player.getCurrentMap()));
+        listJLabel.add(ComponentFactory.getJLabel(this.player.getIcon().toString(), this.player.getLocation())));
+        //listJLabel.add(ComponentFactory.getJLabel(player.getCurrentMap()));
         interfaceGame = new InterfaceGame(listJLabel);
         interfaceInventory = new InterfaceInventory(interfaceGame);
     }

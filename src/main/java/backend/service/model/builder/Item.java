@@ -1,11 +1,10 @@
 package backend.service.model.builder;
 
 import backend.service.interfaces.ICoordinate;
-import frontend.interfaces.IAction;
 
 import javax.swing.*;
 
-public abstract class Item implements IAction {
+public abstract class Item {
 
     private String name;
     private String description;

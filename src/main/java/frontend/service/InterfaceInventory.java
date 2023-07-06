@@ -1,17 +1,10 @@
 package frontend.service;
 
-import backend.controller.interfaces.IInventoryResponse;
+import backend.controller.interfaces.IInventoryOpenResponse;
 import backend.controller.interfaces.IItemDTO;
 import backend.controller.model.EventAction;
-import backend.service.model.Player;
-import frontend.mapper.CombinationItemMapper;
-import frontend.mapper.DropItemMapper;
-import frontend.mapper.EquipItemMapper;
-import frontend.mapper.UseItemMapper;
-import frontend.request.CombinationItemRequest;
-import frontend.request.DropItemRequest;
-import frontend.request.EquipItemRequest;
-import frontend.request.UseItemRequest;
+import frontend.mapper.*;
+import frontend.request.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,23 +16,18 @@ import java.util.Objects;
 public final class InterfaceInventory {
 
     private final InterfaceGame interfaceGame;
-    private final Player player;
     private JLabel labelSideEast;
     private PanelInventory panelInventory;
     private List<String> items;
     private ButtonItem buttonItem;
     private LabelInformation labelInformation;
     private ButtonAction buttonAction;
-    private String iconMap;
 
     public InterfaceInventory(InterfaceGame interfaceGame) {
         this.interfaceGame = interfaceGame;
-        this.player = Player.getInstance();
     }
 
-    public void open(IInventoryResponse inventory) {
-        this.iconMap = this.interfaceGame.getMapGameJLabel().getIcon().toString();
-        this.player.getInventory().setOpenInventory();
+    public void open(IInventoryOpenResponse inventory) {
         this.panelInventory = new PanelInventory();
         this.panelInventory.create();
         this.labelSideEast = this.panelInventory.getLabel();
@@ -50,7 +38,7 @@ public final class InterfaceInventory {
         setSettings(inventory);
     }
 
-    private void setSettings(IInventoryResponse inventory) {
+    private void setSettings(IInventoryOpenResponse inventory) {
         this.panelInventory.getButton().addActionListener(e -> quit());
         setItens(inventory);
         setInfoItens(inventory.capacity(), inventory.maxCapacity());
@@ -60,7 +48,7 @@ public final class InterfaceInventory {
         this.interfaceGame.getFrame().setVisible(true);
     }
 
-    private void setItens(IInventoryResponse inventory) {
+    private void setItens(IInventoryOpenResponse inventory) {
         inventory.itens().forEach(item -> {
             this.buttonItem.create(item);
             this.buttonItem.getLast().addActionListener(e -> actionButtonItem(item));
@@ -142,18 +130,6 @@ public final class InterfaceInventory {
         this.labelSideEast.repaint();//Atualizar os itens combinaveis
     }
 
-    public void quit() {
-        this.player.getInventory().setOpenInventory();
-        this.interfaceGame.getFrame().getContentPane().remove(this.panelInventory.getPanel());
-
-        //TODO atualizar o map ao fechar o inventario
-        this.interfaceGame.getMapGameJLabel().setIcon(new ImageIcon(iconMap));
-        // this.interfaceGame.setItemJLabel(dropItem.item(), dropItem.indexItem());
-
-        this.interfaceGame.getFrame().repaint();
-        this.interfaceGame.getFrame().requestFocus();
-    }
-
     private void eventActionRemove(String name) {
         var dropItemReq = new DropItemRequest("Remover", name);
         var dropItemRes = new EventAction().run(dropItemReq);
@@ -205,6 +181,24 @@ public final class InterfaceInventory {
             this.interfaceGame.playEffects("Combinar", combinationItem.message().effect());
         } else {
             this.interfaceGame.playEffects(combinationItem.message().effect(), null);
+        }
+    }
+
+    public void quit() {
+        var inventoryQuitReq = new InventoryQuitRequest("InventoryQuit");
+        var inventoryQuitRes = new EventAction().run(inventoryQuitReq);
+        var inventoryQuit = new InventoryQuitMapper().apply(inventoryQuitRes);
+
+        if (inventoryQuit.message().sucess()) {
+            this.interfaceGame.getFrame().getContentPane().remove(this.panelInventory.getPanel());
+            this.interfaceGame.getMapGameJLabel().setIcon(new ImageIcon(inventoryQuit.iconMap()));
+            if (Objects.nonNull(inventoryQuit.itens())) {
+                this.interfaceGame.clearJLabelItens();
+                this.interfaceGame.setItensJLabel(inventoryQuit.itens(), inventoryQuit.indexItens());
+                this.interfaceGame.getMapGameJLabel().repaint();
+            }
+            this.interfaceGame.getFrame().repaint();
+            this.interfaceGame.getFrame().requestFocus();
         }
     }
 

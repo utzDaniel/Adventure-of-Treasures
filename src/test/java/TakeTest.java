@@ -4,7 +4,7 @@ import backend.service.model.Player;
 import backend.service.model.builder.Item;
 import backend.service.model.builder.ItemUsableBuilder;
 import backend.service.model.builder.MapGame;
-import backend.service.enums.Direction;
+import frontend.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
 import backend.repository.factory.RepositoryFactory;

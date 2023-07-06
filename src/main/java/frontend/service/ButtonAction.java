@@ -13,8 +13,7 @@ public final class ButtonAction {
     private final JButton[] buttonActions;
 
     public ButtonAction() {
-        int MAX_BUTTON = 6;
-        this.buttonActions = new JButton[MAX_BUTTON];
+        this.buttonActions = new JButton[6];
         this.index = 0;
     }
 

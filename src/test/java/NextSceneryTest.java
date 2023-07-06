@@ -6,7 +6,7 @@ import frontend.model.component.ComponentFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import backend.service.enums.Direction;
+import frontend.enums.Direction;
 import backend.service.component.move.MoveScenery;
 
 import javax.swing.*;
@@ -26,8 +26,8 @@ public class NextSceneryTest {
         player.setDirection(Direction.SUL.getLabel());
         player.setCurrentMap(repositoryMapGame.get("cais"));
         var listJLabel = new ArrayList<JLabel>();
-        listJLabel.add(ComponentFactory.getJLabel(player));
-        listJLabel.add(ComponentFactory.getJLabel(player.getCurrentMap()));
+        listJLabel.add(ComponentFactory.getJLabel(this.player.getIcon().toString(), this.player.getLocation())));
+        listJLabel.add(ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getIcon().toString()));
         moveScenery = new MoveScenery(new Coordinate(810,662));
     }
 

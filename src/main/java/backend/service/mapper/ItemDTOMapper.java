@@ -1,5 +1,6 @@
 package backend.service.mapper;
 
+import backend.service.interfaces.IEffect;
 import backend.service.model.Coordinate;
 import backend.service.dto.ItemDTO;
 import backend.service.model.builder.Item;
@@ -17,7 +18,7 @@ public class ItemDTOMapper implements Function<Item, ItemDTO> {
                 item.getIcon().toString(),
                 item.getWeight(),
                 new Coordinate(item.getLocation().x(), item.getLocation().y()),
-                item.getEffect(),
+                getEffect(item),
                 item.getClass().getName(),
                 equipped(item)
         );
@@ -25,5 +26,8 @@ public class ItemDTOMapper implements Function<Item, ItemDTO> {
 
     private boolean equipped(Item item) {
         return item instanceof ItemEquipable item1 && item1.isEquipped();
+    }
+    private String getEffect(Item item) {
+        return item instanceof IEffect item1 ? item1.getEffect() : null;
     }
 }

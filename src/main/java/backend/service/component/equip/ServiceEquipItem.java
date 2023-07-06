@@ -29,7 +29,7 @@ public class ServiceEquipItem {
 
         if (message.sucess()) {
             String msg = ((IEquipable) item).isEquipped() ? "Item equipado!" : "Item desequipado!";
-            message = new MessageFactory().create(msg, item.getEffect());
+            message = new MessageFactory().create(msg, ((IEquipable) item).getEffect());
         }
 
         var capacity = player.getInventory().getCapacity();

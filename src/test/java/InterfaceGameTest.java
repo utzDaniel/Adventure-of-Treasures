@@ -33,8 +33,8 @@ public class InterfaceGameTest {
             player.getInventory().setItemInvisible(item);
         }
         var listJLabel = new ArrayList<JLabel>();
-        listJLabel.add(ComponentFactory.getJLabel(player));
-        listJLabel.add(ComponentFactory.getJLabel(player.getCurrentMap()));
+        listJLabel.add(ComponentFactory.getJLabel(this.player.getIcon().toString(), this.player.getLocation())));
+        listJLabel.add(ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getIcon().toString()));
         interfaceGame = new InterfaceGame(listJLabel);
         frame = interfaceGame.getFrame();
         container = frame.getContentPane();
@@ -75,14 +75,14 @@ public class InterfaceGameTest {
 
     @Test
     public void validWidthJLabelMapGame() {
-        var jLabel = ComponentFactory.getJLabel(player.getCurrentMap());
+        var jLabel = ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getIcon().toString());
         var width = container.getComponent(1).getWidth();
         assertEquals(jLabel.getWidth(), width);
     }
 
     @Test
     public void validHeightJLabelMapGame() {
-        var jLabel = ComponentFactory.getJLabel(player.getCurrentMap());
+        var jLabel = ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getIcon().toString());
         var height = container.getComponent(1).getHeight();
         assertEquals(jLabel.getHeight(), height);
     }

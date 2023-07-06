@@ -3,14 +3,14 @@ package frontend.event;
 import backend.controller.interfaces.IOpenResponse;
 import backend.controller.interfaces.ITakeResponse;
 import backend.controller.model.EventAction;
-import backend.service.enums.Direction;
-import frontend.mapper.InventoryMapper;
+import frontend.enums.Direction;
+import frontend.mapper.InventoryOpenMapper;
 import frontend.mapper.MoveMapper;
 import frontend.mapper.OpenMapper;
 import frontend.mapper.TakeMapper;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
-import frontend.request.InventoryRequest;
+import frontend.request.InventoryOpenRequest;
 import frontend.request.MoveRequest;
 import frontend.request.OpenRequest;
 import frontend.request.TakeRequest;
@@ -101,16 +101,11 @@ public class Keyboard {
                     //INVENTARIO
                 } else if (keyCode == 99) {
 
-                    var inventoryReq = new InventoryRequest("Inventory");
-                    var inventoryRes = new EventAction().run(inventoryReq);
-                    var inventory = new InventoryMapper().apply(inventoryRes);
+                    var inventoryOpenReq = new InventoryOpenRequest("InventoryOpen");
+                    var inventoryOpenRes = new EventAction().run(inventoryOpenReq);
+                    var inventoryOpen = new InventoryOpenMapper().apply(inventoryOpenRes);
 
-                    if (inventory.isOpen()) {
-                        interfaceInventory.quit();
-                    } else {
-                        interfaceInventory.open(inventory);
-                    }
-
+                    if (inventoryOpen.message().sucess()) interfaceInventory.open(inventoryOpen);
                 }
 
             }

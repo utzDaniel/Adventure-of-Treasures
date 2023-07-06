@@ -4,6 +4,10 @@ import java.awt.*;
 
 public final class Colors {
 
+    private Colors() {
+        //apenas static
+    }
+
     public static Color BROWN_1 = new Color(65, 52, 52);
     public static Color BROWN_2 = new Color(83, 68, 61);
     public static Color RED = new Color(155, 37, 22);

@@ -1,7 +1,7 @@
 import backend.service.exception.MoveException;
 import backend.service.component.move.MovePlayer;
 import backend.service.model.Player;
-import backend.service.enums.Direction;
+import frontend.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
 import backend.repository.factory.RepositoryFactory;

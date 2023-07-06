@@ -1,4 +1,4 @@
-package backend.service.enums;
+package frontend.enums;
 
 import backend.service.exception.MoveException;
 

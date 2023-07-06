@@ -28,7 +28,7 @@ public final class ServiceUseItem {
         var message = new MessageFactory().create(exeption);
 
         if (message.sucess()) {
-            message = new MessageFactory().create("Item usado!", item.getEffect());
+            message = new MessageFactory().create("Item usado!", ((IUsable)item).getEffect());
         }
 
         var capacity = player.getInventory().getCapacity();

@@ -33,7 +33,7 @@ public final class ServiceCombinationItem {
         var message = new MessageFactory().create(exeption);
 
         if (message.sucess()) {
-            message = new MessageFactory().create("Item combinados!", itens.get(0).getEffect());
+            message = new MessageFactory().create("Item combinados!", ((ICombinable)itens.get(0)).getEffect());
         }
 
         var capacity = player.getInventory().getCapacity();

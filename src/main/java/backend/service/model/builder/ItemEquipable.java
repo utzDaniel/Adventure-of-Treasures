@@ -2,10 +2,7 @@ package backend.service.model.builder;
 
 import backend.service.component.equip.Equip;
 import backend.service.component.equip.Unequip;
-import backend.service.interfaces.ICombinable;
 import backend.service.interfaces.IEquipable;
-
-import java.util.List;
 
 public final class ItemEquipable extends Item implements IEquipable {
 
@@ -34,10 +31,6 @@ public final class ItemEquipable extends Item implements IEquipable {
         return this.equipped;
     }
 
-    @Override
-    public boolean action() {
-        return this.isEquipped();
-    }
 
     @Override
     public String getEffect() {
@@ -46,11 +39,6 @@ public final class ItemEquipable extends Item implements IEquipable {
 
     void setEffect(String filename) {
         this.effect = filename;
-    }
-
-    @Override
-    public boolean action(List<ICombinable> itens) {
-        return action();
     }
 
     @Override
