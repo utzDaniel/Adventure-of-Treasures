@@ -14,7 +14,7 @@ public final class UseItemMapper implements Function<IResponse, IUseItemResponse
         return new UseItem(useItemResp.message(),
                 useItemResp.capacity(),
                 useItemResp.maxCapacity(),
-                useItemResp.item(),
+                useItemResp.itens(),
                 useItemResp.indexItem(),
                 useItemResp.iconMap());
     }

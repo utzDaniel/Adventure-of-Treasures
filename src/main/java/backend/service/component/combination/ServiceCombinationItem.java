@@ -41,7 +41,7 @@ public final class ServiceCombinationItem {
         var indexItem = 1;
         var itensDto = new ArrayList<IItemDTO>(player.getInventory().getItemVisible().stream()
                 .map(item -> new ItemDTOMapper().apply(item))
-                .collect(Collectors.toList()));
+                .toList());
         var iconMap = player.getCurrentMap().getIcon().toString();
 
         return new CombinationItemResponse(message, capacity, maxCapacity, itensDto, indexItem, iconMap);

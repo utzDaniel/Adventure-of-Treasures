@@ -1,12 +1,14 @@
 package backend.controller.interfaces;
 
+import java.util.List;
+
 public interface IEquipItemResponse extends IResponse {
 
     int capacity();
 
     int maxCapacity();
 
-    IItemDTO item();
+    List<IItemDTO> itens();
 
     int indexItem();
 

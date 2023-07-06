@@ -14,7 +14,7 @@ public final class DropItemMapper implements Function<IResponse, IDropItemRespon
         return new DropItem(dropItemResponse.message(),
                 dropItemResponse.capacity(),
                 dropItemResponse.maxCapacity(),
-                dropItemResponse.item(),
+                dropItemResponse.itens(),
                 dropItemResponse.indexItem());
     }
 }

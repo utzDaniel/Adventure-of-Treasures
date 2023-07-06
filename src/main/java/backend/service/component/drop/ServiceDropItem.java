@@ -1,6 +1,7 @@
 package backend.service.component.drop;
 
 import backend.controller.interfaces.IDropItemRequest;
+import backend.controller.interfaces.IItemDTO;
 import backend.controller.interfaces.IRequest;
 import backend.controller.interfaces.IResponse;
 import backend.service.dto.response.DropItemResponse;
@@ -8,6 +9,8 @@ import backend.service.factory.MessageFactory;
 import backend.service.mapper.ItemDTOMapper;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
+
+import java.util.ArrayList;
 
 public class ServiceDropItem {
 
@@ -28,9 +31,11 @@ public class ServiceDropItem {
         var capacity = player.getInventory().getCapacity();
         var maxCapacity = player.getInventory().getMaxCapacity();
         var indexItem = 1;
-        var itemDto = new ItemDTOMapper().apply(item);
+        var itensDto = new ArrayList<IItemDTO>(player.getInventory().getItemVisible().stream()
+                .map(item1 -> new ItemDTOMapper().apply(item1))
+                .toList());
 
-        return new DropItemResponse(message, capacity, maxCapacity, itemDto, indexItem);
+        return new DropItemResponse(message, capacity, maxCapacity, itensDto, indexItem);
     }
 
     private Exception isExeption(Item item) {

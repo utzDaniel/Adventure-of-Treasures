@@ -1,5 +1,6 @@
 package backend.service.component.use;
 
+import backend.controller.interfaces.IItemDTO;
 import backend.controller.interfaces.IRequest;
 import backend.controller.interfaces.IResponse;
 import backend.controller.interfaces.IUseItemRequest;
@@ -9,6 +10,8 @@ import backend.service.interfaces.IUsable;
 import backend.service.mapper.ItemDTOMapper;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
+
+import java.util.ArrayList;
 
 public final class ServiceUseItem {
 
@@ -31,10 +34,12 @@ public final class ServiceUseItem {
         var capacity = player.getInventory().getCapacity();
         var maxCapacity = player.getInventory().getMaxCapacity();
         var indexItem = 1;
-        var itemDto = new ItemDTOMapper().apply(item);
+        var itensDto = new ArrayList<IItemDTO>(player.getInventory().getItemVisible().stream()
+                .map(item1 -> new ItemDTOMapper().apply(item1))
+                .toList());
         var iconMap = player.getCurrentMap().getIcon().toString();
 
-        return new UseItemResponse(message, capacity, maxCapacity, itemDto, indexItem, iconMap);
+        return new UseItemResponse(message, capacity, maxCapacity, itensDto, indexItem, iconMap);
     }
 
     private Exception isExeption(Item item) {

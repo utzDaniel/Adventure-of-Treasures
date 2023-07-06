@@ -14,6 +14,7 @@ import frontend.request.EquipItemRequest;
 import frontend.request.UseItemRequest;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,7 +53,7 @@ public final class InterfaceInventory {
     private void setSettings(IInventoryResponse inventory) {
         this.panelInventory.getButton().addActionListener(e -> quit());
         setItens(inventory);
-        setInfoItens();
+        setInfoItens(inventory.capacity(), inventory.maxCapacity());
         setButtonsActions();
         this.interfaceGame.getFrame().add(this.panelInventory.getPanel(), -1);
         this.panelInventory.getPanel().requestFocus();
@@ -75,14 +76,8 @@ public final class InterfaceInventory {
         });
     }
 
-    private void setItemEquip(IItemDTO item) {
-        this.buttonItem.create(item);
-        this.buttonItem.getLast().addActionListener(e -> actionButtonItem(item));
-        this.labelSideEast.add(this.buttonItem.getLast());
-    }
-
-    private void setInfoItens() {
-        String capicadade = String.format("Capacidade do inventario %d/%d", this.player.getInventory().getCapacity(), this.player.getInventory().getMaxCapacity());
+    private void setInfoItens(int capacity, int maxCapacity) {
+        String capicadade = String.format("Capacidade do inventario %d/%d", capacity, maxCapacity);
         List.of(capicadade, "Nome", "Peso", "Descrição").forEach(this.labelInformation::create);
         Arrays.stream(this.labelInformation.getInfoLabel())
                 .forEach(jLabel -> this.labelSideEast.add(jLabel));
@@ -150,7 +145,11 @@ public final class InterfaceInventory {
     public void quit() {
         this.player.getInventory().setOpenInventory();
         this.interfaceGame.getFrame().getContentPane().remove(this.panelInventory.getPanel());
+
+        //TODO atualizar o map ao fechar o inventario
         this.interfaceGame.getMapGameJLabel().setIcon(new ImageIcon(iconMap));
+        // this.interfaceGame.setItemJLabel(dropItem.item(), dropItem.indexItem());
+
         this.interfaceGame.getFrame().repaint();
         this.interfaceGame.getFrame().requestFocus();
     }
@@ -161,16 +160,8 @@ public final class InterfaceInventory {
         var dropItem = new DropItemMapper().apply(dropItemRes);
 
         if (dropItem.message().sucess()) {
-            this.interfaceGame.setItemJLabel(dropItem.item(), dropItem.indexItem());
             this.labelInformation.updateTextCapacity(dropItem.capacity(), dropItem.maxCapacity());
-            for (int i = 0; i < this.labelSideEast.getComponents().length; i++) {
-                if (Objects.nonNull(this.labelSideEast.getComponents()[i].getName()) &&
-                        this.labelSideEast.getComponents()[i].getName().equalsIgnoreCase(dropItem.item().name())) {
-                    this.labelSideEast.remove(i);
-                    break;
-                }
-            }
-            this.buttonItem.removeButtonItem(dropItem.item());
+            updateAllItensComponents(dropItem.itens());
         }
         this.interfaceGame.playEffects(dropItem.message().effect(), null);
     }
@@ -181,16 +172,8 @@ public final class InterfaceInventory {
         var useItem = new UseItemMapper().apply(useItemRes);
 
         if (useItem.message().sucess()) {
-            iconMap = useItem.iconMap();
             this.labelInformation.updateTextCapacity(useItem.capacity(), useItem.maxCapacity());
-            for (int i = 0; i < this.labelSideEast.getComponents().length; i++) {
-                if (Objects.nonNull(this.labelSideEast.getComponents()[i].getName()) &&
-                        this.labelSideEast.getComponents()[i].getName().equalsIgnoreCase(useItem.item().name())) {
-                    this.labelSideEast.remove(i);
-                    break;
-                }
-            }
-            this.buttonItem.removeButtonItem(useItem.item());
+            updateAllItensComponents(useItem.itens());
             this.interfaceGame.playEffects("Usar", useItem.message().effect());
         } else {
             this.interfaceGame.playEffects(useItem.message().effect(), null);
@@ -204,15 +187,7 @@ public final class InterfaceInventory {
 
         if (equipItem.message().sucess()) {
             this.labelInformation.updateTextCapacity(equipItem.capacity(), equipItem.maxCapacity());
-            for (int i = 0; i < this.labelSideEast.getComponents().length; i++) {
-                if (Objects.nonNull(this.labelSideEast.getComponents()[i].getName()) &&
-                        this.labelSideEast.getComponents()[i].getName().equalsIgnoreCase(equipItem.item().name())) {
-                    this.labelSideEast.remove(i);
-                    break;
-                }
-            }
-            this.buttonItem.removeButtonItem(equipItem.item());
-            this.setItemEquip(equipItem.item());
+            updateAllItensComponents(equipItem.itens());
             this.interfaceGame.playEffects("Equipar", equipItem.message().effect());
         } else {
             this.interfaceGame.playEffects(equipItem.message().effect(), null);
@@ -225,24 +200,26 @@ public final class InterfaceInventory {
         var combinationItem = new CombinationItemMapper().apply(combinationItemRes);
 
         if (combinationItem.message().sucess()) {
-            setActionCancel();
-            iconMap = combinationItem.iconMap();
             this.labelInformation.updateTextCapacity(combinationItem.capacity(), combinationItem.maxCapacity());
-            for (int i = 0; i < this.labelSideEast.getComponents().length; i++) {
-                if (this.labelSideEast.getComponents()[i] instanceof JButton && Objects.nonNull(this.labelSideEast.getComponents()[i].getName())) {
-                    this.labelSideEast.remove(i);
-                }
-            }
-            this.buttonItem = new ButtonItem();
-            setItens(combinationItem.itens());
+            updateAllItensComponents(combinationItem.itens());
             this.interfaceGame.playEffects("Combinar", combinationItem.message().effect());
         } else {
             this.interfaceGame.playEffects(combinationItem.message().effect(), null);
         }
     }
+
+    private void updateAllItensComponents(List<IItemDTO> itens) {
+        setActionCancel();
+        removeAllItensComponents();
+        this.buttonItem = new ButtonItem();
+        setItens(itens);
+    }
+
+    private void removeAllItensComponents() {
+        for (Component component : this.labelSideEast.getComponents()) {
+            if (component instanceof JButton && Objects.nonNull(component.getName())) {
+                this.labelSideEast.remove(component);
+            }
+        }
+    }
 }
-/*
- * Será que o front tem que saber se deve deletar? atualizar o mapa?
- * Será que nao seria mais facil pra ele apenas atualizar os componentes do inventario?
- * Acredito que tenha uma quebra de dependencia, por ter que saber o que fazer em caso de remover, equipar, usar e combinar
- * */

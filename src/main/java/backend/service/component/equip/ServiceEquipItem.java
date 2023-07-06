@@ -1,6 +1,7 @@
 package backend.service.component.equip;
 
 import backend.controller.interfaces.IEquipItemRequest;
+import backend.controller.interfaces.IItemDTO;
 import backend.controller.interfaces.IRequest;
 import backend.controller.interfaces.IResponse;
 import backend.service.dto.response.EquipItemResponse;
@@ -9,6 +10,8 @@ import backend.service.interfaces.IEquipable;
 import backend.service.mapper.ItemDTOMapper;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
+
+import java.util.ArrayList;
 
 public class ServiceEquipItem {
 
@@ -32,9 +35,11 @@ public class ServiceEquipItem {
         var capacity = player.getInventory().getCapacity();
         var maxCapacity = player.getInventory().getMaxCapacity();
         var indexItem = 1;
-        var itemDto = new ItemDTOMapper().apply(item);
+        var itensDto = new ArrayList<IItemDTO>(player.getInventory().getItemVisible().stream()
+                .map(item1 -> new ItemDTOMapper().apply(item1))
+                .toList());
 
-        return new EquipItemResponse(message, capacity, maxCapacity, itemDto, indexItem);
+        return new EquipItemResponse(message, capacity, maxCapacity, itensDto, indexItem);
     }
 
     private Exception isExeption(Item item) {

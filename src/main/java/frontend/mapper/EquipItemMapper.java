@@ -14,7 +14,7 @@ public final class EquipItemMapper implements Function<IResponse, IEquipItemResp
         return new EquipItem(equipItemResp.message(),
                 equipItemResp.capacity(),
                 equipItemResp.maxCapacity(),
-                equipItemResp.item(),
+                equipItemResp.itens(),
                 equipItemResp.indexItem());
     }
 }
