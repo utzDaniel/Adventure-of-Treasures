@@ -10,6 +10,4 @@ public interface IDropItemResponse extends IResponse {
 
     List<IItemDTO> itens();
 
-    int indexItem();
-
 }

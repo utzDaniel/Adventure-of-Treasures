@@ -10,6 +10,4 @@ public interface IEquipItemResponse extends IResponse {
 
     List<IItemDTO> itens();
 
-    int indexItem();
-
 }

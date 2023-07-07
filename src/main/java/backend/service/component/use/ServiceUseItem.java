@@ -30,16 +30,13 @@ public final class ServiceUseItem {
         if (message.sucess()) {
             message = new MessageFactory().create("Item usado!", ((IUsable)item).getEffect());
         }
-
         var capacity = player.getInventory().getCapacity();
         var maxCapacity = player.getInventory().getMaxCapacity();
-        var indexItem = 1;
         var itensDto = new ArrayList<IItemDTO>(player.getInventory().getItemVisible().stream()
                 .map(item1 -> new ItemDTOMapper().apply(item1))
                 .toList());
-        var iconMap = player.getCurrentMap().getIcon().toString();
 
-        return new UseItemResponse(message, capacity, maxCapacity, itensDto, indexItem, iconMap);
+        return new UseItemResponse(message, capacity, maxCapacity, itensDto);
     }
 
     private Exception isExeption(Item item) {

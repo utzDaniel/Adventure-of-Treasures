@@ -21,10 +21,10 @@ public final class Inventory {
         this.maxCapacity = 10;
         this.isInventory = false;
         this.itens = new HashMap<>();
-        RepositoryFactory.getRepositoryItem().getAll()
-                .stream().map(itemEntity -> new ItemFactory().create(itemEntity))
-                .forEach(item -> itens.put(item.getName(), item));
-        itens.get("chave").setVisible(true);
+//        RepositoryFactory.getRepositoryItem().getAll()
+//                .stream().map(itemEntity -> new ItemFactory().create(itemEntity))
+//                .forEach(item -> itens.put(item.getName(), item));
+//        itens.get("chave").setVisible(true);
 
     }
 

@@ -6,6 +6,7 @@ import backend.repository.factory.RepositoryFactory;
 import backend.service.infra.Cache;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
+import backend.service.model.builder.ItemFactory;
 import frontend.event.Keyboard;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
@@ -31,17 +32,11 @@ public class Game {
     }
 
     private void initialPlayer() {
-        var repositoryItem = RepositoryFactory.getRepositoryItem();
         player.setCurrentMap(Cache.getMapGame("cais"));
-
         //TODO não usar itens invisivel, resolver depois
-//        for (Item item : repositoryItem
-//                .getAll().stream()
-//                .filter(Item::isInvisible)
-//                .filter(item -> !item.getName().equals("chave"))
-//                .toList()) {
-//            player.getInventory().setItemInvisible(item);
-//        }
+        RepositoryFactory.getRepositoryItem().getAll()
+                .stream().filter(item -> !item.visible() && !item.name().equals("chave"))
+                .forEach(entity -> player.getInventory().setItemInvisible(new ItemFactory().create(entity)));
     }
 
     private List<JLabel> getComponents() {

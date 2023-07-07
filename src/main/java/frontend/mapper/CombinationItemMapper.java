@@ -14,8 +14,6 @@ public final class CombinationItemMapper implements Function<IResponse, ICombina
         return new CombinationItem(combinationItemResp.message(),
                 combinationItemResp.capacity(),
                 combinationItemResp.maxCapacity(),
-                combinationItemResp.itens(),
-                combinationItemResp.indexItem(),
-                combinationItemResp.iconMap());
+                combinationItemResp.itens());
     }
 }

@@ -36,7 +36,7 @@ public abstract class MapGame {
         return this.icon;
     }
 
-    protected void setIcon(ImageIcon imagemIcon) {
+    public void setIcon(ImageIcon imagemIcon) {//Apenas a class ActivateMapGame usar o publico
         this.icon = imagemIcon;
     }
 

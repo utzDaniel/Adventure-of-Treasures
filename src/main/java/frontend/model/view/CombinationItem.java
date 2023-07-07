@@ -10,10 +10,7 @@ public record CombinationItem(IMessage message,
                               int capacity,
 
                               int maxCapacity,
-                              List<IItemDTO> itens,
-                              int indexItem,
-
-                              String iconMap) implements ICombinationItemResponse {
+                              List<IItemDTO> itens) implements ICombinationItemResponse {
 
 
 }

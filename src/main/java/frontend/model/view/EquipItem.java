@@ -10,8 +10,7 @@ public record EquipItem(IMessage message,
                         int capacity,
 
                         int maxCapacity,
-                        List<IItemDTO> itens,
-                        int indexItem) implements IEquipItemResponse {
+                        List<IItemDTO> itens) implements IEquipItemResponse {
 
 
 }

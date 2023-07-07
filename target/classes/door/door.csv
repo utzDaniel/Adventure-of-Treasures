@@ -6,10 +6,10 @@ id;idMapGame;mapGame;positionX;positionY;open
 5;6;enfermaria;720;310;true
 6;6;templo;370;150;false
 7;7;vila;500;510;true
-8;8;vila;380;530;false
+8;8;vila;380;530;true
 9;8;topo do templo;260;190;false
 10;8;porao do templo;90;240;false
-11;9;templo;250;180;false
-12;10;templo;100;150;false
+11;9;templo;250;180;true
+12;10;templo;100;150;true
 13;11;vila;370;510;true
 14;12;cais;70;320;true

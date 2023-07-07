@@ -34,12 +34,11 @@ public class ServiceEquipItem {
 
         var capacity = player.getInventory().getCapacity();
         var maxCapacity = player.getInventory().getMaxCapacity();
-        var indexItem = 1;
         var itensDto = new ArrayList<IItemDTO>(player.getInventory().getItemVisible().stream()
                 .map(item1 -> new ItemDTOMapper().apply(item1))
                 .toList());
 
-        return new EquipItemResponse(message, capacity, maxCapacity, itensDto, indexItem);
+        return new EquipItemResponse(message, capacity, maxCapacity, itensDto);
     }
 
     private Exception isExeption(Item item) {

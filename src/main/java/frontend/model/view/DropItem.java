@@ -10,8 +10,7 @@ public record DropItem(IMessage message,
                        int capacity,
 
                        int maxCapacity,
-                       List<IItemDTO> itens,
-                       int indexItem) implements IDropItemResponse {
+                       List<IItemDTO> itens) implements IDropItemResponse {
 
 
 }

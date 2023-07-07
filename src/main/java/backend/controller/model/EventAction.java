@@ -15,7 +15,7 @@ import backend.service.component.take.Take;
 
 public class EventAction implements IEventAction {
 
-//TODO usar Injeção de Dependência para resolvermos a Inversão de Controle (new Service). usar a anotação ver video da alura
+    // TODO usar Injeção de Dependência para resolvermos a Inversão de Controle (new Service). usar a anotação ver video da alura
 
     @Override
     public IResponse run(IRequest request) {

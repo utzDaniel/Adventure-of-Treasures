@@ -30,12 +30,11 @@ public class ServiceDropItem {
 
         var capacity = player.getInventory().getCapacity();
         var maxCapacity = player.getInventory().getMaxCapacity();
-        var indexItem = 1;
         var itensDto = new ArrayList<IItemDTO>(player.getInventory().getItemVisible().stream()
                 .map(item1 -> new ItemDTOMapper().apply(item1))
                 .toList());
 
-        return new DropItemResponse(message, capacity, maxCapacity, itensDto, indexItem);
+        return new DropItemResponse(message, capacity, maxCapacity, itensDto);
     }
 
     private Exception isExeption(Item item) {

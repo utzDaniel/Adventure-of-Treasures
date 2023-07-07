@@ -38,13 +38,11 @@ public final class ServiceCombinationItem {
 
         var capacity = player.getInventory().getCapacity();
         var maxCapacity = player.getInventory().getMaxCapacity();
-        var indexItem = 1;
         var itensDto = new ArrayList<IItemDTO>(player.getInventory().getItemVisible().stream()
                 .map(item -> new ItemDTOMapper().apply(item))
                 .toList());
-        var iconMap = player.getCurrentMap().getIcon().toString();
 
-        return new CombinationItemResponse(message, capacity, maxCapacity, itensDto, indexItem, iconMap);
+        return new CombinationItemResponse(message, capacity, maxCapacity, itensDto);
     }
 
     private Exception isExeption(List<Item> itens) {

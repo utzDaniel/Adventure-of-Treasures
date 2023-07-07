@@ -10,9 +10,7 @@ public record UseItem(IMessage message,
                       int capacity,
 
                       int maxCapacity,
-                      List<IItemDTO> itens,
-                      int indexItem,
-                      String iconMap) implements IUseItemResponse {
+                      List<IItemDTO> itens) implements IUseItemResponse {
 
 
 }

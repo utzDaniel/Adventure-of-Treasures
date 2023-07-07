@@ -10,8 +10,4 @@ public interface IUseItemResponse extends IResponse {
 
     List<IItemDTO> itens();
 
-    int indexItem();
-
-    String iconMap();
-
 }
