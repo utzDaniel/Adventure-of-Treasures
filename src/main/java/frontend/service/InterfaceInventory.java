@@ -3,6 +3,7 @@ package frontend.service;
 import backend.controller.interfaces.IInventoryOpenResponse;
 import backend.controller.interfaces.IItemDTO;
 import backend.controller.model.EventAction;
+import frontend.event.Keyboard;
 import frontend.mapper.*;
 import frontend.request.*;
 
@@ -22,9 +23,11 @@ public final class InterfaceInventory {
     private ButtonItem buttonItem;
     private LabelInformation labelInformation;
     private ButtonAction buttonAction;
+    private final Keyboard keyboard;
 
-    public InterfaceInventory(InterfaceGame interfaceGame) {
+    public InterfaceInventory(InterfaceGame interfaceGame, Keyboard keyboard) {
         this.interfaceGame = interfaceGame;
+        this.keyboard = keyboard;
     }
 
     public void open(IInventoryOpenResponse inventory) {
@@ -131,8 +134,9 @@ public final class InterfaceInventory {
     }
 
     private void eventActionRemove(String name) {
-        var dropItemReq = new DropItemRequest("Remover", name);
-        var dropItemRes = new EventAction().run(dropItemReq);
+
+        var dropItemRes = this.keyboard.executa(String.format("/eventAction/drop?arg0=%s", name));
+
         var dropItem = new DropItemMapper().apply(dropItemRes);
 
         if (dropItem.message().sucess()) {
@@ -143,8 +147,8 @@ public final class InterfaceInventory {
     }
 
     private void eventActionUse(String name) {
-        var useItemReq = new UseItemRequest("Usar", name);
-        var useItemRes = new EventAction().run(useItemReq);
+
+        var useItemRes = this.keyboard.executa(String.format("/eventAction/use?arg0=%s", name));
         var useItem = new UseItemMapper().apply(useItemRes);
 
         if (useItem.message().sucess()) {
@@ -157,8 +161,8 @@ public final class InterfaceInventory {
     }
 
     private void eventActionEquip(String name) {
-        var equipItemReq = new EquipItemRequest("Equipar", name);
-        var equipItemRes = new EventAction().run(equipItemReq);
+
+        var equipItemRes = this.keyboard.executa(String.format("/eventAction/equip?arg0=%s", name));
         var equipItem = new EquipItemMapper().apply(equipItemRes);
 
         if (equipItem.message().sucess()) {
@@ -171,8 +175,13 @@ public final class InterfaceInventory {
     }
 
     private void eventActionCombination(List<String> items) {
-        var combinationItemReq = new CombinationItemRequest("Combinar", items);
-        var combinationItemRes = new EventAction().run(combinationItemReq);
+
+        var limit = items.size() - 1;
+        var list = new StringBuilder();
+        items.stream().limit(limit).forEach(n -> list.append(n).append(","));
+        list.append(items.get(limit));
+
+        var combinationItemRes = this.keyboard.executa(String.format("/eventAction/combination?arg0=%s", list));
         var combinationItem = new CombinationItemMapper().apply(combinationItemRes);
 
         if (combinationItem.message().sucess()) {
@@ -185,8 +194,8 @@ public final class InterfaceInventory {
     }
 
     public void quit() {
-        var inventoryQuitReq = new InventoryQuitRequest("InventoryQuit");
-        var inventoryQuitRes = new EventAction().run(inventoryQuitReq);
+
+        var inventoryQuitRes = this.keyboard.executa("/eventAction/inventoryQuit");
         var inventoryQuit = new InventoryQuitMapper().apply(inventoryQuitRes);
 
         if (inventoryQuit.message().sucess()) {

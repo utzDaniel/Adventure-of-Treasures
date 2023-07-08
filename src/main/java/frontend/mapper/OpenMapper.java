@@ -1,14 +1,13 @@
 package frontend.mapper;
 
 import backend.controller.interfaces.IOpenResponse;
-import backend.controller.interfaces.IResponse;
 import frontend.model.view.Open;
 
 import java.util.function.Function;
 
-public final class OpenMapper implements Function<IResponse, IOpenResponse> {
+public final class OpenMapper implements Function<Object, IOpenResponse> {
     @Override
-    public IOpenResponse apply(IResponse response) {
+    public IOpenResponse apply(Object response) {
         var openResponse = (IOpenResponse) response;
         return new Open(openResponse.message(),
                 openResponse.iconMap(),

@@ -1,8 +1,6 @@
 package backend.service.component.drop;
 
-import backend.controller.interfaces.IDropItemRequest;
 import backend.controller.interfaces.IItemDTO;
-import backend.controller.interfaces.IRequest;
 import backend.controller.interfaces.IResponse;
 import backend.service.dto.response.DropItemResponse;
 import backend.service.factory.MessageFactory;
@@ -16,9 +14,7 @@ public class ServiceDropItem {
 
     private final Player player = Player.getInstance();
 
-    public IResponse run(IRequest request) {
-        var dropItemRequest = (IDropItemRequest) request;
-        var name = dropItemRequest.name();
+    public IResponse run(String name) {
 
         Item item = player.getInventory().getItemVisible().stream()
                 .filter(item1 -> item1.getName().equals(name)).findFirst().get();

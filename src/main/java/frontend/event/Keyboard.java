@@ -2,18 +2,17 @@ package frontend.event;
 
 import backend.controller.interfaces.IOpenResponse;
 import backend.controller.interfaces.ITakeResponse;
-import backend.controller.model.EventAction;
 import frontend.enums.Direction;
+import frontend.event.ioc.ContainerIoC;
+import frontend.event.protocolo.Request;
+import frontend.event.reflexao.ManipuladorObjeto;
+import frontend.event.reflexao.Reflexao;
 import frontend.mapper.InventoryOpenMapper;
 import frontend.mapper.MoveMapper;
 import frontend.mapper.OpenMapper;
 import frontend.mapper.TakeMapper;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
-import frontend.request.InventoryOpenRequest;
-import frontend.request.MoveRequest;
-import frontend.request.OpenRequest;
-import frontend.request.TakeRequest;
 import frontend.service.InterfaceGame;
 import frontend.service.InterfaceInventory;
 
@@ -21,6 +20,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Map;
 import java.util.Objects;
 
 public class Keyboard {
@@ -30,12 +30,16 @@ public class Keyboard {
     private final SoundEffects soundEffects;
     private final InterfaceInventory interfaceInventory;
 
+    private final String pacoteBase;
+    private final ContainerIoC container;
 
-    public Keyboard(InterfaceGame interfaceGame, Song song, SoundEffects soundEffects) {
+    public Keyboard(InterfaceGame interfaceGame, Song song, SoundEffects soundEffects, String pacoteBase) {
         this.song = song;
         this.interfaceGame = interfaceGame;
         this.soundEffects = soundEffects;
-        interfaceInventory = new InterfaceInventory(interfaceGame);
+        interfaceInventory = new InterfaceInventory(interfaceGame, this);
+        this.pacoteBase = pacoteBase;
+        this.container = new ContainerIoC();
     }
 
     public void run() {
@@ -52,30 +56,25 @@ public class Keyboard {
 
                 if (Direction.containsKeyCode(keyCode)) {
 
-                    var width = interfaceGame.getMapGameJLabel().getWidth();
-                    var height = interfaceGame.getMapGameJLabel().getHeight();
                     var direction = Direction.getLabel(keyCode);
-                    var moveReq = new MoveRequest("Move", direction, width, height);
 
-                    var moveRes = new EventAction().run(moveReq);
+                    var moveRes = executa(String.format("/eventAction/move?arg0=%s", direction));
 
                     var move = new MoveMapper().apply(moveRes);
 
-                    if(move.message().sucess())
+                    if (move.message().sucess())
                         interfaceGame.updateComponentsMove(move);
 
 
                     //ENTRA NA PORTA
                 } else if (keyCode == 97) {
 
-                    var openReq = new OpenRequest("Open");
-                    var openRes = new EventAction().run(openReq);
-
+                    var openRes = executa("/eventAction/open");
                     var open = new OpenMapper().apply(openRes);
 
-                    if("finish".equalsIgnoreCase(open.songMap())) finish(open.songMap());
+                    if ("finish".equalsIgnoreCase(open.songMap())) finish(open.songMap());
 
-                    if(Objects.nonNull(open.message())){
+                    if (Objects.nonNull(open.message())) {
                         if (open.message().sucess())
                             updateItensMapGame(open);
                         else if (Objects.nonNull(open.message().effect()))
@@ -86,23 +85,20 @@ public class Keyboard {
                     //PEGAR ITEM
                 } else if (keyCode == 98) {
 
-                    var takeReq = new TakeRequest("Take");
-                    var takeRes = new EventAction().run(takeReq);
+                    var takeRes = executa("/eventAction/take");
                     var take = new TakeMapper().apply(takeRes);
-
 
                     var effect = take.message().effect();
                     if (Objects.nonNull(effect) && !effect.isEmpty()) {
                         soundEffects.play(commandEffects(effect));
                     }
 
-                    if(take.message().sucess()) updateItensMapGame(take);
+                    if (take.message().sucess()) updateItensMapGame(take);
 
                     //INVENTARIO
                 } else if (keyCode == 99) {
 
-                    var inventoryOpenReq = new InventoryOpenRequest("InventoryOpen");
-                    var inventoryOpenRes = new EventAction().run(inventoryOpenReq);
+                    var inventoryOpenRes = executa("/eventAction/inventoryOpen");
                     var inventoryOpen = new InventoryOpenMapper().apply(inventoryOpenRes);
 
                     if (inventoryOpen.message().sucess()) interfaceInventory.open(inventoryOpen);
@@ -147,5 +143,22 @@ public class Keyboard {
                     case "pegar", "remover ", "finish" -> command;
                     default -> "erro";
                 });
+    }
+
+    public Object executa(String url) {
+        Request request = new Request(url);
+        String nomeControle = request.getNomeControle();
+        String nomeMetodo = request.getNomeMetodo();
+        Map<String, Object> params = request.getQueryParams();
+        Class<?> classeControle = (new Reflexao()).getClasse(this.pacoteBase + nomeControle);
+        Object instanciaControle = this.container.getInstancia(classeControle);
+        return (new ManipuladorObjeto(instanciaControle)).getMetodo(nomeMetodo, params).comTratamentoDeExcecao((metodo, ex) -> {
+            System.out.println("Erro no método " + metodo.getName() + " da classe " + metodo.getDeclaringClass().getName() + ".\n\n");
+            throw new RuntimeException("Erro no método!");
+        }).invoca();
+    }
+
+    public <T, K extends T> void registra(Class<T> tipoFonte, Class<K> tipoDestino) {
+        this.container.registra(tipoFonte, tipoDestino);
     }
 }

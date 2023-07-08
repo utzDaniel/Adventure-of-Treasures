@@ -1,14 +1,13 @@
 package frontend.mapper;
 
 import backend.controller.interfaces.IMoveResponse;
-import backend.controller.interfaces.IResponse;
 import frontend.model.view.Move;
 
 import java.util.function.Function;
 
-public final class MoveMapper implements Function<IResponse, IMoveResponse> {
+public final class MoveMapper implements Function<Object, IMoveResponse> {
     @Override
-    public IMoveResponse apply(IResponse response) {
+    public IMoveResponse apply(Object response) {
         var moveResponse = (IMoveResponse) response;
         return new Move(moveResponse.message(),
                 moveResponse.iconMap(),
@@ -18,4 +17,5 @@ public final class MoveMapper implements Function<IResponse, IMoveResponse> {
                 moveResponse.itens(),
                 moveResponse.indexItens());
     }
+
 }

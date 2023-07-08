@@ -14,15 +14,15 @@ import java.util.List;
 public final class Move {
 
     private final Player player = Player.getInstance();
-
-    public IResponse run(IRequest request) {
-        var moveRequest = (IMoveRequest) request;
-        return getIMoveResponse(moveRequest);
+    public IResponse run(String direction) {
+        return getIMoveResponse(direction);
     }
 
-    private IMoveResponse getIMoveResponse(IMoveRequest moveRequest) {
-        var coordinate = ICoordinate.getInstance(moveRequest.width(), moveRequest.height());
-        var exeption = isExeption(moveRequest.direction(), coordinate);
+    private IMoveResponse getIMoveResponse(String direction) {
+        var width = 800; //interfaceGame.getMapGameJLabel().getWidth();
+        var height = 600; //interfaceGame.getMapGameJLabel().getHeight();
+        var coordinate = ICoordinate.getInstance(width, height);
+        var exeption = isExeption(direction, coordinate);
         var message = new MessageFactory().create(exeption);
         return getMoveResponse(message);
     }

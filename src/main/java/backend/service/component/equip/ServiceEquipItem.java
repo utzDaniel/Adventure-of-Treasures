@@ -1,8 +1,6 @@
 package backend.service.component.equip;
 
-import backend.controller.interfaces.IEquipItemRequest;
 import backend.controller.interfaces.IItemDTO;
-import backend.controller.interfaces.IRequest;
 import backend.controller.interfaces.IResponse;
 import backend.service.dto.response.EquipItemResponse;
 import backend.service.factory.MessageFactory;
@@ -17,9 +15,7 @@ public class ServiceEquipItem {
 
     private final Player player = Player.getInstance();
 
-    public IResponse run(IRequest request) {
-        var equipItemRequest = (IEquipItemRequest) request;
-        var name = equipItemRequest.name();
+    public IResponse run(String name) {
 
         Item item = player.getInventory().getItemVisible().stream()
                 .filter(item1 -> item1.getName().equals(name)).findFirst().get();

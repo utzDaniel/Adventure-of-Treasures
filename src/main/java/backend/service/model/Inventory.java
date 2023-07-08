@@ -1,8 +1,6 @@
 package backend.service.model;
 
-import backend.repository.factory.RepositoryFactory;
 import backend.service.model.builder.Item;
-import backend.service.model.builder.ItemFactory;
 
 import java.util.HashMap;
 import java.util.List;

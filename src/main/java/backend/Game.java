@@ -1,6 +1,8 @@
 package backend;
 
 import backend.controller.interfaces.IItemDTO;
+import backend.service.IService;
+import backend.service.Service;
 import backend.service.mapper.ItemDTOMapper;
 import backend.repository.factory.RepositoryFactory;
 import backend.service.infra.Cache;
@@ -20,6 +22,7 @@ import java.util.List;
 public class Game {
 
     private final Player player;
+    private final String pacoteBase = "backend.controller.model.";
 
     public Game() {
         player = Player.getInstance();
@@ -28,7 +31,11 @@ public class Game {
         Song song = interfaceGame.getSong();
         SoundEffects soundEffects = interfaceGame.getSoundEffects();
         song.play(player.getCurrentMap().getSong());
-        new Keyboard(interfaceGame, song, soundEffects).run();
+
+        var keyboard = new Keyboard(interfaceGame, song, soundEffects, pacoteBase);
+        keyboard.registra(IService.class, Service.class);
+        keyboard.run();
+
     }
 
     private void initialPlayer() {
@@ -56,7 +63,6 @@ public class Game {
     public static void main(String[] args) {
         new Game();
     }
-
 }
 
 

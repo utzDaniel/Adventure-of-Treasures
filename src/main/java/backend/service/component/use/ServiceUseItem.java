@@ -1,9 +1,7 @@
 package backend.service.component.use;
 
 import backend.controller.interfaces.IItemDTO;
-import backend.controller.interfaces.IRequest;
 import backend.controller.interfaces.IResponse;
-import backend.controller.interfaces.IUseItemRequest;
 import backend.service.dto.response.UseItemResponse;
 import backend.service.factory.MessageFactory;
 import backend.service.interfaces.IUsable;
@@ -17,9 +15,7 @@ public final class ServiceUseItem {
 
     private final Player player = Player.getInstance();
 
-    public IResponse run(IRequest request) {
-        var useItemRequest = (IUseItemRequest) request;
-        var name = useItemRequest.name();
+    public IResponse run(String name) {
 
         Item item = player.getInventory().getItemVisible().stream()
                 .filter(item1 -> item1.getName().equals(name)).findFirst().get();
@@ -28,7 +24,7 @@ public final class ServiceUseItem {
         var message = new MessageFactory().create(exeption);
 
         if (message.sucess()) {
-            message = new MessageFactory().create("Item usado!", ((IUsable)item).getEffect());
+            message = new MessageFactory().create("Item usado!", ((IUsable) item).getEffect());
         }
         var capacity = player.getInventory().getCapacity();
         var maxCapacity = player.getInventory().getMaxCapacity();

@@ -1,44 +1,51 @@
 package backend.controller.model;
 
 import backend.controller.interfaces.IEventAction;
-import backend.controller.interfaces.IRequest;
 import backend.controller.interfaces.IResponse;
-import backend.service.component.combination.ServiceCombinationItem;
-import backend.service.component.inventory.quit.InventoryQuit;
-import backend.service.component.use.ServiceUseItem;
-import backend.service.component.drop.ServiceDropItem;
-import backend.service.component.equip.ServiceEquipItem;
-import backend.service.component.move.Move;
-import backend.service.component.open.Open;
-import backend.service.component.inventory.open.InventoryOpen;
-import backend.service.component.take.Take;
+import backend.service.IService;
 
 public class EventAction implements IEventAction {
 
-    // TODO usar Injeção de Dependência para resolvermos a Inversão de Controle (new Service). usar a anotação ver video da alura
+    private final IService service;
 
-    @Override
-    public IResponse run(IRequest request) {
-        var action = request.action();
-        if ("Move".equalsIgnoreCase(action)) {
-            return new Move().run(request);
-        } else if ("Open".equalsIgnoreCase(action)) {
-            return new Open().run();
-        } else if ("Take".equalsIgnoreCase(action)) {
-            return new Take().run();
-        } else if ("InventoryOpen".equalsIgnoreCase(action)) {
-            return new InventoryOpen().run();
-        }else if ("Remover".equalsIgnoreCase(action)) {
-            return new ServiceDropItem().run(request);
-        }else if ("Equipar".equalsIgnoreCase(action)) {
-            return new ServiceEquipItem().run(request);
-        }else if ("Usar".equalsIgnoreCase(action)) {
-            return new ServiceUseItem().run(request);
-        }else if ("Combinar".equalsIgnoreCase(action)) {
-            return new ServiceCombinationItem().run(request);
-        }else if ("InventoryQuit".equalsIgnoreCase(action)) {
-            return new InventoryQuit().run();
-        }
-        return null;
+    public EventAction(IService service) {
+        this.service = service;
+    }
+
+
+    public IResponse inventoryQuit() {
+        return this.service.inventoryQuit();
+    }
+
+    public IResponse combination(String names) {
+        return this.service.combination(names.split(","));
+    }
+
+    public IResponse use(String name) {
+        return this.service.use(name);
+    }
+
+    public IResponse equip(String name) {
+        return this.service.equip(name);
+    }
+
+    public IResponse drop(String name) {
+        return this.service.drop(name);
+    }
+
+    public IResponse inventoryOpen() {
+        return this.service.inventoryOpen();
+    }
+
+    public IResponse take() {
+        return this.service.take();
+    }
+
+    public IResponse open() {
+        return this.service.open();
+    }
+
+    public IResponse move(String direction) {
+        return this.service.move(direction);
     }
 }
