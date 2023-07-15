@@ -9,7 +9,7 @@ public record MapGameEntity(int id,
                             String name,
                             String imagemIcon,
                             String song,
-                            int[][] limits) implements IMapGameEntity {
+                            byte[][] limits) implements IMapGameEntity {
     @Override
     public String toString() {
         return """

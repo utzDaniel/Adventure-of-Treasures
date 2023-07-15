@@ -29,7 +29,7 @@ abstract class MapGameBuilder implements IBuilderMapGame {
     }
 
     @Override
-    public IBuilderMapGame limits(int[][] limits) {
+    public IBuilderMapGame limits(byte[][] limits) {
         this.mapGame.setLimits(limits);
         return this;
     }

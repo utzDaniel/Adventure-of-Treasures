@@ -44,7 +44,7 @@ public abstract class MapGame {
         return this.area;
     }
 
-    protected void setLimits(int[][] limits) {
+    protected void setLimits(byte[][] limits) {
         this.area = new Area(limits);
     }
 

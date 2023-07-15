@@ -9,6 +9,6 @@ public interface IMapGameEntity {
 
     String song();
 
-    int[][] limits();
+    byte[][] limits();
 
 }

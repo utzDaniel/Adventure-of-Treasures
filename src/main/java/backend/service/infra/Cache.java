@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public final class Cache {
 
-    //TODO usar o padrao Flyweight
+    // TODO usar o padrao Flyweight
     private static final Map<String, MapGame> mapGame = new HashMap<>();
     private static final MapGameFactory factory = new MapGameFactory();
 

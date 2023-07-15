@@ -75,10 +75,11 @@ public class Keyboard {
                     if ("finish".equalsIgnoreCase(open.songMap())) finish(open.songMap());
 
                     if (Objects.nonNull(open.message())) {
+                        var effect = open.message().effect();
                         if (open.message().sucess())
                             updateItensMapGame(open);
-                        else if (Objects.nonNull(open.message().effect()))
-                            soundEffects.play(commandEffects(open.message().effect()));
+                        else if (Objects.nonNull(effect))
+                            soundEffects.play(effect);
                     }
 
 
@@ -90,7 +91,7 @@ public class Keyboard {
 
                     var effect = take.message().effect();
                     if (Objects.nonNull(effect) && !effect.isEmpty()) {
-                        soundEffects.play(commandEffects(effect));
+                        soundEffects.play(effect);
                     }
 
                     if (take.message().sucess()) updateItensMapGame(take);
@@ -133,16 +134,8 @@ public class Keyboard {
 
     private void finish(String song) {
         this.song.closePlay();
-        this.soundEffects.play(commandEffects(song));
+        this.soundEffects.play(song);
         System.exit(0);
-    }
-
-    private String commandEffects(String command) {
-        return String.format("src/main/resources/audio/effects/%s.wav",
-                switch (command) {
-                    case "pegar", "remover ", "finish" -> command;
-                    default -> "erro";
-                });
     }
 
     public Object executa(String url) {

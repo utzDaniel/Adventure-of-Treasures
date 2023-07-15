@@ -2,6 +2,8 @@ package frontend.service;
 
 import backend.controller.interfaces.IInventoryResponse;
 import backend.controller.interfaces.IItemDTO;
+import frontend.enums.NameButtonAction;
+import frontend.enums.NameLabelInfoItens;
 import frontend.event.Keyboard;
 import frontend.mapper.*;
 
@@ -66,14 +68,22 @@ public final class InterfaceInventory {
     }
 
     private void setInfoItens(int capacity, int maxCapacity) {
-        String capicadade = String.format("Capacidade do inventario %d/%d", capacity, maxCapacity);
-        List.of(capicadade, "Nome", "Peso", "Descrição").forEach(this.labelInformation::create);
+        //TODO LabelInfoItens.CAPICIDADE deixa sempre aparecer e os depois so quando selecionar
+        //TODO LabelInfoItens.CAPICIDADE ficar junto com o itens porque estão relacionado
+
+        Arrays.stream(NameLabelInfoItens.values())
+                .forEach(l ->{
+                        if(NameLabelInfoItens.CAPICIDADE == l)
+                            this.labelInformation.create(String.format(l.getName(), capacity, maxCapacity));
+                        else
+                            this.labelInformation.create(l.getName());
+                });
         Arrays.stream(this.labelInformation.getInfoLabel())
                 .forEach(jLabel -> this.labelSideEast.add(jLabel));
     }
 
     private void setButtonsActions() {
-        List.of("usar", "equipar", "combinar", "remover", "cancelar", "confirmar").forEach(buttonAction::create);
+        Arrays.stream(NameButtonAction.values()).forEach(b -> buttonAction.create(b.getName()));
         JButton[] buttons = this.buttonAction.getButtonActions();
         Arrays.stream(buttons).limit(4).forEach(jButton -> {
             jButton.addActionListener(e -> setConfirm(e.getActionCommand()));

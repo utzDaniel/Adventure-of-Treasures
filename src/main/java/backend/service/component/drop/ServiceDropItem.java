@@ -22,7 +22,7 @@ public class ServiceDropItem {
         var exeption = isExeption(item);
         var message = new MessageFactory().create(exeption);
         if (message.sucess())
-            message = new MessageFactory().create("Item removido!", "remover");
+            message = new MessageFactory().create("Item removido!", "src/main/resources/audio/effects/remover.wav");
 
         var capacity = player.getInventory().getCapacity();
         var maxCapacity = player.getInventory().getMaxCapacity();

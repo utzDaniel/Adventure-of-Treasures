@@ -9,6 +9,9 @@ import static java.lang.Integer.parseInt;
 
 public final class MapGameEntityMapper implements Function<String, IMapGameEntity> {
 
+    public static final int LINE_COUNT = 56;
+    public static final int COLUMN_COUNT = 78;
+
     @Override
     public IMapGameEntity apply(String l) {
         var dadosLinha = l.split(";");
@@ -29,18 +32,23 @@ public final class MapGameEntityMapper implements Function<String, IMapGameEntit
         return dado.equals("null") ? -1 : parseInt(dado);
     }
 
-    private int[][] createLimits(String dados) {
-        int[][] limits = new int[56][78];
-        int j = 0, k = 0;
-        for (int i = 0; i < dados.length(); i++) {
-            if (i != 0 && i % 78 == 0) {
-                j++;
-                k = 0;
+    private byte[][] createLimits(String dados) {
+        byte[][] limits = new byte[LINE_COUNT][COLUMN_COUNT];
+        int line = 0;
+        int column = 0;
+        for (byte b : dados.getBytes()) {
+            limits[line][column] = b;
+            column++;
+            if (nextLine(column)) {
+                column = 0;
+                line++;
             }
-            limits[j][k] = stringToInt(String.valueOf(dados.charAt(i)));
-            k++;
         }
         return limits;
+    }
+
+    private static boolean nextLine(int column) {
+        return column == COLUMN_COUNT;
     }
 }
 

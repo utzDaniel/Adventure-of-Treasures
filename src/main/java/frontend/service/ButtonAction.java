@@ -50,7 +50,7 @@ public final class ButtonAction {
         this.buttonActions[5].setVisible(true);
     }
 
-    // TODO resolver de outra forma o instanceof
+    //TODO resolver de outra forma o instanceof
     private void validEnable() {
         boolean remove = false;
         Arrays.stream(buttonActions).limit(4)

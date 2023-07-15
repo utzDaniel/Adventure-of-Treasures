@@ -14,9 +14,9 @@ public final class Inventory {
     private boolean isInventory;
     private final Map<String, Item> itens;
 
-    public Inventory() {
-        this.capacity = 0;
-        this.maxCapacity = 10;
+    public Inventory(int capacity, int maxCapacity) {
+        this.capacity = capacity;
+        this.maxCapacity = maxCapacity;
         this.isInventory = false;
         this.itens = new HashMap<>();
 //        RepositoryFactory.getRepositoryItem().getAll()

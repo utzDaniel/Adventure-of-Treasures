@@ -28,11 +28,6 @@ public final class MovePlayer {
         return validCoordinate();
     }
 
-
-    public String getName() {
-        return "walk";
-    }
-
     private Optional<backend.service.enums.MovePlayer> getMovePlayer() {
         return Arrays.stream(backend.service.enums.MovePlayer.values())
                 .filter(movePlayer -> movePlayer.getDirection().equals(this.direction))

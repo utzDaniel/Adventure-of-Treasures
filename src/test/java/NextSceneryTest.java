@@ -28,7 +28,7 @@ public class NextSceneryTest {
         var listJLabel = new ArrayList<JLabel>();
         listJLabel.add(ComponentFactory.getJLabel(this.player.getIcon().toString(), this.player.getLocation())));
         listJLabel.add(ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getIcon().toString()));
-        moveScenery = new MoveScenery(new Coordinate(810,662));
+        moveScenery = new MoveScenery(player, Direction.SUL.getLabel());
     }
 
     @Test

@@ -7,6 +7,8 @@ import java.util.Objects;
 
 public final class MessageFactory {
 
+    private static final String ERRO = "src/main/resources/audio/effects/erro.wav";
+
     public IMessage create(String text, String effect) {
         return new Message(true, text, effect);
     }
@@ -28,15 +30,15 @@ public final class MessageFactory {
     }
 
     private IMessage msgItemCombinableException(String text) {
-        return new Message(false, text, "erro");
+        return new Message(false, text, ERRO);
     }
 
     private IMessage msgItemEquipableException(String text) {
-        return new Message(false, text, "erro");
+        return new Message(false, text, ERRO);
     }
 
     private IMessage msgItemUsableException(String text) {
-        return new Message(false, text, "erro");
+        return new Message(false, text, ERRO);
     }
 
     private IMessage msgMoveException(String text) {
@@ -52,12 +54,12 @@ public final class MessageFactory {
     }
 
     private IMessage msgInventoryException(String text) {
-        return new Message(false, text, "erro");
+        return new Message(false, text, ERRO);
     }
 
     private IMessage msgDoorExeption(String text) {
         String effect = null;
-        if (text.equalsIgnoreCase("Porta está fechada!")) effect = "erro";
+        if (text.equalsIgnoreCase("Porta está fechada!")) effect = ERRO;
         return new Message(false, text, effect);
     }
 }

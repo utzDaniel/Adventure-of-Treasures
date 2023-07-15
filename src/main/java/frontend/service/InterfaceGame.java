@@ -1,5 +1,6 @@
 package frontend.service;
 
+import frontend.enums.NameJMenu;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
 import frontend.model.component.ComponentFactory;
@@ -73,14 +74,16 @@ public final class InterfaceGame {
     private void createJMenuBar() {
         var menuBar = ComponentFactory.getJMenuBar();
         var events = new EventsMenuBar(frame.getContentPane(), song, soundEffects);
-        List.of("Historia", "Comandos", "Ajuda", "Musica", "Efeitos", "Sair")
-                .forEach(name -> {
-                    var menu = ComponentFactory.getJMenu(name);
-                    menuBar.add(menu);
-                    var item = ComponentFactory.getJMenuItem(name);
-                    item.addActionListener(e -> events.action(name));
-                    menu.add(item);
-                });
+
+        Arrays.stream(NameJMenu.values()).forEach(v -> {
+            var name = v.getName();
+            var menu = ComponentFactory.getJMenu(name);
+            menuBar.add(menu);
+            var item = ComponentFactory.getJMenuItem(name);
+            item.addActionListener(e -> events.action(name));
+            menu.add(item);
+        });
+
         frame.setJMenuBar(menuBar);
     }
 
@@ -96,11 +99,6 @@ public final class InterfaceGame {
         jLabelList.forEach(jLabel -> frame.getContentPane().add(jLabel, index));
     }
 
-    public void setItemJLabel(IItemDTO item, int index) {
-        var jLabel = ComponentFactory.getJLabel(item);
-        frame.getContentPane().add(jLabel, index);
-    }
-
     public Song getSong() {
         return song;
     }
@@ -111,16 +109,8 @@ public final class InterfaceGame {
 
     public void playEffects(String command, String effect) {
         if (Objects.isNull(effect))
-            soundEffects.play(commandEffects(command));
+            soundEffects.play(command);
         else
             soundEffects.play(effect);
-    }
-
-    private String commandEffects(String command) {
-        return String.format("src/main/resources/audio/effects/%s.wav",
-                switch (command) {
-                    case "pegar", "remover", "finish" -> command;
-                    default -> "erro";
-                });
     }
 }

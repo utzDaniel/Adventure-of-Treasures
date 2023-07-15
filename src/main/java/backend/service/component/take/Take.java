@@ -36,7 +36,7 @@ public final class Take {
         List<IItemDTO> itens = null;
 
         if (message.sucess()) {
-            message = new MessageFactory().create("Item adicionado a mochila!", "pegar");
+            message = new MessageFactory().create("Item adicionado a mochila!", "src/main/resources/audio/effects/pegar.wav");
             List<Item> itensMap = new ArrayList<>(this.player.getCurrentMap().getItemVisible());
             itens = new ArrayList<>(itensMap.stream()
                     .map(item1 -> new ItemDTOMapper().apply(item1))

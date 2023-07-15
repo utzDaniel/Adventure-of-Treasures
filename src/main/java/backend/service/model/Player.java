@@ -8,24 +8,23 @@ import java.util.Objects;
 
 public final class Player {
 
-    private static Player player = new Player();
+    private static Player player = null;
     private String direction;
     private MapGame currentMapGame;
     private final Inventory inventory;
     private ICoordinate coordinate;
     private ImageIcon icon;
 
-    private Player() {
-        this.currentMapGame = null;
-        this.icon = new ImageIcon("src/main/resources/player/baixo_C.png");
-        this.inventory = new Inventory();
-        this.coordinate = ICoordinate.getInstance(300, 470);
+    public Player(ImageIcon icon, ICoordinate coordinate, MapGame mapGame, Inventory inventory) throws Exception {
+        if(Objects.nonNull(player)) throw new Exception("Player já criado, use o Player.getInstance()");
+        this.icon = icon;
+        this.coordinate = coordinate;
+        this.currentMapGame = mapGame;
+        this.inventory = inventory;
+        player = this;
     }
 
     public static synchronized Player getInstance() {
-        if (Objects.isNull(player)) {
-            player = new Player();
-        }
         return player;
     }
 

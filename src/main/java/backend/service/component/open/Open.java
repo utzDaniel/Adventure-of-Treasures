@@ -58,7 +58,7 @@ public final class Open {
     private IOpenResponse isFinish(ICoordinate coordinate) {
         if (coordinate.x() == 710 && coordinate.y() == 280
                 && Objects.nonNull(player.getInventory().getItem("tesouro"))) {
-            return new OpenResponse(null, null, "finish", null, null, null);
+            return new OpenResponse(null, null, "src/main/resources/audio/effects/finish.wav", null, null, null);
         }
         return null;
     }

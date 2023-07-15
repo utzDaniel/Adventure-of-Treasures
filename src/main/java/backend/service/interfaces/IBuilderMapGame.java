@@ -12,7 +12,7 @@ public interface IBuilderMapGame {
 
     IBuilderMapGame image(String filename);
 
-    IBuilderMapGame limits(int[][] limits);
+    IBuilderMapGame limits(byte[][] limits);
 
     IBuilderMapGame doors(List<Door> door);
 
