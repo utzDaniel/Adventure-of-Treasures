@@ -6,6 +6,7 @@ import backend.controller.interfaces.ITakeResponse;
 import backend.service.dto.response.TakeResponse;
 import backend.service.enums.MovePlayer;
 import backend.service.factory.MessageFactory;
+import backend.service.interfaces.ICoordinate;
 import backend.service.mapper.ItemDTOMapper;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
@@ -30,7 +31,7 @@ public final class Take {
         var item = getItem();
         var iconMap = player.getCurrentMap().getIcon().toString();
         var iconPlayer = player.getIcon().toString();
-        var coordinatePlayer = player.getLocation();
+        var coordinatePlayer = ICoordinate.getInstance(player.getLocation().y() * 10, player.getLocation().x() * 10);
         var exeption = isExeption(item);
         var message = new MessageFactory().create(exeption);
         List<IItemDTO> itens = null;

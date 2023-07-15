@@ -1,15 +1,15 @@
 id;idMapGame;mapGame;positionX;positionY;open
-1;1;barco;300;520;true
-2;2;dentro do farol;270;240;true
-3;3;farol;720;260;true
-4;6;alojamento;140;380;true
-5;6;enfermaria;720;310;true
-6;6;templo;370;150;false
-7;7;vila;500;510;true
-8;8;vila;380;530;true
-9;8;topo do templo;260;190;false
-10;8;porao do templo;90;240;false
-11;9;templo;250;180;true
-12;10;templo;100;150;true
-13;11;vila;370;510;true
-14;12;cais;70;320;true
+1;1;barco;52;30;true
+2;2;dentro do farol;24;27;true
+3;3;farol;26;72;true
+4;6;alojamento;38;14;true
+5;6;enfermaria;31;72;true
+6;6;templo;15;37;false
+7;7;vila;51;50;true
+8;8;vila;53;38;true
+9;8;topo do templo;19;26;false
+10;8;porao do templo;24;9;false
+11;9;templo;18;25;true
+12;10;templo;15;10;true
+13;11;vila;51;37;true
+14;12;cais;32;7;true

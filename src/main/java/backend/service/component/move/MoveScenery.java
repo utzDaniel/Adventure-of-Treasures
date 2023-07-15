@@ -37,10 +37,10 @@ public final class MoveScenery {
     private void newPosition() {
         var upCoordinate = this.player.getLocation();
         switch (this.direction) {
-            case "norte" -> upCoordinate.setY(Area.limitY());
-            case "sul" -> upCoordinate.setY(Area.minY());
-            case "oeste" -> upCoordinate.setX(Area.limitX());
-            case "leste" -> upCoordinate.setX(Area.minX());
+            case "norte" -> upCoordinate.setX(Area.maxX());
+            case "sul" -> upCoordinate.setX(Area.minX());
+            case "oeste" -> upCoordinate.setY(Area.maxY());
+            case "leste" -> upCoordinate.setY(Area.minY());
             default -> this.player.getLocation();
         }
         this.player.setLocation(upCoordinate);

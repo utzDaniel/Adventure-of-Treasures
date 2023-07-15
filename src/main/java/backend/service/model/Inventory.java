@@ -1,6 +1,8 @@
 package backend.service.model;
 
+import backend.repository.factory.RepositoryFactory;
 import backend.service.model.builder.Item;
+import backend.service.model.builder.ItemFactory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,11 +21,10 @@ public final class Inventory {
         this.maxCapacity = maxCapacity;
         this.isInventory = false;
         this.itens = new HashMap<>();
-//        RepositoryFactory.getRepositoryItem().getAll()
-//                .stream().map(itemEntity -> new ItemFactory().create(itemEntity))
-//                .forEach(item -> itens.put(item.getName(), item));
-//        itens.get("chave").setVisible(true);
-
+        RepositoryFactory.getRepositoryItem().getAll()
+                .stream().map(itemEntity -> new ItemFactory().create(itemEntity))
+                .forEach(item -> itens.put(item.getName(), item));
+        itens.get("chave").setVisible(true);
     }
 
     public int getCapacity() {

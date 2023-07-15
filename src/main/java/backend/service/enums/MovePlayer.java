@@ -6,13 +6,13 @@ import javax.swing.*;
 
 public enum MovePlayer {
 
-    OESTE("oeste", ICoordinate.getInstance(-MovePlayer.STEP, 0), ImagePlayer.ESQUERDA),
-    NORTE("norte", ICoordinate.getInstance(0, -MovePlayer.STEP), ImagePlayer.CIMA),
-    LESTE("leste", ICoordinate.getInstance(MovePlayer.STEP, 0), ImagePlayer.DIREITA),
-    SUL("sul", ICoordinate.getInstance(0, MovePlayer.STEP), ImagePlayer.BAIXO);
+    OESTE("oeste", ICoordinate.getInstance(0, -MovePlayer.STEP), ImagePlayer.ESQUERDA),
+    NORTE("norte", ICoordinate.getInstance(-MovePlayer.STEP, 0), ImagePlayer.CIMA),
+    LESTE("leste", ICoordinate.getInstance(0, MovePlayer.STEP), ImagePlayer.DIREITA),
+    SUL("sul", ICoordinate.getInstance(MovePlayer.STEP, 0), ImagePlayer.BAIXO);
 
     private final String direction;
-    public static final int STEP = 10;
+    public static final int STEP = 1;
     private final ICoordinate coordinate;
     private final ImagePlayer imagePlayer;
 

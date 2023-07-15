@@ -46,7 +46,7 @@ public final class Open {
         var iconMap = player.getCurrentMap().getIcon().toString();
         var songMap = this.player.getCurrentMap().getSong();
         var iconPlayer = player.getIcon().toString();
-        var coordinatePlayer = player.getLocation();
+        var coordinatePlayer = ICoordinate.getInstance(player.getLocation().y() * 10, player.getLocation().x() * 10);
         var itens = new ArrayList<Item>(this.player.getCurrentMap().getItemVisible());
         var itensDTO = new ArrayList<IItemDTO>(itens.stream()
                 .map(item -> new ItemDTOMapper().apply(item))

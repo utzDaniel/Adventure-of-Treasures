@@ -1,12 +1,10 @@
 package backend.service.component.move;
 
-import backend.controller.interfaces.IItemDTO;
-import backend.controller.interfaces.IMessage;
-import backend.controller.interfaces.IMoveResponse;
-import backend.controller.interfaces.IResponse;
+import backend.controller.interfaces.*;
 import backend.service.dto.response.MoveResponse;
 import backend.service.exception.MoveException;
 import backend.service.factory.MessageFactory;
+import backend.service.interfaces.ICoordinate;
 import backend.service.mapper.ItemDTOMapper;
 import backend.service.model.Area;
 import backend.service.model.Player;
@@ -29,10 +27,10 @@ public final class Move {
 
     private boolean isWalk(String direction) {
         return switch (direction) {
-            case "norte" -> player.getLocation().y() > Area.minY();
-            case "sul" -> player.getLocation().y() < Area.limitY();
-            case "oeste" -> player.getLocation().x() > Area.minX();
-            case "leste" -> player.getLocation().x() < Area.limitX();
+            case "norte" -> player.getLocation().x() > Area.minX();
+            case "sul" -> player.getLocation().x() < Area.maxX();
+            case "oeste" -> player.getLocation().y() > Area.minY();
+            case "leste" -> player.getLocation().y() < Area.maxY();
             default -> throw new MoveException("Direção invalida!");
         };
     }
@@ -55,7 +53,7 @@ public final class Move {
         var iconMap = player.getCurrentMap().getIcon().toString();
         String songMap = this.player.getCurrentMap().getSong();
         var iconPlayer = player.getIcon().toString();
-        var coordinatePlayer = player.getLocation();
+        var coordinatePlayer = ICoordinate.getInstance(player.getLocation().y()*10, player.getLocation().x() *10);
         List<IItemDTO> itens = new ArrayList<>(this.player.getCurrentMap().getItemVisible().stream()
                 .map(i -> new ItemDTOMapper().apply(i))
                 .toList());

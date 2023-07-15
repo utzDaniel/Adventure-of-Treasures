@@ -73,7 +73,8 @@ public class Game {
 
     private List<JLabel> getComponents() {
         var listJLabel = new ArrayList<JLabel>();
-        listJLabel.add(ComponentFactory.getJLabel(this.player.getIcon().toString(), this.player.getLocation()));
+        var coordinatePlayer = ICoordinate.getInstance(player.getLocation().y() * 10, player.getLocation().x() * 10);
+        listJLabel.add(ComponentFactory.getJLabel(this.player.getIcon().toString(), coordinatePlayer));
         listJLabel.add(ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getIcon().toString()));
         listJLabel.addAll(ComponentFactory.getJLabel(getIItemDTO(this.player.getCurrentMap().getItemVisible())));
         return listJLabel;

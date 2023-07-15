@@ -1,10 +1,11 @@
 package backend.service.component.drop;
 
+import backend.service.enums.MovePlayer;
+import backend.service.exception.MapGameException;
+import backend.service.interfaces.ICoordinate;
 import backend.service.model.Area;
 import backend.service.model.builder.Item;
 import backend.service.model.builder.MapGame;
-import backend.service.exception.MapGameException;
-import backend.service.interfaces.ICoordinate;
 
 public class AddItemMapGame {
 
@@ -36,14 +37,15 @@ public class AddItemMapGame {
                 if (checkLimitPosition()) continue;
                 this.areaTraveled++;
                 if (checkCoordinateValid()) return true;
-                if (isAreaTraveledComplete()) throw new MapGameException("Não é possivel remover esse item neste mapa!");
+                if (isAreaTraveledComplete())
+                    throw new MapGameException("Não é possivel remover esse item neste mapa!");
             }
         }
         return false;
     }
 
     private int moveEixo(int distance) {
-        return distance % 2 != 0 ? -Area.STEP : +Area.STEP;
+        return distance % 2 != 0 ? -MovePlayer.STEP : +MovePlayer.STEP;
     }
 
     private void updateCoordinate(int move, int axis) {
