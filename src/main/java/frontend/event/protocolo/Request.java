@@ -11,7 +11,7 @@ public final class Request {
     public Request(String url) {
         String[] partesUrl = url.replaceFirst("/", "").split("[?]");
         String[] controleEMetodo = partesUrl[0].split("/");
-        this.nomeControle = Character.toUpperCase(controleEMetodo[0].charAt(0)) + controleEMetodo[0].substring(1);//+ "Controller"
+        this.nomeControle = Character.toUpperCase(controleEMetodo[0].charAt(0)) + controleEMetodo[0].substring(1)+ "Controller";
         this.nomeMetodo = controleEMetodo[1];
         this.queryParams = (partesUrl.length > 1 ? (new QueryParamsBuilder()).comParametros(partesUrl[1]).build() : new HashMap<>());
     }

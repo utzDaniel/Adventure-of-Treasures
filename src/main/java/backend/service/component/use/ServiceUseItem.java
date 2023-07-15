@@ -2,7 +2,7 @@ package backend.service.component.use;
 
 import backend.controller.interfaces.IItemDTO;
 import backend.controller.interfaces.IResponse;
-import backend.service.dto.response.UseItemResponse;
+import backend.service.dto.response.InventoryResponse;
 import backend.service.factory.MessageFactory;
 import backend.service.interfaces.IUsable;
 import backend.service.mapper.ItemDTOMapper;
@@ -32,7 +32,7 @@ public final class ServiceUseItem {
                 .map(item1 -> new ItemDTOMapper().apply(item1))
                 .toList());
 
-        return new UseItemResponse(message, capacity, maxCapacity, itensDto);
+        return new InventoryResponse(message, capacity, maxCapacity, itensDto);
     }
 
     private Exception isExeption(Item item) {

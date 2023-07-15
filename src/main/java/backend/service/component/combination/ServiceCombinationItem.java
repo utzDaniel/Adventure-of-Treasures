@@ -2,7 +2,7 @@ package backend.service.component.combination;
 
 import backend.controller.interfaces.IItemDTO;
 import backend.controller.interfaces.IResponse;
-import backend.service.dto.response.CombinationItemResponse;
+import backend.service.dto.response.InventoryResponse;
 import backend.service.exception.ItemCombinableException;
 import backend.service.factory.MessageFactory;
 import backend.service.interfaces.ICombinable;
@@ -38,7 +38,7 @@ public final class ServiceCombinationItem {
                 .map(item -> new ItemDTOMapper().apply(item))
                 .toList());
 
-        return new CombinationItemResponse(message, capacity, maxCapacity, itensDto);
+        return new InventoryResponse(message, capacity, maxCapacity, itensDto);
     }
 
     private Exception isExeption(List<Item> itens) {

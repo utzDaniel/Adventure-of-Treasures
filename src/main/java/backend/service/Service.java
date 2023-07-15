@@ -1,6 +1,7 @@
 package backend.service;
 
 import backend.controller.interfaces.IResponse;
+import backend.controller.interfaces.IService;
 import backend.service.component.combination.ServiceCombinationItem;
 import backend.service.component.drop.ServiceDropItem;
 import backend.service.component.equip.ServiceEquipItem;
@@ -16,6 +17,14 @@ public final class Service implements IService {
     public IResponse inventoryQuit() {
         return new InventoryQuit().run();
     }
+    /**
+     * O service é responsável por conter a lógica de negócio da aplicação.
+     * Ele encapsula as operações e regras de negócio que são necessárias para realizar as tarefas desejadas.
+     * O service recebe os dados do controller, executa a lógica necessária e se comunica com o repository,
+     * se for necessário acessar dados persistentes.
+     * O service também pode realizar validações adicionais,
+     * orquestrar várias operações do repository e aplicar regras de negócio mais complexas.
+     * */
 
     @Override
     public IResponse combination(String... names) {

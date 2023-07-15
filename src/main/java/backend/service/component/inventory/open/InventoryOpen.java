@@ -1,9 +1,9 @@
 package backend.service.component.inventory.open;
 
-import backend.controller.interfaces.IInventoryOpenResponse;
+import backend.controller.interfaces.IInventoryResponse;
 import backend.controller.interfaces.IItemDTO;
 import backend.controller.interfaces.IResponse;
-import backend.service.dto.response.InventoryOpenResponse;
+import backend.service.dto.response.InventoryResponse;
 import backend.service.exception.InventoryException;
 import backend.service.factory.MessageFactory;
 import backend.service.mapper.ItemDTOMapper;
@@ -24,7 +24,7 @@ public final class InventoryOpen {
         return getInventoryOpenResponse();
     }
 
-    private IInventoryOpenResponse getInventoryOpenResponse() {
+    private IInventoryResponse getInventoryOpenResponse() {
         int capacity = this.player.getInventory().getCapacity();
         int maxCapacity = this.player.getInventory().getMaxCapacity();
         var exeption = isExeption();
@@ -39,7 +39,7 @@ public final class InventoryOpen {
                     .map(item -> new ItemDTOMapper().apply(item))
                     .toList());
         }
-        return new InventoryOpenResponse(message, capacity, maxCapacity, itensDTO);
+        return new InventoryResponse(message, capacity, maxCapacity, itensDTO);
     }
 
     private Exception isExeption() {

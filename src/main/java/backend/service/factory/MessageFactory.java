@@ -2,7 +2,6 @@ package backend.service.factory;
 
 import backend.controller.interfaces.IMessage;
 import backend.service.dto.Message;
-import backend.service.exception.ItemUsableException;
 
 import java.util.Objects;
 
@@ -28,14 +27,15 @@ public final class MessageFactory {
         };
     }
 
-    private IMessage msgItemCombinableException(String text)  {
+    private IMessage msgItemCombinableException(String text) {
         return new Message(false, text, "erro");
     }
+
     private IMessage msgItemEquipableException(String text) {
         return new Message(false, text, "erro");
     }
 
-    private IMessage msgItemUsableException(String text)  {
+    private IMessage msgItemUsableException(String text) {
         return new Message(false, text, "erro");
     }
 

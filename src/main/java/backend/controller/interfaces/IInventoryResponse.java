@@ -2,7 +2,7 @@ package backend.controller.interfaces;
 
 import java.util.List;
 
-public interface IEquipItemResponse extends IResponse {
+public interface IInventoryResponse extends IResponse {
 
     int capacity();
 

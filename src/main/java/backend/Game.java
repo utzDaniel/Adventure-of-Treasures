@@ -1,7 +1,7 @@
 package backend;
 
 import backend.controller.interfaces.IItemDTO;
-import backend.service.IService;
+import backend.controller.interfaces.IService;
 import backend.service.Service;
 import backend.service.mapper.ItemDTOMapper;
 import backend.repository.factory.RepositoryFactory;
@@ -22,7 +22,7 @@ import java.util.List;
 public class Game {
 
     private final Player player;
-    private final String pacoteBase = "backend.controller.model.";
+    private final String pacoteBase = "backend.controller.";
 
     public Game() {
         player = Player.getInstance();

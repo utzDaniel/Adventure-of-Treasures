@@ -7,7 +7,7 @@ import frontend.event.ioc.ContainerIoC;
 import frontend.event.protocolo.Request;
 import frontend.event.reflexao.ManipuladorObjeto;
 import frontend.event.reflexao.Reflexao;
-import frontend.mapper.InventoryOpenMapper;
+import frontend.mapper.InventoryMapper;
 import frontend.mapper.MoveMapper;
 import frontend.mapper.OpenMapper;
 import frontend.mapper.TakeMapper;
@@ -58,7 +58,7 @@ public class Keyboard {
 
                     var direction = Direction.getLabel(keyCode);
 
-                    var moveRes = executa(String.format("/eventAction/move?arg0=%s", direction));
+                    var moveRes = executa(String.format("/action/move?arg0=%s", direction));
 
                     var move = new MoveMapper().apply(moveRes);
 
@@ -69,7 +69,7 @@ public class Keyboard {
                     //ENTRA NA PORTA
                 } else if (keyCode == 97) {
 
-                    var openRes = executa("/eventAction/open");
+                    var openRes = executa("/action/open");
                     var open = new OpenMapper().apply(openRes);
 
                     if ("finish".equalsIgnoreCase(open.songMap())) finish(open.songMap());
@@ -85,7 +85,7 @@ public class Keyboard {
                     //PEGAR ITEM
                 } else if (keyCode == 98) {
 
-                    var takeRes = executa("/eventAction/take");
+                    var takeRes = executa("/action/take");
                     var take = new TakeMapper().apply(takeRes);
 
                     var effect = take.message().effect();
@@ -98,8 +98,8 @@ public class Keyboard {
                     //INVENTARIO
                 } else if (keyCode == 99) {
 
-                    var inventoryOpenRes = executa("/eventAction/inventoryOpen");
-                    var inventoryOpen = new InventoryOpenMapper().apply(inventoryOpenRes);
+                    var inventoryOpenRes = executa("/action/inventoryOpen");
+                    var inventoryOpen = new InventoryMapper().apply(inventoryOpenRes);
 
                     if (inventoryOpen.message().sucess()) interfaceInventory.open(inventoryOpen);
                 }

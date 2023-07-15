@@ -2,7 +2,7 @@ package backend.service.component.drop;
 
 import backend.controller.interfaces.IItemDTO;
 import backend.controller.interfaces.IResponse;
-import backend.service.dto.response.DropItemResponse;
+import backend.service.dto.response.InventoryResponse;
 import backend.service.factory.MessageFactory;
 import backend.service.mapper.ItemDTOMapper;
 import backend.service.model.Player;
@@ -30,7 +30,7 @@ public class ServiceDropItem {
                 .map(item1 -> new ItemDTOMapper().apply(item1))
                 .toList());
 
-        return new DropItemResponse(message, capacity, maxCapacity, itensDto);
+        return new InventoryResponse(message, capacity, maxCapacity, itensDto);
     }
 
     private Exception isExeption(Item item) {

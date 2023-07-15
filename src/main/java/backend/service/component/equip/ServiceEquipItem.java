@@ -2,7 +2,7 @@ package backend.service.component.equip;
 
 import backend.controller.interfaces.IItemDTO;
 import backend.controller.interfaces.IResponse;
-import backend.service.dto.response.EquipItemResponse;
+import backend.service.dto.response.InventoryResponse;
 import backend.service.factory.MessageFactory;
 import backend.service.interfaces.IEquipable;
 import backend.service.mapper.ItemDTOMapper;
@@ -34,7 +34,7 @@ public class ServiceEquipItem {
                 .map(item1 -> new ItemDTOMapper().apply(item1))
                 .toList());
 
-        return new EquipItemResponse(message, capacity, maxCapacity, itensDto);
+        return new InventoryResponse(message, capacity, maxCapacity, itensDto);
     }
 
     private Exception isExeption(Item item) {

@@ -1,11 +1,10 @@
-package backend.service;
+package backend.controller.interfaces;
 
-import backend.controller.interfaces.IResponse;
+public interface IActionController {
 
-public interface IService {
     IResponse inventoryQuit();
 
-    IResponse combination(String... names);
+    IResponse combination(String names);
 
     IResponse use(String name);
 
@@ -20,4 +19,5 @@ public interface IService {
     IResponse open();
 
     IResponse move(String direction);
+
 }
