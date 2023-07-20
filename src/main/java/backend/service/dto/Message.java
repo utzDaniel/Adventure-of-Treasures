@@ -7,6 +7,5 @@ public record Message(
 
         String text,
 
-        String effect
-) implements IMessage {
+        String effect) implements IMessage {
 }

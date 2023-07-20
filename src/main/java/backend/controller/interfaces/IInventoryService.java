@@ -1,10 +1,6 @@
 package backend.controller.interfaces;
 
-import backend.controller.interfaces.IResponse;
-
-public interface IService {
-    IResponse inventoryQuit();
-
+public interface IInventoryService {
     IResponse combination(String... names);
 
     IResponse use(String name);
@@ -13,11 +9,5 @@ public interface IService {
 
     IResponse drop(String name);
 
-    IResponse inventoryOpen();
-
-    IResponse take();
-
     IResponse open();
-
-    IResponse move(String direction);
 }

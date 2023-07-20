@@ -143,7 +143,7 @@ public final class InterfaceInventory {
 
     private void eventActionRemove(String name) {
 
-        var inventoryRes = this.keyboard.executa(String.format("/action/drop?arg0=%s", name));
+        var inventoryRes = this.keyboard.executa(String.format("/inventory/drop?arg0=%s", name));
 
         var inventory = new InventoryMapper().apply(inventoryRes);
 
@@ -156,7 +156,7 @@ public final class InterfaceInventory {
 
     private void eventActionUse(String name) {
 
-        var inventoryRes = this.keyboard.executa(String.format("/action/use?arg0=%s", name));
+        var inventoryRes = this.keyboard.executa(String.format("/inventory/use?arg0=%s", name));
         var inventory = new InventoryMapper().apply(inventoryRes);
 
         if (inventory.message().sucess()) {
@@ -170,7 +170,7 @@ public final class InterfaceInventory {
 
     private void eventActionEquip(String name) {
 
-        var inventoryRes = this.keyboard.executa(String.format("/action/equip?arg0=%s", name));
+        var inventoryRes = this.keyboard.executa(String.format("/inventory/equip?arg0=%s", name));
         var inventory = new InventoryMapper().apply(inventoryRes);
 
         if (inventory.message().sucess()) {
@@ -189,7 +189,7 @@ public final class InterfaceInventory {
         items.stream().limit(limit).forEach(n -> list.append(n).append(","));
         list.append(items.get(limit));
 
-        var inventoryRes = this.keyboard.executa(String.format("/action/combination?arg0=%s", list));
+        var inventoryRes = this.keyboard.executa(String.format("/inventory/combination?arg0=%s", list));
         var inventory = new InventoryMapper().apply(inventoryRes);
 
         if (inventory.message().sucess()) {
@@ -203,7 +203,7 @@ public final class InterfaceInventory {
 
     public void quit() {
 
-        var actionRes = this.keyboard.executa("/action/inventoryQuit");
+        var actionRes = this.keyboard.executa("/action/refresh");
         var actionQuit = new ActionMapper().apply(actionRes);
 
         if (actionQuit.message().sucess()) {

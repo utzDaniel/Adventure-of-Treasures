@@ -1,6 +1,6 @@
 package backend.controller.interfaces;
 
-public interface IActionController {
+public interface IActionService {
     IResponse refresh();
 
     IResponse take();
@@ -8,5 +8,4 @@ public interface IActionController {
     IResponse open();
 
     IResponse move(String direction);
-
 }

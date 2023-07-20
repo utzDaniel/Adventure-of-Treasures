@@ -1,9 +1,11 @@
 package backend;
 
+import backend.controller.interfaces.IActionService;
+import backend.controller.interfaces.IInventoryService;
 import backend.controller.interfaces.IItemDTO;
-import backend.controller.interfaces.IService;
 import backend.repository.factory.RepositoryFactory;
-import backend.service.Service;
+import backend.service.ActionService;
+import backend.service.InventoryService;
 import backend.service.infra.Cache;
 import backend.service.interfaces.ICoordinate;
 import backend.service.mapper.ItemDTOMapper;
@@ -41,7 +43,8 @@ public class Game {
         song.play(player.getCurrentMap().getSong());
         var controller = properties.getProperty("game.controller");
         var keyboard = new Keyboard(interfaceGame, song, soundEffects, controller);
-        keyboard.registra(IService.class, Service.class);
+        keyboard.registra(IActionService.class, ActionService.class);
+        keyboard.registra(IInventoryService.class, InventoryService.class);
         keyboard.run();
     }
 

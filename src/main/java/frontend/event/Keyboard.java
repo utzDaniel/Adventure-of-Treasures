@@ -96,7 +96,7 @@ public class Keyboard {
                     //INVENTARIO
                 } else if (keyCode == 99) {
 
-                    var inventoryOpenRes = executa("/action/inventoryOpen");
+                    var inventoryOpenRes = executa("/inventory/open");
                     var inventoryOpen = new InventoryMapper().apply(inventoryOpenRes);
 
                     if (inventoryOpen.message().sucess()) interfaceInventory.open(inventoryOpen);
