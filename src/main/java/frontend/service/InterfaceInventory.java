@@ -203,15 +203,15 @@ public final class InterfaceInventory {
 
     public void quit() {
 
-        var inventoryQuitRes = this.keyboard.executa("/action/inventoryQuit");
-        var inventoryQuit = new InventoryQuitMapper().apply(inventoryQuitRes);
+        var actionRes = this.keyboard.executa("/action/inventoryQuit");
+        var actionQuit = new ActionMapper().apply(actionRes);
 
-        if (inventoryQuit.message().sucess()) {
+        if (actionQuit.message().sucess()) {
             this.interfaceGame.getFrame().getContentPane().remove(this.panelInventory.getPanel());
-            this.interfaceGame.getMapGameJLabel().setIcon(new ImageIcon(inventoryQuit.iconMap()));
-            if (Objects.nonNull(inventoryQuit.itens())) {
+            this.interfaceGame.getMapGameJLabel().setIcon(new ImageIcon(actionQuit.iconMap()));
+            if (Objects.nonNull(actionQuit.itens())) {
                 this.interfaceGame.clearJLabelItens();
-                this.interfaceGame.setItensJLabel(inventoryQuit.itens(), inventoryQuit.indexItens());
+                this.interfaceGame.setItensJLabel(actionQuit.itens(), actionQuit.indexItens());
                 this.interfaceGame.getMapGameJLabel().repaint();
             }
             this.interfaceGame.getFrame().repaint();

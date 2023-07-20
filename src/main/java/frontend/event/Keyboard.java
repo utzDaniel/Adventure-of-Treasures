@@ -1,16 +1,13 @@
 package frontend.event;
 
-import backend.controller.interfaces.IOpenResponse;
-import backend.controller.interfaces.ITakeResponse;
+import backend.controller.interfaces.IActionResponse;
 import frontend.enums.Direction;
 import frontend.event.ioc.ContainerIoC;
 import frontend.event.protocolo.Request;
 import frontend.event.reflexao.ManipuladorObjeto;
 import frontend.event.reflexao.Reflexao;
+import frontend.mapper.ActionMapper;
 import frontend.mapper.InventoryMapper;
-import frontend.mapper.MoveMapper;
-import frontend.mapper.OpenMapper;
-import frontend.mapper.TakeMapper;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
 import frontend.service.InterfaceGame;
@@ -58,26 +55,26 @@ public class Keyboard {
 
                     var direction = Direction.getLabel(keyCode);
 
-                    var moveRes = executa(String.format("/action/move?arg0=%s", direction));
+                    var actionRes = executa(String.format("/action/move?arg0=%s", direction));
 
-                    var move = new MoveMapper().apply(moveRes);
+                    var action = new ActionMapper().apply(actionRes);
 
-                    if (move.message().sucess())
-                        interfaceGame.updateComponentsMove(move);
+                    if (action.message().sucess())
+                        interfaceGame.updateComponentsMove(action);
 
 
                     //ENTRA NA PORTA
                 } else if (keyCode == 97) {
 
-                    var openRes = executa("/action/open");
-                    var open = new OpenMapper().apply(openRes);
+                    var actionRes = executa("/action/open");
+                    var action = new ActionMapper().apply(actionRes);
 
-                    if ("finish".equalsIgnoreCase(open.songMap())) finish(open.songMap());
+                    if ("finish".equalsIgnoreCase(action.songMap())) finish(action.songMap());
 
-                    if (Objects.nonNull(open.message())) {
-                        var effect = open.message().effect();
-                        if (open.message().sucess())
-                            updateItensMapGame(open);
+                    if (Objects.nonNull(action.message())) {
+                        var effect = action.message().effect();
+                        if (action.message().sucess())
+                            updateItensMapGame(action);
                         else if (Objects.nonNull(effect))
                             soundEffects.play(effect);
                     }
@@ -86,15 +83,15 @@ public class Keyboard {
                     //PEGAR ITEM
                 } else if (keyCode == 98) {
 
-                    var takeRes = executa("/action/take");
-                    var take = new TakeMapper().apply(takeRes);
+                    var actionRes = executa("/action/take");
+                    var action = new ActionMapper().apply(actionRes);
 
-                    var effect = take.message().effect();
+                    var effect = action.message().effect();
                     if (Objects.nonNull(effect) && !effect.isEmpty()) {
                         soundEffects.play(effect);
                     }
 
-                    if (take.message().sucess()) updateItensMapGame(take);
+                    if (action.message().sucess()) updateItensMapGame(action);
 
                     //INVENTARIO
                 } else if (keyCode == 99) {
@@ -114,22 +111,13 @@ public class Keyboard {
         });
     }
 
-    private void updateItensMapGame(IOpenResponse open) {
-        this.interfaceGame.getMapGameJLabel().setIcon(new ImageIcon(open.iconMap()));
+    private void updateItensMapGame(IActionResponse action) {
+        this.interfaceGame.getMapGameJLabel().setIcon(new ImageIcon(action.iconMap()));
         this.interfaceGame.clearJLabelItens();
-        this.interfaceGame.setItensJLabel(open.itens(), 1);
+        this.interfaceGame.setItensJLabel(action.itens(), action.indexItens());
         this.interfaceGame.getMapGameJLabel().repaint();
-        this.interfaceGame.getPlayerJLabel().setLocation(new Point(open.coordinatePlayer().x(),
-                open.coordinatePlayer().y()));
-    }
-
-    private void updateItensMapGame(ITakeResponse take) {
-        this.interfaceGame.getMapGameJLabel().setIcon(new ImageIcon(take.iconMap()));
-        this.interfaceGame.clearJLabelItens();
-        this.interfaceGame.setItensJLabel(take.itens(), 1);
-        this.interfaceGame.getMapGameJLabel().repaint();
-        this.interfaceGame.getPlayerJLabel().setLocation(new Point(take.coordinatePlayer().x(),
-                take.coordinatePlayer().y()));
+        this.interfaceGame.getPlayerJLabel().setLocation(new Point(action.coordinatePlayer().x(),
+                action.coordinatePlayer().y()));
     }
 
     private void finish(String song) {

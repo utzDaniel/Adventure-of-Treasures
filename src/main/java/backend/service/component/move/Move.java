@@ -1,7 +1,7 @@
 package backend.service.component.move;
 
 import backend.controller.interfaces.*;
-import backend.service.dto.response.MoveResponse;
+import backend.service.dto.response.ActionResponse;
 import backend.service.exception.MoveException;
 import backend.service.factory.MessageFactory;
 import backend.service.interfaces.ICoordinate;
@@ -18,10 +18,10 @@ public final class Move {
         return getIMoveResponse(direction);
     }
 
-    private IMoveResponse getIMoveResponse(String direction) {
+    private IActionResponse getIMoveResponse(String direction) {
         var exeption = isExeption(direction);
         var message = new MessageFactory().create(exeption);
-        return getMoveResponse(message);
+        return getActionResponse(message);
     }
 
 
@@ -47,11 +47,11 @@ public final class Move {
         return null;
     }
 
-    private MoveResponse getMoveResponse(IMessage message) {
+    private IActionResponse getActionResponse(IMessage message) {
         var newMessage = message;
 
         var iconMap = player.getCurrentMap().getIcon().toString();
-        String songMap = this.player.getCurrentMap().getSong();
+        var songMap = this.player.getCurrentMap().getSong();
         var iconPlayer = player.getIcon().toString();
         var coordinatePlayer = ICoordinate.getInstance(player.getLocation().y()*10, player.getLocation().x() *10);
         List<IItemDTO> itens = new ArrayList<>(this.player.getCurrentMap().getItemVisible().stream()
@@ -64,7 +64,7 @@ public final class Move {
             var text = String.format("Vamos para %s", map);
             newMessage = new MessageFactory().create(text, "");
         }
-        return new MoveResponse(newMessage, iconMap, songMap, iconPlayer, coordinatePlayer, itens, indexItens);
+        return new ActionResponse(newMessage, iconMap, songMap, iconPlayer, coordinatePlayer, itens, indexItens);
     }
 
 }

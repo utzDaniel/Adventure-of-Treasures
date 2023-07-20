@@ -5,7 +5,7 @@ import frontend.model.Song;
 import frontend.model.SoundEffects;
 import frontend.model.component.ComponentFactory;
 import backend.controller.interfaces.IItemDTO;
-import backend.controller.interfaces.IMoveResponse;
+import backend.controller.interfaces.IActionResponse;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,7 +43,7 @@ public final class InterfaceGame {
         return this.components.get(0);
     }
 
-    public void updateComponentsMove(IMoveResponse movePlayerVO) {
+    public void updateComponentsMove(IActionResponse movePlayerVO) {
         components.forEach(
                 jLabel -> {
                     if (jLabel.getName().equals("player")) {

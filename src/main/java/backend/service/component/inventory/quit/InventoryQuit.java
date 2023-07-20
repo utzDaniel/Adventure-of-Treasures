@@ -1,11 +1,12 @@
 package backend.service.component.inventory.quit;
 
-import backend.controller.interfaces.IInventoryQuitResponse;
+import backend.controller.interfaces.IActionResponse;
 import backend.controller.interfaces.IItemDTO;
 import backend.controller.interfaces.IResponse;
-import backend.service.dto.response.InventoryQuitResponse;
+import backend.service.dto.response.ActionResponse;
 import backend.service.exception.InventoryException;
 import backend.service.factory.MessageFactory;
+import backend.service.interfaces.ICoordinate;
 import backend.service.mapper.ItemDTOMapper;
 import backend.service.model.Player;
 
@@ -21,12 +22,15 @@ public final class InventoryQuit {
     }
 
     public IResponse run() {
-        return getInventoryQuitResponse();
+        return getActionResponse();
     }
 
-    private IInventoryQuitResponse getInventoryQuitResponse() {
+    private IActionResponse getActionResponse() {
 
         var iconMap = this.player.getCurrentMap().getIcon().toString();
+        var songMap = this.player.getCurrentMap().getSong();
+        var iconPlayer = player.getIcon().toString();
+        var coordinatePlayer = ICoordinate.getInstance(player.getLocation().y() * 10, player.getLocation().x() * 10);
 
         var indexItens = 1;
         var exeption = isExeption();
@@ -43,7 +47,7 @@ public final class InventoryQuit {
                     .toList());
         }
 
-        return new InventoryQuitResponse(message, iconMap, itensDTO, indexItens);
+        return new ActionResponse(message, iconMap, songMap, iconPlayer, coordinatePlayer, itensDTO, indexItens);
     }
 
     private Exception isExeption() {

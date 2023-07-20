@@ -1,9 +1,9 @@
 package backend.service.component.take;
 
+import backend.controller.interfaces.IActionResponse;
 import backend.controller.interfaces.IItemDTO;
 import backend.controller.interfaces.IResponse;
-import backend.controller.interfaces.ITakeResponse;
-import backend.service.dto.response.TakeResponse;
+import backend.service.dto.response.ActionResponse;
 import backend.service.enums.MovePlayer;
 import backend.service.factory.MessageFactory;
 import backend.service.interfaces.ICoordinate;
@@ -24,18 +24,21 @@ public final class Take {
     }
 
     public IResponse run() {
-        return getTakeResponse();
+        return getActionResponse();
     }
 
-    private ITakeResponse getTakeResponse() {
+    private IActionResponse getActionResponse() {
         var item = getItem();
         var iconMap = player.getCurrentMap().getIcon().toString();
         var iconPlayer = player.getIcon().toString();
+        var songMap = player.getCurrentMap().getSong();
+
         var coordinatePlayer = ICoordinate.getInstance(player.getLocation().y() * 10, player.getLocation().x() * 10);
         var exeption = isExeption(item);
         var message = new MessageFactory().create(exeption);
-        List<IItemDTO> itens = null;
+        var indexItens = 1;
 
+        List<IItemDTO> itens = null;
         if (message.sucess()) {
             message = new MessageFactory().create("Item adicionado a mochila!", "src/main/resources/audio/effects/pegar.wav");
             List<Item> itensMap = new ArrayList<>(this.player.getCurrentMap().getItemVisible());
@@ -43,7 +46,7 @@ public final class Take {
                     .map(item1 -> new ItemDTOMapper().apply(item1))
                     .toList());
         }
-        return new TakeResponse(message, iconMap, iconPlayer, coordinatePlayer, itens);
+        return new ActionResponse(message, iconMap, songMap, iconPlayer, coordinatePlayer, itens, indexItens);
     }
 
     private Exception isExeption(Item item) {

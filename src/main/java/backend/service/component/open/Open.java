@@ -1,9 +1,9 @@
 package backend.service.component.open;
 
+import backend.controller.interfaces.IActionResponse;
 import backend.controller.interfaces.IItemDTO;
-import backend.controller.interfaces.IOpenResponse;
 import backend.controller.interfaces.IResponse;
-import backend.service.dto.response.OpenResponse;
+import backend.service.dto.response.ActionResponse;
 import backend.service.factory.MessageFactory;
 import backend.service.infra.Cache;
 import backend.service.interfaces.ICoordinate;
@@ -23,10 +23,10 @@ public final class Open {
     //TODO deixar o conversão para o controller
     public IResponse run() {
         ICoordinate coordinate = player.getLocation();
-        return getOpenResponse(coordinate);
+        return getActionResponse(coordinate);
     }
 
-    private IOpenResponse getOpenResponse(ICoordinate coordinate) {
+    private IActionResponse getActionResponse(ICoordinate coordinate) {
 
         //TODO finish game
         var finish = isFinish(coordinate);
@@ -35,6 +35,7 @@ public final class Open {
         var door = player.getCurrentMap().getDoor(player.getLocation()).orElse(null);
         var exeption = isExeption(door);
         var message = new MessageFactory().create(exeption);
+        int indexItens = 1;
 
         if (message.sucess()) {
             message = new MessageFactory().create("Porta aberta!", "");
@@ -52,13 +53,13 @@ public final class Open {
                 .map(item -> new ItemDTOMapper().apply(item))
                 .toList());
 
-        return new OpenResponse(message, iconMap, songMap, iconPlayer, coordinatePlayer, itensDTO);
+        return new ActionResponse(message, iconMap, songMap, iconPlayer, coordinatePlayer, itensDTO, indexItens);
     }
 
-    private IOpenResponse isFinish(ICoordinate coordinate) {
+    private IActionResponse isFinish(ICoordinate coordinate) {
         if (coordinate.x() == 710 && coordinate.y() == 280
                 && Objects.nonNull(player.getInventory().getItem("tesouro"))) {
-            return new OpenResponse(null, null, "src/main/resources/audio/effects/finish.wav", null, null, null);
+            return new ActionResponse(null, null, "src/main/resources/audio/effects/finish.wav", null, null, null, 0);
         }
         return null;
     }

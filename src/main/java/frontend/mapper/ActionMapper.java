@@ -1,15 +1,15 @@
 package frontend.mapper;
 
-import backend.controller.interfaces.IMoveResponse;
-import frontend.model.view.Move;
+import backend.controller.interfaces.IActionResponse;
+import frontend.model.view.Action;
 
 import java.util.function.Function;
 
-public final class MoveMapper implements Function<Object, IMoveResponse> {
+public final class ActionMapper implements Function<Object, IActionResponse> {
     @Override
-    public IMoveResponse apply(Object response) {
-        var moveResponse = (IMoveResponse) response;
-        return new Move(moveResponse.message(),
+    public IActionResponse apply(Object response) {
+        var moveResponse = (IActionResponse) response;
+        return new Action(moveResponse.message(),
                 moveResponse.iconMap(),
                 moveResponse.songMap(),
                 moveResponse.iconPlayer(),
