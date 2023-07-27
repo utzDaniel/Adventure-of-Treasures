@@ -144,41 +144,43 @@ public final class InterfaceInventory {
     private void eventActionRemove(String name) {
 
         var inventoryRes = this.keyboard.executa(String.format("/inventory/drop?arg0=%s", name));
-
+        var message = new MessageMapper().apply(inventoryRes);
         var inventory = new InventoryMapper().apply(inventoryRes);
 
-        if (inventory.message().sucess()) {
+        if (message.sucess()) {
             this.labelInformation.updateTextCapacity(inventory.capacity(), inventory.maxCapacity());
             updateAllItensComponents(inventory.itens());
         }
-        this.interfaceGame.playEffects(inventory.message().effect(), null);
+        this.interfaceGame.playEffects(message.effect(), null);
     }
 
     private void eventActionUse(String name) {
 
         var inventoryRes = this.keyboard.executa(String.format("/inventory/use?arg0=%s", name));
+        var message = new MessageMapper().apply(inventoryRes);
         var inventory = new InventoryMapper().apply(inventoryRes);
 
-        if (inventory.message().sucess()) {
+        if (message.sucess()) {
             this.labelInformation.updateTextCapacity(inventory.capacity(), inventory.maxCapacity());
             updateAllItensComponents(inventory.itens());
-            this.interfaceGame.playEffects("Usar", inventory.message().effect());
+            this.interfaceGame.playEffects("Usar", message.effect());
         } else {
-            this.interfaceGame.playEffects(inventory.message().effect(), null);
+            this.interfaceGame.playEffects(message.effect(), null);
         }
     }
 
     private void eventActionEquip(String name) {
 
         var inventoryRes = this.keyboard.executa(String.format("/inventory/equip?arg0=%s", name));
+        var message = new MessageMapper().apply(inventoryRes);
         var inventory = new InventoryMapper().apply(inventoryRes);
 
-        if (inventory.message().sucess()) {
+        if (message.sucess()) {
             this.labelInformation.updateTextCapacity(inventory.capacity(), inventory.maxCapacity());
             updateAllItensComponents(inventory.itens());
-            this.interfaceGame.playEffects("Equipar", inventory.message().effect());
+            this.interfaceGame.playEffects("Equipar", message.effect());
         } else {
-            this.interfaceGame.playEffects(inventory.message().effect(), null);
+            this.interfaceGame.playEffects(message.effect(), null);
         }
     }
 
@@ -190,23 +192,25 @@ public final class InterfaceInventory {
         list.append(items.get(limit));
 
         var inventoryRes = this.keyboard.executa(String.format("/inventory/combination?arg0=%s", list));
+        var message = new MessageMapper().apply(inventoryRes);
         var inventory = new InventoryMapper().apply(inventoryRes);
 
-        if (inventory.message().sucess()) {
+        if (message.sucess()) {
             this.labelInformation.updateTextCapacity(inventory.capacity(), inventory.maxCapacity());
             updateAllItensComponents(inventory.itens());
-            this.interfaceGame.playEffects("Combinar", inventory.message().effect());
+            this.interfaceGame.playEffects("Combinar", message.effect());
         } else {
-            this.interfaceGame.playEffects(inventory.message().effect(), null);
+            this.interfaceGame.playEffects(message.effect(), null);
         }
     }
 
     public void quit() {
 
         var actionRes = this.keyboard.executa("/action/refresh");
+        var message = new MessageMapper().apply(actionRes);
         var actionQuit = new ActionMapper().apply(actionRes);
 
-        if (actionQuit.message().sucess()) {
+        if (message.sucess()) {
             this.interfaceGame.getFrame().getContentPane().remove(this.panelInventory.getPanel());
             this.interfaceGame.getMapGameJLabel().setIcon(new ImageIcon(actionQuit.iconMap()));
             if (Objects.nonNull(actionQuit.itens())) {

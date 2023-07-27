@@ -1,6 +1,7 @@
 package frontend.mapper;
 
 import backend.controller.interfaces.IActionResponse;
+import backend.controller.interfaces.IResponse;
 import frontend.model.view.Action;
 
 import java.util.function.Function;
@@ -8,14 +9,14 @@ import java.util.function.Function;
 public final class ActionMapper implements Function<Object, IActionResponse> {
     @Override
     public IActionResponse apply(Object response) {
-        var moveResponse = (IActionResponse) response;
-        return new Action(moveResponse.message(),
-                moveResponse.iconMap(),
-                moveResponse.songMap(),
-                moveResponse.iconPlayer(),
-                moveResponse.coordinatePlayer(),
-                moveResponse.itens(),
-                moveResponse.indexItens());
+        var resp = (IResponse) response;
+        var action = (IActionResponse) resp.obj();
+        return new Action(action.iconMap(),
+                action.songMap(),
+                action.iconPlayer(),
+                action.coordinatePlayer(),
+                action.itens(),
+                action.indexItens());
     }
 
 }

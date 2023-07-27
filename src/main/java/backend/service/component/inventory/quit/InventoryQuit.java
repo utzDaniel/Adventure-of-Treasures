@@ -1,63 +1,20 @@
 package backend.service.component.inventory.quit;
 
-import backend.controller.interfaces.IActionResponse;
-import backend.controller.interfaces.IItemDTO;
-import backend.controller.interfaces.IResponse;
-import backend.service.dto.response.ActionResponse;
-import backend.service.exception.InventoryException;
-import backend.service.factory.MessageFactory;
-import backend.service.interfaces.ICoordinate;
-import backend.service.mapper.ItemDTOMapper;
-import backend.service.model.Player;
-
-import java.util.ArrayList;
-import java.util.List;
+import backend.controller.enums.TypeMessage;
+import backend.service.model.Inventory;
 
 public final class InventoryQuit {
 
-    private final Player player;
+    private final Inventory inventory;
 
-    public InventoryQuit() {
-        this.player = Player.getInstance();
+    public InventoryQuit(Inventory inventory) {
+        this.inventory = inventory;
     }
 
-    public IResponse run() {
-        return getActionResponse();
+    public TypeMessage run() {
+        var isOpen = this.inventory.openInventory();
+        if (!isOpen) return TypeMessage.INVENTORY_NOT_CLOSED;
+        this.inventory.setOpenInventory();
+        return TypeMessage.INVENTORY_SUCESS_CLOSED;
     }
-
-    private IActionResponse getActionResponse() {
-
-        var iconMap = this.player.getCurrentMap().getIcon().toString();
-        var songMap = this.player.getCurrentMap().getSong();
-        var iconPlayer = player.getIcon().toString();
-        var coordinatePlayer = ICoordinate.getInstance(player.getLocation().y() * 10, player.getLocation().x() * 10);
-
-        var indexItens = 1;
-        var exeption = isExeption();
-
-        var message = new MessageFactory().create(exeption);
-        List<IItemDTO> itensDTO = null;
-
-        if (message.sucess()) {
-            this.player.getInventory().setOpenInventory();
-            message = new MessageFactory().create("Inventario fechado", "");
-            var itens = new ArrayList<>(this.player.getCurrentMap().getItemVisible());
-            itensDTO = new ArrayList<>(itens.stream()
-                    .map(item -> new ItemDTOMapper().apply(item))
-                    .toList());
-        }
-
-        return new ActionResponse(message, iconMap, songMap, iconPlayer, coordinatePlayer, itensDTO, indexItens);
-    }
-
-    private Exception isExeption() {
-        try {
-            boolean isOpen = this.player.getInventory().openInventory();
-            if (!isOpen) throw new InventoryException("Inventario já está fechado!");
-        } catch (Exception e) {
-            return e;
-        }
-        return null;
-    }
-
 }

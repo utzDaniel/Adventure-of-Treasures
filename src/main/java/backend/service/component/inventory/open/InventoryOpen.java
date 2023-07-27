@@ -1,55 +1,25 @@
 package backend.service.component.inventory.open;
 
-import backend.controller.interfaces.IInventoryResponse;
-import backend.controller.interfaces.IItemDTO;
-import backend.controller.interfaces.IResponse;
-import backend.service.dto.response.InventoryResponse;
-import backend.service.exception.InventoryException;
-import backend.service.factory.MessageFactory;
-import backend.service.mapper.ItemDTOMapper;
-import backend.service.model.Player;
-
-import java.util.ArrayList;
-import java.util.List;
+import backend.controller.enums.TypeMessage;
+import backend.service.model.Inventory;
 
 public final class InventoryOpen {
 
-    private final Player player;
+    private final Inventory inventory;
 
-    public InventoryOpen() {
-        this.player = Player.getInstance();
+    public InventoryOpen(Inventory inventory) {
+        this.inventory = inventory;
     }
 
-    public IResponse run() {
-        return getInventoryOpenResponse();
-    }
+    public TypeMessage run() {
+        boolean isOpen = this.inventory.openInventory();
 
-    private IInventoryResponse getInventoryOpenResponse() {
-        int capacity = this.player.getInventory().getCapacity();
-        int maxCapacity = this.player.getInventory().getMaxCapacity();
-        var exeption = isExeption();
-        var message = new MessageFactory().create(exeption);
-        List<IItemDTO> itensDTO = null;
+        if (isOpen)
+            return TypeMessage.INVENTORY_NOT_OPEN;
 
-        if (message.sucess()) {
-            this.player.getInventory().setOpenInventory();
-            message = new MessageFactory().create("Inventario aberto", "");
-            var itens = new ArrayList<>(this.player.getInventory().getItemVisible());
-            itensDTO = new ArrayList<>(itens.stream()
-                    .map(item -> new ItemDTOMapper().apply(item))
-                    .toList());
-        }
-        return new InventoryResponse(message, capacity, maxCapacity, itensDTO);
-    }
+        this.inventory.setOpenInventory();
 
-    private Exception isExeption() {
-        try {
-            boolean isOpen = this.player.getInventory().openInventory();
-            if (isOpen) throw new InventoryException("Inventario está já está aberto!");
-        } catch (Exception e) {
-            return e;
-        }
-        return null;
+        return TypeMessage.INVENTORY_SUCESS_OPEN;
     }
 
 }

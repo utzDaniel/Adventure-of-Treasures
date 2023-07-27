@@ -12,7 +12,8 @@ public final class ItemEquipable extends Item implements IEquipable {
     ItemEquipable() {
     }
 
-    void setEquipped(boolean equipped) {
+    @Override
+    public void setEquipped(boolean equipped) {
         this.equipped = equipped;
     }
 

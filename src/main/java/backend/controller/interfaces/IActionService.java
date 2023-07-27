@@ -1,11 +1,11 @@
 package backend.controller.interfaces;
 
 public interface IActionService {
-    IResponse refresh();
+    IServiceResponse refresh();
 
-    IResponse take();
+    IServiceResponse take();
 
-    IResponse open();
+    IServiceResponse open();
 
-    IResponse move(String direction);
+    IServiceResponse move(String direction);
 }

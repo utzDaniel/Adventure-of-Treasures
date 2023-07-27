@@ -1,13 +1,18 @@
 package backend.service;
 
 import backend.controller.interfaces.IActionService;
-import backend.controller.interfaces.IResponse;
+import backend.controller.interfaces.IServiceResponse;
 import backend.service.component.inventory.quit.InventoryQuit;
-import backend.service.component.move.Move;
+import backend.service.component.move.MovePlayer;
 import backend.service.component.open.Open;
 import backend.service.component.take.Take;
+import backend.service.dto.response.ServiceResponse;
+import backend.service.mapper.ActionResponseMapper;
+import backend.service.model.Player;
 
-public final class ActionService implements IActionService {
+public final class ActionService<T> implements IActionService {
+
+    private static final Player PLAYER = Player.getInstance();
     /**
      * O service é responsável por conter a lógica de negócio da aplicação.
      * Ele encapsula as operações e regras de negócio que são necessárias para realizar as tarefas desejadas.
@@ -15,24 +20,51 @@ public final class ActionService implements IActionService {
      * se for necessário acessar dados persistentes.
      * O service também pode realizar validações adicionais,
      * orquestrar várias operações do repository e aplicar regras de negócio mais complexas.
-     * */
+     */
     @Override
-    public IResponse refresh() {
-        return new InventoryQuit().run();
+    public IServiceResponse refresh() {
+        var inventory = PLAYER.getInventory();
+        var typeMessage = new InventoryQuit(inventory).run();
+
+        if(!typeMessage.isSucess())
+            new ServiceResponse(typeMessage,null);
+
+        var obj = new ActionResponseMapper().apply(PLAYER);
+        return new ServiceResponse(typeMessage,obj);
     }
 
     @Override
-    public IResponse take() {
-        return new Take().run();
+    public IServiceResponse take() {
+        var typeMessage = new Take(PLAYER).run();
+
+        if(!typeMessage.isSucess())
+            new ServiceResponse(typeMessage,null);
+
+        var obj = new ActionResponseMapper().apply(PLAYER);
+        return new ServiceResponse(typeMessage,obj);
     }
 
     @Override
-    public IResponse open() {
-        return new Open().run();
+    public IServiceResponse open() {
+        var typeMessage = new Open(PLAYER).run();
+
+        if(!typeMessage.isSucess())
+            new ServiceResponse(typeMessage,null);
+
+        var obj = new ActionResponseMapper().apply(PLAYER);
+        return new ServiceResponse(typeMessage,obj);
     }
 
     @Override
-    public IResponse move(String direction) {
-        return new Move().run(direction);
+    public IServiceResponse move(String direction) {
+        var typeMessage = new MovePlayer(direction, PLAYER).run();
+
+        if(!typeMessage.isSucess())
+            new ServiceResponse(typeMessage,null);
+
+        var obj = new ActionResponseMapper().apply(PLAYER);
+        return new ServiceResponse(typeMessage,obj);
     }
+
+
 }

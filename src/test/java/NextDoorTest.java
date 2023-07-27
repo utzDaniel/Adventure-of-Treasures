@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 import backend.service.exception.MapGameException;
 import backend.service.interfaces.ICoordinate;
-import backend.service.component.open.OpenDoor;
 
 import javax.swing.*;
 import java.util.ArrayList;

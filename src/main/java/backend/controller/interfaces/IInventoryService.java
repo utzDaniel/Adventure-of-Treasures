@@ -1,13 +1,13 @@
 package backend.controller.interfaces;
 
 public interface IInventoryService {
-    IResponse combination(String... names);
+    IServiceResponse combination(String... names);
 
-    IResponse use(String name);
+    IServiceResponse use(String name);
 
-    IResponse equip(String name);
+    IServiceResponse equip(String name);
 
-    IResponse drop(String name);
+    IServiceResponse drop(String name);
 
-    IResponse open();
+    IServiceResponse open();
 }

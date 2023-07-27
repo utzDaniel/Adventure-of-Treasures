@@ -17,7 +17,7 @@ public final class Scenery extends MapGame {
         return exits.stream()
                 .filter(exit -> exit.direction().equals(direction))
                 .map(Exit::mapGame)
-                .findFirst().get();
+                .findFirst().orElse("");
     }
 
     void setExits(List<Exit> exits) {

@@ -2,11 +2,17 @@ package backend.service;
 
 import backend.controller.interfaces.IInventoryService;
 import backend.controller.interfaces.IResponse;
+import backend.controller.interfaces.IServiceResponse;
 import backend.service.component.combination.ServiceCombinationItem;
 import backend.service.component.drop.ServiceDropItem;
 import backend.service.component.equip.ServiceEquipItem;
 import backend.service.component.inventory.open.InventoryOpen;
+import backend.service.component.inventory.quit.InventoryQuit;
 import backend.service.component.use.ServiceUseItem;
+import backend.service.dto.response.ServiceResponse;
+import backend.service.mapper.ActionResponseMapper;
+import backend.service.mapper.InventoryResponseMapper;
+import backend.service.model.Player;
 
 public final class InventoryService implements IInventoryService {
     /**
@@ -17,29 +23,66 @@ public final class InventoryService implements IInventoryService {
      * O service também pode realizar validações adicionais,
      * orquestrar várias operações do repository e aplicar regras de negócio mais complexas.
      */
+    private static final Player PLAYER = Player.getInstance();
 
     @Override
-    public IResponse combination(String... names) {
-        return new ServiceCombinationItem().run(names);
+    public IServiceResponse combination(String... names) {
+        var inventory = PLAYER.getInventory();
+        var typeMessage = new ServiceCombinationItem(inventory).run(names);
+
+        if(!typeMessage.isSucess())
+            new ServiceResponse(typeMessage,null);
+
+        var obj = new InventoryResponseMapper().apply(inventory);
+        return new ServiceResponse(typeMessage,obj);
     }
 
     @Override
-    public IResponse use(String name) {
-        return new ServiceUseItem().run(name);
+    public IServiceResponse use(String name) {
+        var inventory = PLAYER.getInventory();
+        var map = PLAYER.getCurrentMap().getName();
+        var typeMessage = new ServiceUseItem(inventory).run(name, map);
+
+        if(!typeMessage.isSucess())
+            new ServiceResponse(typeMessage,null);
+
+        var obj = new InventoryResponseMapper().apply(inventory);
+        return new ServiceResponse(typeMessage,obj);
     }
 
     @Override
-    public IResponse equip(String name) {
-        return new ServiceEquipItem().run(name);
+    public IServiceResponse equip(String name) {
+        var inventory = PLAYER.getInventory();
+        var typeMessage = new ServiceEquipItem(inventory).run(name);
+
+        if(!typeMessage.isSucess())
+            new ServiceResponse(typeMessage,null);
+
+        var obj = new InventoryResponseMapper().apply(inventory);
+        return new ServiceResponse(typeMessage,obj);
     }
 
     @Override
-    public IResponse drop(String name) {
-        return new ServiceDropItem().run(name);
+    public IServiceResponse drop(String name) {
+        var inventory = PLAYER.getInventory();
+        var typeMessage = new ServiceDropItem(inventory).run(name);
+
+        if(!typeMessage.isSucess())
+            new ServiceResponse(typeMessage,null);
+
+        var obj = new InventoryResponseMapper().apply(inventory);
+        return new ServiceResponse(typeMessage,obj);
     }
 
     @Override
-    public IResponse open() {
-        return new InventoryOpen().run();
+    public IServiceResponse open() {
+        var inventory = PLAYER.getInventory();
+        var typeMessage = new InventoryOpen(inventory).run();
+
+        if(!typeMessage.isSucess())
+            new ServiceResponse(typeMessage,null);
+
+        var obj = new InventoryResponseMapper().apply(inventory);
+        return new ServiceResponse(typeMessage,obj);
     }
 }

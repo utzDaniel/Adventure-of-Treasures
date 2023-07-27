@@ -1,72 +1,59 @@
 package backend.service.component.take;
 
-import backend.controller.interfaces.IActionResponse;
-import backend.controller.interfaces.IItemDTO;
-import backend.controller.interfaces.IResponse;
-import backend.service.dto.response.ActionResponse;
-import backend.service.enums.MovePlayer;
-import backend.service.factory.MessageFactory;
+import backend.controller.enums.TypeMessage;
+import backend.service.enums.Move;
 import backend.service.interfaces.ICoordinate;
-import backend.service.mapper.ItemDTOMapper;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 public final class Take {
 
     private final Player player;
 
-    public Take() {
-        this.player = Player.getInstance();
+    public Take(Player player) {
+        this.player = player;
     }
 
-    public IResponse run() {
-        return getActionResponse();
+    public TypeMessage run() {
+
+        var direction = this.player.getDirection();
+        var move = getMove(direction);
+
+        var coordinate = createCoordinate(move);
+
+        var item = getItem(coordinate);
+
+        var inventory = this.player.getInventory();
+
+        if (Objects.isNull(item))
+            return TypeMessage.ITEM_NOT_FOUND;
+
+        var newCapacity = item.getWeight() + inventory.getCapacity();
+        if (newCapacity > inventory.getMaxCapacity())
+            return TypeMessage.INVENTORY_FULL;
+
+        inventory.addItem(item);
+        var mapGame = this.player.getCurrentMap();
+        mapGame.removeItem(item);
+
+        return TypeMessage.TAKE_SUCESS_ITEM;
     }
 
-    private IActionResponse getActionResponse() {
-        var item = getItem();
-        var iconMap = player.getCurrentMap().getIcon().toString();
-        var iconPlayer = player.getIcon().toString();
-        var songMap = player.getCurrentMap().getSong();
-
-        var coordinatePlayer = ICoordinate.getInstance(player.getLocation().y() * 10, player.getLocation().x() * 10);
-        var exeption = isExeption(item);
-        var message = new MessageFactory().create(exeption);
-        var indexItens = 1;
-
-        List<IItemDTO> itens = null;
-        if (message.sucess()) {
-            message = new MessageFactory().create("Item adicionado a mochila!", "src/main/resources/audio/effects/pegar.wav");
-            List<Item> itensMap = new ArrayList<>(this.player.getCurrentMap().getItemVisible());
-            itens = new ArrayList<>(itensMap.stream()
-                    .map(item1 -> new ItemDTOMapper().apply(item1))
-                    .toList());
-        }
-        return new ActionResponse(message, iconMap, songMap, iconPlayer, coordinatePlayer, itens, indexItens);
+    private Move getMove(String direction) {
+        return Enum.valueOf(Move.class, direction.toUpperCase(Locale.ROOT));
     }
 
-    private Exception isExeption(Item item) {
-        try {
-            new TakeItem(this.player, item).run();
-        } catch (Exception e) {
-            return e;
-        }
-        return null;
+    private ICoordinate createCoordinate(Move move) {
+        var coordinate = this.player.getLocation();
+        coordinate.move(move.getCoordinate());
+        return coordinate;
     }
 
-    private Item getItem() {
-        var direction = player.getDirection();
-        var coordinate = player.getLocation();
+    private Item getItem(ICoordinate coordinate) {
         var mapGame = player.getCurrentMap();
-        Arrays.stream(MovePlayer.values())
-                .filter(move -> move.getDirection().equals(direction))
-                .map(MovePlayer::getCoordinate)
-                .findFirst()
-                .ifPresent(coordinate::move);
         return mapGame.getItem(coordinate);
     }
 }

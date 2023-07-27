@@ -2,12 +2,10 @@ package frontend.model.view;
 
 import backend.controller.interfaces.IInventoryResponse;
 import backend.controller.interfaces.IItemDTO;
-import backend.controller.interfaces.IMessage;
 
 import java.util.List;
 
-public record Inventory(IMessage message,
-                        int capacity,
+public record Inventory(int capacity,
                         int maxCapacity,
                         List<IItemDTO> itens) implements IInventoryResponse {
 }

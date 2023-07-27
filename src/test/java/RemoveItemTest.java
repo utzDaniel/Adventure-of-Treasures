@@ -1,7 +1,6 @@
 import backend.service.exception.InventoryException;
 import backend.service.component.drop.AddItemMapGame;
 import backend.service.component.drop.ServiceDropItem;
-import backend.service.component.take.TakeItem;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
 import backend.service.model.builder.ItemEquipableBuilder;
@@ -42,7 +41,7 @@ public class RemoveItemTest {
         Item item = ItemUsableBuilder.builder().localUse("praia").name("pa").description("ferramenta usada para cavar").weight(0)
                 .coordinate(ICoordinate.getInstance(200, 280)).image(null).removable(true).visible(true).build();
         new TakeItem(this.player, item).run();
-        assertTrue(new ServiceDropItem().run(player,item.getName()));
+        assertTrue(new ServiceDropItem(player.getInventory()).run(item.getName()).isSucess());
     }
 
     @Test(expected = InventoryException.class)
@@ -56,7 +55,7 @@ public class RemoveItemTest {
             mapGame.addItem(item);
         }
         new TakeItem(this.player, item).run();
-        new ServiceDropItem().run(player,item.getName());
+        new ServiceDropItem(player.getInventory()).run(item.getName());
     }
 
 }

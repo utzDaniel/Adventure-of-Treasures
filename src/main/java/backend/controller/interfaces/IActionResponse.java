@@ -2,7 +2,7 @@ package backend.controller.interfaces;
 
 import java.util.List;
 
-public interface IActionResponse extends IResponse {
+public interface IActionResponse {
 
     String iconMap();
 

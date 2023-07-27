@@ -1,60 +1,50 @@
 package backend.service.component.combination;
 
-import backend.controller.interfaces.IItemDTO;
-import backend.controller.interfaces.IResponse;
-import backend.service.dto.response.InventoryResponse;
-import backend.service.exception.ItemCombinableException;
+import backend.controller.enums.TypeMessage;
 import backend.service.factory.MessageFactory;
 import backend.service.interfaces.ICombinable;
-import backend.service.mapper.ItemDTOMapper;
-import backend.service.model.Player;
+import backend.service.model.Inventory;
 import backend.service.model.builder.Item;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Objects;
 
 public final class ServiceCombinationItem {
+    private final Inventory inventory;
 
-    private final Player player = Player.getInstance();
+    public ServiceCombinationItem(Inventory inventory) {
+        this.inventory = inventory;
+    }
 
-    public IResponse run(String... names) {
+    public TypeMessage run(String... names) {
 
         var itens = new ArrayList<Item>();
-        Arrays.stream(names).forEach(name1 -> itens.add(player.getInventory().getItemVisible().stream()
-                .filter(item1 -> item1.getName().equals(name1)).findFirst().get()));
+        Arrays.stream(names)
+                .forEach(name1 -> itens.add(
+                        this.inventory.getItemVisible().stream()
+                                .filter(item1 -> item1.getName().equals(name1))
+                                .findFirst().get()));
 
+        if (itens.isEmpty()) return TypeMessage.ITEM_NOT_FOUND;
 
-        var exeption = isExeption(itens);
-        var message = new MessageFactory().create(exeption);
+        var itensCombination = new ArrayList<ICombinable>();
+        TypeMessage typeMessage = null;
 
-        if (message.sucess()) {
-            message = new MessageFactory().create("Item combinados!", ((ICombinable) itens.get(0)).getEffect());
+        for (Item item : itens) {
+            if (item instanceof ICombinable combinable) {
+                itensCombination.add(combinable);
+            } else {
+                typeMessage = TypeMessage.COMBINE_NOT_ALL;
+                break;
+            }
         }
 
-        var capacity = player.getInventory().getCapacity();
-        var maxCapacity = player.getInventory().getMaxCapacity();
-        var itensDto = new ArrayList<IItemDTO>(player.getInventory().getItemVisible().stream()
-                .map(item -> new ItemDTOMapper().apply(item))
-                .toList());
+        if (Objects.nonNull(typeMessage)) return typeMessage;
 
-        return new InventoryResponse(message, capacity, maxCapacity, itensDto);
+        typeMessage = new Combination(itensCombination, this.inventory).run();
+
+        return typeMessage;
     }
 
-    private Exception isExeption(List<Item> itens) {
-        try {
-            var itensCombination = new ArrayList<ICombinable>();
-            itens.forEach(item -> {
-                if (item instanceof ICombinable combinable) {
-                    itensCombination.add(combinable);
-                } else {
-                    throw new ItemCombinableException("Algum dos itens não é combinavel!");
-                }
-            });
-            itensCombination.get(0).combination(itensCombination);
-        } catch (Exception e) {
-            return e;
-        }
-        return null;
-    }
 }

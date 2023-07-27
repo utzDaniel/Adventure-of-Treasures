@@ -1,37 +1,46 @@
 package backend.service.component.move;
 
-import backend.service.component.move.valid.MoveSceneryValidIsExistMap;
-import backend.service.component.move.valid.MoveSceneryValidIsExistName;
-import backend.service.enums.MovePlayer;
+import backend.controller.enums.TypeMessage;
+import backend.service.enums.Move;
 import backend.service.infra.Cache;
 import backend.service.model.Area;
 import backend.service.model.Player;
 import backend.service.model.builder.Scenery;
 
-import java.util.Arrays;
-import java.util.Optional;
+import java.util.Locale;
+import java.util.Objects;
 
-public final class MoveScenery {
+public final class MovePlayerNextScenery {
 
     private final Player player;
     private final String direction;
-    private backend.service.enums.MovePlayer move;
+    private Move move;
 
-    public MoveScenery(Player player, String direction) {
+    public MovePlayerNextScenery(Player player, String direction) {
         this.direction = direction;
         this.player = player;
     }
 
-    public void run() {
-        var nameScenery = ((Scenery) this.player.getCurrentMap()).getExit(this.direction);
-        new MoveSceneryValidIsExistName().valid(nameScenery);
+    public TypeMessage run() {
+        var map = this.player.getCurrentMap();
+        String nameScenery = "";
+
+        if (map instanceof Scenery map1)
+            nameScenery = map1.getExit(this.direction);
+
+        if (nameScenery.isEmpty())
+            return TypeMessage.MAP_NOT_EXIT;
+
         var nextScenery = Cache.getMapGame(nameScenery);
-        new MoveSceneryValidIsExistMap().valid(nextScenery);
+        if (Objects.isNull(nextScenery))
+            return TypeMessage.MAP_NOT_FOUND;
+
         this.player.setCurrentMap(nextScenery);
-        getMovePlayer().ifPresent(m -> this.move = m);
+        this.move = getMovePlayer();
         updateImagePlayer();
         updateDirectionPlayer();
         newPosition();
+        return TypeMessage.MOVE_SUCESS;
     }
 
     private void newPosition() {
@@ -46,10 +55,8 @@ public final class MoveScenery {
         this.player.setLocation(upCoordinate);
     }
 
-    private Optional<MovePlayer> getMovePlayer() {
-        return Arrays.stream(backend.service.enums.MovePlayer.values())
-                .filter(movePlayer -> movePlayer.getDirection().equals(this.direction))
-                .findFirst();
+    private Move getMovePlayer() {
+        return Enum.valueOf(Move.class, direction.toUpperCase(Locale.ROOT));
     }
 
     private void updateImagePlayer() {

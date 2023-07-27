@@ -1,44 +1,35 @@
 package backend.service.component.drop;
 
-import backend.controller.interfaces.IItemDTO;
-import backend.controller.interfaces.IResponse;
-import backend.service.dto.response.InventoryResponse;
-import backend.service.factory.MessageFactory;
-import backend.service.mapper.ItemDTOMapper;
+import backend.controller.enums.TypeMessage;
+import backend.service.component.RemoveItem;
+import backend.service.model.Inventory;
 import backend.service.model.Player;
-import backend.service.model.builder.Item;
-
-import java.util.ArrayList;
 
 public class ServiceDropItem {
 
     private final Player player = Player.getInstance();
+    private final Inventory inventory;
 
-    public IResponse run(String name) {
-
-        Item item = player.getInventory().getItemVisible().stream()
-                .filter(item1 -> item1.getName().equals(name)).findFirst().get();
-
-        var exeption = isExeption(item);
-        var message = new MessageFactory().create(exeption);
-        if (message.sucess())
-            message = new MessageFactory().create("Item removido!", "src/main/resources/audio/effects/remover.wav");
-
-        var capacity = player.getInventory().getCapacity();
-        var maxCapacity = player.getInventory().getMaxCapacity();
-        var itensDto = new ArrayList<IItemDTO>(player.getInventory().getItemVisible().stream()
-                .map(item1 -> new ItemDTOMapper().apply(item1))
-                .toList());
-
-        return new InventoryResponse(message, capacity, maxCapacity, itensDto);
+    public ServiceDropItem(Inventory inventory) {
+        this.inventory = inventory;
     }
 
-    private Exception isExeption(Item item) {
-        try {
-            new DropItem(player, item).run();
-        } catch (Exception e) {
-            return e;
-        }
-        return null;
+    public TypeMessage run(String name) {
+
+        var item = this.inventory.getItemVisible().stream()
+                .filter(item1 -> item1.getName().equals(name))
+                .findFirst().get();
+
+        var typeMessage = new RemoveItem(this.inventory, item).run();
+        if (!typeMessage.isSucess()) return typeMessage;
+
+        var mapGame = this.player.getCurrentMap();
+        var coordinate = this.player.getLocation();
+
+        typeMessage = new AddItemMapGame(mapGame, item, coordinate).run();
+        if (typeMessage.isSucess()) mapGame.addItem(item);
+
+        return typeMessage;
     }
+
 }

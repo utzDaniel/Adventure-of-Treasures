@@ -1,5 +1,6 @@
 package backend.controller;
 
+import backend.controller.factory.ResponseFactory;
 import backend.controller.interfaces.IInventoryController;
 import backend.controller.interfaces.IInventoryService;
 import backend.controller.interfaces.IResponse;
@@ -19,27 +20,32 @@ public final class InventoryController implements IInventoryController {
 
     @Override
     public IResponse combination(String names) {
-        return this.inventoryService.combination(names.split(","));
+        var rsp = this.inventoryService.combination(names.split(","));
+        return ResponseFactory.create(rsp);
     }
 
     @Override
     public IResponse use(String name) {
-        return this.inventoryService.use(name);
+        var rsp = this.inventoryService.use(name);
+        return ResponseFactory.create(rsp);
     }
 
     @Override
     public IResponse equip(String name) {
-        return this.inventoryService.equip(name);
+        var rsp = this.inventoryService.equip(name);
+        return ResponseFactory.create(rsp);
     }
 
     @Override
     public IResponse drop(String name) {
-        return this.inventoryService.drop(name);
+        var rsp = this.inventoryService.drop(name);
+        return ResponseFactory.create(rsp);
     }
 
     @Override
     public IResponse open() {
-        return this.inventoryService.open();
+        var rsp = this.inventoryService.open();
+        return ResponseFactory.create(rsp);
     }
 
 }

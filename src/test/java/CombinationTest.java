@@ -43,7 +43,7 @@ public class CombinationTest {
                 .coordinate(ICoordinate.getInstance(640, 80)).image(null).removable(true).visible(true).build());
         var iCombinableList = item.stream()
                 .map(item1 -> (ICombinable) item1).toList();
-        assertTrue(new Combination(iCombinableList).run());
+        assertTrue(new Combination(iCombinableList, Player.getInstance().getInventory()).run());
     }
 
     @Test
@@ -54,7 +54,7 @@ public class CombinationTest {
                 .coordinate(ICoordinate.getInstance(490, 390)).image(null).removable(true).visible(true).build());
         var iCombinableList = item.stream()
                 .map(item1 -> (ICombinable) item1).toList();
-        assertTrue(new Combination(iCombinableList).run());
+        assertTrue(new Combination(iCombinableList, Player.getInstance().getInventory()).run());
     }
 
     @Test(expected = ItemCombinableException.class)
@@ -65,7 +65,7 @@ public class CombinationTest {
                 .coordinate(ICoordinate.getInstance(410, 200)).image(null).removable(true).visible(true).build());
         var iCombinableList = item.stream()
                 .map(item1 -> (ICombinable) item1).toList();
-        assertFalse(new Combination(iCombinableList).run());
+        assertFalse(new Combination(iCombinableList, Player.getInstance().getInventory()).run());
     }
 
     @Test(expected = ItemCombinableException.class)
@@ -76,7 +76,7 @@ public class CombinationTest {
                 .coordinate(ICoordinate.getInstance(640, 400)).image(null).removable(true).visible(true).build());
         var iCombinableList = item.stream()
                 .map(item1 -> (ICombinable) item1).toList();
-        assertFalse(new Combination(iCombinableList).run());
+        assertFalse(new Combination(iCombinableList, Player.getInstance().getInventory()).run());
     }
 
 }

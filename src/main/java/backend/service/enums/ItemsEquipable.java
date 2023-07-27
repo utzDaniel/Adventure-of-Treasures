@@ -1,6 +1,6 @@
 package backend.service.enums;
 
-import backend.service.exception.ItemEquipableException;
+import backend.controller.enums.TypeMessage;
 import backend.service.component.ActivateMapGame;
 import backend.service.model.Player;
 
@@ -8,41 +8,42 @@ public enum ItemsEquipable {
 
     MOCHILA("mochila") {
         @Override
-        public boolean equip() {
+        public TypeMessage equip() {
             player.getInventory().updadeMaxCapacity(UPDATE);
-            return true;
+            return TypeMessage.EQUIP_SUCESS_SCHOOLBAG;
         }
 
         @Override
-        public boolean unequip() {
-            if (!(player.getInventory().getCapacity() <= (player.getInventory().getMaxCapacity() - UPDATE)))
-                throw new ItemEquipableException("Remove itens da mochila, antes de tentar desequipar");
+        public TypeMessage unequip() {
+            var capacity = player.getInventory().getCapacity();
+            var newCapacity = player.getInventory().getMaxCapacity() - UPDATE;
+            if (capacity > newCapacity) return TypeMessage.UNEQUIP_ERRO_SCHOOLBAG;
             player.getInventory().updadeMaxCapacity(-UPDATE);
-            return true;
+            return TypeMessage.UNEQUIP_SUCESS_SCHOOLBAG;
         }
     }, TOCHA("tocha") {
         @Override
-        public boolean equip() {
+        public TypeMessage equip() {
             boolean openDoor = new ActivateMapGame().run("tocha");
-            if(!openDoor) throw new ItemEquipableException("Erro ao abrir a door");
-            return true;
+            if (!openDoor) return TypeMessage.EQUIPABLE_ERRO_TORCH;
+            return TypeMessage.EQUIP_SUCESS_TORCH;
         }
 
         @Override
-        public boolean unequip() {
+        public TypeMessage unequip() {
             boolean openDoor = new ActivateMapGame().run("tocha");
-            if(!openDoor) throw new ItemEquipableException("Erro ao abrir a door");
-            return true;
+            if (!openDoor) return TypeMessage.EQUIPABLE_ERRO_TORCH;
+            return TypeMessage.UNEQUIP_SUCESS_TORCH;
         }
     };
 
-    private static  final int UPDATE = 5;
+    private static final int UPDATE = 5;
     private static final Player player = Player.getInstance();
     private final String label;
 
-    public abstract boolean equip();
+    public abstract TypeMessage equip();
 
-    public abstract boolean unequip();
+    public abstract TypeMessage unequip();
 
     ItemsEquipable(String label) {
         this.label = label;

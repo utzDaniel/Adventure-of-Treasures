@@ -43,14 +43,14 @@ public class TakeTest {
             mapGame.addItem(item);
         }
 
-        take = new Take();
+        take = new Take(player);
     }
 
     @Test
     public void testarItemValidoAFrente() {
         player.setLocation(ICoordinate.getInstance(item.getLocation().x(), (item.getLocation().y() - 10)));
         player.setCurrentMap(mapGame);
-        assertTrue(take.run());
+        assertTrue(take.run().isSucess());
     }
 
     @Test(expected = InventoryException.class)
@@ -72,6 +72,6 @@ public class TakeTest {
     public void testarItemInvalidoAFrente() {
         player.setLocation(ICoordinate.getInstance(290, player.getLocation().y()));
         player.setCurrentMap(mapGame);
-        assertFalse(take.run());
+        assertFalse(take.run().isSucess());
     }
 }

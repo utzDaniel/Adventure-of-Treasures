@@ -1,5 +1,4 @@
 import backend.service.exception.InventoryException;
-import backend.service.component.take.TakeItem;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
 import backend.service.model.builder.ItemEquipableBuilder;

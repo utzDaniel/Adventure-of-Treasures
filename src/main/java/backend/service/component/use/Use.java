@@ -31,7 +31,7 @@ public final class Use {
     private void useItem() {
         var item = Arrays.stream(ItemsUsable.values())
                 .filter(itemsUsable -> itemsUsable.getLabel().equals(this.item.getName()))
-                .findFirst().orElseThrow(() -> new ItemUsableException("Não foi possível usar esse item!"));
+                .findFirst().get();
         item.use();
     }
 }

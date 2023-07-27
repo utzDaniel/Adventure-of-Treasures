@@ -1,6 +1,7 @@
 package frontend.event;
 
 import backend.controller.interfaces.IActionResponse;
+import backend.service.dto.Message;
 import frontend.enums.Direction;
 import frontend.event.ioc.ContainerIoC;
 import frontend.event.protocolo.Request;
@@ -8,6 +9,7 @@ import frontend.event.reflexao.ManipuladorObjeto;
 import frontend.event.reflexao.Reflexao;
 import frontend.mapper.ActionMapper;
 import frontend.mapper.InventoryMapper;
+import frontend.mapper.MessageMapper;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
 import frontend.service.InterfaceGame;
@@ -57,9 +59,10 @@ public class Keyboard {
 
                     var actionRes = executa(String.format("/action/move?arg0=%s", direction));
 
+                    var message = new MessageMapper().apply(actionRes);
                     var action = new ActionMapper().apply(actionRes);
 
-                    if (action.message().sucess())
+                    if (message.sucess())
                         interfaceGame.updateComponentsMove(action);
 
 
@@ -67,13 +70,15 @@ public class Keyboard {
                 } else if (keyCode == 97) {
 
                     var actionRes = executa("/action/open");
+
+                    var message = new MessageMapper().apply(actionRes);
                     var action = new ActionMapper().apply(actionRes);
 
                     if ("finish".equalsIgnoreCase(action.songMap())) finish(action.songMap());
 
-                    if (Objects.nonNull(action.message())) {
-                        var effect = action.message().effect();
-                        if (action.message().sucess())
+                    if (Objects.nonNull(message)) {
+                        var effect = message.effect();
+                        if (message.sucess())
                             updateItensMapGame(action);
                         else if (Objects.nonNull(effect))
                             soundEffects.play(effect);
@@ -84,22 +89,24 @@ public class Keyboard {
                 } else if (keyCode == 98) {
 
                     var actionRes = executa("/action/take");
+                    var message = new MessageMapper().apply(actionRes);
                     var action = new ActionMapper().apply(actionRes);
 
-                    var effect = action.message().effect();
+                    var effect = message.effect();
                     if (Objects.nonNull(effect) && !effect.isEmpty()) {
                         soundEffects.play(effect);
                     }
 
-                    if (action.message().sucess()) updateItensMapGame(action);
+                    if (message.sucess()) updateItensMapGame(action);
 
                     //INVENTARIO
                 } else if (keyCode == 99) {
 
                     var inventoryOpenRes = executa("/inventory/open");
+                    var message = new MessageMapper().apply(inventoryOpenRes);
                     var inventoryOpen = new InventoryMapper().apply(inventoryOpenRes);
 
-                    if (inventoryOpen.message().sucess()) interfaceInventory.open(inventoryOpen);
+                    if (message.sucess()) interfaceInventory.open(inventoryOpen);
                 }
 
             }

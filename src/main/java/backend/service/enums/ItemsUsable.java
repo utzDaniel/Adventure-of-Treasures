@@ -1,40 +1,44 @@
 package backend.service.enums;
 
-import backend.service.exception.ItemUsableException;
+import backend.controller.enums.TypeMessage;
 import backend.service.component.ActivateMapGame;
+import backend.service.exception.ItemUsableException;
 import backend.service.model.Player;
+
+import java.util.Objects;
 
 public enum ItemsUsable {
     PA("pa") {
         @Override
-        public boolean use() throws ItemUsableException {
+        public TypeMessage use() throws ItemUsableException {
             if (!(player.getInventory().getItem("mapa").isVisible()))
-                throw new ItemUsableException("Não foi possível usar esse item, falta algo no inventario!");
+                return TypeMessage.USABLE_INCOMPLETE;
             var item = player.getCurrentMap().getItemInvisible().stream()
                     .filter(item1 -> item1.getName().equals("chave"))
-                    .findFirst().orElseThrow(() -> new ItemUsableException("O mapa não possui itens invisiveis!"));//TODO colocar log de erro
+                    .findFirst().orElse(null);
+            if (Objects.isNull(item)) return TypeMessage.ITEM_NOT_FOUND;
             item.setVisible(true);
             new ActivateMapGame().run("chave");
-            return true;
+            return TypeMessage.USABLE_SUCESS_SHOVEL;
         }
     },
     CHAVE("chave") {
         @Override
-        public boolean use() {
-            var door = player.getCurrentMap().getDoor(player.getLocation())
-                    .orElseThrow(() -> new ItemUsableException("Não foi possível usar esse item, neste local!"));
+        public TypeMessage use() {
+            var door = player.getCurrentMap().getDoor(player.getLocation()).orElse(null);
+            if (Objects.isNull(door)) return TypeMessage.USABLE_NOT_LOCAL;
             door.setOpen(true);
-            return true;
+            return TypeMessage.USABLE_SUCESS_KEY;
         }
     },
     ESCADA("escada") {
         @Override
-        public boolean use() {
-            var door = player.getCurrentMap().getDoor(player.getLocation())
-                    .orElseThrow(() -> new ItemUsableException("Não foi possível usar esse item, neste local!"));
+        public TypeMessage use() {
+            var door = player.getCurrentMap().getDoor(player.getLocation()).orElse(null);
+            if (Objects.isNull(door)) return TypeMessage.USABLE_NOT_LOCAL;
             door.setOpen(true);
             new ActivateMapGame().run("escada");
-            return true;
+            return TypeMessage.USABLE_SUCESS_LADDER;
         }
     };
 
@@ -46,7 +50,7 @@ public enum ItemsUsable {
         this.label = label;
     }
 
-    public abstract boolean use();
+    public abstract TypeMessage use();
 
     public String getLabel() {
         return this.label;

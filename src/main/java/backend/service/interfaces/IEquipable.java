@@ -5,6 +5,8 @@ public interface IEquipable extends IEffect {
 
     void unequip();
 
+    void setEquipped(boolean equipped);
+
     boolean isEquipped();
 
     String getName();

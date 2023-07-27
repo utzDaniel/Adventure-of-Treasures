@@ -4,12 +4,12 @@ import backend.service.interfaces.ICoordinate;
 
 import javax.swing.*;
 
-public enum MovePlayer {
+public enum Move {
 
-    OESTE("oeste", ICoordinate.getInstance(0, -MovePlayer.STEP), ImagePlayer.ESQUERDA),
-    NORTE("norte", ICoordinate.getInstance(-MovePlayer.STEP, 0), ImagePlayer.CIMA),
-    LESTE("leste", ICoordinate.getInstance(0, MovePlayer.STEP), ImagePlayer.DIREITA),
-    SUL("sul", ICoordinate.getInstance(MovePlayer.STEP, 0), ImagePlayer.BAIXO);
+    OESTE("oeste", ICoordinate.getInstance(0, -Move.STEP), ImagePlayer.ESQUERDA),
+    NORTE("norte", ICoordinate.getInstance(-Move.STEP, 0), ImagePlayer.CIMA),
+    LESTE("leste", ICoordinate.getInstance(0, Move.STEP), ImagePlayer.DIREITA),
+    SUL("sul", ICoordinate.getInstance(Move.STEP, 0), ImagePlayer.BAIXO);
 
     private final String direction;
     public static final int STEP = 1;
@@ -17,7 +17,7 @@ public enum MovePlayer {
     private final ImagePlayer imagePlayer;
 
 
-    MovePlayer(String direction, ICoordinate coordinate, ImagePlayer imagePlayer) {
+    Move(String direction, ICoordinate coordinate, ImagePlayer imagePlayer) {
         this.direction = direction;
         this.coordinate = coordinate;
         this.imagePlayer = imagePlayer;

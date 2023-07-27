@@ -1,6 +1,6 @@
 package backend.service.component;
 
-import backend.service.exception.InventoryException;
+import backend.controller.enums.TypeMessage;
 import backend.service.interfaces.IEquipable;
 import backend.service.interfaces.IMission;
 import backend.service.model.Inventory;
@@ -16,31 +16,15 @@ public final class RemoveItem {
         this.item = item;
     }
 
-    public void run() {
-        checkItemRemoved();
-        checkItemEquipable();
-        removeItem();
-        updateInventoryCapacity();
-    }
-
-    private void checkItemRemoved() {
+    public TypeMessage run() {
         if (this.item instanceof IMission)
-            throw new InventoryException("Item não pode ser removido!");
-    }
+            return TypeMessage.INVENTORY_NOT_REMOVE;
 
-
-    private void checkItemEquipable() {
         if (this.item instanceof IEquipable item1 && item1.isEquipped())
-            throw new InventoryException("Não pode remover item equipado!");
-    }
+            return TypeMessage.INVENTORY_NOT_REMOVE_EQUIP;
 
-    private void removeItem() {
         this.inventory.removeItem(this.item);
-
-    }
-
-    private void updateInventoryCapacity() {
         this.inventory.updadeCapacity(-this.item.getWeight());
-
+        return TypeMessage.DROP_SUCESS;
     }
 }

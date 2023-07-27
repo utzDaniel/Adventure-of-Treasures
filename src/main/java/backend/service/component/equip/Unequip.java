@@ -23,6 +23,6 @@ public final class Unequip {
         var item = Arrays.stream(ItemsEquipable.values())
                 .filter(equipable -> equipable.getLabel().equals(this.item.getName()))
                 .findFirst().orElseThrow(() -> new ItemEquipableException("Item equipavél não encontrado"));
-        return item.unequip();
+        return item.unequip().isSucess();
     }
 }

@@ -1,4 +1,3 @@
-import backend.service.model.Coordinate;
 import backend.service.model.Player;
 import backend.service.model.builder.MapGame;
 import backend.repository.factory.RepositoryFactory;
@@ -7,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import frontend.enums.Direction;
-import backend.service.component.move.MoveScenery;
+import backend.service.component.move.MovePlayerNextScenery;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 public class NextSceneryTest {
 
     private Player player;
-    private MoveScenery moveScenery;
+    private MovePlayerNextScenery moveScenery;
 
     @Before
     public void inicialize() {
@@ -28,7 +27,7 @@ public class NextSceneryTest {
         var listJLabel = new ArrayList<JLabel>();
         listJLabel.add(ComponentFactory.getJLabel(this.player.getIcon().toString(), this.player.getLocation())));
         listJLabel.add(ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getIcon().toString()));
-        moveScenery = new MoveScenery(player, Direction.SUL.getLabel());
+        moveScenery = new MovePlayerNextScenery(player, Direction.SUL.getLabel());
     }
 
     @Test

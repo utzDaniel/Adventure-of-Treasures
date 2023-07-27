@@ -128,7 +128,7 @@ public class UseTest {
 
         var iCombinableList = itens.stream()
                 .map(item1 -> (ICombinable) item1).toList();
-        new Combination(iCombinableList).run();
+        new Combination(iCombinableList, Player.getInstance().getInventory()).run();
 
         Use use = new Use((IUsable) this.itens.get(3));
         assertTrue(use.run());
@@ -160,7 +160,7 @@ public class UseTest {
 
         var iCombinableList = itens.stream()
                 .map(item1 -> (ICombinable) item1).toList();
-        new Combination(iCombinableList).run();
+        new Combination(iCombinableList, Player.getInstance().getInventory()).run();
 
         new Use((IUsable) this.itens.get(2)).run();
 
@@ -211,7 +211,7 @@ public class UseTest {
 
         var iCombinableList = itens.stream()
                 .map(item1 -> (ICombinable) item1).toList();
-        new Combination(iCombinableList).run();
+        new Combination(iCombinableList, Player.getInstance().getInventory()).run();
 
         new Use((IUsable) this.itens.get(3)).run();
 

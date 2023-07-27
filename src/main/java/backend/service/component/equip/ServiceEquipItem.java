@@ -1,54 +1,50 @@
 package backend.service.component.equip;
 
-import backend.controller.interfaces.IItemDTO;
-import backend.controller.interfaces.IResponse;
-import backend.service.dto.response.InventoryResponse;
-import backend.service.factory.MessageFactory;
+import backend.controller.enums.TypeMessage;
+import backend.service.enums.ItemsEquipable;
 import backend.service.interfaces.IEquipable;
-import backend.service.mapper.ItemDTOMapper;
-import backend.service.model.Player;
+import backend.service.model.Inventory;
 import backend.service.model.builder.Item;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class ServiceEquipItem {
 
-    private final Player player = Player.getInstance();
+    private final Inventory inventory;
 
-    public IResponse run(String name) {
-
-        Item item = player.getInventory().getItemVisible().stream()
-                .filter(item1 -> item1.getName().equals(name)).findFirst().get();
-
-        var exeption = isExeption(item);
-        var message = new MessageFactory().create(exeption);
-
-        if (message.sucess()) {
-            String msg = ((IEquipable) item).isEquipped() ? "Item equipado!" : "Item desequipado!";
-            message = new MessageFactory().create(msg, ((IEquipable) item).getEffect());
-        }
-
-        var capacity = player.getInventory().getCapacity();
-        var maxCapacity = player.getInventory().getMaxCapacity();
-        var itensDto = new ArrayList<IItemDTO>(player.getInventory().getItemVisible().stream()
-                .map(item1 -> new ItemDTOMapper().apply(item1))
-                .toList());
-
-        return new InventoryResponse(message, capacity, maxCapacity, itensDto);
+    public ServiceEquipItem(Inventory inventory) {
+        this.inventory = inventory;
     }
 
-    private Exception isExeption(Item item) {
-        try {
-            if (item instanceof IEquipable equipable) {
-                if (equipable.isEquipped()) {
-                    equipable.unequip();
-                } else {
-                    equipable.equip();
-                }
+    public TypeMessage run(String name) {
+
+        Item item = this.inventory.getItemVisible().stream()
+                .filter(item1 -> item1.getName().equals(name))
+                .findFirst().get();
+
+        var typeMessage = TypeMessage.ITEM_NOT_FOUND;
+        if (item instanceof IEquipable equipable) {
+
+            var equipable1 = getItemEquipable(equipable.getName());
+            if (Objects.isNull(equipable1)) return typeMessage;
+
+            if (equipable.isEquipped()) {
+                typeMessage = equipable1.unequip();
+                if (typeMessage.isSucess()) equipable.setEquipped(false);
+            } else {
+                typeMessage = equipable1.equip();
+                if (typeMessage.isSucess()) equipable.setEquipped(true);
             }
-        } catch (Exception e) {
-            return e;
         }
-        return null;
+        return typeMessage;
     }
+
+    //item equipavel com room e outro sem, será que deve criar uma nova classe?
+    private ItemsEquipable getItemEquipable(String name) {
+        return Arrays.stream(ItemsEquipable.values())
+                .filter(equipable -> equipable.getLabel().equals(name))
+                .findFirst().orElse(null);
+    }
+
 }

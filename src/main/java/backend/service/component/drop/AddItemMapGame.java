@@ -1,6 +1,7 @@
 package backend.service.component.drop;
 
-import backend.service.enums.MovePlayer;
+import backend.controller.enums.TypeMessage;
+import backend.service.enums.Move;
 import backend.service.exception.MapGameException;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.Area;
@@ -20,13 +21,14 @@ public class AddItemMapGame {
         this.mapGame = mapGame;
     }
 
-    public boolean run() {
+    public TypeMessage run() {
         int distance = 0;
         do {
             distance++;
         } while (!searchCoordinate(distance));
         setItemNewCoordinate();
-        return true;
+        if (isAreaTraveledComplete()) return TypeMessage.MAP_FULL_ITEM;
+        return TypeMessage.DROP_SUCESS;
     }
 
     private boolean searchCoordinate(int distance) {
@@ -37,15 +39,14 @@ public class AddItemMapGame {
                 if (checkLimitPosition()) continue;
                 this.areaTraveled++;
                 if (checkCoordinateValid()) return true;
-                if (isAreaTraveledComplete())
-                    throw new MapGameException("Não é possivel remover esse item neste mapa!");
+                if (isAreaTraveledComplete()) return false;
             }
         }
         return false;
     }
 
     private int moveEixo(int distance) {
-        return distance % 2 != 0 ? -MovePlayer.STEP : +MovePlayer.STEP;
+        return distance % 2 != 0 ? -Move.STEP : +Move.STEP;
     }
 
     private void updateCoordinate(int move, int axis) {

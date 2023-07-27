@@ -1,48 +1,53 @@
 package backend.service.component.use;
 
-import backend.controller.interfaces.IItemDTO;
-import backend.controller.interfaces.IResponse;
-import backend.service.dto.response.InventoryResponse;
-import backend.service.factory.MessageFactory;
+import backend.controller.enums.TypeMessage;
+import backend.service.component.RemoveItem;
+import backend.service.enums.ItemsUsable;
 import backend.service.interfaces.IUsable;
-import backend.service.mapper.ItemDTOMapper;
-import backend.service.model.Player;
+import backend.service.model.Inventory;
 import backend.service.model.builder.Item;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
 public final class ServiceUseItem {
 
-    private final Player player = Player.getInstance();
+    private final Inventory inventory;
 
-    public IResponse run(String name) {
-
-        Item item = player.getInventory().getItemVisible().stream()
-                .filter(item1 -> item1.getName().equals(name)).findFirst().get();
-
-        var exeption = isExeption(item);
-        var message = new MessageFactory().create(exeption);
-
-        if (message.sucess()) {
-            message = new MessageFactory().create("Item usado!", ((IUsable) item).getEffect());
-        }
-        var capacity = player.getInventory().getCapacity();
-        var maxCapacity = player.getInventory().getMaxCapacity();
-        var itensDto = new ArrayList<IItemDTO>(player.getInventory().getItemVisible().stream()
-                .map(item1 -> new ItemDTOMapper().apply(item1))
-                .toList());
-
-        return new InventoryResponse(message, capacity, maxCapacity, itensDto);
+    public ServiceUseItem(Inventory inventory) {
+        this.inventory = inventory;
     }
 
-    private Exception isExeption(Item item) {
-        try {
-            if (item instanceof IUsable usable) {
-                usable.use();
-            }
-        } catch (Exception e) {
-            return e;
+    public TypeMessage run(String name, String map) {
+
+        Item item = this.inventory.getItemVisible().stream()
+                .filter(item1 -> item1.getName().equals(name))
+                .findFirst().get();
+
+        var typeMessage = TypeMessage.ITEM_NOT_FOUND;
+        if (item instanceof IUsable usable) {
+
+            if (!(usable.getLocalUse().equals(map)))
+                return TypeMessage.USABLE_NOT_MAP;
+
+            var usable1 = getItemUsable(usable.getName());
+            if (Objects.isNull(usable1))
+                return TypeMessage.ITEM_NOT_FOUND;
+
+            typeMessage = usable1.use();
+            if (!typeMessage.isSucess()) return typeMessage;
+
+            var typeMessage1 = new RemoveItem(this.inventory, item).run();
+            if (!typeMessage1.isSucess()) return typeMessage1;
         }
-        return null;
+
+        return typeMessage;
+    }
+
+    private ItemsUsable getItemUsable(String name) {
+        return Arrays.stream(ItemsUsable.values())
+                .filter(itemsUsable -> itemsUsable.getLabel().equals(name))
+                .findFirst().orElse(null);
+
     }
 }

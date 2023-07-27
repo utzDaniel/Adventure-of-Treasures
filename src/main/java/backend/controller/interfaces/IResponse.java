@@ -1,6 +1,7 @@
 package backend.controller.interfaces;
 
 public interface IResponse {
+    IMessage msg();
 
-    IMessage message();
+    Object obj();
 }
