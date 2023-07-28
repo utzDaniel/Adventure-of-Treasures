@@ -1,7 +1,6 @@
-import backend.service.exception.MoveException;
+import backend.service.enums.Move;
 import backend.service.component.move.MovePlayerScenery;
 import backend.service.model.Player;
-import frontend.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
 import backend.repository.factory.RepositoryFactory;
@@ -17,42 +16,35 @@ public class MovePlayerTest {
     public void iniciacaoDoPlayerParaTeste() {
         var repositoryMapGame = RepositoryFactory.getRepositoryMapGame();
         player = Player.getInstance();
-        player.setDirection(Direction.SUL.getLabel());
+        player.setM(Move.SUL);
         player.setCurrentMap(repositoryMapGame.get("cais"));
     }
 
     @Test
     public void andarPlayerParaLeste() {
         int positionX = player.getLocation().x();
-        new MovePlayerScenery(this.player, Direction.LESTE.getLabel()).run();
+        new MovePlayerScenery(this.player, Move.LESTE).run();
         assertEquals(positionX + 10, player.getLocation().x());
     }
 
     @Test
     public void andarPlayerParaOeste() {
         int positionX = player.getLocation().x();
-        new MovePlayerScenery(this.player, Direction.OESTE.getLabel()).run();
+        new MovePlayerScenery(this.player, Move.OESTE).run();
         assertEquals(positionX - 10, player.getLocation().x());
     }
 
     @Test
     public void andarPlayerParaSul() {
         int positionY = player.getLocation().y();
-        new MovePlayerScenery(this.player, Direction.SUL.getLabel()).run();
+        new MovePlayerScenery(this.player, Move.SUL).run();
         assertEquals(positionY + 10, player.getLocation().y());
     }
 
     @Test
     public void andarPlayerParaNorte() {
         int positionY = player.getLocation().y();
-        new MovePlayerScenery(this.player, Direction.NORTE.getLabel()).run();
-        assertEquals(positionY - 10, player.getLocation().y());
-    }
-
-    @Test(expected = MoveException.class)
-    public void naoAndarPlayerParaNort() {
-        int positionY = player.getLocation().y();
-        new MovePlayerScenery(this.player, "nort").run();
+        new MovePlayerScenery(this.player, Move.NORTE).run();
         assertEquals(positionY - 10, player.getLocation().y());
     }
 
@@ -61,7 +53,7 @@ public class MovePlayerTest {
         player.setCurrentMap(RepositoryFactory.getRepositoryMapGame().get("cais"));
         player.setLocation(ICoordinate.getInstance(10, 10));
         int positionY = player.getLocation().y();
-        new MovePlayerScenery(this.player, Direction.SUL.getLabel()).run();
+        new MovePlayerScenery(this.player, Move.SUL).run();
         assertEquals(positionY, player.getLocation().y());
     }
 

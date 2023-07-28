@@ -1,3 +1,4 @@
+import backend.service.enums.Move;
 import backend.service.exception.InventoryException;
 import backend.service.component.drop.ServiceDropItem;
 import backend.service.model.Player;
@@ -5,7 +6,6 @@ import backend.service.model.builder.Item;
 import backend.service.model.builder.ItemEquipableBuilder;
 import backend.service.model.builder.ItemMissionBuilder;
 import backend.service.model.builder.ItemUsableBuilder;
-import frontend.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
 import backend.repository.factory.RepositoryFactory;
@@ -21,7 +21,7 @@ public class DropItemTest {
     public void iniciacaoDoPlayerParaTeste() {
         var repositoryMapGame = RepositoryFactory.getRepositoryMapGame();
         player = Player.getInstance();
-        player.setDirection(Direction.SUL.getLabel());
+        player.setM(Move.SUL);
         player.setCurrentMap(repositoryMapGame.get("cais"));
         for (Item item : RepositoryFactory.getRepositoryItem()
                 .getAll().stream()

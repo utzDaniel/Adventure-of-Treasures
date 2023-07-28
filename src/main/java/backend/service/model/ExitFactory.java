@@ -1,6 +1,9 @@
 package backend.service.model;
 
 import backend.repository.interfaces.IExitEntity;
+import backend.service.enums.Move;
+
+import java.util.Locale;
 
 public final class ExitFactory {
 
@@ -14,6 +17,7 @@ public final class ExitFactory {
     private Exit run() {
         var direction = exitEntity.direction();
         var mapGame = exitEntity.mapGame();
-        return new Exit(direction, mapGame);
+        var move = Enum.valueOf(Move.class, direction.toUpperCase(Locale.ROOT));
+        return new Exit(move, mapGame);
     }
 }

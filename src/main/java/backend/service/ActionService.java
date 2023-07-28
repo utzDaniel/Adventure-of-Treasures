@@ -1,5 +1,6 @@
 package backend.service;
 
+import backend.controller.enums.TypeMessage;
 import backend.controller.interfaces.IActionService;
 import backend.controller.interfaces.IServiceResponse;
 import backend.service.component.inventory.quit.InventoryQuit;
@@ -7,8 +8,11 @@ import backend.service.component.move.MovePlayer;
 import backend.service.component.open.Open;
 import backend.service.component.take.Take;
 import backend.service.dto.response.ServiceResponse;
+import backend.service.enums.Move;
 import backend.service.mapper.ActionResponseMapper;
 import backend.service.model.Player;
+
+import java.util.Locale;
 
 public final class ActionService<T> implements IActionService {
 
@@ -57,7 +61,11 @@ public final class ActionService<T> implements IActionService {
 
     @Override
     public IServiceResponse move(String direction) {
-        var typeMessage = new MovePlayer(direction, PLAYER).run();
+        if(!EnumValidator.isValid(Move.class, direction))
+            new ServiceResponse(TypeMessage.DIRECTION_INVALID,null);
+
+        var move = Enum.valueOf(Move.class, direction.toUpperCase(Locale.ROOT));
+        var typeMessage = new MovePlayer(move, PLAYER).run();
 
         if(!typeMessage.isSucess())
             new ServiceResponse(typeMessage,null);
@@ -65,6 +73,5 @@ public final class ActionService<T> implements IActionService {
         var obj = new ActionResponseMapper().apply(PLAYER);
         return new ServiceResponse(typeMessage,obj);
     }
-
 
 }

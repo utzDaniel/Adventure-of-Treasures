@@ -6,7 +6,6 @@ import backend.service.interfaces.ICoordinate;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
 
-import java.util.Locale;
 import java.util.Objects;
 
 public final class Take {
@@ -19,10 +18,9 @@ public final class Take {
 
     public TypeMessage run() {
 
-        var direction = this.player.getDirection();
-        var move = getMove(direction);
+        var direction = this.player.getMove();
 
-        var coordinate = createCoordinate(move);
+        var coordinate = newCoordinate(direction);
 
         var item = getItem(coordinate);
 
@@ -42,14 +40,9 @@ public final class Take {
         return TypeMessage.TAKE_SUCESS_ITEM;
     }
 
-    private Move getMove(String direction) {
-        return Enum.valueOf(Move.class, direction.toUpperCase(Locale.ROOT));
-    }
-
-    private ICoordinate createCoordinate(Move move) {
+    private ICoordinate newCoordinate(Move move) {
         var coordinate = this.player.getLocation();
-        coordinate.move(move.getCoordinate());
-        return coordinate;
+        return move.coordinateByScenery(coordinate);
     }
 
     private Item getItem(ICoordinate coordinate) {

@@ -1,5 +1,6 @@
 package backend.service.model.builder;
 
+import backend.service.enums.Move;
 import backend.service.model.Exit;
 
 import java.util.ArrayList;
@@ -13,9 +14,9 @@ public final class Scenery extends MapGame {
         this.exits = new ArrayList<>();
     }
 
-    public String getExit(String direction) {
+    public String getExit(Move move) {
         return exits.stream()
-                .filter(exit -> exit.direction().equals(direction))
+                .filter(exit -> exit.move().name().equals(move.name()))
                 .map(Exit::mapGame)
                 .findFirst().orElse("");
     }

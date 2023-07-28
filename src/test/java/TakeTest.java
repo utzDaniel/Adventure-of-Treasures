@@ -1,10 +1,10 @@
+import backend.service.enums.Move;
 import backend.service.exception.InventoryException;
 import backend.service.component.drop.AddItemMapGame;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
 import backend.service.model.builder.ItemUsableBuilder;
 import backend.service.model.builder.MapGame;
-import frontend.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
 import backend.repository.factory.RepositoryFactory;
@@ -25,7 +25,7 @@ public class TakeTest {
     public void inicialize() {
         var repositoryMapGame = RepositoryFactory.getRepositoryMapGame();
         player = Player.getInstance();
-        player.setDirection(Direction.SUL.getLabel());
+        player.setM(Move.SUL);
         player.setCurrentMap(repositoryMapGame.get("cais"));
         for (Item item : RepositoryFactory.getRepositoryItem()
                 .getAll().stream()
@@ -58,7 +58,7 @@ public class TakeTest {
         Item item = ItemUsableBuilder.builder().localUse("praia").name("pa1487").description("ferramenta usada para cavar").weight(30)
                 .coordinate(ICoordinate.getInstance(320, 320)).image(null).removable(true).visible(true).build();
         player.setLocation(ICoordinate.getInstance(320, 320));
-        player.setDirection("oeste");
+        player.setM(Move.OESTE);
         var mapGame = this.player.getCurrentMap();
         var coordinate = this.player.getLocation();
         if (new AddItemMapGame(mapGame, item, coordinate).run()) {

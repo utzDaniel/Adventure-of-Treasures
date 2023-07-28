@@ -1,19 +1,15 @@
-import backend.service.exception.ItemUsableException;
-import backend.service.model.builder.Item;
-import backend.service.model.builder.ItemCombinableBuilder;
-import backend.service.model.builder.ItemMissionBuilder;
-import backend.service.model.builder.ItemUsableBuilder;
-import backend.service.model.Player;
-import backend.service.model.builder.Room;
-import backend.service.model.builder.Scenery;
-import backend.service.interfaces.ICombinable;
-import backend.service.interfaces.IUsable;
-import org.junit.Before;
-import org.junit.Test;
 import backend.repository.factory.RepositoryFactory;
-import backend.service.interfaces.ICoordinate;
 import backend.service.component.combination.Combination;
 import backend.service.component.use.Use;
+import backend.service.enums.Move;
+import backend.service.exception.ItemUsableException;
+import backend.service.interfaces.ICombinable;
+import backend.service.interfaces.ICoordinate;
+import backend.service.interfaces.IUsable;
+import backend.service.model.Player;
+import backend.service.model.builder.*;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +110,7 @@ public class UseTest {
                 .toList()) {
             player.getInventory().setItemInvisible(item);
         }
-        player.setCurrentMap(((Scenery)repositoryMapGame.get("cais")).getExit("leste"));
+        player.setCurrentMap(((Scenery) repositoryMapGame.get("cais")).getExit(Move.LESTE));
 
         //mapa visivel
         var itens = new ArrayList<Item>();
@@ -145,7 +141,7 @@ public class UseTest {
                 .toList()) {
             player.getInventory().setItemInvisible(item);
         }
-        player.setCurrentMap(((Scenery)repositoryMapGame.get("cais")).getExit("leste"));
+        player.setCurrentMap(((Scenery) repositoryMapGame.get("cais")).getExit(Move.LESTE));
 
         //mapa visivel
         var itens = new ArrayList<Item>();
@@ -180,7 +176,7 @@ public class UseTest {
         Item item = ItemMissionBuilder.builder().mapGame("praia").name("mapa").description("algo está enterrado na praia").weight(0)
                 .coordinate(ICoordinate.getInstance(410, 200)).image(null).removable(false).visible(false).build();
         player.getInventory().setItemInvisible(item);
-        player.setCurrentMap(((Scenery)repositoryMapGame.get("cais")).getExit("leste"));
+        player.setCurrentMap(((Scenery) repositoryMapGame.get("cais")).getExit(Move.LESTE));
 
         new Use((IUsable) itens.get(3)).run();
 

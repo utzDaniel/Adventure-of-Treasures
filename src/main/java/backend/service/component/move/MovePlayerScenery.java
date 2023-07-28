@@ -5,32 +5,23 @@ import backend.service.enums.Move;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.Player;
 
-import java.util.Locale;
-
 public final class MovePlayerScenery {
 
-    private final String direction;
     private final Player player;
-    private final ICoordinate coordinate;
-    private Move move;
+    private final Move move;
 
-    public MovePlayerScenery(Player player, String direction) {
-        this.direction = direction;
+    public MovePlayerScenery(Player player, Move move) {
+        this.move = move;
         this.player = player;
-        this.coordinate = player.getLocation();
     }
 
     public TypeMessage run() {
-        this.move = getMovePlayer();
         updateImagePlayer();
         updateDirectionPlayer();
-        updateCoordinate();
-        if (validCoordinate()) updateLocationPlayer();
-        return TypeMessage.MOVE_SUCESS;
-    }
 
-    private Move getMovePlayer() {
-        return Enum.valueOf(Move.class, this.direction.toUpperCase(Locale.ROOT));
+        var newCoordate = newCoordinate();
+        if (validCoordinate(newCoordate)) updateLocationPlayer(newCoordate);
+        return TypeMessage.MOVE_SUCESS;
     }
 
     private void updateImagePlayer() {
@@ -38,20 +29,21 @@ public final class MovePlayerScenery {
         this.player.setIcon(this.move.getImage());
     }
 
-    private void updateCoordinate() {
-        this.coordinate.move(move.getCoordinate());
+    private ICoordinate newCoordinate() {
+        var coordinate = this.player.getLocation();
+        return this.move.coordinateByScenery(coordinate);
     }
 
     private void updateDirectionPlayer() {
-        this.player.setDirection(this.direction);
+        this.player.setMove(move);
     }
 
-    private boolean validCoordinate() {
+    private boolean validCoordinate(ICoordinate coordinate) {
         var area = this.player.getCurrentMap().getArea();
-        return area.isBlock(this.coordinate);
+        return area.isBlock(coordinate);
     }
 
-    private void updateLocationPlayer() {
-        this.player.setLocation(this.coordinate);
+    private void updateLocationPlayer(ICoordinate coordinate) {
+        this.player.setLocation(coordinate);
     }
 }

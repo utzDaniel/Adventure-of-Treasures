@@ -1,13 +1,10 @@
 package backend.controller;
 
 
-import backend.controller.enums.TypeMessage;
 import backend.controller.factory.ResponseFactory;
 import backend.controller.interfaces.IActionController;
 import backend.controller.interfaces.IActionService;
 import backend.controller.interfaces.IResponse;
-import backend.controller.parameters.EnumValidator;
-import backend.controller.enums.Direction;
 
 
 public final class ActionController implements IActionController {
@@ -45,8 +42,6 @@ public final class ActionController implements IActionController {
 
     @Override
     public IResponse move(String direction) {
-        if(!EnumValidator.isValid(Direction.class, direction))
-            return ResponseFactory.create(TypeMessage.DIRECTION_INVALID);
         var rsp = this.actionService.move(direction);
         return ResponseFactory.create(rsp);
     }

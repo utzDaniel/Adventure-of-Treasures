@@ -1,9 +1,9 @@
+import backend.service.enums.Move;
 import backend.service.exception.InventoryException;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
 import backend.service.model.builder.ItemEquipableBuilder;
 import backend.service.model.builder.ItemUsableBuilder;
-import frontend.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
 import backend.repository.factory.RepositoryFactory;
@@ -19,7 +19,7 @@ public class TakeItemTest {
     public void iniciacaoDoPlayerParaTeste() {
         var createMapGame = RepositoryFactory.getRepositoryMapGame();
         player = Player.getInstance();
-        player.setDirection(Direction.SUL.getLabel());
+        player.setM(Move.SUL);
         player.setCurrentMap(createMapGame.get("cais"));
         for (Item item : RepositoryFactory.getRepositoryItem()
                 .getAll().stream()

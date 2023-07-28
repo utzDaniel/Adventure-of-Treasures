@@ -1,14 +1,16 @@
 package backend.service.model;
 
-public record Exit(String direction,
+import backend.service.enums.Move;
+
+public record Exit(Move move,
                    String mapGame) {
     @Override
     public String toString() {
         return """
                 {
-                    "direction": %s,
+                    "move": %s,
                     "mapGame": %s
                 }
-                """.formatted(this.direction, this.mapGame);
+                """.formatted(this.move, this.mapGame);
     }
 }

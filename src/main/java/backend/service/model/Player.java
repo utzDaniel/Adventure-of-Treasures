@@ -1,5 +1,6 @@
 package backend.service.model;
 
+import backend.service.enums.Move;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.builder.MapGame;
 
@@ -9,7 +10,7 @@ import java.util.Objects;
 public final class Player {
 
     private static Player player = null;
-    private String direction;
+    private Move move;
     private MapGame currentMapGame;
     private final Inventory inventory;
     private ICoordinate coordinate;
@@ -36,12 +37,12 @@ public final class Player {
         this.coordinate = ICoordinate.getInstance(coordinate);
     }
 
-    public String getDirection() {
-        return this.direction;
+    public Move getMove() {
+        return this.move;
     }
 
-    public void setDirection(String direction) {
-        this.direction = direction;
+    public void setMove(Move move) {
+        this.move = move;
     }
 
     public MapGame getCurrentMap() {
