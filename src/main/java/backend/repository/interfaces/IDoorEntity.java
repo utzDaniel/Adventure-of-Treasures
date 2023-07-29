@@ -4,7 +4,7 @@ public interface IDoorEntity {
 
     int id();
     int idMapGame();
-    String mapGame();
+    int idMapGameExit();
 
     int positionX();
 

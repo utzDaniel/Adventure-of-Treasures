@@ -1,7 +1,7 @@
 package backend.service.component.combination;
 
 import backend.controller.enums.TypeMessage;
-import backend.service.interfaces.ICombinable;
+import backend.service.enums.TypeItem;
 import backend.service.model.Inventory;
 import backend.service.model.builder.Item;
 
@@ -27,13 +27,10 @@ public final class ServiceCombinationItem {
 
         if (itens.isEmpty()) return TypeMessage.ITEM_NOT_FOUND;
 
-        var itensCombination = new ArrayList<ICombinable>();
         TypeMessage typeMessage = null;
 
         for (Item item : itens) {
-            if (item instanceof ICombinable combinable) {
-                itensCombination.add(combinable);
-            } else {
+            if (!item.isType(TypeItem.COMBINABLE)) {
                 typeMessage = TypeMessage.COMBINE_NOT_ALL;
                 break;
             }
@@ -41,7 +38,7 @@ public final class ServiceCombinationItem {
 
         if (Objects.nonNull(typeMessage)) return typeMessage;
 
-        typeMessage = new Combination(itensCombination, this.inventory).run();
+        typeMessage = new Combination(itens, this.inventory).run();
 
         return typeMessage;
     }

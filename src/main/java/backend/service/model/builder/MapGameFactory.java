@@ -27,7 +27,8 @@ public final class MapGameFactory {
     }
 
     private IBuilderMapGame inicial(IBuilderMapGame mapGame) {
-        return mapGame.name(mapGameEntity.name())
+        return mapGame.id(mapGameEntity.id())
+                .name(mapGameEntity.name())
                 .image(mapGameEntity.imagemIcon())
                 .doors(getDoors())
                 .itens(getItens())

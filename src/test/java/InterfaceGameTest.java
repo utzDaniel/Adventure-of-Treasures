@@ -1,6 +1,5 @@
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
-import backend.service.model.builder.ItemEquipableBuilder;
 import backend.repository.factory.RepositoryFactory;
 import frontend.model.component.ComponentFactory;
 import frontend.service.InterfaceGame;

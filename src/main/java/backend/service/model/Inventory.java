@@ -4,6 +4,7 @@ import backend.repository.factory.RepositoryFactory;
 import backend.service.model.builder.Item;
 import backend.service.model.builder.ItemFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,12 +16,14 @@ public final class Inventory {
     private int maxCapacity;
     private boolean isInventory;
     private final Map<String, Item> itens;
+    private List<Integer> itensAtivos;
 
     public Inventory(int capacity, int maxCapacity) {
         this.capacity = capacity;
         this.maxCapacity = maxCapacity;
         this.isInventory = false;
         this.itens = new HashMap<>();
+        this.itensAtivos = new ArrayList<>();
         RepositoryFactory.getRepositoryItem().getAll()
                 .stream().map(itemEntity -> new ItemFactory().create(itemEntity))
                 .forEach(item -> itens.put(item.getName(), item));
@@ -64,6 +67,18 @@ public final class Inventory {
 
     public void setItemInvisible(Item item) {
         this.itens.put(item.getName(), item);
+    }
+
+    public boolean isAtivo(Item item) {
+        return this.itensAtivos.stream().anyMatch(id -> id == item.getId());
+    }
+
+    public void addItemAtivo(Item item) {
+        this.itensAtivos.add(item.getId());
+    }
+
+    public void removeItemAtivo(Item item) {
+        this.itensAtivos.remove(item.getId());
     }
 
     public List<Item> getItemInvisible() {

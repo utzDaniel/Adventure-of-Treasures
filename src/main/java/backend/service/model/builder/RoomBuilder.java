@@ -12,7 +12,7 @@ public final class RoomBuilder extends MapGameBuilder {
         super.itens = new HashMap<>();
     }
 
-    static public RoomBuilder builder() {
+    public static RoomBuilder builder() {
         return new RoomBuilder();
     }
 

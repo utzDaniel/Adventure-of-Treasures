@@ -20,15 +20,15 @@ public final class MovePlayerNextScenery {
 
     public TypeMessage run() {
         var map = this.player.getCurrentMap();
-        String nameScenery = "";
+        int idScenery = -1;
 
         if (map instanceof Scenery map1)
-            nameScenery = map1.getExit(this.move);
+            idScenery = map1.getExit(this.move);
 
-        if (nameScenery.isEmpty())
+        if (idScenery == -1)
             return TypeMessage.MOVE_MAP_NOT_EXIT;
 
-        var nextScenery = Cache.getMapGame(nameScenery);
+        var nextScenery = Cache.getMapGame(idScenery);
         if (Objects.isNull(nextScenery))
             return TypeMessage.MOVE_MAP_NOT_FOUND;
 

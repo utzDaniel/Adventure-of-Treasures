@@ -1,5 +1,9 @@
 package backend.repository.interfaces;
 
+import backend.service.enums.TypeItem;
+
+import java.util.List;
+
 public interface IItemEntity {
 
     int id();
@@ -16,15 +20,7 @@ public interface IItemEntity {
 
     String imagemIcon();
 
-    int combine();
-
-    boolean equipped();
-
-    String mapGame();
-
-    String localUse();
-
-    boolean remove();
+    List<TypeItem> type();
 
     boolean visible();
 

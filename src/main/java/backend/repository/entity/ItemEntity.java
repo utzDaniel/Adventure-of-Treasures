@@ -1,6 +1,9 @@
 package backend.repository.entity;
 
 import backend.repository.interfaces.IItemEntity;
+import backend.service.enums.TypeItem;
+
+import java.util.List;
 
 public record ItemEntity(
         int id,
@@ -13,15 +16,7 @@ public record ItemEntity(
 
         String imagemIcon,
 
-        int combine,
-
-        boolean equipped,
-
-        String mapGame,
-
-        String localUse,
-
-        boolean remove,
+        List<TypeItem> type,
 
         boolean visible) implements IItemEntity {
 
@@ -37,15 +32,11 @@ public record ItemEntity(
                     "positionX": %d,
                     "positionY": %d,
                     "imagemIcon": "%s",
-                    "combine": %d,
-                    "equipped": %b,
-                    "mapGame": "%s",
-                    "localUse": "%s",
-                    "remove": %b,
+                    "type": %s,
                     "visible": %b
                 }
-                """.formatted(this.id, this.idMapGame, this.name, this.description, this.weight, this.positionX, this.positionY,
-                this.imagemIcon, this.combine, this.equipped, this.mapGame, this.localUse, this.remove, this.visible);
+                """.formatted(this.id, this.idMapGame, this.name, this.description, this.weight, this.positionX,
+                this.positionY, this.imagemIcon, this.type, this.visible);
 
     }
 }

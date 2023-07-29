@@ -1,9 +1,10 @@
 package backend.service.component.use;
 
 import backend.controller.enums.TypeMessage;
+import backend.repository.factory.RepositoryFactory;
 import backend.service.component.RemoveItem;
 import backend.service.enums.ItemsUsable;
-import backend.service.interfaces.IUsable;
+import backend.service.enums.TypeItem;
 import backend.service.model.Inventory;
 import backend.service.model.builder.Item;
 
@@ -18,19 +19,22 @@ public final class ServiceUseItem {
         this.inventory = inventory;
     }
 
-    public TypeMessage run(String name, String map) {
+    public TypeMessage run(String name, int idMap) {
 
         Item item = this.inventory.getItemVisible().stream()
                 .filter(item1 -> item1.getName().equals(name))
                 .findFirst().get();
 
         var typeMessage = TypeMessage.ITEM_NOT_FOUND;
-        if (item instanceof IUsable usable) {
+        if (item.isType(TypeItem.USABLE)) {
 
-            if (!(usable.getLocalUse().equals(map)))
+            var listUsable = RepositoryFactory.getRepositoryUsable().getAll();
+            var usable = listUsable.stream().filter(v -> v.idItem() == item.getId()).findFirst().orElse(null);
+
+            if (usable.idMapGame() != idMap)
                 return TypeMessage.USABLE_NOT_MAP;
 
-            var usable1 = getItemUsable(usable.getName());
+            var usable1 = getItemUsable(item.getName());
             if (Objects.isNull(usable1))
                 return TypeMessage.ITEM_NOT_FOUND;
 

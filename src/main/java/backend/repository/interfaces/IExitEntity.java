@@ -6,5 +6,5 @@ public interface IExitEntity {
 
     String direction();
 
-    String mapGame();
+    int idMapGameExit();
 }

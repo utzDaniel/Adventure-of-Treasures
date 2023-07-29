@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public final class RepositoryMapGame implements IRepository<IMapGameEntity, String> {
-    private final Map<String, IMapGameEntity> mapGame;
+public final class RepositoryMapGame implements IRepository<IMapGameEntity, Integer> {
+    private final Map<Integer, IMapGameEntity> mapGame;
 
     RepositoryMapGame() {
         this.mapGame = new HashMap<>();
@@ -25,15 +25,15 @@ public final class RepositoryMapGame implements IRepository<IMapGameEntity, Stri
         try {
             this.mapGame.putAll(
                     file.readFile(new MapGameEntityMapper()).stream()
-                            .collect(Collectors.toMap(IMapGameEntity::name, mapGame1 -> mapGame1)));
+                            .collect(Collectors.toMap(IMapGameEntity::id, mapGame1 -> mapGame1)));
         } catch (IOException e) {
             System.exit(0);
         }
     }
 
     @Override
-    public IMapGameEntity get(String name) {
-        return this.mapGame.get(name);
+    public IMapGameEntity get(Integer id) {
+        return this.mapGame.get(id);
     }
 
     @Override

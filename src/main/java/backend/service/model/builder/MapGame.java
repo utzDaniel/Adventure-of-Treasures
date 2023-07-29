@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public abstract class MapGame {
+    private int id;
     private String name;
     private String song;
     private ImageIcon icon;
@@ -24,6 +25,12 @@ public abstract class MapGame {
         this.itens = new HashMap<>();
     }
 
+    public int getId() {
+        return this.id;
+    }
+    protected void setId(int id) {
+        this.id = id;
+    }
     public String getName() {
         return this.name;
     }
@@ -54,9 +61,9 @@ public abstract class MapGame {
                 .findFirst();
     }
 
-    public Optional<Door> getDoor(String map) {
+    public Optional<Door> getDoor(int idMapGame) {
         return this.doors.values().stream()
-                .filter(o -> o.isMap(map))
+                .filter(o -> o.isMap(idMapGame))
                 .findFirst();
     }
 

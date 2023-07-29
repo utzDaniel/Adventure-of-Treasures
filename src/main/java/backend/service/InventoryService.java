@@ -37,8 +37,8 @@ public final class InventoryService implements IInventoryService {
     @Override
     public IServiceResponse use(String name) {
         var inventory = PLAYER.getInventory();
-        var map = PLAYER.getCurrentMap().getName();
-        var typeMessage = new ServiceUseItem(inventory).run(name, map);
+        var idMap = PLAYER.getCurrentMap().getId();
+        var typeMessage = new ServiceUseItem(inventory).run(name, idMap);
 
         if (!typeMessage.isSucess())
             new ServiceResponse(typeMessage, null);

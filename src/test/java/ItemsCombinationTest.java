@@ -1,5 +1,4 @@
 import backend.service.model.builder.Item;
-import backend.service.model.builder.ItemCombinableBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import backend.service.enums.ItemsCombination;

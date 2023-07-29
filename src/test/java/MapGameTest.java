@@ -44,28 +44,28 @@ public class MapGameTest {
 
     @Test
     public void mostrarOsItensVisiveisNoMapaSIZETRUE(){
-        Scenery nextScenery = (Scenery) RepositoryFactory.getRepositoryMapGame().get("farol");
+        //Scenery nextScenery = (Scenery) RepositoryFactory.getRepositoryMapGame().get("farol");
         player.setCurrentMap(nextScenery);
         assertEquals(1, player.getCurrentMap().getItemVisible().size());
     }
 
     @Test
     public void mostrarOsItensVisiveisNoMapaSIZEFALSE(){
-        Scenery nextScenery = (Scenery) RepositoryFactory.getRepositoryMapGame().get("farol");
+        //Scenery nextScenery = (Scenery) RepositoryFactory.getRepositoryMapGame().get("farol");
         player.setCurrentMap(nextScenery);
         assertNotEquals(player.getCurrentMap().getItemVisible().size(), 0);
     }
 
     @Test
     public void pegarOsItensInVisiveisNoMapaSIZETRUE(){
-        Scenery nextScenery = (Scenery) RepositoryFactory.getRepositoryMapGame().get("praia");
+       // Scenery nextScenery = (Scenery) RepositoryFactory.getRepositoryMapGame().get("praia");
         player.setCurrentMap(nextScenery);
         assertEquals(player.getCurrentMap().getItemInvisible().size(), 1);
     }
 
     @Test
     public void pegarOsItensInVisiveisNoMapaSIZEFALSE(){
-        Scenery nextScenery = (Scenery) RepositoryFactory.getRepositoryMapGame().get("praia");
+        //Scenery nextScenery = (Scenery) RepositoryFactory.getRepositoryMapGame().get("praia");
         player.setCurrentMap(nextScenery);
         assertNotEquals(player.getCurrentMap().getItemInvisible().size(), 0);
     }

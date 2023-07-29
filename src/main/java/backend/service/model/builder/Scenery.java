@@ -14,11 +14,11 @@ public final class Scenery extends MapGame {
         this.exits = new ArrayList<>();
     }
 
-    public String getExit(Move move) {
+    public int getExit(Move move) {
         return exits.stream()
                 .filter(exit -> exit.move().name().equals(move.name()))
-                .map(Exit::mapGame)
-                .findFirst().orElse("");
+                .map(Exit::idMapGame)
+                .findFirst().orElse(-1);
     }
 
     void setExits(List<Exit> exits) {

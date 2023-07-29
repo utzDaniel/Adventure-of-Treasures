@@ -1,9 +1,6 @@
 import backend.service.enums.Move;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
-import backend.service.model.builder.ItemCombinableBuilder;
-import backend.service.model.builder.ItemEquipableBuilder;
-import backend.service.model.builder.ItemUsableBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import backend.repository.factory.RepositoryFactory;

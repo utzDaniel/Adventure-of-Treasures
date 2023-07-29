@@ -6,8 +6,7 @@ public record ExitEntity(
         int id,
         int idMapGame,
         String direction,
-        String mapGame
-) implements IExitEntity {
+        int idMapGameExit) implements IExitEntity {
 
     @Override
     public String toString() {
@@ -16,8 +15,8 @@ public record ExitEntity(
                     "id": "%d",
                     "idMapGame": "%d",
                     "direction": %s,
-                    "mapGame": %s
+                    "idMapGameExit": %d
                 }
-                """.formatted(this.id, this.idMapGame,this.direction, this.mapGame);
+                """.formatted(this.id, this.idMapGame, this.direction, this.idMapGameExit);
     }
 }

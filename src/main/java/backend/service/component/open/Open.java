@@ -25,7 +25,7 @@ public final class Open {
         if (!door.isOpen())
             return TypeMessage.DOOR_CLOSED;
 
-        MapGame mapGame = Cache.getMapGame(door.getMapGame());
+        MapGame mapGame = Cache.getMapGame(door.getIdMapGame());
         updatePositionPlayer(mapGame);
         player.setCurrentMap(mapGame);
 
@@ -39,8 +39,8 @@ public final class Open {
     }
 
     private void updatePositionPlayer(MapGame mapGame) {
-        var nameMap = player.getCurrentMap().getName();
-        var door = mapGame.getDoor(nameMap).get();
+        var idMapGame = player.getCurrentMap().getId();
+        var door = mapGame.getDoor(idMapGame).get();
         player.setLocation(door.getCoordinate());
     }
 

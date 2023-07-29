@@ -14,18 +14,18 @@ public final class ActivateMapGame {
         boolean activate = false;
         try {
             if (nameItem.equals("tocha")) {
-                MapGame templo = Cache.getMapGame("templo");
-                Door openDoor = templo.getDoor(ICoordinate.getInstance(90, 240)).get();
+                MapGame templo = Cache.getMapGame(8);
+                Door openDoor = templo.getDoor(ICoordinate.getInstance(9, 24)).get();
                 openDoor.setOpen(!openDoor.isOpen());
                 activate = true;
             } else if (nameItem.equals("mapa")) {
-                MapGame praia = Cache.getMapGame("praia");
+                MapGame praia = Cache.getMapGame(4);
                 praia.setIcon(new ImageIcon("src/main/resources/map/praiaM.png"));
             } else if (nameItem.equals("chave")) {
-                MapGame praia = Cache.getMapGame("praia");
+                MapGame praia = Cache.getMapGame(4);
                 praia.setIcon(new ImageIcon("src/main/resources/map/praia.png"));
             } else if (nameItem.equals("escada")) {
-                MapGame templo = Cache.getMapGame("templo");
+                MapGame templo = Cache.getMapGame(8);
                 templo.setIcon(new ImageIcon("src/main/resources/map/temploF.png"));
             }
         } catch (Exception e) {

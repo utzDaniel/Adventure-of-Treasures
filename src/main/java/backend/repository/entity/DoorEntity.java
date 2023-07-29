@@ -5,11 +5,10 @@ import backend.repository.interfaces.IDoorEntity;
 public record DoorEntity(
         int id,
         int idMapGame,
-        String mapGame,
+        int idMapGameExit,
         int positionX,
         int positionY,
-        boolean open
-) implements IDoorEntity {
+        boolean open) implements IDoorEntity {
 
     @Override
     public String toString() {
@@ -17,11 +16,11 @@ public record DoorEntity(
                 {
                     "id": %d,
                     "idMapGame": "%d",
-                    "mapGame": "%s",
+                    "idMapGameExit": "%d",
                     "positionX": %d,
                     "positionY": %d,
                     "open": %b
                 }
-                """.formatted(this.id,this.idMapGame, this.mapGame, this.positionX, this.positionY, this.open);
+                """.formatted(this.id,this.idMapGame, this.idMapGameExit, this.positionX, this.positionY, this.open);
     }
 }

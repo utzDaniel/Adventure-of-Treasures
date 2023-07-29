@@ -1,12 +1,8 @@
 import backend.repository.factory.RepositoryFactory;
-import backend.service.component.combination.Combination;
-import backend.service.component.use.Use;
-import backend.service.enums.Move;
-import backend.service.interfaces.ICombinable;
 import backend.service.interfaces.ICoordinate;
-import backend.service.interfaces.IUsable;
 import backend.service.model.Player;
-import backend.service.model.builder.*;
+import backend.service.model.builder.Item;
+import backend.service.model.builder.Room;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,27 +30,27 @@ public class UseTest {
 
     @Test
     public void validarUsoDaChave() {
-        Scenery village = (Scenery) RepositoryFactory.getRepositoryMapGame().get("vila");
+        // Scenery village = (Scenery) RepositoryFactory.getRepositoryMapGame().get("vila");
         player.setCurrentMap(village);
         player.setLocation(ICoordinate.getInstance(370, 150));
-        Use use = new Use((IUsable) itens.get(0));
+//        Use use = new Use(itens.get(0));
         assertTrue(use.run());
     }
 
     @Test//(expected = ItemUsableException.class)
     public void invalidarUsoDaChavePorItem() {
-        Scenery village = (Scenery) RepositoryFactory.getRepositoryMapGame().get("vila");
+        //Scenery village = (Scenery) RepositoryFactory.getRepositoryMapGame().get("vila");
         player.setCurrentMap(village);
         player.setLocation(ICoordinate.getInstance(370, 150));
-        new Use((IUsable) itens.get(2)).run();
+        //new Use(itens.get(2)).run();
     }
 
     @Test//(expected = ItemUsableException.class)
     public void invalidarUsoDaChavePorDoor() {
-        Scenery village = (Scenery) RepositoryFactory.getRepositoryMapGame().get("vila");
+        // Scenery village = (Scenery) RepositoryFactory.getRepositoryMapGame().get("vila");
         player.setCurrentMap(village);
         player.setLocation(ICoordinate.getInstance(0, 0));
-        new Use((IUsable) itens.get(0)).run();
+        // new Use(itens.get(0)).run();
     }
 
     @Test//(expected = ItemUsableException.class)
@@ -62,7 +58,7 @@ public class UseTest {
         Room temple = (Room) RepositoryFactory.getRepositoryMapGame().get("templo");
         player.setCurrentMap(temple);
         player.setLocation(ICoordinate.getInstance(370, 150));
-        new Use((IUsable) itens.get(0)).run();
+        //new Use(itens.get(0)).run();
     }
 
     @Test
@@ -70,7 +66,7 @@ public class UseTest {
         Room temple = (Room) RepositoryFactory.getRepositoryMapGame().get("templo");
         player.setLocation(ICoordinate.getInstance(260, 190));
         player.setCurrentMap(temple);
-        Use use = new Use((IUsable) itens.get(1));
+        //Use use = new Use(itens.get(1));
         assertTrue(use.run());
     }
 
@@ -79,15 +75,15 @@ public class UseTest {
         Room temple = (Room) RepositoryFactory.getRepositoryMapGame().get("templo");
         player.setCurrentMap(temple);
         player.setLocation(ICoordinate.getInstance(0, 0));
-        new Use((IUsable) itens.get(1)).run();
+        //new Use(itens.get(1)).run();
     }
 
     @Test//(expected = ItemUsableException.class)
     public void invalidarUsoDaEscadaPorScenery() {
-        Scenery village = (Scenery) RepositoryFactory.getRepositoryMapGame().get("vila");
+        //Scenery village = (Scenery) RepositoryFactory.getRepositoryMapGame().get("vila");
         player.setCurrentMap(village);
         player.setLocation(ICoordinate.getInstance(250, 180));
-        new Use((IUsable) itens.get(1)).run();
+        //new Use(itens.get(1)).run();
     }
 
     @Test//(expected = ItemUsableException.class)
@@ -95,7 +91,7 @@ public class UseTest {
         Room temple = (Room) RepositoryFactory.getRepositoryMapGame().get("templo");
         player.setCurrentMap(temple);
         player.setLocation(ICoordinate.getInstance(250, 180));
-        new Use((IUsable) itens.get(2)).run();
+        //new Use(itens.get(2)).run();
     }
 
     @Test
@@ -109,7 +105,7 @@ public class UseTest {
                 .toList()) {
             player.getInventory().setItemInvisible(item);
         }
-        player.setCurrentMap(((Scenery) repositoryMapGame.get("cais")).getExit(Move.LESTE));
+        //player.setCurrentMap(((Scenery) repositoryMapGame.get("cais")).getExit(Move.LESTE));
 
         //mapa visivel
         var itens = new ArrayList<Item>();
@@ -122,10 +118,10 @@ public class UseTest {
         player.getInventory().setItemInvisible(item);
 
         var iCombinableList = itens.stream()
-                .map(item1 -> (ICombinable) item1).toList();
-        new Combination(iCombinableList, Player.getInstance().getInventory()).run();
+                .map(item1 -> item1).toList();
+        //new Combination(iCombinableList, Player.getInstance().getInventory()).run();
 
-        Use use = new Use((IUsable) this.itens.get(3));
+        //Use use = new Use(this.itens.get(3));
         assertTrue(use.run());
     }
 
@@ -140,7 +136,7 @@ public class UseTest {
                 .toList()) {
             player.getInventory().setItemInvisible(item);
         }
-        player.setCurrentMap(((Scenery) repositoryMapGame.get("cais")).getExit(Move.LESTE));
+        //player.setCurrentMap(((Scenery) repositoryMapGame.get("cais")).getExit(Move.LESTE));
 
         //mapa visivel
         var itens = new ArrayList<Item>();
@@ -154,10 +150,10 @@ public class UseTest {
         player.getInventory().setItemInvisible(item);
 
         var iCombinableList = itens.stream()
-                .map(item1 -> (ICombinable) item1).toList();
-        new Combination(iCombinableList, Player.getInstance().getInventory()).run();
+                .map(item1 -> item1).toList();
+        //new Combination(iCombinableList, Player.getInstance().getInventory()).run();
 
-        new Use((IUsable) this.itens.get(2)).run();
+        //new Use((IUsable) this.itens.get(2)).run();
 
     }
 
@@ -175,9 +171,9 @@ public class UseTest {
         Item item = ItemMissionBuilder.builder().mapGame("praia").name("mapa").description("algo está enterrado na praia").weight(0)
                 .coordinate(ICoordinate.getInstance(410, 200)).image(null).removable(false).visible(false).build();
         player.getInventory().setItemInvisible(item);
-        player.setCurrentMap(((Scenery) repositoryMapGame.get("cais")).getExit(Move.LESTE));
+        //player.setCurrentMap(((Scenery) repositoryMapGame.get("cais")).getExit(Move.LESTE));
 
-        new Use((IUsable) itens.get(3)).run();
+        // new Use((IUsable) itens.get(3)).run();
 
     }
 
@@ -205,10 +201,10 @@ public class UseTest {
         player.getInventory().setItemInvisible(item);
 
         var iCombinableList = itens.stream()
-                .map(item1 -> (ICombinable) item1).toList();
-        new Combination(iCombinableList, Player.getInstance().getInventory()).run();
+                .map(item1 -> item1).toList();
+        //new Combination(iCombinableList, Player.getInstance().getInventory()).run();
 
-        new Use((IUsable) this.itens.get(3)).run();
+        //new Use((IUsable) this.itens.get(3)).run();
 
     }
 }

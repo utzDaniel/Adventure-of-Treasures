@@ -15,15 +15,11 @@ public final class DoorEntityMapper implements Function<String, IDoorEntity> {
         return new DoorEntity(
                 stringToInt(dadosLinha[0].trim()),
                 stringToInt(dadosLinha[1].trim()),
-                tratarString(dadosLinha[2].trim()),
+                stringToInt(dadosLinha[2].trim()),
                 stringToInt(dadosLinha[3].trim()),
                 stringToInt(dadosLinha[4].trim()),
                 stringToBoolean(dadosLinha[5].trim())
         );
-    }
-
-    private String tratarString(String dado) {
-        return dado.equals("null") ? null : dado;
     }
 
     private boolean stringToBoolean(String dado) {

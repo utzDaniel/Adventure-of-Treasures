@@ -60,7 +60,7 @@ public class Game {
         var coordinate = ICoordinate.getInstance(x, y);
 
         var map = this.properties.getProperty("backend.player.map");
-        var mapGame = Cache.getMapGame(map);
+        var mapGame = Cache.getMapGame(Integer.parseInt(map));
 
         try {
             var player = new Player(icon, coordinate, mapGame, inventory);

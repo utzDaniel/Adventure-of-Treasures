@@ -1,21 +1,21 @@
 package backend.service.model.builder;
 
+import backend.service.enums.TypeItem;
 import backend.service.interfaces.ICoordinate;
 
 import javax.swing.*;
+import java.util.List;
 
-public abstract class Item {
+public final class Item {
 
+    private int id;
     private String name;
     private String description;
     private int weight;
     private ICoordinate coordinate;
     private ImageIcon icon;
-    private boolean removable;
+    private List<TypeItem> listType;
     private boolean visible;
-
-    protected Item() {
-    }
 
     public ICoordinate getLocation() {
         return ICoordinate.getInstance(this.coordinate);
@@ -29,6 +29,9 @@ public abstract class Item {
         return this.icon;
     }
 
+    public int getId() {
+        return this.id;
+    }
     public String getName() {
         return this.name;
     }
@@ -39,6 +42,10 @@ public abstract class Item {
 
     public int getWeight() {
         return this.weight;
+    }
+
+    public boolean isType(TypeItem type) {
+        return this.listType.contains(type);
     }
 
     public boolean isVisible() {
@@ -53,43 +60,49 @@ public abstract class Item {
         this.visible = visible;
     }
 
-    protected void setName(String name) {
+    void setId(int id) {
+        this.id = id;
+    }
+
+    void setName(String name) {
         this.name = name;
     }
 
-    protected void setDescription(String description) {
+    void setDescription(String description) {
         this.description = description;
     }
 
-    protected void setWeight(int weight) {
+    void setWeight(int weight) {
         this.weight = weight;
     }
 
-    protected void setIcon(ImageIcon icon) {
+    void setIcon(ImageIcon icon) {
         this.icon = icon;
     }
 
-    protected void setRemovable(boolean removable) {
-        this.removable = removable;
+    void setRemovable(List<TypeItem> listType) {
+        this.listType = listType;
     }
+
 
     @Override
     public String toString() {
         return """
                 {
+                    "id": "%d",
                     "name": "%s",
                     "description": "%s",
                     "weight": %d,
                     "coordinate": %s,
                     "imagemIcon": "%s",
-                    "remove": %b,
+                    "listType": %s,
                     "visible": %b,
                 }
-                """.formatted(this.name, this.description, this.weight, this.coordinate.toString(),
-                this.icon.toString(), this.removable, this.visible);
+                """.formatted(this.id, this.name,this.description, this.weight, this.coordinate.toString(),
+                this.icon.toString(), this.listType, this.visible);
     }
 
     public boolean equipped() {
-        return this instanceof ItemEquipable item && item.isEquipped();
+        return this.listType.contains(TypeItem.EQUIPABLE); //&& item.isEquipped()
     }
 }

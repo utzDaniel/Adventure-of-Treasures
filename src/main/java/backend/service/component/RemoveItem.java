@@ -1,8 +1,7 @@
 package backend.service.component;
 
 import backend.controller.enums.TypeMessage;
-import backend.service.interfaces.IEquipable;
-import backend.service.interfaces.IMission;
+import backend.service.enums.TypeItem;
 import backend.service.model.Inventory;
 import backend.service.model.builder.Item;
 
@@ -17,10 +16,10 @@ public final class RemoveItem {
     }
 
     public TypeMessage run() {
-        if (this.item instanceof IMission)
+        if (this.item.isType(TypeItem.MISSION))
             return TypeMessage.INVENTORY_NOT_REMOVE;
 
-        if (this.item instanceof IEquipable item1 && item1.isEquipped())
+        if (this.item.isType(TypeItem.EQUIPABLE) && inventory.isAtivo(item))
             return TypeMessage.INVENTORY_NOT_REMOVE_EQUIP;
 
         this.inventory.removeItem(this.item);

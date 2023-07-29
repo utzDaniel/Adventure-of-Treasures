@@ -1,8 +1,11 @@
 package backend.repository.mapper;
 
-import backend.repository.interfaces.IItemEntity;
 import backend.repository.entity.ItemEntity;
+import backend.repository.interfaces.IItemEntity;
+import backend.service.enums.TypeItem;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 import static java.lang.Integer.parseInt;
@@ -21,12 +24,8 @@ public final class ItemEntityMapper implements Function<String, IItemEntity> {
                 stringToInt(dadosLinha[5].trim()),
                 stringToInt(dadosLinha[6].trim()),
                 tratarString(dadosLinha[7].trim()),
-                stringToInt(dadosLinha[8].trim()),
-                stringToBoolean(dadosLinha[9].trim()),
-                tratarString(dadosLinha[10].trim()),
-                tratarString(dadosLinha[11].trim()),
-                stringToBoolean(dadosLinha[12].trim()),
-                stringToBoolean(dadosLinha[13].trim())
+                getListTypeItem(dadosLinha),
+                stringToBoolean(dadosLinha[12].trim())
         );
     }
 
@@ -40,6 +39,19 @@ public final class ItemEntityMapper implements Function<String, IItemEntity> {
 
     private int stringToInt(String dado) {
         return dado.equals("null") ? -1 : parseInt(dado);
+    }
+
+    private List<TypeItem> getListTypeItem(String[] dados) {
+        var list = new ArrayList<TypeItem>();
+        if (stringToBoolean(dados[8].trim()))
+            list.add(TypeItem.COMBINABLE);
+        if (stringToBoolean(dados[9].trim()))
+            list.add(TypeItem.EQUIPABLE);
+        if (stringToBoolean(dados[10].trim()))
+            list.add(TypeItem.USABLE);
+        if (stringToBoolean(dados[11].trim()))
+            list.add(TypeItem.MISSION);
+        return list;
     }
 
 }

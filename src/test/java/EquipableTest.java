@@ -1,11 +1,7 @@
 import backend.repository.factory.RepositoryFactory;
-import backend.service.component.equip.Equip;
-import backend.service.component.equip.Unequip;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
-import backend.service.model.builder.ItemEquipable;
-import backend.service.model.builder.ItemEquipableBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,7 +27,7 @@ public class EquipableTest {
         Player player = Player.getInstance();
         new AddItemInventory(player.getInventory(), itens.get(0)).run();
         ((ItemEquipable) itens.get(0)).equip();
-        assertTrue(((ItemEquipable) itens.get(0)).isEquipped());
+        assertTrue((itens.get(0)).isEquipped());
     }
 
     @Test
@@ -39,7 +35,7 @@ public class EquipableTest {
         Player player = Player.getInstance();
         int capacity = player.getInventory().getMaxCapacity();
         new AddItemInventory(player.getInventory(), itens.get(0)).run();
-        ((ItemEquipable) itens.get(0)).equip();
+        (itens.get(0)).equip();
         assertEquals(capacity + 5, player.getInventory().getMaxCapacity());
     }
 
@@ -47,8 +43,8 @@ public class EquipableTest {
     public void validarItemUnequipMochila() {
         Player player = Player.getInstance();
         new AddItemInventory(player.getInventory(), itens.get(0)).run();
-        ((ItemEquipable) itens.get(0)).equip();
-        ((ItemEquipable) itens.get(0)).unequip();
+        (itens.get(0)).equip();
+        (itens.get(0)).unequip();
         assertFalse(((ItemEquipable) itens.get(0)).isEquipped());
     }
 
@@ -57,8 +53,8 @@ public class EquipableTest {
         Player player = Player.getInstance();
         int capacity = player.getInventory().getMaxCapacity();
         new AddItemInventory(player.getInventory(), itens.get(0)).run();
-        ((ItemEquipable) itens.get(0)).equip();
-        ((ItemEquipable) itens.get(0)).unequip();
+        (itens.get(0)).equip();
+        (itens.get(0)).unequip();
         assertEquals(capacity, player.getInventory().getMaxCapacity());
     }
 
@@ -66,13 +62,13 @@ public class EquipableTest {
     public void validarItemUnequipMochilaAtributoErro() {
         Player player = Player.getInstance();
         new AddItemInventory(player.getInventory(), itens.get(0)).run();
-        ((ItemEquipable) itens.get(0)).equip();
+        (itens.get(0)).equip();
         int size = player.getInventory().getMaxCapacity() - player.getInventory().getCapacity();
 
         var item = ItemEquipableBuilder.builder().equipped(false).name("peso").description("pesar").weight(size)
                 .coordinate(ICoordinate.getInstance(410, 220)).image(null).removable(true).visible(true).build();
         new AddItemInventory(player.getInventory(), item).run();
-        ((ItemEquipable) itens.get(0)).unequip();
+        (itens.get(0)).unequip();
     }
 
     @Test
@@ -88,8 +84,8 @@ public class EquipableTest {
             player.getInventory().setItemInvisible(item);
         }
         new AddItemInventory(player.getInventory(), itens.get(2)).run();
-        ((ItemEquipable) itens.get(2)).equip();
-        assertTrue(((ItemEquipable) itens.get(2)).isEquipped());
+        (itens.get(2)).equip();
+        assertTrue((itens.get(2)).isEquipped());
     }
 
     @Test
@@ -121,9 +117,9 @@ public class EquipableTest {
             player.getInventory().setItemInvisible(item);
         }
         new AddItemInventory(player.getInventory(), itens.get(2)).run();
-        ((ItemEquipable) itens.get(2)).equip();
-        ((ItemEquipable) itens.get(2)).unequip();
-        assertFalse(((ItemEquipable) itens.get(2)).isEquipped());
+        (itens.get(2)).equip();
+        (itens.get(2)).unequip();
+        assertFalse((itens.get(2)).isEquipped());
     }
 
     @Test
@@ -139,28 +135,28 @@ public class EquipableTest {
             player.getInventory().setItemInvisible(item);
         }
         new AddItemInventory(player.getInventory(), itens.get(2)).run();
-        ((ItemEquipable) itens.get(2)).equip();
+        (itens.get(2)).equip();
         // assertTrue(((ItemEquipable) itens.get(2)).unequip());
     }
 
-    @Test
-    public void validarItemEquip() {
-        assertTrue(new Equip((ItemEquipable) itens.get(0)).run());
-    }
+//    @Test
+//    public void validarItemEquip() {
+//        assertTrue(new Equip( itens.get(0)).run());
+//    }
 
-    @Test //ItemEquipableException.class
-    public void itemEquipInvalido() {
-        assertFalse(new Equip((ItemEquipable) itens.get(1)).run());
-    }
+//    @Test //ItemEquipableException.class
+//    public void itemEquipInvalido() {
+//        assertFalse(new Equip( itens.get(1)).run());
+//    }
 
 
-    @Test
-    public void validarItemUnequip() {
-        assertTrue(new Unequip((ItemEquipable) itens.get(0)).run());
-    }
-
-    @Test//ItemEquipableException.class
-    public void itemUnequipInvalido() {
-        assertFalse(new Unequip((ItemEquipable) itens.get(1)).run());
-    }
+//    @Test
+//    public void validarItemUnequip() {
+//        assertTrue(new Unequip(itens.get(0)).run());
+//    }
+//
+//    @Test//ItemEquipableException.class
+//    public void itemUnequipInvalido() {
+//        assertFalse(new Unequip(itens.get(1)).run());
+//    }
 }

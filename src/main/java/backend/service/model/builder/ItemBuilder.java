@@ -1,13 +1,27 @@
 package backend.service.model.builder;
 
+import backend.service.enums.TypeItem;
 import backend.service.interfaces.IBuilderItem;
 import backend.service.interfaces.ICoordinate;
 
 import javax.swing.*;
+import java.util.List;
 
-abstract class ItemBuilder implements IBuilderItem {
+public final class ItemBuilder implements IBuilderItem {
 
-    protected Item item;
+    private final Item item;
+
+    private ItemBuilder() {
+        this.item = new Item();
+    }
+    public static ItemBuilder builder() {
+        return new ItemBuilder();
+    }
+    @Override
+    public IBuilderItem id(int id) {
+        this.item.setId(id);
+        return this;
+    }
 
     @Override
     public IBuilderItem name(String name) {
@@ -40,8 +54,8 @@ abstract class ItemBuilder implements IBuilderItem {
     }
 
     @Override
-    public IBuilderItem removable(boolean removable) {
-        this.item.setRemovable(removable);
+    public IBuilderItem type(List<TypeItem> listType) {
+        this.item.setRemovable(listType);
         return this;
     }
 
@@ -49,6 +63,11 @@ abstract class ItemBuilder implements IBuilderItem {
     public IBuilderItem visible(boolean visible) {
         this.item.setVisible(visible);
         return this;
+    }
+
+    @Override
+    public Item build() {
+        return this.item;
     }
 
 }

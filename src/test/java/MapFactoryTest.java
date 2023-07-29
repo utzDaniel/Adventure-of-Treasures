@@ -47,18 +47,18 @@ public class MapFactoryTest {
                 .exits("leste", "praia")
                 .song(filename2 + "cais.wav")
                 .name("cais").image(filename1 + "cais.png")
-                .doors(new Door("barco", ICoordinate.getInstance(300, 520), true))
+                .doors(new Door(12, ICoordinate.getInstance(30, 52), true))
                 .limits(limitsPier()).build();
 
         var lighthouse = SceneryBuilder.builder()
                 .exits("leste", "cais")
                 .song(filename2 + "farol.wav")
                 .name("farol").image(filename1 + "farol.png")
-                .doors(new Door("dentro do farol", ICoordinate.getInstance(270, 240), true))
+                .doors(new Door(3, ICoordinate.getInstance(27, 24), true))
                 .itens("pa").limits(limitsLighthouse()).build();
 
         var lighthouseRoom = RoomBuilder.builder().name("dentro do farol").image(filename1 + "dentro-do-farol.png")
-                .doors(new Door("farol", ICoordinate.getInstance(720, 260), true))
+                .doors(new Door(2, ICoordinate.getInstance(72, 26), true))
                 .itens("faca").itens("pregos").limits(limitsLighthouseRoom()).build();
 
         var beach = SceneryBuilder.builder()
@@ -77,37 +77,37 @@ public class MapFactoryTest {
                 .exits("sul", "floresta")
                 .song(filename2 + "vila.wav")
                 .name("vila").image(filename1 + "vila.png")
-                .doors(new Door("alojamento", ICoordinate.getInstance(140, 380), true))
-                .doors(new Door("enfermaria", ICoordinate.getInstance(720, 310), true))
-                .doors(new Door("templo", ICoordinate.getInstance(370, 150), false))
+                .doors(new Door(7, ICoordinate.getInstance(14, 38), true))
+                .doors(new Door(11, ICoordinate.getInstance(72, 31), true))
+                .doors(new Door(8, ICoordinate.getInstance(37, 15), false))
                 .limits(limitsVillage()).build();
 
         var accommodation = RoomBuilder.builder().name("alojamento").image(filename1 + "alojamento.png")
-                .doors(new Door("vila", ICoordinate.getInstance(500, 510), true))
+                .doors(new Door(6, ICoordinate.getInstance(50, 51), true))
                 .itens("martelo").itens("papel").limits(limitsAccommodation()).build();
 
         var temple = RoomBuilder.builder()
                 .song(filename2 + "templo.wav")
                 .name("templo").image(filename1 + "templo.png")
-                .doors(new Door("vila", ICoordinate.getInstance(380, 530), false))
-                .doors(new Door("topo do templo", ICoordinate.getInstance(260, 190), false))
-                .doors(new Door("porao do templo", ICoordinate.getInstance(90, 240), false))
+                .doors(new Door(6, ICoordinate.getInstance(38, 53), false))
+                .doors(new Door(9, ICoordinate.getInstance(26, 19), false))
+                .doors(new Door(10, ICoordinate.getInstance(9, 24), false))
                 .itens("madeira").limits(limitsTemple()).build();
 
         var topTemple = RoomBuilder.builder().name("topo do templo").image(filename1 + "topo-do-templo.png")
-                .doors(new Door("templo", ICoordinate.getInstance(250, 180), false))
+                .doors(new Door(8, ICoordinate.getInstance(250, 180), false))
                 .itens("pederneira").limits(limitsTopTemple()).build();
 
         var basement = RoomBuilder.builder().name("porao do templo").image(filename1 + "porao.png")
-                .doors(new Door("templo", ICoordinate.getInstance(100, 150), false))
+                .doors(new Door(8, ICoordinate.getInstance(100, 150), false))
                 .itens("tesouro").limits(limitsBasement()).build();
 
         var nursery = RoomBuilder.builder().name("enfermaria").image(filename1 + "enfermaria.png")
-                .doors(new Door("vila", ICoordinate.getInstance(370, 510), true))
+                .doors(new Door(6, ICoordinate.getInstance(370, 510), true))
                 .itens("frasco").itens("livro").limits(limitsNursery()).build();
 
         var boat = RoomBuilder.builder().name("barco").image(filename1 + "barco.png")
-                .doors(new Door("cais", ICoordinate.getInstance(70, 320), true))
+                .doors(new Door(1, ICoordinate.getInstance(70, 320), true))
                 .itens("mochila").limits(limitsBoat()).build();
 
         mapGames.add(pier);

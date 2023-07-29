@@ -16,7 +16,7 @@ public final class ExitEntityMapper implements Function<String, IExitEntity> {
                 stringToInt(dadosLinha[0].trim()),
                 stringToInt(dadosLinha[1].trim()),
                 tratarString(dadosLinha[2].trim()),
-                tratarString(dadosLinha[3].trim())
+                stringToInt(dadosLinha[3].trim())
         );
     }
 

@@ -17,6 +17,11 @@ abstract class MapGameBuilder implements IBuilderMapGame {
     protected Map<ICoordinate, Item> itens;
 
     @Override
+    public IBuilderMapGame id(int id) {
+        this.mapGame.setId(id);
+        return this;
+    }
+    @Override
     public IBuilderMapGame name(String name) {
         this.mapGame.setName(name);
         return this;

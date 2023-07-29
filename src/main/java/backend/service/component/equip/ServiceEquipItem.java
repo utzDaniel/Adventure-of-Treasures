@@ -2,7 +2,7 @@ package backend.service.component.equip;
 
 import backend.controller.enums.TypeMessage;
 import backend.service.enums.ItemsEquipable;
-import backend.service.interfaces.IEquipable;
+import backend.service.enums.TypeItem;
 import backend.service.model.Inventory;
 import backend.service.model.builder.Item;
 
@@ -24,17 +24,19 @@ public class ServiceEquipItem {
                 .findFirst().get();
 
         var typeMessage = TypeMessage.ITEM_NOT_FOUND;
-        if (item instanceof IEquipable equipable) {
+        if (item.isType(TypeItem.EQUIPABLE)) {
 
-            var equipable1 = getItemEquipable(equipable.getName());
+            var equipable1 = getItemEquipable(item.getName());
             if (Objects.isNull(equipable1)) return typeMessage;
 
-            if (equipable.isEquipped()) {
+            if (this.inventory.isAtivo(item)) {
                 typeMessage = equipable1.unequip();
-                if (typeMessage.isSucess()) equipable.setEquipped(false);
+                if (typeMessage.isSucess())
+                    this.inventory.removeItemAtivo(item);
             } else {
                 typeMessage = equipable1.equip();
-                if (typeMessage.isSucess()) equipable.setEquipped(true);
+                if (typeMessage.isSucess())
+                    this.inventory.addItemAtivo(item);
             }
         }
         return typeMessage;

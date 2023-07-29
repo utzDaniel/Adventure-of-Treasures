@@ -1,8 +1,13 @@
 package backend.service.interfaces;
 
+import backend.service.enums.TypeItem;
 import backend.service.model.builder.Item;
 
+import java.util.List;
+
 public interface IBuilderItem {
+
+    IBuilderItem id(int id);
 
     IBuilderItem name(String name);
 
@@ -14,7 +19,7 @@ public interface IBuilderItem {
 
     IBuilderItem image(String filename);
 
-    IBuilderItem removable(boolean removable);
+    IBuilderItem type(List<TypeItem> listType);
 
     IBuilderItem visible(boolean visible);
 

@@ -16,8 +16,8 @@ public final class ExitFactory {
 
     private Exit run() {
         var direction = exitEntity.direction();
-        var mapGame = exitEntity.mapGame();
+        var idMapGame = exitEntity.idMapGameExit();
         var move = Enum.valueOf(Move.class, direction.toUpperCase(Locale.ROOT));
-        return new Exit(move, mapGame);
+        return new Exit(move, idMapGame);
     }
 }

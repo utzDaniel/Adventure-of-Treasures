@@ -13,9 +13,9 @@ public final class DoorFactory {
     }
 
     private Door run() {
-        var mapGame = doorEntity.mapGame();
+        var idMapGame = doorEntity.idMapGameExit();
         var coordinate = ICoordinate.getInstance(doorEntity.positionX(), doorEntity.positionY());
         var open = doorEntity.open();
-        return new Door(mapGame, coordinate, open);
+        return new Door(idMapGame, coordinate, open);
     }
 }

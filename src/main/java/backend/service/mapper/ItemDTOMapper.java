@@ -3,7 +3,6 @@ package backend.service.mapper;
 import backend.service.dto.ItemDTO;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.builder.Item;
-import backend.service.model.builder.ItemEquipable;
 
 import java.util.function.Function;
 
@@ -23,6 +22,7 @@ public class ItemDTOMapper implements Function<Item, ItemDTO> {
     }
 
     private boolean equipped(Item item) {
-        return item instanceof ItemEquipable item1 && item1.isEquipped();
+        return false;
+        //return item instanceof ItemEquipable item1 && item1.isEquipped();
     }
 }

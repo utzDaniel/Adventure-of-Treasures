@@ -1,71 +1,67 @@
 package backend.service.component.combination;
 
 import backend.controller.enums.TypeMessage;
+import backend.repository.factory.RepositoryFactory;
 import backend.service.component.ActivateMapGame;
 import backend.service.component.RemoveItem;
 import backend.service.enums.ItemsCombination;
-import backend.service.interfaces.ICombinable;
 import backend.service.model.Inventory;
 import backend.service.model.builder.Item;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public final class Combination {
 
     private final Inventory inventory;
-    private final List<ICombinable> itens;
+    private final List<Item> itens;
     private Item newItem;
 
-    public Combination(List<ICombinable> itensCombination, Inventory inventory) {
+    public Combination(List<Item> itens, Inventory inventory) {
         this.inventory = inventory;
-        this.itens = itensCombination;
+        this.itens = itens;
         newItem = null;
     }
 
     public TypeMessage run() {
-        TypeMessage typeMessage = null;
 
-        typeMessage = checkAllEqualsCombination();
-        if (Objects.nonNull(typeMessage)) return typeMessage;
+        var listCombinable = RepositoryFactory.getRepositoryCombinable().getAll();
+        var combinable = listCombinable.stream()
+                .filter(v -> v.idItemCombine() == itens.get(0).getId())
+                .findFirst().orElse(null);
 
-        typeMessage = checkEnoughAmountCombine();
-        if (Objects.nonNull(typeMessage)) return typeMessage;
+        var listNewCombinable = listCombinable.stream()
+                .filter(v -> v.idItem() == combinable.idItem())
+                .toList();
 
-        var itemCombination = getItemCombination();
-        newItem = getItem(itemCombination);
+        if (itens.size() != listNewCombinable.size())
+            return TypeMessage.COMBINE_INCOMPLETE;
+
+        var isCombine = itens.stream()
+                .allMatch(item ->
+                        listNewCombinable.stream().anyMatch(v -> v.idItem() == item.getId())
+                );
+        if (!isCombine)
+            return TypeMessage.COMBINE_NOT_COMBINABLE;
+
+        newItem = getItem(listNewCombinable.get(0).idItem());
         if (Objects.isNull(newItem)) return TypeMessage.ITEM_NOT_FOUND;
 
         updateMap();
         removeAllItemCombine();
         setItemViseble();
         updadeInventoryCapacity();
-        return itemCombination.getTypeMessage();
-    }
+        var nameUp = newItem.getName().toUpperCase(Locale.ROOT);
 
-    private TypeMessage checkAllEqualsCombination() {
-        int combine = itens.get(0).getCombine();
-        var isCombine = itens.stream()
-                .allMatch(item -> item.getCombine() == combine);
-        if (!isCombine)
-            return TypeMessage.COMBINE_NOT_COMBINABLE;
-        return null;
-    }
-
-    private TypeMessage checkEnoughAmountCombine() {
-        if (itens.size() == ItemsCombination.getAmountCombination(itens.get(0).getCombine()))
-            return null;
-        return TypeMessage.COMBINE_INCOMPLETE;
-    }
-
-    private ItemsCombination getItemCombination() {
-        return ItemsCombination.getItemCombined(itens.get(0).getCombine());
+        var e = Enum.valueOf(ItemsCombination.class, nameUp);
+        return e.getTypeMessage();
     }
 
 
-    private Item getItem(ItemsCombination itemsCombination) {
+    private Item getItem(int idItem) {
         return this.inventory.getItemInvisible().stream()
-                .filter(item -> item.getName().equals(itemsCombination.getLabel()))
+                .filter(item -> item.getId() == idItem)
                 .findFirst().orElse(null);
     }
 
@@ -76,7 +72,7 @@ public final class Combination {
     }
 
     private void removeAllItemCombine() {
-        this.itens.forEach(itensCombinable -> new RemoveItem(this.inventory, (Item) itensCombinable).run());
+        this.itens.forEach(item -> new RemoveItem(this.inventory, item).run());
 
     }
 

@@ -1,5 +1,4 @@
 import backend.service.model.builder.Item;
-import backend.service.model.builder.ItemUsableBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import frontend.service.LabelInformation;

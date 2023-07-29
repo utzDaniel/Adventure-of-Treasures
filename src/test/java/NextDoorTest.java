@@ -25,10 +25,10 @@ public class NextDoorTest {
     @Before
     public void inicialize() {
         player = Player.getInstance();
-        Scenery village = (Scenery) RepositoryFactory.getRepositoryMapGame().get("vila");
+        //Scenery village = (Scenery) RepositoryFactory.getRepositoryMapGame().get("vila");
         Room temple = (Room) RepositoryFactory.getRepositoryMapGame().get("templo");
         templeDoor = temple.getDoor(ICoordinate.getInstance(380, 530)).get();
-        vilaDoor = village.getDoor(ICoordinate.getInstance(370, 150)).get();
+        //vilaDoor = village.getDoor(ICoordinate.getInstance(370, 150)).get();
         player.setCurrentMap(village);
         player.setLocation(ICoordinate.getInstance(370, 150));
         var listJLabel = new ArrayList<JLabel>();

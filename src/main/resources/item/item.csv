@@ -1,17 +1,17 @@
-id;idMapGame;name;description;weight;positionItemX;positionItemY;imagemIcon;combine;equipped;mapGame;localUse;remove;visible
-1;4;chave;utilizada para abrir algo;3;30;58;src/main/resources/item/chave.png;-1;false;null;vila;true;false
-2;-1;escada;utilizada para subir em algum lugar;5;20;41;src/main/resources/item/escada.png;-1;false;null;templo;true;false
-3;3;faca;serve para cortar algo;3;13;42;src/main/resources/item/faca.png;3;false;null;null;true;true
-4;11;frasco;contém algum líquido inflamável;3;31;28;src/main/resources/item/frasco.png;3;false;null;null;true;true
-5;11;livro;livro antigo usado para decifrar escrita antiga;1;39;49;src/main/resources/item/livro.png;1;false;null;null;true;true
-6;8;madeira;cabo de madeira velho;5;20;41;src/main/resources/item/madeira.png;3;false;null;null;true;true
-7;5;madeiras;madeira para construir algo;5;8;64;src/main/resources/item/madeiras.png;2;false;null;null;true;true
-8;-1;mapa;algo está enterrado na praia;0;20;41;src/main/resources/item/mapa.png;-1;false;praia;null;false;false
-9;7;martelo;utilizado para construir algo;4;32;16;src/main/resources/item/martelo.png;2;false;null;null;true;true
-10;12;mochila;utilizada para carregar mais coisas;0;22;65;src/main/resources/item/mochila.png;-1;true;null;null;true;true
-11;2;pa;ferramenta usada para cavar;3;28;20;src/main/resources/item/pa.png;-1;false;null;praia;true;true
-12;7;papel;papel escrito em lingua antiga;2;32;51;src/main/resources/item/papel.png;1;false;null;null;true;true
-13;9;pederneira;item específico para fazer fogo;2;20;44;src/main/resources/item/pederneira.png;3;false;null;null;true;true
-14;3;pregos;utilizado para construir algo;3;40;46;src/main/resources/item/pregos.png;2;false;null;null;true;true
-15;10;tesouro;tesouro lendário dos templários;3;24;62;src/main/resources/item/tesouro.png;-1;false;barco;null;false;true
-16;-1;tocha;utilizado para iluminar;5;20;41;src/main/resources/item/tocha.png;-1;true;null;null;true;false
+id;idMapGame;name;description;weight;positionItemX;positionItemY;imagemIcon;combinable;equipable;usable;mission;visible
+1;4;chave;utilizada para abrir algo;3;30;58;src/main/resources/item/chave.png;false;false;true;false;false
+2;-1;escada;utilizada para subir em algum lugar;5;20;41;src/main/resources/item/escada.png;false;false;true;false;false
+3;3;faca;serve para cortar algo;3;13;42;src/main/resources/item/faca.png;true;false;false;false;true
+4;11;frasco;contï¿½m algum lï¿½quido inflamï¿½vel;3;31;28;src/main/resources/item/frasco.png;true;false;false;false;true
+5;11;livro;livro antigo usado para decifrar escrita antiga;1;39;49;src/main/resources/item/livro.png;true;false;false;false;true
+6;8;madeira;cabo de madeira velho;5;20;41;src/main/resources/item/madeira.png;true;false;false;false;true
+7;5;madeiras;madeira para construir algo;5;8;64;src/main/resources/item/madeiras.png;true;false;false;false;true
+8;-1;mapa;algo estï¿½ enterrado na praia;0;20;41;src/main/resources/item/mapa.png;false;false;false;true;false
+9;7;martelo;utilizado para construir algo;4;32;16;src/main/resources/item/martelo.png;true;false;false;false;true
+10;12;mochila;utilizada para carregar mais coisas;0;22;65;src/main/resources/item/mochila.png;false;true;false;false;true
+11;2;pa;ferramenta usada para cavar;3;28;20;src/main/resources/item/pa.png;false;false;true;false;true
+12;7;papel;papel escrito em lingua antiga;2;32;51;src/main/resources/item/papel.png;true;false;false;false;true
+13;9;pederneira;item especï¿½fico para fazer fogo;2;20;44;src/main/resources/item/pederneira.png;true;false;false;false;true
+14;3;pregos;utilizado para construir algo;3;40;46;src/main/resources/item/pregos.png;true;false;false;false;true
+15;10;tesouro;tesouro lendï¿½rio dos templï¿½rios;3;24;62;src/main/resources/item/tesouro.png;false;false;false;true;true
+16;-1;tocha;utilizado para iluminar;5;20;41;src/main/resources/item/tocha.png;false;true;false;false;false
