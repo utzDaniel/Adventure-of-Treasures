@@ -41,24 +41,21 @@ public final class ItemFactory {
     private Item createItemCombinable() {
         return inicial(ItemCombinableBuilder
                 .builder()
-                .combine(itemEntity.combine())
-                .effect(itemEntity.effectsCombine()))
+                .combine(itemEntity.combine()))
                 .build();
     }
 
     private Item createItemEquipable() {
         return inicial(ItemEquipableBuilder
                 .builder()
-                .equipped(false)
-                .effect(itemEntity.effectsEquipped()))
+                .equipped(false))
                 .build();
     }
 
     private Item createItemUsable() {
         return inicial(ItemUsableBuilder
                 .builder()
-                .localUse(itemEntity.localUse())
-                .effect(itemEntity.effectsUse()))
+                .localUse(itemEntity.localUse()))
                 .build();
     }
 

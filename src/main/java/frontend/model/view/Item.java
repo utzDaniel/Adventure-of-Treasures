@@ -8,7 +8,6 @@ public record Item(String name,
                    String icon,
                    int weight,
                    ICoordinateDTO coordinate,
-                   String effect,
                    String specialization,
                    boolean isEquipped) implements IItemDTO {
 

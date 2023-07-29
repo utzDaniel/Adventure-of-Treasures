@@ -2,7 +2,6 @@ package backend.service.enums;
 
 import backend.controller.enums.TypeMessage;
 import backend.service.component.ActivateMapGame;
-import backend.service.exception.ItemUsableException;
 import backend.service.model.Player;
 
 import java.util.Objects;
@@ -10,7 +9,7 @@ import java.util.Objects;
 public enum ItemsUsable {
     PA("pa") {
         @Override
-        public TypeMessage use() throws ItemUsableException {
+        public TypeMessage use() {
             if (!(player.getInventory().getItem("mapa").isVisible()))
                 return TypeMessage.USABLE_INCOMPLETE;
             var item = player.getCurrentMap().getItemInvisible().stream()

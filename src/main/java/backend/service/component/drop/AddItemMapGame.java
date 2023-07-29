@@ -2,7 +2,6 @@ package backend.service.component.drop;
 
 import backend.controller.enums.TypeMessage;
 import backend.service.enums.Move;
-import backend.service.exception.MapGameException;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.Area;
 import backend.service.model.builder.Item;

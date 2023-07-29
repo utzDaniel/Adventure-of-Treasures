@@ -1,6 +1,6 @@
 package backend.service.interfaces;
 
-public interface IEquipable extends IEffect {
+public interface IEquipable {
     void equip();
 
     void unequip();
@@ -10,6 +10,4 @@ public interface IEquipable extends IEffect {
     boolean isEquipped();
 
     String getName();
-
-    String getEffect();
 }

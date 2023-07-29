@@ -16,17 +16,10 @@ public final class MovePlayerScenery {
     }
 
     public TypeMessage run() {
-        updateImagePlayer();
-        updateDirectionPlayer();
-
         var newCoordate = newCoordinate();
-        if (validCoordinate(newCoordate)) updateLocationPlayer(newCoordate);
+        if (!validCoordinate(newCoordate))
+            return TypeMessage.MOVE_BLOCKED;
         return TypeMessage.MOVE_SUCESS;
-    }
-
-    private void updateImagePlayer() {
-        this.move.run();
-        this.player.setIcon(this.move.getImage());
     }
 
     private ICoordinate newCoordinate() {
@@ -34,16 +27,8 @@ public final class MovePlayerScenery {
         return this.move.coordinateByScenery(coordinate);
     }
 
-    private void updateDirectionPlayer() {
-        this.player.setMove(move);
-    }
-
     private boolean validCoordinate(ICoordinate coordinate) {
         var area = this.player.getCurrentMap().getArea();
         return area.isBlock(coordinate);
-    }
-
-    private void updateLocationPlayer(ICoordinate coordinate) {
-        this.player.setLocation(coordinate);
     }
 }

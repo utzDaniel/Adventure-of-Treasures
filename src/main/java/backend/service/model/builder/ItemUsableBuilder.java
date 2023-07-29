@@ -17,10 +17,7 @@ public final class ItemUsableBuilder extends ItemBuilder {
         this.itemUsable.setLocalUse(localUse);
         return this;
     }
-    public ItemUsableBuilder effect(String filename) {
-        this.itemUsable.setEffect(filename);
-        return this;
-    }
+
     @Override
     public ItemUsable build() {
         return this.itemUsable;

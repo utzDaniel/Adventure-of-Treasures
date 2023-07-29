@@ -23,13 +23,7 @@ public record ItemEntity(
 
         boolean remove,
 
-        boolean visible,
-
-        String effectsCombine,
-
-        String effectsEquipped,
-
-        String effectsUse) implements IItemEntity {
+        boolean visible) implements IItemEntity {
 
     @Override
     public String toString() {
@@ -48,14 +42,10 @@ public record ItemEntity(
                     "mapGame": "%s",
                     "localUse": "%s",
                     "remove": %b,
-                    "visible": %b,
-                    "effectsCombine": "%s",
-                    "effectsEquipped": "%s",
-                    "effectsUse": "%s"
+                    "visible": %b
                 }
                 """.formatted(this.id, this.idMapGame, this.name, this.description, this.weight, this.positionX, this.positionY,
-                this.imagemIcon, this.combine, this.equipped, this.mapGame, this.localUse, this.remove, this.visible,
-                this.effectsCombine, this.effectsEquipped, this.effectsUse);
+                this.imagemIcon, this.combine, this.equipped, this.mapGame, this.localUse, this.remove, this.visible);
 
     }
 }

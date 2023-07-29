@@ -26,10 +26,7 @@ public final class ItemEntityMapper implements Function<String, IItemEntity> {
                 tratarString(dadosLinha[10].trim()),
                 tratarString(dadosLinha[11].trim()),
                 stringToBoolean(dadosLinha[12].trim()),
-                stringToBoolean(dadosLinha[13].trim()),
-                tratarString(dadosLinha[14].trim()),
-                tratarString(dadosLinha[15].trim()),
-                tratarString(dadosLinha[16].trim())
+                stringToBoolean(dadosLinha[13].trim())
         );
     }
 

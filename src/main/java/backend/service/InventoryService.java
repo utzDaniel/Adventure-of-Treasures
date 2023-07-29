@@ -1,16 +1,13 @@
 package backend.service;
 
 import backend.controller.interfaces.IInventoryService;
-import backend.controller.interfaces.IResponse;
 import backend.controller.interfaces.IServiceResponse;
 import backend.service.component.combination.ServiceCombinationItem;
 import backend.service.component.drop.ServiceDropItem;
 import backend.service.component.equip.ServiceEquipItem;
 import backend.service.component.inventory.open.InventoryOpen;
-import backend.service.component.inventory.quit.InventoryQuit;
 import backend.service.component.use.ServiceUseItem;
 import backend.service.dto.response.ServiceResponse;
-import backend.service.mapper.ActionResponseMapper;
 import backend.service.mapper.InventoryResponseMapper;
 import backend.service.model.Player;
 
@@ -30,11 +27,11 @@ public final class InventoryService implements IInventoryService {
         var inventory = PLAYER.getInventory();
         var typeMessage = new ServiceCombinationItem(inventory).run(names);
 
-        if(!typeMessage.isSucess())
-            new ServiceResponse(typeMessage,null);
+        if (!typeMessage.isSucess())
+            new ServiceResponse(typeMessage, null);
 
         var obj = new InventoryResponseMapper().apply(inventory);
-        return new ServiceResponse(typeMessage,obj);
+        return new ServiceResponse(typeMessage, obj);
     }
 
     @Override
@@ -43,11 +40,11 @@ public final class InventoryService implements IInventoryService {
         var map = PLAYER.getCurrentMap().getName();
         var typeMessage = new ServiceUseItem(inventory).run(name, map);
 
-        if(!typeMessage.isSucess())
-            new ServiceResponse(typeMessage,null);
+        if (!typeMessage.isSucess())
+            new ServiceResponse(typeMessage, null);
 
         var obj = new InventoryResponseMapper().apply(inventory);
-        return new ServiceResponse(typeMessage,obj);
+        return new ServiceResponse(typeMessage, obj);
     }
 
     @Override
@@ -55,11 +52,11 @@ public final class InventoryService implements IInventoryService {
         var inventory = PLAYER.getInventory();
         var typeMessage = new ServiceEquipItem(inventory).run(name);
 
-        if(!typeMessage.isSucess())
-            new ServiceResponse(typeMessage,null);
+        if (!typeMessage.isSucess())
+            new ServiceResponse(typeMessage, null);
 
         var obj = new InventoryResponseMapper().apply(inventory);
-        return new ServiceResponse(typeMessage,obj);
+        return new ServiceResponse(typeMessage, obj);
     }
 
     @Override
@@ -67,11 +64,11 @@ public final class InventoryService implements IInventoryService {
         var inventory = PLAYER.getInventory();
         var typeMessage = new ServiceDropItem(inventory).run(name);
 
-        if(!typeMessage.isSucess())
-            new ServiceResponse(typeMessage,null);
+        if (!typeMessage.isSucess())
+            new ServiceResponse(typeMessage, null);
 
         var obj = new InventoryResponseMapper().apply(inventory);
-        return new ServiceResponse(typeMessage,obj);
+        return new ServiceResponse(typeMessage, obj);
     }
 
     @Override
@@ -79,10 +76,10 @@ public final class InventoryService implements IInventoryService {
         var inventory = PLAYER.getInventory();
         var typeMessage = new InventoryOpen(inventory).run();
 
-        if(!typeMessage.isSucess())
-            new ServiceResponse(typeMessage,null);
+        if (!typeMessage.isSucess())
+            new ServiceResponse(typeMessage, null);
 
         var obj = new InventoryResponseMapper().apply(inventory);
-        return new ServiceResponse(typeMessage,obj);
+        return new ServiceResponse(typeMessage, obj);
     }
 }

@@ -12,8 +12,6 @@ public interface IItemDTO {
 
     ICoordinateDTO coordinate();
 
-    String effect();
-
     String specialization();
 
     boolean isEquipped();

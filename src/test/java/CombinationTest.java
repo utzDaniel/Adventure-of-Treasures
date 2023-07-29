@@ -1,17 +1,15 @@
-import backend.service.exception.ItemCombinableException;
+import backend.repository.factory.RepositoryFactory;
+import backend.service.component.combination.Combination;
+import backend.service.interfaces.ICombinable;
+import backend.service.interfaces.ICoordinate;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
 import backend.service.model.builder.ItemCombinableBuilder;
-import backend.service.interfaces.ICombinable;
 import org.junit.Before;
 import org.junit.Test;
-import backend.repository.factory.RepositoryFactory;
-import backend.service.interfaces.ICoordinate;
-import backend.service.component.combination.Combination;
 
 import java.util.ArrayList;
 
-import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class CombinationTest {
@@ -57,7 +55,7 @@ public class CombinationTest {
         assertTrue(new Combination(iCombinableList, Player.getInstance().getInventory()).run());
     }
 
-    @Test(expected = ItemCombinableException.class)
+    @Test//ItemCombinableException.class
     public void AllItemCombinableMasComCombinacaoDiferente() {
         item.add(ItemCombinableBuilder.builder().combine(2).name("madeiras").description("madeira para construir algo").weight(0)
                 .coordinate(ICoordinate.getInstance(640, 80)).image(null).removable(true).visible(true).build());
@@ -68,7 +66,7 @@ public class CombinationTest {
         assertFalse(new Combination(iCombinableList, Player.getInstance().getInventory()).run());
     }
 
-    @Test(expected = ItemCombinableException.class)
+    @Test//ItemCombinableException.class
     public void AllItemCombinableComCombinacaoIguaisMasFaltandoAlgumItem() {
         item.add(ItemCombinableBuilder.builder().combine(2).name("madeiras").description("madeira para construir algo").weight(0)
                 .coordinate(ICoordinate.getInstance(640, 80)).image(null).removable(true).visible(true).build());

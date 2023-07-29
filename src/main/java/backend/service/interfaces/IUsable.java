@@ -1,12 +1,10 @@
 package backend.service.interfaces;
 
-public interface IUsable extends IEffect {
+public interface IUsable {
 
     void use();
 
     String getLocalUse();
 
     String getName();
-
-    String getEffect();
 }

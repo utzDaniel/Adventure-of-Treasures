@@ -7,8 +7,6 @@ import backend.service.interfaces.IEquipable;
 public final class ItemEquipable extends Item implements IEquipable {
 
     private boolean equipped;
-    private String effect;
-
     ItemEquipable() {
     }
 
@@ -32,25 +30,14 @@ public final class ItemEquipable extends Item implements IEquipable {
         return this.equipped;
     }
 
-
-    @Override
-    public String getEffect() {
-        return this.effect;
-    }
-
-    void setEffect(String filename) {
-        this.effect = filename;
-    }
-
     @Override
     public String toString() {
         return """
                 Item: %s
                 {
-                    "equipped": %b,
-                    "effect": "%s"
+                    "equipped": %b
                 }
-                """.formatted(super.toString(), this.equipped, this.effect);
+                """.formatted(super.toString(), this.equipped);
     }
 
 }

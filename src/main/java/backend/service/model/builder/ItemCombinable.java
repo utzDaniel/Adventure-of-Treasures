@@ -5,7 +5,6 @@ import backend.service.interfaces.ICombinable;
 public final class ItemCombinable extends Item implements ICombinable {
 
     private int combine;
-    private String effect;
 
     ItemCombinable() {
     }
@@ -20,22 +19,12 @@ public final class ItemCombinable extends Item implements ICombinable {
     }
 
     @Override
-    public String getEffect() {
-        return this.effect;
-    }
-
-    void setEffect(String filename) {
-        this.effect = filename;
-    }
-
-    @Override
     public String toString() {
         return """
                 Item: %s
                 {
-                    "combine": %d,
-                    "effect": "%s"
+                    "combine": %d
                 }
-                """.formatted(super.toString(), this.combine, this.effect);
+                """.formatted(super.toString(), this.combine);
     }
 }

@@ -17,6 +17,7 @@ import java.util.Locale;
 public final class ActionService<T> implements IActionService {
 
     private static final Player PLAYER = Player.getInstance();
+
     /**
      * O service é responsável por conter a lógica de negócio da aplicação.
      * Ele encapsula as operações e regras de negócio que são necessárias para realizar as tarefas desejadas.
@@ -30,48 +31,50 @@ public final class ActionService<T> implements IActionService {
         var inventory = PLAYER.getInventory();
         var typeMessage = new InventoryQuit(inventory).run();
 
-        if(!typeMessage.isSucess())
-            new ServiceResponse(typeMessage,null);
+        if (!typeMessage.isSucess())
+            new ServiceResponse(typeMessage, null);
 
         var obj = new ActionResponseMapper().apply(PLAYER);
-        return new ServiceResponse(typeMessage,obj);
+        return new ServiceResponse(typeMessage, obj);
     }
 
     @Override
     public IServiceResponse take() {
         var typeMessage = new Take(PLAYER).run();
 
-        if(!typeMessage.isSucess())
-            new ServiceResponse(typeMessage,null);
+        if (!typeMessage.isSucess())
+            new ServiceResponse(typeMessage, null);
 
         var obj = new ActionResponseMapper().apply(PLAYER);
-        return new ServiceResponse(typeMessage,obj);
+        return new ServiceResponse(typeMessage, obj);
     }
 
     @Override
     public IServiceResponse open() {
         var typeMessage = new Open(PLAYER).run();
 
-        if(!typeMessage.isSucess())
-            new ServiceResponse(typeMessage,null);
+        if (!typeMessage.isSucess())
+            new ServiceResponse(typeMessage, null);
 
         var obj = new ActionResponseMapper().apply(PLAYER);
-        return new ServiceResponse(typeMessage,obj);
+        return new ServiceResponse(typeMessage, obj);
     }
 
     @Override
     public IServiceResponse move(String direction) {
-        if(!EnumValidator.isValid(Move.class, direction))
-            new ServiceResponse(TypeMessage.DIRECTION_INVALID,null);
-
-        var move = Enum.valueOf(Move.class, direction.toUpperCase(Locale.ROOT));
+        Move move;
+        try {
+            move = Enum.valueOf(Move.class, direction.toUpperCase(Locale.ROOT));
+        } catch (Exception e) {
+            return new ServiceResponse(TypeMessage.DIRECTION_INVALID, null);
+        }
         var typeMessage = new MovePlayer(move, PLAYER).run();
 
-        if(!typeMessage.isSucess())
-            new ServiceResponse(typeMessage,null);
+        if (!typeMessage.isSucess())
+            new ServiceResponse(typeMessage, null);
 
         var obj = new ActionResponseMapper().apply(PLAYER);
-        return new ServiceResponse(typeMessage,obj);
+        return new ServiceResponse(typeMessage, obj);
     }
 
 }

@@ -1,6 +1,5 @@
 package backend.service.component;
 
-import backend.service.exception.MoveException;
 import backend.service.infra.Cache;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.Door;
@@ -30,7 +29,7 @@ public final class ActivateMapGame {
                 templo.setIcon(new ImageIcon("src/main/resources/map/temploF.png"));
             }
         } catch (Exception e) {
-            throw new MoveException("Direção invalida!");
+            System.out.println("Direção invalida!");
         }
         return activate;
     }

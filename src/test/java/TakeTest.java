@@ -1,15 +1,14 @@
-import backend.service.enums.Move;
-import backend.service.exception.InventoryException;
+import backend.repository.factory.RepositoryFactory;
 import backend.service.component.drop.AddItemMapGame;
+import backend.service.component.take.Take;
+import backend.service.enums.Move;
+import backend.service.interfaces.ICoordinate;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
 import backend.service.model.builder.ItemUsableBuilder;
 import backend.service.model.builder.MapGame;
 import org.junit.Before;
 import org.junit.Test;
-import backend.repository.factory.RepositoryFactory;
-import backend.service.interfaces.ICoordinate;
-import backend.service.component.take.Take;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -53,7 +52,7 @@ public class TakeTest {
         assertTrue(take.run().isSucess());
     }
 
-    @Test(expected = InventoryException.class)
+    @Test //InventoryException.class
     public void testarItemValidoAFrenteSemCapacitadadeNoInventario() {
         Item item = ItemUsableBuilder.builder().localUse("praia").name("pa1487").description("ferramenta usada para cavar").weight(30)
                 .coordinate(ICoordinate.getInstance(320, 320)).image(null).removable(true).visible(true).build();

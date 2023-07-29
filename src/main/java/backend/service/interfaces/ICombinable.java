@@ -1,10 +1,8 @@
 package backend.service.interfaces;
 
-public interface ICombinable extends IEffect {
+public interface ICombinable {
 
     int getCombine();
 
     String getName();
-
-    String getEffect();
 }

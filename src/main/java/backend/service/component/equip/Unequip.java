@@ -1,13 +1,12 @@
 package backend.service.component.equip;
 
-import backend.service.exception.ItemEquipableException;
-import backend.service.interfaces.IEquipable;
 import backend.service.enums.ItemsEquipable;
+import backend.service.interfaces.IEquipable;
 
 import java.util.Arrays;
 
 public final class Unequip {
-
+    // TODO apagar depois, quando refatorar o item
     private final IEquipable item;
 
     public Unequip(IEquipable item) {
@@ -22,7 +21,7 @@ public final class Unequip {
     private boolean unequipItem() {
         var item = Arrays.stream(ItemsEquipable.values())
                 .filter(equipable -> equipable.getLabel().equals(this.item.getName()))
-                .findFirst().orElseThrow(() -> new ItemEquipableException("Item equipavél não encontrado"));
+                .findFirst().orElse(null);
         return item.unequip().isSucess();
     }
 }

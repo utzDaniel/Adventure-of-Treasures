@@ -1,14 +1,13 @@
 package backend.service.component.use;
 
-import backend.service.exception.ItemUsableException;
-import backend.service.model.Player;
 import backend.service.enums.ItemsUsable;
 import backend.service.interfaces.IUsable;
+import backend.service.model.Player;
 
 import java.util.Arrays;
 
 public final class Use {
-
+    // TODO apagar depois, quando refatorar o item
     private final Player player;
     private final IUsable item;
 
@@ -18,14 +17,13 @@ public final class Use {
     }
 
     public boolean run() {
-        checkCurrentMap();
+        if (checkCurrentMap()) return false;
         useItem();
         return true;
     }
 
-    private void checkCurrentMap() {
-        if (!(this.item.getLocalUse().equals(this.player.getCurrentMap().getName())))
-            throw new ItemUsableException("Esse item não pode ser usado nesse mapa!");
+    private boolean checkCurrentMap() {
+        return !(this.item.getLocalUse().equals(this.player.getCurrentMap().getName()));
     }
 
     private void useItem() {

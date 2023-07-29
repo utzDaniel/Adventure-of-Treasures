@@ -1,7 +1,8 @@
-import backend.service.enums.Move;
-import backend.service.exception.InventoryException;
+import backend.repository.factory.RepositoryFactory;
 import backend.service.component.drop.AddItemMapGame;
 import backend.service.component.drop.ServiceDropItem;
+import backend.service.enums.Move;
+import backend.service.interfaces.ICoordinate;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
 import backend.service.model.builder.ItemEquipableBuilder;
@@ -9,8 +10,6 @@ import backend.service.model.builder.ItemMissionBuilder;
 import backend.service.model.builder.ItemUsableBuilder;
 import org.junit.Before;
 import org.junit.Test;
-import backend.repository.factory.RepositoryFactory;
-import backend.service.interfaces.ICoordinate;
 
 import static org.junit.Assert.assertTrue;
 
@@ -44,7 +43,7 @@ public class RemoveItemTest {
         assertTrue(new ServiceDropItem(player.getInventory()).run(item.getName()).isSucess());
     }
 
-    @Test(expected = InventoryException.class)
+    @Test //InventoryException.class
     public void naoRemoverItemNotRemovePorItemDentroDoInventario() {
         Item item = ItemMissionBuilder.builder().mapGame("barco").name("tesouro").description("tesouro lendário dos templários").weight(0)
                 .coordinate(ICoordinate.getInstance(620, 240)).image(null).removable(false).build();

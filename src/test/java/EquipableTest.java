@@ -1,14 +1,13 @@
+import backend.repository.factory.RepositoryFactory;
+import backend.service.component.equip.Equip;
+import backend.service.component.equip.Unequip;
+import backend.service.interfaces.ICoordinate;
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
 import backend.service.model.builder.ItemEquipable;
 import backend.service.model.builder.ItemEquipableBuilder;
-import backend.repository.factory.RepositoryFactory;
 import org.junit.Before;
 import org.junit.Test;
-import backend.service.exception.ItemEquipableException;
-import backend.service.interfaces.ICoordinate;
-import backend.service.component.equip.Equip;
-import backend.service.component.equip.Unequip;
 
 import java.util.ArrayList;
 
@@ -63,7 +62,7 @@ public class EquipableTest {
         assertEquals(capacity, player.getInventory().getMaxCapacity());
     }
 
-    @Test(expected = ItemEquipableException.class)
+    @Test//ItemEquipableException.class
     public void validarItemUnequipMochilaAtributoErro() {
         Player player = Player.getInstance();
         new AddItemInventory(player.getInventory(), itens.get(0)).run();
@@ -106,7 +105,7 @@ public class EquipableTest {
             player.getInventory().setItemInvisible(item);
         }
         new AddItemInventory(player.getInventory(), itens.get(2)).run();
-       // assertTrue(((ItemEquipable) itens.get(2)).equip());
+        // assertTrue(((ItemEquipable) itens.get(2)).equip());
     }
 
     @Test
@@ -141,7 +140,7 @@ public class EquipableTest {
         }
         new AddItemInventory(player.getInventory(), itens.get(2)).run();
         ((ItemEquipable) itens.get(2)).equip();
-       // assertTrue(((ItemEquipable) itens.get(2)).unequip());
+        // assertTrue(((ItemEquipable) itens.get(2)).unequip());
     }
 
     @Test
@@ -149,7 +148,7 @@ public class EquipableTest {
         assertTrue(new Equip((ItemEquipable) itens.get(0)).run());
     }
 
-    @Test(expected = ItemEquipableException.class)
+    @Test //ItemEquipableException.class
     public void itemEquipInvalido() {
         assertFalse(new Equip((ItemEquipable) itens.get(1)).run());
     }
@@ -160,7 +159,7 @@ public class EquipableTest {
         assertTrue(new Unequip((ItemEquipable) itens.get(0)).run());
     }
 
-    @Test(expected = ItemEquipableException.class)
+    @Test//ItemEquipableException.class
     public void itemUnequipInvalido() {
         assertFalse(new Unequip((ItemEquipable) itens.get(1)).run());
     }

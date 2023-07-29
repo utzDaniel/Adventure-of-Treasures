@@ -14,7 +14,6 @@ public final class ItemUsable extends Item implements IUsable {
      * */
 
     private String localUse;
-    private String effect;
 
     ItemUsable() {
     }
@@ -34,22 +33,12 @@ public final class ItemUsable extends Item implements IUsable {
     }
 
     @Override
-    public String getEffect() {
-        return this.effect;
-    }
-
-    void setEffect(String filename) {
-        this.effect = filename;
-    }
-
-    @Override
     public String toString() {
         return """
                 Item: %s
                 {
-                    "localUse": "%s",
-                    "effect": "%s"
+                    "localUse": "%s"
                 }
-                """.formatted(super.toString(), this.localUse, this.effect);
+                """.formatted(super.toString(), this.localUse);
     }
 }

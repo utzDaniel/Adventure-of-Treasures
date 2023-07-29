@@ -1,7 +1,5 @@
 package frontend.enums;
 
-import backend.service.exception.MoveException;
-
 import java.util.Arrays;
 
 public enum Direction {
@@ -30,7 +28,7 @@ public enum Direction {
         return Arrays.stream(Direction.values())
                 .filter(direction -> direction.isKeyCode(keyCode))
                 .findFirst().map(Direction::getLabel)
-                .orElseThrow(() -> new MoveException("Direção invalida!"));
+                .orElse(null);
     }
 
     public boolean isKeyCode(int keyCode) {

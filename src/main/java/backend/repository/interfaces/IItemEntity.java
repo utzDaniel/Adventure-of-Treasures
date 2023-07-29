@@ -28,10 +28,4 @@ public interface IItemEntity {
 
     boolean visible();
 
-    String effectsCombine();
-
-    String effectsEquipped();
-
-    String effectsUse();
-
 }
