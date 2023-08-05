@@ -1,9 +1,8 @@
 package backend.repository.interfaces;
 
-public interface IUsableEntity {
-    int id();
+public interface IUsableEntity extends IEntity {
 
     int idItem();
 
-    int idMapGame();
+    int idMap();
 }

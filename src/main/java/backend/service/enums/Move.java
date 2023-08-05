@@ -101,7 +101,7 @@ public enum Move {
 
     public abstract ICoordinate coordinateByNextScenery(ICoordinate coordinate);
 
-    public ImageIcon getImage() {
+    public String getImage() {
         return this.imagePlayer.select();
     }
 

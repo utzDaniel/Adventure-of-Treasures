@@ -2,24 +2,18 @@ package backend.repository.mapper;
 
 import backend.repository.entity.CombinableEntity;
 import backend.repository.interfaces.ICombinableEntity;
+import backend.repository.interfaces.IMapperEntity;
+import backend.repository.util.ValidUtil;
 
-import java.util.function.Function;
-
-import static java.lang.Integer.parseInt;
-
-public final class CombinableEntityMapper implements Function<String, ICombinableEntity> {
+public final class CombinableEntityMapper implements IMapperEntity<ICombinableEntity> {
 
     @Override
-    public ICombinableEntity apply(String l) {
-        var dadosLinha = l.split(";");
+    public ICombinableEntity apply(String linha) {
+        var dados = split(linha);
         return new CombinableEntity(
-                stringToInt(dadosLinha[0].trim()),
-                stringToInt(dadosLinha[1].trim()),
-                stringToInt(dadosLinha[2].trim()));
-    }
-
-    private int stringToInt(String dado) {
-        return dado.equals("null") ? -1 : parseInt(dado);
+                ValidUtil.parseInt(dados[0]),
+                ValidUtil.parseInt(dados[1]),
+                ValidUtil.parseInt(dados[2]));
     }
 
 }

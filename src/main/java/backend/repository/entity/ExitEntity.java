@@ -4,19 +4,19 @@ import backend.repository.interfaces.IExitEntity;
 
 public record ExitEntity(
         int id,
-        int idMapGame,
+        int idMapOri,
         String direction,
-        int idMapGameExit) implements IExitEntity {
+        int idMapExt) implements IExitEntity {
 
     @Override
     public String toString() {
         return """
                 {
                     "id": "%d",
-                    "idMapGame": "%d",
+                    "idMapOri": "%d",
                     "direction": %s,
-                    "idMapGameExit": %d
+                    "idMapExt": %d
                 }
-                """.formatted(this.id, this.idMapGame, this.direction, this.idMapGameExit);
+                """.formatted(this.id, this.idMapOri, this.direction, this.idMapExt);
     }
 }

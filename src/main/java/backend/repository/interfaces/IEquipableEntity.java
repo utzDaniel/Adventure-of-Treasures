@@ -1,9 +1,8 @@
 package backend.repository.interfaces;
 
-public interface IEquipableEntity {
-    int id();
+public interface IEquipableEntity extends IEntity {
 
     int idItem();
 
-    int upMaxCapacity();
+    int upCapacity();
 }

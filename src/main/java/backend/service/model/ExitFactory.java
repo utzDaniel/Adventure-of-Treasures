@@ -1,23 +1,16 @@
 package backend.service.model;
 
 import backend.repository.interfaces.IExitEntity;
-import backend.service.enums.Move;
-
-import java.util.Locale;
+import backend.service.enums.Direction;
 
 public final class ExitFactory {
 
-    private IExitEntity exitEntity;
-
-    public Exit create(IExitEntity exitEntity) {
-        this.exitEntity = exitEntity;
-        return run();
+    private ExitFactory() {
     }
 
-    private Exit run() {
-        var direction = exitEntity.direction();
-        var idMapGame = exitEntity.idMapGameExit();
-        var move = Enum.valueOf(Move.class, direction.toUpperCase(Locale.ROOT));
-        return new Exit(move, idMapGame);
+    public static Exit create(IExitEntity entity) {
+        var idMapGame = entity.idMapExt();
+        var direction = Direction.getInstance(entity.direction());
+        return new Exit(direction, idMapGame);
     }
 }

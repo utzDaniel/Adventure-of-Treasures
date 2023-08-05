@@ -1,4 +1,3 @@
-import backend.repository.factory.RepositoryFactory;
 import backend.service.component.drop.AddItemMapGame;
 import backend.service.component.take.Take;
 import backend.service.enums.Move;

@@ -3,7 +3,7 @@ package backend;
 import backend.controller.interfaces.IActionService;
 import backend.controller.interfaces.IInventoryService;
 import backend.controller.interfaces.IItemDTO;
-import backend.repository.factory.RepositoryFactory;
+import backend.repository.singleton.ItemRepository;
 import backend.service.ActionService;
 import backend.service.InventoryService;
 import backend.service.infra.Cache;
@@ -54,20 +54,23 @@ public class Game {
         var maxCapacity = Integer.parseInt(this.properties.getProperty("backend.inventory.maxCapacity"));
         var inventory = new Inventory(capacity, maxCapacity);
 
-        var icon = new ImageIcon(this.properties.getProperty("backend.player.icon"));
-        int x = Integer.parseInt(this.properties.getProperty("backend.player.x"));
-        int y = Integer.parseInt(this.properties.getProperty("backend.player.y"));
+        var image = this.properties.getProperty("backend.player.image");
+        int x = Integer.parseInt(this.properties.getProperty("backend.player.position.x"));
+        int y = Integer.parseInt(this.properties.getProperty("backend.player.position.y"));
         var coordinate = ICoordinate.getInstance(x, y);
 
         var map = this.properties.getProperty("backend.player.map");
         var mapGame = Cache.getMapGame(Integer.parseInt(map));
 
         try {
-            var player = new Player(icon, coordinate, mapGame, inventory);
+            var player = new Player(image, coordinate, mapGame, inventory);
             //TODO não usar itens invisivel, resolver depois
-            RepositoryFactory.getRepositoryItem().getAll()
-                    .stream().filter(item -> !item.visible() && !item.name().equals("chave"))
-                    .forEach(entity -> player.getInventory().setItemInvisible(new ItemFactory().create(entity)));
+            ItemRepository.getInstance().getAll()
+                    .stream()
+                    .filter(item -> !item.visible() && !item.name().equals("chave"))
+                    .map(ItemFactory::create)
+                    .forEach(v -> player.getInventory().setItemInvisible(v));
+
         } catch (Exception e) {
             e.getMessage();
         }
@@ -77,8 +80,8 @@ public class Game {
     private List<JLabel> getComponents() {
         var listJLabel = new ArrayList<JLabel>();
         var coordinatePlayer = ICoordinate.getInstance(player.getLocation().y() * 10, player.getLocation().x() * 10);
-        listJLabel.add(ComponentFactory.getJLabel(this.player.getIcon().toString(), coordinatePlayer));
-        listJLabel.add(ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getIcon().toString()));
+        listJLabel.add(ComponentFactory.getJLabel(this.player.getImage(), coordinatePlayer));
+        listJLabel.add(ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getImage()));
         listJLabel.addAll(ComponentFactory.getJLabel(getIItemDTO(this.player.getCurrentMap().getItemVisible())));
         return listJLabel;
     }

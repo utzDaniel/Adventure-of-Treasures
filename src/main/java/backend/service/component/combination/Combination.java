@@ -1,7 +1,7 @@
 package backend.service.component.combination;
 
 import backend.controller.enums.TypeMessage;
-import backend.repository.factory.RepositoryFactory;
+import backend.repository.singleton.CombinableRepository;
 import backend.service.component.ActivateMapGame;
 import backend.service.component.RemoveItem;
 import backend.service.enums.ItemsCombination;
@@ -26,13 +26,13 @@ public final class Combination {
 
     public TypeMessage run() {
 
-        var listCombinable = RepositoryFactory.getRepositoryCombinable().getAll();
+        var listCombinable = CombinableRepository.getInstance().getAll();
         var combinable = listCombinable.stream()
-                .filter(v -> v.idItemCombine() == itens.get(0).getId())
+                .filter(v -> v.idItemOri() == itens.get(0).getId())
                 .findFirst().orElse(null);
 
         var listNewCombinable = listCombinable.stream()
-                .filter(v -> v.idItem() == combinable.idItem())
+                .filter(v -> v.idItemNew() == combinable.idItemNew())
                 .toList();
 
         if (itens.size() != listNewCombinable.size())
@@ -40,12 +40,12 @@ public final class Combination {
 
         var isCombine = itens.stream()
                 .allMatch(item ->
-                        listNewCombinable.stream().anyMatch(v -> v.idItem() == item.getId())
+                        listNewCombinable.stream().anyMatch(v -> v.idItemNew() == item.getId())
                 );
         if (!isCombine)
             return TypeMessage.COMBINE_NOT_COMBINABLE;
 
-        newItem = getItem(listNewCombinable.get(0).idItem());
+        newItem = getItem(listNewCombinable.get(0).idItemNew());
         if (Objects.isNull(newItem)) return TypeMessage.ITEM_NOT_FOUND;
 
         updateMap();

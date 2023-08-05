@@ -4,8 +4,8 @@ import backend.repository.interfaces.IDoorEntity;
 
 public record DoorEntity(
         int id,
-        int idMapGame,
-        int idMapGameExit,
+        int idMapOri,
+        int idMapDor,
         int positionX,
         int positionY,
         boolean open) implements IDoorEntity {
@@ -15,12 +15,12 @@ public record DoorEntity(
         return """
                 {
                     "id": %d,
-                    "idMapGame": "%d",
-                    "idMapGameExit": "%d",
+                    "idMapOri": "%d",
+                    "idMapDor": "%d",
                     "positionX": %d,
                     "positionY": %d,
                     "open": %b
                 }
-                """.formatted(this.id,this.idMapGame, this.idMapGameExit, this.positionX, this.positionY, this.open);
+                """.formatted(this.id,this.idMapOri, this.idMapDor, this.positionX, this.positionY, this.open);
     }
 }

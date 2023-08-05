@@ -3,7 +3,6 @@ import backend.service.component.move.MovePlayerScenery;
 import backend.service.model.Player;
 import org.junit.Before;
 import org.junit.Test;
-import backend.repository.factory.RepositoryFactory;
 import backend.service.interfaces.ICoordinate;
 
 import static org.junit.Assert.assertEquals;

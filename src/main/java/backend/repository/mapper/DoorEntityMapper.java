@@ -2,32 +2,22 @@ package backend.repository.mapper;
 
 import backend.repository.entity.DoorEntity;
 import backend.repository.interfaces.IDoorEntity;
+import backend.repository.interfaces.IMapperEntity;
+import backend.repository.util.ValidUtil;
 
-import java.util.function.Function;
-
-import static java.lang.Integer.parseInt;
-
-public final class DoorEntityMapper implements Function<String, IDoorEntity> {
+public final class DoorEntityMapper implements IMapperEntity<IDoorEntity> {
 
     @Override
-    public IDoorEntity apply(String l) {
-        var dadosLinha = l.split(";");
+    public IDoorEntity apply(String linha) {
+        var dados = split(linha);
         return new DoorEntity(
-                stringToInt(dadosLinha[0].trim()),
-                stringToInt(dadosLinha[1].trim()),
-                stringToInt(dadosLinha[2].trim()),
-                stringToInt(dadosLinha[3].trim()),
-                stringToInt(dadosLinha[4].trim()),
-                stringToBoolean(dadosLinha[5].trim())
+                ValidUtil.parseInt(dados[0]),
+                ValidUtil.parseInt(dados[1]),
+                ValidUtil.parseInt(dados[2]),
+                ValidUtil.parseInt(dados[3]),
+                ValidUtil.parseInt(dados[4]),
+                ValidUtil.parseBoolean(dados[5])
         );
-    }
-
-    private boolean stringToBoolean(String dado) {
-        return dado.equals("true");
-    }
-
-    private int stringToInt(String dado) {
-        return dado.equals("null") ? -1 : parseInt(dado);
     }
 
 }

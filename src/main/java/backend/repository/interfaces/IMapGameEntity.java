@@ -1,11 +1,9 @@
 package backend.repository.interfaces;
 
-public interface IMapGameEntity {
-
-    int id();
+public interface IMapGameEntity extends IEntity {
     String name();
 
-    String imagemIcon();
+    String image();
 
     String song();
 

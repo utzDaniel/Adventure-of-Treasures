@@ -2,24 +2,18 @@ package backend.repository.mapper;
 
 import backend.repository.entity.EquipableEntity;
 import backend.repository.interfaces.IEquipableEntity;
+import backend.repository.interfaces.IMapperEntity;
+import backend.repository.util.ValidUtil;
 
-import java.util.function.Function;
-
-import static java.lang.Integer.parseInt;
-
-public final class EquipableEntityMapper implements Function<String, IEquipableEntity> {
+public final class EquipableEntityMapper implements IMapperEntity<IEquipableEntity> {
 
     @Override
-    public IEquipableEntity apply(String l) {
-        var dadosLinha = l.split(";");
+    public IEquipableEntity apply(String linha) {
+        var dados = split(linha);
         return new EquipableEntity(
-                stringToInt(dadosLinha[0].trim()),
-                stringToInt(dadosLinha[1].trim()),
-                stringToInt(dadosLinha[2].trim()));
-    }
-
-    private int stringToInt(String dado) {
-        return dado.equals("null") ? -1 : parseInt(dado);
+                ValidUtil.parseInt(dados[0]),
+                ValidUtil.parseInt(dados[1]),
+                ValidUtil.parseInt(dados[2]));
     }
 
 }

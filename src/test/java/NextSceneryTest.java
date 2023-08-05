@@ -1,7 +1,6 @@
 import backend.service.enums.Move;
 import backend.service.model.Player;
 import backend.service.model.builder.MapGame;
-import backend.repository.factory.RepositoryFactory;
 import frontend.model.component.ComponentFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,8 +24,8 @@ public class NextSceneryTest {
         player.setM(Move.SUL);
         player.setCurrentMap(repositoryMapGame.get("cais"));
         var listJLabel = new ArrayList<JLabel>();
-        listJLabel.add(ComponentFactory.getJLabel(this.player.getIcon().toString(), this.player.getLocation())));
-        listJLabel.add(ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getIcon().toString()));
+        listJLabel.add(ComponentFactory.getJLabel(this.player.getImage().toString(), this.player.getLocation())));
+        listJLabel.add(ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getImage().toString()));
         moveScenery = new MovePlayerNextScenery(player, Move.SUL);
     }
 

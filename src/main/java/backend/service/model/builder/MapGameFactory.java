@@ -1,76 +1,74 @@
 package backend.service.model.builder;
 
-import backend.repository.factory.RepositoryFactory;
+import backend.repository.interfaces.IItemMapEntity;
 import backend.repository.interfaces.IMapGameEntity;
+import backend.repository.singleton.DoorRepository;
+import backend.repository.singleton.ExitRepository;
+import backend.repository.singleton.ItemMapRepository;
+import backend.repository.singleton.ItemRepository;
 import backend.service.interfaces.IBuilderMapGame;
 import backend.service.model.Door;
 import backend.service.model.DoorFactory;
 import backend.service.model.Exit;
 import backend.service.model.ExitFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class MapGameFactory {
-    private IMapGameEntity mapGameEntity;
-
     public MapGame create(IMapGameEntity mapGameEntity) {
-        this.mapGameEntity = mapGameEntity;
-        return type();
+        return isScenery(mapGameEntity) ? createScenery(mapGameEntity) : createRoom(mapGameEntity);
     }
 
-    private MapGame type() {
-        return isScenery() ? createScenery() : createRoom();
+    private boolean isScenery(IMapGameEntity mapGameEntity) {
+        return !getExits(mapGameEntity).isEmpty();
     }
 
-    private boolean isScenery() {
-        return !getExits().isEmpty();
+    private MapGame createRoom(IMapGameEntity mapGameEntity) {
+        RoomBuilder builder = RoomBuilder.builder();
+        return buildMapGame(builder, mapGameEntity);
     }
 
-    private IBuilderMapGame inicial(IBuilderMapGame mapGame) {
-        return mapGame.id(mapGameEntity.id())
+    private MapGame createScenery(IMapGameEntity mapGameEntity) {
+        SceneryBuilder builder = SceneryBuilder.builder();
+        builder.exits(getExits(mapGameEntity));
+        return buildMapGame(builder, mapGameEntity);
+    }
+
+    private MapGame buildMapGame(IBuilderMapGame builder, IMapGameEntity mapGameEntity) {
+        return builder.id(mapGameEntity.id())
                 .name(mapGameEntity.name())
-                .image(mapGameEntity.imagemIcon())
-                .doors(getDoors())
-                .itens(getItens())
+                .image(mapGameEntity.image())
+                .doors(getDoors(mapGameEntity))
+                .itens(getItens(mapGameEntity))
                 .song(mapGameEntity.song())
-                .limits(mapGameEntity.limits());
-    }
-
-    private MapGame createRoom() {
-        return inicial(RoomBuilder
-                .builder())
+                .limits(mapGameEntity.limits())
                 .build();
     }
 
-    private MapGame createScenery() {
-        return inicial(SceneryBuilder
-                .builder()
-                .exits(getExits()))
-                .build();
-    }
-
-    private List<Item> getItens() {
-        return RepositoryFactory.getRepositoryItem().getAll()
-                .stream().filter(item -> isValid(item.idMapGame()) && item.idMapGame() == mapGameEntity.id())
-                .map(itemEntity -> new ItemFactory().create(itemEntity))
+    private List<Item> getItens(IMapGameEntity mapGameEntity) {
+        var idMap = mapGameEntity.id();
+        return ItemMapRepository.getInstance().getByIdMap(idMap)
+                .stream()
+                .map(v -> ItemRepository.getInstance().getById(v.idItem()))
+                .map(ItemFactory::create)
                 .toList();
     }
 
-    private List<Exit> getExits() {
-        return RepositoryFactory.getRepositoryExit().getAll()
-                .stream().filter(exit -> isValid(exit.idMapGame()) && exit.idMapGame() == mapGameEntity.id())
-                .map(exitEntity -> new ExitFactory().create(exitEntity))
+    private List<Exit> getExits(IMapGameEntity mapGameEntity) {
+        return ExitRepository.getInstance()
+                .getByIdMapOri(mapGameEntity.id())
+                .stream()
+                .map(ExitFactory::create)
                 .toList();
     }
 
-    private List<Door> getDoors() {
-        return RepositoryFactory.getRepositoryDoor().getAll()
-                .stream().filter(door -> isValid(door.idMapGame()) && door.idMapGame() == mapGameEntity.id())
-                .map(doorEntity -> new DoorFactory().create(doorEntity))
+    private List<Door> getDoors(IMapGameEntity mapGameEntity) {
+        return DoorRepository.getInstance()
+                .getByIdMapOri(mapGameEntity.id())
+                .stream()
+                .map(DoorFactory::create)
                 .toList();
     }
 
-    private boolean isValid(int key) {
-        return key != -1;
-    }
 }

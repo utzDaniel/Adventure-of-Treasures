@@ -2,30 +2,20 @@ package backend.repository.mapper;
 
 import backend.repository.entity.ExitEntity;
 import backend.repository.interfaces.IExitEntity;
+import backend.repository.interfaces.IMapperEntity;
+import backend.repository.util.ValidUtil;
 
-import java.util.function.Function;
-
-import static java.lang.Integer.parseInt;
-
-public final class ExitEntityMapper implements Function<String, IExitEntity> {
+public final class ExitEntityMapper implements IMapperEntity<IExitEntity> {
 
     @Override
-    public IExitEntity apply(String l) {
-        var dadosLinha = l.split(";");
+    public IExitEntity apply(String linha) {
+        var dados = split(linha);
         return new ExitEntity(
-                stringToInt(dadosLinha[0].trim()),
-                stringToInt(dadosLinha[1].trim()),
-                tratarString(dadosLinha[2].trim()),
-                stringToInt(dadosLinha[3].trim())
+                ValidUtil.parseInt(dados[0]),
+                ValidUtil.parseInt(dados[1]),
+                ValidUtil.parseString(dados[2]),
+                ValidUtil.parseInt(dados[3])
         );
-    }
-
-    private String tratarString(String dado) {
-        return dado.equals("null") ? null : dado;
-    }
-
-    private int stringToInt(String dado) {
-        return dado.equals("null") ? -1 : parseInt(dado);
     }
 
 }

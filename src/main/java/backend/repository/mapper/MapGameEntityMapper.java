@@ -2,34 +2,24 @@ package backend.repository.mapper;
 
 import backend.repository.entity.MapGameEntity;
 import backend.repository.interfaces.IMapGameEntity;
+import backend.repository.interfaces.IMapperEntity;
+import backend.repository.util.ValidUtil;
 
-import java.util.function.Function;
-
-import static java.lang.Integer.parseInt;
-
-public final class MapGameEntityMapper implements Function<String, IMapGameEntity> {
+public final class MapGameEntityMapper implements IMapperEntity<IMapGameEntity> {
 
     public static final int LINE_COUNT = 56;
     public static final int COLUMN_COUNT = 78;
 
     @Override
-    public IMapGameEntity apply(String l) {
-        var dadosLinha = l.split(";");
+    public IMapGameEntity apply(String linha) {
+        var dados = split(linha);
         return new MapGameEntity(
-                stringToInt(dadosLinha[0].trim()),
-                tratarString(dadosLinha[1].trim()),
-                tratarString(dadosLinha[2].trim()),
-                tratarString(dadosLinha[3].trim()),
-                createLimits(dadosLinha[4].trim())
+                ValidUtil.parseInt(dados[0]),
+                ValidUtil.parseString(dados[1]),
+                ValidUtil.parseString(dados[2]),
+                ValidUtil.parseString(dados[3]),
+                createLimits(dados[4])
         );
-    }
-
-    private String tratarString(String dado) {
-        return dado.equals("null") ? null : dado;
-    }
-
-    private int stringToInt(String dado) {
-        return dado.equals("null") ? -1 : parseInt(dado);
     }
 
     private byte[][] createLimits(String dados) {

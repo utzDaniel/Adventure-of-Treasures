@@ -19,9 +19,9 @@ public final class ActionResponseMapper implements Function<Player, IActionRespo
                 .map(item -> new ItemDTOMapper().apply(item))
                 .toList());
 
-        var iconMap = player.getCurrentMap().getIcon().toString();
+        var iconMap = player.getCurrentMap().getImage();
         var songMap = player.getCurrentMap().getSong();
-        var iconPlayer = player.getIcon().toString();
+        var iconPlayer = player.getImage();
         int step = 10;
         var x = player.getLocation().y() * step;
         var y = player.getLocation().x() * step;

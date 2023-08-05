@@ -1,13 +1,7 @@
 package backend.repository.interfaces;
 
-import backend.service.enums.TypeItem;
+public interface IItemEntity extends IEntity {
 
-import java.util.List;
-
-public interface IItemEntity {
-
-    int id();
-    int idMapGame();
     String name();
 
     String description();
@@ -18,9 +12,7 @@ public interface IItemEntity {
 
     int positionY();
 
-    String imagemIcon();
-
-    List<TypeItem> type();
+    String image();
 
     boolean visible();
 

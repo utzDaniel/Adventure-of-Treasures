@@ -1,9 +1,8 @@
 package backend.repository.interfaces;
 
-public interface ICombinableEntity {
-    int id();
+public interface ICombinableEntity extends IEntity {
 
-    int idItem();
+    int idItemNew();
 
-    int idItemCombine();
+    int idItemOri();
 }

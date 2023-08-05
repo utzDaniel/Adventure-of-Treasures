@@ -3,17 +3,17 @@ package backend.repository.entity;
 import backend.repository.interfaces.ICombinableEntity;
 
 public record CombinableEntity(int id,
-                               int idItem,
-                               int idItemCombine) implements ICombinableEntity {
+                               int idItemNew,
+                               int idItemOri) implements ICombinableEntity {
 
     @Override
     public String toString() {
         return """
                 {
                     "id": %d,
-                    "idItem": "%d",
-                    "idItemCombine": "%d"
+                    "idItemNew": "%d",
+                    "idItemOri": "%d"
                 }
-                """.formatted(this.id, this.idItem, this.idItemCombine);
+                """.formatted(this.id, this.idItemNew, this.idItemOri);
     }
 }

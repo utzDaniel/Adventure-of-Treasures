@@ -1,10 +1,9 @@
 package backend.repository.interfaces;
 
-public interface IExitEntity {
-    int id();
-    int idMapGame();
+public interface IExitEntity extends IEntity {
+    int idMapOri();
 
     String direction();
 
-    int idMapGameExit();
+    int idMapExt();
 }

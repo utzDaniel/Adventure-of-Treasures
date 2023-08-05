@@ -1,16 +1,16 @@
 package backend.service.model;
 
-import backend.service.enums.Move;
+import backend.service.enums.Direction;
 
-public record Exit(Move move,
-                   int idMapGame) {
+public record Exit(Direction direction,
+                   int idMap) {
     @Override
     public String toString() {
         return """
                 {
-                    "move": %s,
-                    "idMapGame": %s
+                    "direction": %s,
+                    "idMap": %s
                 }
-                """.formatted(this.move, this.idMapGame);
+                """.formatted(this.direction, this.idMap);
     }
 }

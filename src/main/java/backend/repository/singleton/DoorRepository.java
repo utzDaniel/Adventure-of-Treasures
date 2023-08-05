@@ -1,0 +1,50 @@
+package backend.repository.singleton;
+
+import backend.repository.enums.Filename;
+import backend.repository.interfaces.IDoorEntity;
+import backend.repository.mapper.DoorEntityMapper;
+import backend.repository.util.Repository;
+
+import java.util.*;
+
+public final class DoorRepository {
+    private static DoorRepository repository;
+    private final Map<Integer, IDoorEntity> map;
+
+    public static synchronized DoorRepository getInstance() {
+        if (Objects.isNull(repository)) {
+            var mapper = new DoorEntityMapper();
+            var rep = new Repository<>(Filename.DOOR, mapper);
+            var map = rep.create();
+            repository = new DoorRepository(map);
+        }
+        return repository;
+    }
+
+    private DoorRepository(Map<Integer, IDoorEntity> map) {
+        this.map = new HashMap<>(map);
+    }
+
+    public Optional<IDoorEntity> getById(int id) {
+        return Optional.ofNullable(this.map.get(id));
+    }
+
+    public List<IDoorEntity> getByIdMapOri(int idMapOri) {
+        return this.map.values()
+                .stream()
+                .filter(v -> v.idMapOri() == idMapOri)
+                .toList();
+    }
+
+    public List<IDoorEntity> getByIdMapDor(int idMapDor) {
+        return this.map.values()
+                .stream()
+                .filter(v -> v.idMapDor() == idMapDor)
+                .toList();
+    }
+
+    public List<IDoorEntity> getAll() {
+        return this.map.values().stream().toList();
+    }
+
+}

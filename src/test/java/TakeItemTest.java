@@ -1,4 +1,3 @@
-import backend.repository.factory.RepositoryFactory;
 import backend.service.enums.Move;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.Player;

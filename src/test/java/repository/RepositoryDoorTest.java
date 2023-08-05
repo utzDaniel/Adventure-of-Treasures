@@ -1,7 +1,6 @@
 package repository;
 
 import backend.repository.entity.DoorEntity;
-import backend.repository.factory.RepositoryFactory;
 import backend.repository.interfaces.IDoorEntity;
 import org.junit.Before;
 import org.junit.Test;

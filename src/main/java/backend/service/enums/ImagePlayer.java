@@ -1,39 +1,37 @@
 package backend.service.enums;
 
-import javax.swing.*;
-
 public enum ImagePlayer {
 
     CIMA {
         @Override
-        public ImageIcon select() {
+        public String select() {
             char pos = CIMA.position == 'A' ? 'C' : CIMA.position;
-            return new ImageIcon(filename + String.format("cima_%s.png", pos));
+            return filename + String.format("cima_%s.png", pos);
         }
     },
     BAIXO {
         @Override
-        public ImageIcon select() {
+        public String select() {
             char pos = BAIXO.position == 'A' ? 'C' : BAIXO.position;
-            return new ImageIcon(filename + String.format("baixo_%s.png", pos));
+            return filename + String.format("baixo_%s.png", pos);
         }
     },
     DIREITA {
         @Override
-        public ImageIcon select() {
+        public String select() {
             char pos = DIREITA.position == 'A' ? 'C' : DIREITA.position;
-            return new ImageIcon(filename + String.format("direita_%s.png", pos));
+            return filename + String.format("direita_%s.png", pos);
         }
     },
     ESQUERDA {
         @Override
-        public ImageIcon select() {
+        public String select() {
             char pos = ESQUERDA.position == 'A' ? 'C' : ESQUERDA.position;
-            return new ImageIcon(filename + String.format("esquerda_%s.png", pos));
+            return filename + String.format("esquerda_%s.png", pos);
         }
     };
 
-    private static final String filename = "src/main/resources/player/";
+    private static final String filename = "src/main/resources/image/player/";
     private static final String POSITIONS = "ECDA";
     private char position;
 
@@ -50,5 +48,5 @@ public enum ImagePlayer {
         };
     }
 
-    public abstract ImageIcon select();
+    public abstract String select();
 }

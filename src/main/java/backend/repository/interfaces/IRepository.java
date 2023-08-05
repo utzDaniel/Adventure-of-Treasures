@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface IRepository<T, I extends Serializable> {
 
-    T get(I id);
+    T getById(I id);
 
     List<T> getAll();
 }

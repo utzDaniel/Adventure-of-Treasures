@@ -37,7 +37,7 @@ public final class MovePlayer {
 
     private void updateImagePlayer() {
         this.move.run();
-        this.player.setIcon(this.move.getImage());
+        this.player.setImage(this.move.getImage());
     }
 
     private void updateMovePlayer() {

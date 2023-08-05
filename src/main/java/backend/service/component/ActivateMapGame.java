@@ -20,13 +20,13 @@ public final class ActivateMapGame {
                 activate = true;
             } else if (nameItem.equals("mapa")) {
                 MapGame praia = Cache.getMapGame(4);
-                praia.setIcon(new ImageIcon("src/main/resources/map/praiaM.png"));
+                praia.setImage("src/main/resources/map/praiaM.png");
             } else if (nameItem.equals("chave")) {
                 MapGame praia = Cache.getMapGame(4);
-                praia.setIcon(new ImageIcon("src/main/resources/map/praia.png"));
+                praia.setImage("src/main/resources/map/praia.png");
             } else if (nameItem.equals("escada")) {
                 MapGame templo = Cache.getMapGame(8);
-                templo.setIcon(new ImageIcon("src/main/resources/map/temploF.png"));
+                templo.setImage("src/main/resources/map/temploF.png");
             }
         } catch (Exception e) {
             System.out.println("Direção invalida!");

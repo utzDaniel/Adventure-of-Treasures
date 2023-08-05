@@ -1,6 +1,6 @@
 package backend.service.infra;
 
-import backend.repository.factory.RepositoryFactory;
+import backend.repository.singleton.MapGameRepository;
 import backend.service.model.builder.MapGame;
 import backend.service.model.builder.MapGameFactory;
 
@@ -30,7 +30,7 @@ public final class Cache {
     }
 
     private static MapGame create(int idMap){
-        var entity = RepositoryFactory.getRepositoryMapGame().get(idMap);
+        var entity = MapGameRepository.getInstance().getById(idMap);
         return factory.create(entity);
     }
 

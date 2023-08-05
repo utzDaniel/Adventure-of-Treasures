@@ -1,10 +1,10 @@
 package backend.repository.interfaces;
 
-public interface IDoorEntity {
+public interface IDoorEntity extends IEntity {
 
-    int id();
-    int idMapGame();
-    int idMapGameExit();
+    int idMapOri();
+
+    int idMapDor();
 
     int positionX();
 

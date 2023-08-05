@@ -4,7 +4,6 @@ import backend.service.interfaces.ICoordinate;
 import backend.service.model.Area;
 import backend.service.model.Door;
 
-import javax.swing.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +14,7 @@ public abstract class MapGame {
     private int id;
     private String name;
     private String song;
-    private ImageIcon icon;
+    private String image;
     private Area area;
     private Map<ICoordinate, Door> doors;
     private Map<ICoordinate, Item> itens;
@@ -28,9 +27,11 @@ public abstract class MapGame {
     public int getId() {
         return this.id;
     }
+
     protected void setId(int id) {
         this.id = id;
     }
+
     public String getName() {
         return this.name;
     }
@@ -39,12 +40,12 @@ public abstract class MapGame {
         this.name = name;
     }
 
-    public ImageIcon getIcon() {
-        return this.icon;
+    public String getImage() {
+        return this.image;
     }
 
-    public void setIcon(ImageIcon imagemIcon) {//Apenas a class ActivateMapGame usar o publico
-        this.icon = imagemIcon;
+    public void setImage(String image) {//Apenas a class ActivateMapGame usar o publico
+        this.image = image;
     }
 
     public Area getArea() {
@@ -122,7 +123,7 @@ public abstract class MapGame {
                     "itens": %s,
                     "song": "%s"
                 }
-                """.formatted(this.name, this.icon.toString(), this.area, this.doors.values(),
+                """.formatted(this.name, this.image, this.area, this.doors.values(),
                 this.itens.values(), this.song);
     }
 }

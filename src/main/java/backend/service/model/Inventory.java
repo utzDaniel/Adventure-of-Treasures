@@ -1,6 +1,6 @@
 package backend.service.model;
 
-import backend.repository.factory.RepositoryFactory;
+import backend.repository.singleton.ItemRepository;
 import backend.service.model.builder.Item;
 import backend.service.model.builder.ItemFactory;
 
@@ -24,8 +24,8 @@ public final class Inventory {
         this.isInventory = false;
         this.itens = new HashMap<>();
         this.itensAtivos = new ArrayList<>();
-        RepositoryFactory.getRepositoryItem().getAll()
-                .stream().map(itemEntity -> new ItemFactory().create(itemEntity))
+        ItemRepository.getInstance().getAll()
+                .stream().map(ItemFactory::create)
                 .forEach(item -> itens.put(item.getName(), item));
         itens.get("chave").setVisible(true);
     }

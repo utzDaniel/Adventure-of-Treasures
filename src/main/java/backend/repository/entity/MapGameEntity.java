@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public record MapGameEntity(int id,
                             String name,
-                            String imagemIcon,
+                            String image,
                             String song,
                             byte[][] limits) implements IMapGameEntity {
     @Override
@@ -16,11 +16,11 @@ public record MapGameEntity(int id,
                 {
                     "id": %d,
                     "name": "%s",
-                    "icon": "%s",
+                    "image": "%s",
                     "song": "%s",
                     "limits": %s,
                 }
-                """.formatted(this.id, this.name,this.imagemIcon, this.song, Arrays.toString(this.limits));
+                """.formatted(this.id, this.name,this.image, this.song, Arrays.toString(this.limits));
     }
 
     @Override
@@ -31,13 +31,13 @@ public record MapGameEntity(int id,
         return Arrays.deepEquals(this.limits, mapGameEntity.limits) &&
                 Objects.equals(this.id, mapGameEntity.id) &&
                 Objects.equals(this.name, mapGameEntity.name) &&
-                Objects.equals(this.imagemIcon, mapGameEntity.imagemIcon) &&
+                Objects.equals(this.image, mapGameEntity.image) &&
                 Objects.equals(this.song, mapGameEntity.song);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(this.id, this.name,this.imagemIcon, this.song);
+        int result = Objects.hash(this.id, this.name,this.image, this.song);
         result = 31 * result + Arrays.deepHashCode(this.limits);
         return result;
     }

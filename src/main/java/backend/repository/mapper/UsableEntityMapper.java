@@ -1,25 +1,19 @@
 package backend.repository.mapper;
 
 import backend.repository.entity.UsableEntity;
+import backend.repository.interfaces.IMapperEntity;
 import backend.repository.interfaces.IUsableEntity;
+import backend.repository.util.ValidUtil;
 
-import java.util.function.Function;
-
-import static java.lang.Integer.parseInt;
-
-public final class UsableEntityMapper implements Function<String, IUsableEntity> {
+public final class UsableEntityMapper implements IMapperEntity<IUsableEntity> {
 
     @Override
-    public IUsableEntity apply(String l) {
-        var dadosLinha = l.split(";");
+    public IUsableEntity apply(String linha) {
+        var dados = split(linha);
         return new UsableEntity(
-                stringToInt(dadosLinha[0].trim()),
-                stringToInt(dadosLinha[1].trim()),
-                stringToInt(dadosLinha[2].trim()));
-    }
-
-    private int stringToInt(String dado) {
-        return dado.equals("null") ? -1 : parseInt(dado);
+                ValidUtil.parseInt(dados[0]),
+                ValidUtil.parseInt(dados[1]),
+                ValidUtil.parseInt(dados[2]));
     }
 
 }

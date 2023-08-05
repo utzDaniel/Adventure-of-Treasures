@@ -1,6 +1,5 @@
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
-import backend.repository.factory.RepositoryFactory;
 import frontend.model.component.ComponentFactory;
 import frontend.service.InterfaceGame;
 import frontend.service.InterfaceInventory;
@@ -32,7 +31,7 @@ public class InterfaceInventoryTest {
             player.getInventory().setItemInvisible(item);
         }
         var listJLabel = new ArrayList<JLabel>();
-        listJLabel.add(ComponentFactory.getJLabel(this.player.getIcon().toString(), this.player.getLocation())));
+        listJLabel.add(ComponentFactory.getJLabel(this.player.getImage().toString(), this.player.getLocation())));
         //listJLabel.add(ComponentFactory.getJLabel(player.getCurrentMap()));
         interfaceGame = new InterfaceGame(listJLabel);
 //        interfaceInventory = new InterfaceInventory(interfaceGame);

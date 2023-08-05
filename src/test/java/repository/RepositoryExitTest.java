@@ -1,7 +1,6 @@
 package repository;
 
 import backend.repository.entity.ExitEntity;
-import backend.repository.factory.RepositoryFactory;
 import backend.repository.interfaces.IExitEntity;
 import org.junit.Before;
 import org.junit.Test;

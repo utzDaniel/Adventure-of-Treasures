@@ -1,6 +1,5 @@
 import backend.service.model.Player;
 import backend.service.model.builder.Item;
-import backend.repository.factory.RepositoryFactory;
 import frontend.model.component.ComponentFactory;
 import frontend.service.InterfaceGame;
 import org.junit.Before;
@@ -32,8 +31,8 @@ public class InterfaceGameTest {
             player.getInventory().setItemInvisible(item);
         }
         var listJLabel = new ArrayList<JLabel>();
-        listJLabel.add(ComponentFactory.getJLabel(this.player.getIcon().toString(), this.player.getLocation())));
-        listJLabel.add(ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getIcon().toString()));
+        listJLabel.add(ComponentFactory.getJLabel(this.player.getImage().toString(), this.player.getLocation())));
+        listJLabel.add(ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getImage().toString()));
         interfaceGame = new InterfaceGame(listJLabel);
         frame = interfaceGame.getFrame();
         container = frame.getContentPane();
@@ -63,25 +62,25 @@ public class InterfaceGameTest {
     @Test
     public void validIconJLabelPlayer() {
         var icon = ((JLabel) container.getComponent(0)).getIcon();
-        assertEquals(player.getIcon().toString(), icon.toString());
+        assertEquals(player.getImage().toString(), icon.toString());
     }
 
     @Test
     public void validIconJLabelMapGame() {
         var icon = ((JLabel) container.getComponent(1)).getIcon();
-        assertEquals(player.getCurrentMap().getIcon().toString(), icon.toString());
+        assertEquals(player.getCurrentMap().getImage().toString(), icon.toString());
     }
 
     @Test
     public void validWidthJLabelMapGame() {
-        var jLabel = ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getIcon().toString());
+        var jLabel = ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getImage().toString());
         var width = container.getComponent(1).getWidth();
         assertEquals(jLabel.getWidth(), width);
     }
 
     @Test
     public void validHeightJLabelMapGame() {
-        var jLabel = ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getIcon().toString());
+        var jLabel = ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getImage().toString());
         var height = container.getComponent(1).getHeight();
         assertEquals(jLabel.getHeight(), height);
     }

@@ -1,21 +1,16 @@
 package backend.service.model;
 
-import backend.service.interfaces.ICoordinate;
 import backend.repository.interfaces.IDoorEntity;
+import backend.service.interfaces.ICoordinate;
 
 public final class DoorFactory {
 
-    private IDoorEntity doorEntity;
-
-    public Door create(IDoorEntity doorEntity) {
-        this.doorEntity = doorEntity;
-        return run();
-    }
-
-    private Door run() {
-        var idMapGame = doorEntity.idMapGameExit();
+    private DoorFactory(){}
+    public static Door create(IDoorEntity doorEntity) {
+        var idMap = doorEntity.idMapDor();
         var coordinate = ICoordinate.getInstance(doorEntity.positionX(), doorEntity.positionY());
         var open = doorEntity.open();
-        return new Door(idMapGame, coordinate, open);
+        return new Door(idMap, coordinate, open);
     }
+
 }

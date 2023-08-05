@@ -1,10 +1,8 @@
-import backend.repository.factory.RepositoryFactory;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.Door;
 import backend.service.model.Player;
 import backend.service.model.builder.MapGame;
 import backend.service.model.builder.Room;
-import backend.service.model.builder.Scenery;
 import frontend.model.component.ComponentFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,8 +30,8 @@ public class NextDoorTest {
         player.setCurrentMap(village);
         player.setLocation(ICoordinate.getInstance(370, 150));
         var listJLabel = new ArrayList<JLabel>();
-        listJLabel.add(ComponentFactory.getJLabel(this.player.getIcon().toString(), this.player.getLocation())));
-        listJLabel.add(ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getIcon().toString()));
+        listJLabel.add(ComponentFactory.getJLabel(this.player.getImage().toString(), this.player.getLocation())));
+        listJLabel.add(ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getImage().toString()));
         //nextDoor = new NextDoor(new InterfaceGame(listJLabel));
         nextDoor = new OpenDoor(null);
     }

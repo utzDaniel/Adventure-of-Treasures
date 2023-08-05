@@ -14,11 +14,12 @@ public final class Player {
     private MapGame currentMapGame;
     private final Inventory inventory;
     private ICoordinate coordinate;
-    private ImageIcon icon;
+    private String image;
 
-    public Player(ImageIcon icon, ICoordinate coordinate, MapGame mapGame, Inventory inventory) throws Exception {
+    // TODO resolver isso depois
+    public Player(String image, ICoordinate coordinate, MapGame mapGame, Inventory inventory) throws Exception {
         if(Objects.nonNull(player)) throw new Exception("Player já criado, use o Player.getInstance()");
-        this.icon = icon;
+        this.image = image;
         this.coordinate = coordinate;
         this.currentMapGame = mapGame;
         this.inventory = inventory;
@@ -57,11 +58,11 @@ public final class Player {
         return this.inventory;
     }
 
-    public ImageIcon getIcon() {
-        return this.icon;
+    public String getImage() {
+        return this.image;
     }
 
-    public void setIcon(ImageIcon icon) {
-        this.icon = icon;
+    public void setImage(String image) {
+        this.image = image;
     }
 }

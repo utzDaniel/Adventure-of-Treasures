@@ -1,0 +1,17 @@
+id;name;description;weight;position_x;position_y;image;visible
+1;chave;utilizada para abrir algo;3;30;58;src/main/resources/image/item/chave.png;false
+2;escada;utilizada para subir em algum lugar;5;20;41;src/main/resources/image/item/escada.png;false
+3;faca;serve para cortar algo;3;13;42;src/main/resources/image/item/faca.png;true
+4;frasco;cont�m algum l�quido inflam�vel;3;31;28;src/main/resources/image/item/frasco.png;true
+5;livro;livro antigo usado para decifrar escrita antiga;1;39;49;src/main/resources/image/item/livro.png;true
+6;madeira;cabo de madeira velho;5;20;41;src/main/resources/image/item/madeira.png;true
+7;madeiras;madeira para construir algo;5;8;64;src/main/resources/image/item/madeiras.png;true
+8;mapa;algo est� enterrado na praia;0;20;41;src/main/resources/image/item/mapa.png;false
+9;martelo;utilizado para construir algo;4;32;16;src/main/resources/image/item/martelo.png;true
+10;mochila;utilizada para carregar mais coisas;0;22;65;src/main/resources/image/item/mochila.png;true
+11;pa;ferramenta usada para cavar;3;28;20;src/main/resources/image/item/pa.png;true
+12;papel;papel escrito em lingua antiga;2;32;51;src/main/resources/image/item/papel.png;true
+13;pederneira;item espec�fico para fazer fogo;2;20;44;src/main/image/resources/item/pederneira.png;true
+14;pregos;utilizado para construir algo;3;40;46;src/main/image/resources/item/pregos.png;true
+15;tesouro;tesouro lend�rio dos templ�rios;3;24;62;src/main/image/resources/item/tesouro.png;true
+16;tocha;utilizado para iluminar;5;20;41;src/main/resources/image/item/tocha.png;false

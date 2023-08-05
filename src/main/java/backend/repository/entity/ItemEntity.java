@@ -1,23 +1,15 @@
 package backend.repository.entity;
 
 import backend.repository.interfaces.IItemEntity;
-import backend.service.enums.TypeItem;
-
-import java.util.List;
 
 public record ItemEntity(
         int id,
-        int idMapGame,
         String name,
         String description,
         int weight,
         int positionX,
         int positionY,
-
-        String imagemIcon,
-
-        List<TypeItem> type,
-
+        String image,
         boolean visible) implements IItemEntity {
 
     @Override
@@ -25,18 +17,16 @@ public record ItemEntity(
         return """
                 {
                     "id": "%d",
-                    "idMapGame": "%d",
                     "name": "%s",
                     "description": "%s",
                     "weight": %d,
                     "positionX": %d,
                     "positionY": %d,
-                    "imagemIcon": "%s",
-                    "type": %s,
+                    "image": "%s",
                     "visible": %b
                 }
-                """.formatted(this.id, this.idMapGame, this.name, this.description, this.weight, this.positionX,
-                this.positionY, this.imagemIcon, this.type, this.visible);
+                """.formatted(this.id, this.name, this.description, this.weight, this.positionX,
+                this.positionY, this.image, this.visible);
 
     }
 }

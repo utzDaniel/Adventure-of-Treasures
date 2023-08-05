@@ -1,7 +1,7 @@
 package backend.service.component.use;
 
 import backend.controller.enums.TypeMessage;
-import backend.repository.factory.RepositoryFactory;
+import backend.repository.singleton.UsableRepository;
 import backend.service.component.RemoveItem;
 import backend.service.enums.ItemsUsable;
 import backend.service.enums.TypeItem;
@@ -28,10 +28,10 @@ public final class ServiceUseItem {
         var typeMessage = TypeMessage.ITEM_NOT_FOUND;
         if (item.isType(TypeItem.USABLE)) {
 
-            var listUsable = RepositoryFactory.getRepositoryUsable().getAll();
+            var listUsable = UsableRepository.getInstance().getAll();
             var usable = listUsable.stream().filter(v -> v.idItem() == item.getId()).findFirst().orElse(null);
 
-            if (usable.idMapGame() != idMap)
+            if (usable.idMap() != idMap)
                 return TypeMessage.USABLE_NOT_MAP;
 
             var usable1 = getItemUsable(item.getName());
