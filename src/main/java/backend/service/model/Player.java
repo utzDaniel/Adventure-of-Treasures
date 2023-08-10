@@ -2,9 +2,7 @@ package backend.service.model;
 
 import backend.service.enums.Move;
 import backend.service.interfaces.ICoordinate;
-import backend.service.model.builder.MapGame;
 
-import javax.swing.*;
 import java.util.Objects;
 
 public final class Player {

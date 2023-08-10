@@ -2,7 +2,7 @@ package backend.service.mapper;
 
 import backend.service.dto.ItemDTO;
 import backend.service.interfaces.ICoordinate;
-import backend.service.model.builder.Item;
+import backend.service.model.Item;
 
 import java.util.function.Function;
 
@@ -13,7 +13,7 @@ public class ItemDTOMapper implements Function<Item, ItemDTO> {
     public ItemDTO apply(Item item) {
         return new ItemDTO(item.getName(),
                 item.getDescription(),
-                item.getIcon().toString(),
+                item.getImage(),
                 item.getWeight(),
                 ICoordinate.getInstance(item.getLocation().y() * 10, item.getLocation().x() * 10),
                 item.getClass().getName(),

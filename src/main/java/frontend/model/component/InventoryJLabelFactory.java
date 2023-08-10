@@ -22,7 +22,7 @@ final class InventoryJLabelFactory {
     private static JLabel northLabel() {
         var label = new JLabel();
         label.setName("label_norte");
-        label.setIcon(new ImageIcon("src/main/resources/inventario/top.png"));
+        label.setIcon(new ImageIcon("src/main/resources/image/inventario/top.png"));
         label.setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0));
         label.setLayout(new BorderLayout(0, 0));
         label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -36,7 +36,7 @@ final class InventoryJLabelFactory {
     private static JLabel eastLabel() {
         var label = new JLabel();
         label.setName("label_leste");
-        label.setIcon(new ImageIcon("src/main/resources/inventario/icons.png"));
+        label.setIcon(new ImageIcon("src/main/resources/image/inventario/icons.png"));
         label.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 19));
         label.setLayout(null);
         label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -50,7 +50,7 @@ final class InventoryJLabelFactory {
     private static JLabel westLabel() {
         var label = new JLabel();
         label.setName("label_oeste");
-        label.setIcon(new ImageIcon("src/main/resources/inventario/player.png"));
+        label.setIcon(new ImageIcon("src/main/resources/image/inventario/player.png"));
         label.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 0));
         label.setLayout(new BorderLayout(0, 0));
         label.setHorizontalAlignment(SwingConstants.CENTER);

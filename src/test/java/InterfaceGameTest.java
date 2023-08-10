@@ -1,5 +1,5 @@
 import backend.service.model.Player;
-import backend.service.model.builder.Item;
+import backend.service.model.Item;
 import frontend.model.component.ComponentFactory;
 import frontend.service.InterfaceGame;
 import org.junit.Before;

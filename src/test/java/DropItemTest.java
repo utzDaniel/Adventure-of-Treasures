@@ -2,7 +2,7 @@ import backend.service.component.drop.ServiceDropItem;
 import backend.service.enums.Move;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.Player;
-import backend.service.model.builder.Item;
+import backend.service.model.Item;
 import org.junit.Before;
 import org.junit.Test;
 

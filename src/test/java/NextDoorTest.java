@@ -1,8 +1,7 @@
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.Door;
 import backend.service.model.Player;
-import backend.service.model.builder.MapGame;
-import backend.service.model.builder.Room;
+import backend.service.model.MapGame;
 import frontend.model.component.ComponentFactory;
 import org.junit.Before;
 import org.junit.Test;

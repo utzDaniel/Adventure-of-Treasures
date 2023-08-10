@@ -17,9 +17,8 @@ public final class ItemEntityMapper implements IMapperEntity<IItemEntity> {
                 ValidUtil.parseInt(dados[3]),
                 ValidUtil.parseInt(dados[4]),
                 ValidUtil.parseInt(dados[5]),
-                ValidUtil.parseString(dados[6]),
-                ValidUtil.parseBoolean(dados[7])
-        );
+                ValidUtil.parseString(dados[6]));
+
     }
 }
 

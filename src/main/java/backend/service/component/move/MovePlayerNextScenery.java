@@ -4,7 +4,6 @@ import backend.controller.enums.TypeMessage;
 import backend.service.enums.Move;
 import backend.service.infra.Cache;
 import backend.service.model.Player;
-import backend.service.model.builder.Scenery;
 
 import java.util.Objects;
 
@@ -20,15 +19,12 @@ public final class MovePlayerNextScenery {
 
     public TypeMessage run() {
         var map = this.player.getCurrentMap();
-        int idScenery = -1;
 
-        if (map instanceof Scenery map1)
-            idScenery = map1.getExit(this.move);
-
-        if (idScenery == -1)
+        var idMap = map.getExit(this.move);
+        if (idMap.isEmpty())
             return TypeMessage.MOVE_MAP_NOT_EXIT;
 
-        var nextScenery = Cache.getMapGame(idScenery);
+        var nextScenery = Cache.getMapGame(idMap.get());
         if (Objects.isNull(nextScenery))
             return TypeMessage.MOVE_MAP_NOT_FOUND;
 

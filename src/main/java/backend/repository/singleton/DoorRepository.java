@@ -11,14 +11,17 @@ public final class DoorRepository {
     private static DoorRepository repository;
     private final Map<Integer, IDoorEntity> map;
 
-    public static synchronized DoorRepository getInstance() {
-        if (Objects.isNull(repository)) {
-            var mapper = new DoorEntityMapper();
-            var rep = new Repository<>(Filename.DOOR, mapper);
-            var map = rep.create();
-            repository = new DoorRepository(map);
+    public static DoorRepository getInstance() {
+        if (Objects.nonNull(repository)) return repository;
+        synchronized (DoorRepository.class) {
+            if (Objects.isNull(repository)) {
+                var mapper = new DoorEntityMapper();
+                var rep = new Repository<>(Filename.DOOR, mapper);
+                var map = rep.create();
+                repository = new DoorRepository(map);
+            }
+            return repository;
         }
-        return repository;
     }
 
     private DoorRepository(Map<Integer, IDoorEntity> map) {

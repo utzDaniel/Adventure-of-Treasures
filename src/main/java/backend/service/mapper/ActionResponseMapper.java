@@ -14,7 +14,7 @@ public final class ActionResponseMapper implements Function<Player, IActionRespo
     @Override
     public IActionResponse apply(Player player) {
 
-        var itens = new ArrayList<>(player.getCurrentMap().getItemVisible());
+        var itens = new ArrayList<>(player.getCurrentMap().getItens());
         var itensDTO = new ArrayList<IItemDTO>(itens.stream()
                 .map(item -> new ItemDTOMapper().apply(item))
                 .toList());

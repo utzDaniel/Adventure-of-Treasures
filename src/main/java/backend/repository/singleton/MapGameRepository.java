@@ -15,14 +15,17 @@ public final class MapGameRepository implements IRepository<IMapGameEntity, Inte
     private static MapGameRepository repository;
     private final Map<Integer, IMapGameEntity> map;
 
-    public static synchronized IRepository<IMapGameEntity, Integer> getInstance() {
-        if (Objects.isNull(repository)) {
-            var mapper = new MapGameEntityMapper();
-            var rep = new Repository<>(Filename.MAPGAME, mapper);
-            var map = rep.create();
-            repository = new MapGameRepository(map);
+    public static IRepository<IMapGameEntity, Integer> getInstance() {
+        if (Objects.nonNull(repository)) return repository;
+        synchronized (MapGameRepository.class) {
+            if (Objects.isNull(repository)) {
+                var mapper = new MapGameEntityMapper();
+                var rep = new Repository<>(Filename.MAPGAME, mapper);
+                var map = rep.create();
+                repository = new MapGameRepository(map);
+            }
+            return repository;
         }
-        return repository;
     }
 
     private MapGameRepository(Map<Integer, IMapGameEntity> map) {

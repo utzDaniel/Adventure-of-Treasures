@@ -3,7 +3,7 @@ package backend.service.component;
 import backend.controller.enums.TypeMessage;
 import backend.service.enums.TypeItem;
 import backend.service.model.Inventory;
-import backend.service.model.builder.Item;
+import backend.service.model.Item;
 
 public final class RemoveItem {
 

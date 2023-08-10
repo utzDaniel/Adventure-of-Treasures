@@ -14,7 +14,7 @@ public final class InventoryResponseMapper implements Function<Inventory, IInven
     public IInventoryResponse apply(Inventory inventory) {
         int capacity = inventory.getCapacity();
         int maxCapacity = inventory.getMaxCapacity();
-        var itens = new ArrayList<>(inventory.getItemVisible());
+        var itens = new ArrayList<>(inventory.getItens());
         var itensDTO = new ArrayList<IItemDTO>(itens.stream()
                 .map(item -> new ItemDTOMapper().apply(item))
                 .toList());

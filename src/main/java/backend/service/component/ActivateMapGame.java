@@ -3,9 +3,7 @@ package backend.service.component;
 import backend.service.infra.Cache;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.Door;
-import backend.service.model.builder.MapGame;
-
-import javax.swing.*;
+import backend.service.model.MapGame;
 
 public final class ActivateMapGame {
 
@@ -20,13 +18,13 @@ public final class ActivateMapGame {
                 activate = true;
             } else if (nameItem.equals("mapa")) {
                 MapGame praia = Cache.getMapGame(4);
-                praia.setImage("src/main/resources/map/praiaM.png");
+                praia.setImage("src/main/resources/image/map/praiaM.png");
             } else if (nameItem.equals("chave")) {
                 MapGame praia = Cache.getMapGame(4);
-                praia.setImage("src/main/resources/map/praia.png");
+                praia.setImage("src/main/resources/image/map/praia.png");
             } else if (nameItem.equals("escada")) {
                 MapGame templo = Cache.getMapGame(8);
-                templo.setImage("src/main/resources/map/temploF.png");
+                templo.setImage("src/main/resources/image/map/temploF.png");
             }
         } catch (Exception e) {
             System.out.println("Direção invalida!");

@@ -1,4 +1,4 @@
-package backend.service.model.builder;
+package backend.service.model;
 
 import backend.repository.interfaces.IItemEntity;
 import backend.repository.singleton.CombinableRepository;
@@ -16,16 +16,13 @@ public final class ItemFactory {
     private ItemFactory(){}
 
     public static Item create(IItemEntity itemEntity) {
-        return ItemBuilder.builder()
-                .id(itemEntity.id())
-                .name(itemEntity.name())
-                .description(itemEntity.description())
-                .weight(itemEntity.weight())
-                .coordinate(ICoordinate.getInstance(itemEntity.positionX(), itemEntity.positionY()))
-                .image(itemEntity.image())
-                .type(getListTypeItem(itemEntity))
-                .visible(itemEntity.visible())
-                .build();
+        return new Item(itemEntity.id(),
+                itemEntity.name(),
+                itemEntity.description(),
+                itemEntity.weight(),
+                itemEntity.image(),
+                getListTypeItem(itemEntity),
+                ICoordinate.getInstance(itemEntity.positionX(), itemEntity.positionY()));
     }
 
     private static List<TypeItem> getListTypeItem(IItemEntity itemEntity) {

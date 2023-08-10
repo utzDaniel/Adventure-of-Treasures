@@ -1,43 +1,39 @@
-package backend.service.model.builder;
+package backend.service.model;
 
+import backend.service.enums.Move;
 import backend.service.interfaces.ICoordinate;
-import backend.service.model.Area;
-import backend.service.model.Door;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-public abstract class MapGame {
-    private int id;
-    private String name;
-    private String song;
+public final class MapGame {
+    private final int id;
+    private final String name;
+    private final String song;
     private String image;
-    private Area area;
-    private Map<ICoordinate, Door> doors;
-    private Map<ICoordinate, Item> itens;
+    private final Area area;
+    private final Map<ICoordinate, Door> doors;
+    private final Map<ICoordinate, Item> itens;
+    private final List<Exit> exits;
 
-    protected MapGame() {
-        this.doors = new HashMap<>();
-        this.itens = new HashMap<>();
+    MapGame(int id, String name, String song, String image, Area area, Map<ICoordinate, Door> doors, Map<ICoordinate, Item> itens, List<Exit> exits) {
+        this.id = id;
+        this.name = name;
+        this.song = song;
+        this.image = image;
+        this.area = area;
+        this.doors = doors;
+        this.itens = itens;
+        this.exits = exits;
     }
 
     public int getId() {
         return this.id;
     }
 
-    protected void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return this.name;
-    }
-
-    protected void setName(String name) {
-        this.name = name;
     }
 
     public String getImage() {
@@ -52,10 +48,6 @@ public abstract class MapGame {
         return this.area;
     }
 
-    protected void setLimits(byte[][] limits) {
-        this.area = new Area(limits);
-    }
-
     public Optional<Door> getDoor(ICoordinate coordinate) {
         return this.doors.values().stream()
                 .filter(o -> o.isDoor(coordinate))
@@ -66,10 +58,6 @@ public abstract class MapGame {
         return this.doors.values().stream()
                 .filter(o -> o.isMap(idMapGame))
                 .findFirst();
-    }
-
-    protected void setDoors(Map<ICoordinate, Door> doors) {
-        this.doors = doors;
     }
 
     public Item getItem(ICoordinate coordinate) {
@@ -87,29 +75,19 @@ public abstract class MapGame {
         this.area.block(item.getLocation());
     }
 
-    protected void setItens(Map<ICoordinate, Item> itens) {
-        this.itens = itens;
-        this.itens.keySet().forEach(c -> this.area.block(c));
-    }
-
-    public List<Item> getItemVisible() {
-        return this.itens.values().stream()
-                .filter(Item::isVisible)
-                .collect(Collectors.toList());
-    }
-
-    public List<Item> getItemInvisible() {
-        return this.itens.values().stream()
-                .filter(Item::isInvisible)
-                .collect(Collectors.toList());
+    public List<Item> getItens() {
+        return this.itens.values().stream().toList();
     }
 
     public String getSong() {
         return this.song;
     }
 
-    protected void setSong(String filename) {
-        this.song = filename;
+    public Optional<Integer> getExit(Move move) {
+        return exits.stream()
+                .filter(exit -> exit.direction().name().equals(move.name()))
+                .map(Exit::idMap)
+                .findFirst();
     }
 
     @Override
@@ -121,9 +99,10 @@ public abstract class MapGame {
                     "area": %s,
                     "doors": %s,
                     "itens": %s,
-                    "song": "%s"
+                    "song": "%s",
+                    "exits": "%s"
                 }
                 """.formatted(this.name, this.image, this.area, this.doors.values(),
-                this.itens.values(), this.song);
+                this.itens.values(), this.song, this.exits);
     }
 }

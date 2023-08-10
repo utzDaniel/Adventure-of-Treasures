@@ -15,14 +15,17 @@ public final class CombinableRepository {
     private static CombinableRepository repository;
     private final Map<Integer, ICombinableEntity> map;
 
-    public static synchronized CombinableRepository getInstance() {
-        if (Objects.isNull(repository)) {
-            var mapper = new CombinableEntityMapper();
-            var rep = new Repository<>(Filename.COMBINABLE, mapper);
-            var map = rep.create();
-            repository = new CombinableRepository(map);
+    public static CombinableRepository getInstance() {
+        if (Objects.nonNull(repository)) return repository;
+        synchronized (CombinableRepository.class) {
+            if (Objects.isNull(repository)) {
+                var mapper = new CombinableEntityMapper();
+                var rep = new Repository<>(Filename.COMBINABLE, mapper);
+                var map = rep.create();
+                repository = new CombinableRepository(map);
+            }
+            return repository;
         }
-        return repository;
     }
 
     private CombinableRepository(Map<Integer, ICombinableEntity> map) {

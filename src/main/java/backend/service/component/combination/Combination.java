@@ -2,11 +2,13 @@ package backend.service.component.combination;
 
 import backend.controller.enums.TypeMessage;
 import backend.repository.singleton.CombinableRepository;
+import backend.repository.singleton.ItemRepository;
 import backend.service.component.ActivateMapGame;
 import backend.service.component.RemoveItem;
 import backend.service.enums.ItemsCombination;
 import backend.service.model.Inventory;
-import backend.service.model.builder.Item;
+import backend.service.model.Item;
+import backend.service.model.ItemFactory;
 
 import java.util.List;
 import java.util.Locale;
@@ -50,8 +52,7 @@ public final class Combination {
 
         updateMap();
         removeAllItemCombine();
-        setItemViseble();
-        updadeInventoryCapacity();
+        this.inventory.addItem(newItem);
         var nameUp = newItem.getName().toUpperCase(Locale.ROOT);
 
         var e = Enum.valueOf(ItemsCombination.class, nameUp);
@@ -60,9 +61,7 @@ public final class Combination {
 
 
     private Item getItem(int idItem) {
-        return this.inventory.getItemInvisible().stream()
-                .filter(item -> item.getId() == idItem)
-                .findFirst().orElse(null);
+        return ItemFactory.create(ItemRepository.getInstance().getById(idItem));
     }
 
     private void updateMap() {
@@ -74,13 +73,5 @@ public final class Combination {
     private void removeAllItemCombine() {
         this.itens.forEach(item -> new RemoveItem(this.inventory, item).run());
 
-    }
-
-    private void setItemViseble() {
-        this.newItem.setVisible(true);
-    }
-
-    private void updadeInventoryCapacity() {
-        this.inventory.updadeCapacity(this.newItem.getWeight());
     }
 }

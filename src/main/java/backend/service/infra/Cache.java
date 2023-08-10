@@ -1,8 +1,8 @@
 package backend.service.infra;
 
 import backend.repository.singleton.MapGameRepository;
-import backend.service.model.builder.MapGame;
-import backend.service.model.builder.MapGameFactory;
+import backend.service.model.MapGame;
+import backend.service.model.MapGameFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +12,6 @@ public final class Cache {
 
     // TODO usar o padrao Flyweight
     private static final Map<Integer, MapGame> mapGame = new HashMap<>();
-    private static final MapGameFactory factory = new MapGameFactory();
 
     private Cache(){}
 
@@ -31,7 +30,7 @@ public final class Cache {
 
     private static MapGame create(int idMap){
         var entity = MapGameRepository.getInstance().getById(idMap);
-        return factory.create(entity);
+        return MapGameFactory.create(entity);
     }
 
 }

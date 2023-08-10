@@ -14,6 +14,4 @@ public interface IItemEntity extends IEntity {
 
     String image();
 
-    boolean visible();
-
 }

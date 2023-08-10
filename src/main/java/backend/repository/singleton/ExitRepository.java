@@ -11,14 +11,17 @@ public final class ExitRepository {
     private static ExitRepository repository;
     private final Map<Integer, IExitEntity> map;
 
-    public static synchronized ExitRepository getInstance() {
-        if (Objects.isNull(repository)) {
-            var mapper = new ExitEntityMapper();
-            var rep = new Repository<>(Filename.EXIT, mapper);
-            var map = rep.create();
-            repository = new ExitRepository(map);
+    public static ExitRepository getInstance() {
+        if (Objects.nonNull(repository)) return repository;
+        synchronized (ExitRepository.class) {
+            if (Objects.isNull(repository)) {
+                var mapper = new ExitEntityMapper();
+                var rep = new Repository<>(Filename.EXIT, mapper);
+                var map = rep.create();
+                repository = new ExitRepository(map);
+            }
+            return repository;
         }
-        return repository;
     }
 
     private ExitRepository(Map<Integer, IExitEntity> map) {

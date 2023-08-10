@@ -16,7 +16,7 @@ public class ServiceDropItem {
 
     public TypeMessage run(String name) {
 
-        var item = this.inventory.getItemVisible().stream()
+        var item = this.inventory.getItens().stream()
                 .filter(item1 -> item1.getName().equals(name))
                 .findFirst().get();
 

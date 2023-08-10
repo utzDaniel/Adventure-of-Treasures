@@ -4,8 +4,8 @@ import backend.controller.enums.TypeMessage;
 import backend.service.enums.Move;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.Area;
-import backend.service.model.builder.Item;
-import backend.service.model.builder.MapGame;
+import backend.service.model.Item;
+import backend.service.model.MapGame;
 
 public class AddItemMapGame {
 

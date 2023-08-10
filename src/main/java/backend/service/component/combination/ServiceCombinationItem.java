@@ -3,7 +3,7 @@ package backend.service.component.combination;
 import backend.controller.enums.TypeMessage;
 import backend.service.enums.TypeItem;
 import backend.service.model.Inventory;
-import backend.service.model.builder.Item;
+import backend.service.model.Item;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +21,7 @@ public final class ServiceCombinationItem {
         var itens = new ArrayList<Item>();
         Arrays.stream(names)
                 .forEach(name1 -> itens.add(
-                        this.inventory.getItemVisible().stream()
+                        this.inventory.getItens().stream()
                                 .filter(item1 -> item1.getName().equals(name1))
                                 .findFirst().get()));
 

@@ -1,12 +1,14 @@
 package backend.service.component.use;
 
 import backend.controller.enums.TypeMessage;
+import backend.repository.singleton.ItemRepository;
 import backend.repository.singleton.UsableRepository;
 import backend.service.component.RemoveItem;
 import backend.service.enums.ItemsUsable;
 import backend.service.enums.TypeItem;
 import backend.service.model.Inventory;
-import backend.service.model.builder.Item;
+import backend.service.model.Item;
+import backend.service.model.ItemFactory;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -21,7 +23,7 @@ public final class ServiceUseItem {
 
     public TypeMessage run(String name, int idMap) {
 
-        Item item = this.inventory.getItemVisible().stream()
+        Item item = this.inventory.getItens().stream()
                 .filter(item1 -> item1.getName().equals(name))
                 .findFirst().get();
 
@@ -40,6 +42,13 @@ public final class ServiceUseItem {
 
             typeMessage = usable1.use();
             if (!typeMessage.isSucess()) return typeMessage;
+
+
+            var newItem = ItemFactory.create(ItemRepository.getInstance().getById(1));//chave
+            if (Objects.isNull(newItem))
+                return TypeMessage.ITEM_NOT_FOUND;
+
+            this.inventory.addItem(newItem);
 
             var typeMessage1 = new RemoveItem(this.inventory, item).run();
             if (!typeMessage1.isSucess()) return typeMessage1;

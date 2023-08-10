@@ -15,14 +15,17 @@ public final class ItemRepository implements IRepository<IItemEntity, Integer> {
     private static ItemRepository repository;
     private final Map<Integer, IItemEntity> map;
 
-    public static synchronized IRepository<IItemEntity, Integer> getInstance() {
-        if (Objects.isNull(repository)) {
-            var mapper = new ItemEntityMapper();
-            var rep = new Repository<>(Filename.ITEM, mapper);
-            var map = rep.create();
-            repository = new ItemRepository(map);
+    public static IRepository<IItemEntity, Integer> getInstance() {
+        if (Objects.nonNull(repository)) return repository;
+        synchronized (ItemRepository.class) {
+            if (Objects.isNull(repository)) {
+                var mapper = new ItemEntityMapper();
+                var rep = new Repository<>(Filename.ITEM, mapper);
+                var map = rep.create();
+                repository = new ItemRepository(map);
+            }
+            return repository;
         }
-        return repository;
     }
 
     private ItemRepository(Map<Integer, IItemEntity> map) {

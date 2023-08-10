@@ -1,7 +1,7 @@
 import backend.service.enums.Move;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.Player;
-import backend.service.model.builder.Item;
+import backend.service.model.Item;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,7 +29,7 @@ public class TakeItemTest {
 
     @Test
     public void testarPegarItem() {
-        int size = player.getInventory().getItemVisible().size();
+        int size = player.getInventory().getItens().size();
         var item1 = ItemEquipableBuilder.builder().equipped(false).name("mochila878").description("utilizada para carregar mais coisas").weight(0)
                 .coordinate(ICoordinate.getInstance(650, 220)).image(null).removable(true).visible(true).build();
         new AddItemInventory(player.getInventory(), item1).run();
@@ -37,7 +37,7 @@ public class TakeItemTest {
                 .coordinate(ICoordinate.getInstance(200, 280)).image(null).removable(true).visible(true).build();
         new TakeItem(this.player, item).run();
 
-        assertEquals(size + 2, player.getInventory().getItemVisible().size());
+        assertEquals(size + 2, player.getInventory().getItens().size());
     }
 
     @Test

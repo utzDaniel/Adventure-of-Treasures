@@ -1,5 +1,5 @@
 import backend.service.interfaces.ICoordinate;
-import backend.service.model.builder.*;
+import backend.service.model.Item;
 import org.junit.Before;
 import org.junit.Test;
 

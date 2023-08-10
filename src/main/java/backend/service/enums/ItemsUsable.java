@@ -10,13 +10,6 @@ public enum ItemsUsable {
     PA("pa") {
         @Override
         public TypeMessage use() {
-            if (!(player.getInventory().getItem("mapa").isVisible()))
-                return TypeMessage.USABLE_INCOMPLETE;
-            var item = player.getCurrentMap().getItemInvisible().stream()
-                    .filter(item1 -> item1.getName().equals("chave"))
-                    .findFirst().orElse(null);
-            if (Objects.isNull(item)) return TypeMessage.ITEM_NOT_FOUND;
-            item.setVisible(true);
             new ActivateMapGame().run("chave");
             return TypeMessage.USABLE_SUCESS_SHOVEL;
         }

@@ -11,14 +11,17 @@ public final class EquipableRepository {
     private static EquipableRepository repository;
     private final Map<Integer, IEquipableEntity> map;
 
-    public static synchronized EquipableRepository getInstance() {
-        if (Objects.isNull(repository)) {
-            var mapper = new EquipableEntityMapper();
-            var rep = new Repository<>(Filename.EQUIPABLE, mapper);
-            var map = rep.create();
-            repository = new EquipableRepository(map);
+    public static EquipableRepository getInstance() {
+        if (Objects.nonNull(repository)) return repository;
+        synchronized (EquipableRepository.class) {
+            if (Objects.isNull(repository)) {
+                var mapper = new EquipableEntityMapper();
+                var rep = new Repository<>(Filename.EQUIPABLE, mapper);
+                var map = rep.create();
+                repository = new EquipableRepository(map);
+            }
+            return repository;
         }
-        return repository;
     }
 
     private EquipableRepository(Map<Integer, IEquipableEntity> map) {

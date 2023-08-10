@@ -31,7 +31,7 @@ public final class PanelInventory {
 
         //TODO criar uma generico ComponentsFactory
         button.setName("sair");
-        button.setIcon(new ImageIcon("src/main/resources/inventario/botao_fechar.png"));
+        button.setIcon(new ImageIcon("src/main/resources/image/inventario/botao_fechar.png"));
         button.setOpaque(false);
         button.setContentAreaFilled(false);
         button.setFocusPainted(false);

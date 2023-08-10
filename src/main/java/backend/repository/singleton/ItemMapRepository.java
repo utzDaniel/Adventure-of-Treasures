@@ -11,14 +11,17 @@ public final class ItemMapRepository {
     private static ItemMapRepository repository;
     private final Map<Integer, IItemMapEntity> map;
 
-    public static synchronized ItemMapRepository getInstance() {
-        if (Objects.isNull(repository)) {
-            var mapper = new ItemMapEntityMapper();
-            var rep = new Repository<>(Filename.ITEM_MAP, mapper);
-            var map = rep.create();
-            repository = new ItemMapRepository(map);
+    public static ItemMapRepository getInstance() {
+        if (Objects.nonNull(repository)) return repository;
+        synchronized (ItemMapRepository.class) {
+            if (Objects.isNull(repository)) {
+                var mapper = new ItemMapEntityMapper();
+                var rep = new Repository<>(Filename.ITEM_MAP, mapper);
+                var map = rep.create();
+                repository = new ItemMapRepository(map);
+            }
+            return repository;
         }
-        return repository;
     }
 
     private ItemMapRepository(Map<Integer, IItemMapEntity> map) {

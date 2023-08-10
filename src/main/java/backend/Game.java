@@ -3,7 +3,6 @@ package backend;
 import backend.controller.interfaces.IActionService;
 import backend.controller.interfaces.IInventoryService;
 import backend.controller.interfaces.IItemDTO;
-import backend.repository.singleton.ItemRepository;
 import backend.service.ActionService;
 import backend.service.InventoryService;
 import backend.service.infra.Cache;
@@ -11,8 +10,7 @@ import backend.service.interfaces.ICoordinate;
 import backend.service.mapper.ItemDTOMapper;
 import backend.service.model.Inventory;
 import backend.service.model.Player;
-import backend.service.model.builder.Item;
-import backend.service.model.builder.ItemFactory;
+import backend.service.model.Item;
 import frontend.event.Keyboard;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
@@ -63,14 +61,7 @@ public class Game {
         var mapGame = Cache.getMapGame(Integer.parseInt(map));
 
         try {
-            var player = new Player(image, coordinate, mapGame, inventory);
-            //TODO não usar itens invisivel, resolver depois
-            ItemRepository.getInstance().getAll()
-                    .stream()
-                    .filter(item -> !item.visible() && !item.name().equals("chave"))
-                    .map(ItemFactory::create)
-                    .forEach(v -> player.getInventory().setItemInvisible(v));
-
+            new Player(image, coordinate, mapGame, inventory);
         } catch (Exception e) {
             e.getMessage();
         }
@@ -82,7 +73,7 @@ public class Game {
         var coordinatePlayer = ICoordinate.getInstance(player.getLocation().y() * 10, player.getLocation().x() * 10);
         listJLabel.add(ComponentFactory.getJLabel(this.player.getImage(), coordinatePlayer));
         listJLabel.add(ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getImage()));
-        listJLabel.addAll(ComponentFactory.getJLabel(getIItemDTO(this.player.getCurrentMap().getItemVisible())));
+        listJLabel.addAll(ComponentFactory.getJLabel(getIItemDTO(this.player.getCurrentMap().getItens())));
         return listJLabel;
     }
 

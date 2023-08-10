@@ -3,7 +3,7 @@ package backend.service.component.open;
 import backend.controller.enums.TypeMessage;
 import backend.service.infra.Cache;
 import backend.service.model.Player;
-import backend.service.model.builder.MapGame;
+import backend.service.model.MapGame;
 
 import java.util.Objects;
 
@@ -34,7 +34,7 @@ public final class Open {
 
     private boolean isFinish() {
         var coordinate = player.getLocation();
-        var item = player.getInventory().getItem("tesouro");
+        var item = player.getInventory().getItem(15);
         return coordinate.x() == 71 && coordinate.y() == 28 && Objects.nonNull(item);
     }
 

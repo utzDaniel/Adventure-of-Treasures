@@ -1,0 +1,62 @@
+package backend.service.model;
+
+import backend.repository.interfaces.IMapGameEntity;
+import backend.repository.singleton.DoorRepository;
+import backend.repository.singleton.ExitRepository;
+import backend.repository.singleton.ItemMapRepository;
+import backend.repository.singleton.ItemRepository;
+import backend.service.interfaces.ICoordinate;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+public final class MapGameFactory {
+
+    private MapGameFactory() {
+    }
+
+    public static MapGame create(IMapGameEntity entity) {
+        var itens = getItens(entity);
+        return new MapGame(
+                entity.id(),
+                entity.name(),
+                entity.song(),
+                entity.image(),
+                getArea(entity, itens),
+                getDoors(entity),
+                getItens(entity),
+                getExits(entity));
+    }
+
+    private static Map<ICoordinate, Item> getItens(IMapGameEntity mapGameEntity) {
+        return ItemMapRepository.getInstance().getByIdMap(mapGameEntity.id())
+                .stream()
+                .map(v -> ItemRepository.getInstance().getById(v.idItem()))
+                .map(ItemFactory::create)
+                .collect(Collectors.toMap(Item::getLocation, item1 -> item1));
+    }
+
+    private static List<Exit> getExits(IMapGameEntity mapGameEntity) {
+        return ExitRepository.getInstance()
+                .getByIdMapOri(mapGameEntity.id())
+                .stream()
+                .map(ExitFactory::create)
+                .toList();
+    }
+
+    private static Map<ICoordinate, Door> getDoors(IMapGameEntity mapGameEntity) {
+        return DoorRepository.getInstance()
+                .getByIdMapOri(mapGameEntity.id())
+                .stream()
+                .map(DoorFactory::create)
+                .collect(Collectors.toMap(Door::getCoordinate, door1 -> door1));
+    }
+
+    private static Area getArea(IMapGameEntity entity, Map<ICoordinate, Item> itens) {
+        var area = new Area(entity.limits());
+        itens.keySet().forEach(area::block);
+        return area;
+    }
+
+}

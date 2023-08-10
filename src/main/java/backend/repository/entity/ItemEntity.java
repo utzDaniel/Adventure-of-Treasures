@@ -9,8 +9,7 @@ public record ItemEntity(
         int weight,
         int positionX,
         int positionY,
-        String image,
-        boolean visible) implements IItemEntity {
+        String image) implements IItemEntity {
 
     @Override
     public String toString() {
@@ -22,11 +21,10 @@ public record ItemEntity(
                     "weight": %d,
                     "positionX": %d,
                     "positionY": %d,
-                    "image": "%s",
-                    "visible": %b
+                    "image": "%s"
                 }
                 """.formatted(this.id, this.name, this.description, this.weight, this.positionX,
-                this.positionY, this.image, this.visible);
+                this.positionY, this.image);
 
     }
 }
