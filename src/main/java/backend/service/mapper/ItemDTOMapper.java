@@ -1,28 +1,25 @@
 package backend.service.mapper;
 
+import backend.controller.interfaces.IItemDTO;
 import backend.service.dto.ItemDTO;
-import backend.service.interfaces.ICoordinate;
+import backend.service.enums.TypeItem;
 import backend.service.model.Item;
 
 import java.util.function.Function;
 
-public class ItemDTOMapper implements Function<Item, ItemDTO> {
-
-
+public class ItemDTOMapper implements Function<Item, IItemDTO> {
     @Override
-    public ItemDTO apply(Item item) {
-        return new ItemDTO(item.getName(),
+    public IItemDTO apply(Item item) {
+        return new ItemDTO(item.getId(),
+                item.getName(),
+                item.getWeight(),
                 item.getDescription(),
                 item.getImage(),
-                item.getWeight(),
-                ICoordinate.getInstance(item.getLocation().y() * 10, item.getLocation().x() * 10),
-                item.getClass().getName(),
-                equipped(item)
+                combinable(item)
         );
     }
 
-    private boolean equipped(Item item) {
-        return false;
-        //return item instanceof ItemEquipable item1 && item1.isEquipped();
+    private boolean combinable(Item item) {
+        return item.isType(TypeItem.COMBINABLE);
     }
 }

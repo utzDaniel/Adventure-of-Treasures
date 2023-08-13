@@ -45,14 +45,14 @@ public class LabelInformationTest {
         labelItem.add(label[1] +": "+ item.getName());
         labelItem.add(label[2] +": "+ item.getWeight());
         labelItem.add("<html>"+label[3] +": "+ item.getDescription()+"</html>");
-        labelInformation.updateText(item);
+        //labelInformation.updateText(item);
         for (int i = 0; i < labelInformation.getInfoLabel().length; i++) {
             assertEquals(labelItem.get(i),labelInformation.getInfoLabel()[i].getText());
         }
     }
     @Test
     public void validResetText(){
-        labelInformation.updateText(item);
+        //labelInformation.updateText(item);
         labelInformation.resetText();
         String name;
         for (int i = 0; i < label.length; i++) {

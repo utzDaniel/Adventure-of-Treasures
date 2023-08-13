@@ -1,12 +1,13 @@
 package backend.controller.interfaces;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IInventoryResponse {
 
-    int capacity();
+    Map<Integer, List<ISpecialization>> specialization();
 
-    int maxCapacity();
+    List<String> information();
 
     List<IItemDTO> itens();
 

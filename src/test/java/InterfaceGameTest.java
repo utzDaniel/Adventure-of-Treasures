@@ -31,9 +31,9 @@ public class InterfaceGameTest {
             player.getInventory().setItemInvisible(item);
         }
         var listJLabel = new ArrayList<JLabel>();
-        listJLabel.add(ComponentFactory.getJLabel(this.player.getImage().toString(), this.player.getLocation())));
-        listJLabel.add(ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getImage().toString()));
-        interfaceGame = new InterfaceGame(listJLabel);
+        //listJLabel.add(ComponentFactory.getJLabel(this.player.getImage().toString(), this.player.getCoordinate())));
+        //listJLabel.add(ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getImage().toString()));
+        //interfaceGame = new InterfaceGame(listJLabel);
         frame = interfaceGame.getFrame();
         container = frame.getContentPane();
     }
@@ -73,14 +73,14 @@ public class InterfaceGameTest {
 
     @Test
     public void validWidthJLabelMapGame() {
-        var jLabel = ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getImage().toString());
+       // var jLabel = ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getImage().toString());
         var width = container.getComponent(1).getWidth();
         assertEquals(jLabel.getWidth(), width);
     }
 
     @Test
     public void validHeightJLabelMapGame() {
-        var jLabel = ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getImage().toString());
+        //var jLabel = ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getImage().toString());
         var height = container.getComponent(1).getHeight();
         assertEquals(jLabel.getHeight(), height);
     }
@@ -93,7 +93,7 @@ public class InterfaceGameTest {
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila2").description("utilizada para carregar mais coisas").weight(0)
                 .coordinate(ICoordinate.getInstance(650, 220)).image(null).removable(true).visible(true).build());
         int size = container.getComponentCount();
-        interfaceGame.setItensJLabel(itens, 2);
+        //interfaceGame.setItensJLabel(itens, 2);
         assertEquals(size + 2, container.getComponentCount());
     }
 
@@ -105,7 +105,7 @@ public class InterfaceGameTest {
         itens.add(ItemEquipableBuilder.builder().equipped(false).name("mochila2").description("utilizada para carregar mais coisas").weight(0)
                 .coordinate(ICoordinate.getInstance(650, 220)).image(null).removable(true).visible(true).build());
         int size = container.getComponentCount();
-        interfaceGame.setItensJLabel(itens, 2);
+        //interfaceGame.setItensJLabel(itens, 2);
         interfaceGame.clearJLabelItens();
         assertEquals(size, container.getComponentCount());
     }

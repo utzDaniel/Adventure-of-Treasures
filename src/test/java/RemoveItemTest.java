@@ -45,7 +45,7 @@ public class RemoveItemTest {
                 .coordinate(ICoordinate.getInstance(620, 240)).image(null).removable(false).build();
 
         var mapGame = this.player.getCurrentMap();
-        var coordinate = this.player.getLocation();
+        var coordinate = this.player.getCoordinate();
         if (new AddItemMapGame(mapGame, item, coordinate).run()) {
             mapGame.addItem(item);
         }

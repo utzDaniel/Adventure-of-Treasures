@@ -11,8 +11,8 @@ public final class InventoryMapper implements Function<Object, IInventoryRespons
     public IInventoryResponse apply(Object response) {
         var resp = (IResponse) response;
         var inventory = (IInventoryResponse) resp.obj();
-        return new Inventory(inventory.capacity(),
-                inventory.maxCapacity(),
+        return new Inventory(inventory.specialization(),
+                inventory.information(),
                 inventory.itens());
     }
 }

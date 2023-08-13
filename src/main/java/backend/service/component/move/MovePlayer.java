@@ -15,7 +15,7 @@ public final class MovePlayer {
     }
 
     public TypeMessage run() {
-        var coordinate = this.player.getLocation();
+        var coordinate = this.player.getCoordinate();
         TypeMessage typeMessage;
         ICoordinate newCoordinate;
 
@@ -45,6 +45,6 @@ public final class MovePlayer {
     }
 
     private void updateLocationPlayer(ICoordinate coordinate) {
-        this.player.setLocation(coordinate);
+        this.player.setCoordinate(coordinate);
     }
 }

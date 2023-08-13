@@ -24,8 +24,8 @@ public class NextSceneryTest {
         player.setM(Move.SUL);
         player.setCurrentMap(repositoryMapGame.get("cais"));
         var listJLabel = new ArrayList<JLabel>();
-        listJLabel.add(ComponentFactory.getJLabel(this.player.getImage().toString(), this.player.getLocation())));
-        listJLabel.add(ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getImage().toString()));
+        //listJLabel.add(ComponentFactory.getJLabel(this.player.getImage().toString(), this.player.getCoordinate())));
+        //listJLabel.add(ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getImage().toString()));
         moveScenery = new MovePlayerNextScenery(player, Move.SUL);
     }
 

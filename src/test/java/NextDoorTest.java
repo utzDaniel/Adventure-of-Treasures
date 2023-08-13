@@ -27,17 +27,17 @@ public class NextDoorTest {
         templeDoor = temple.getDoor(ICoordinate.getInstance(380, 530)).get();
         //vilaDoor = village.getDoor(ICoordinate.getInstance(370, 150)).get();
         player.setCurrentMap(village);
-        player.setLocation(ICoordinate.getInstance(370, 150));
+        player.setCoordinate(ICoordinate.getInstance(370, 150));
         var listJLabel = new ArrayList<JLabel>();
-        listJLabel.add(ComponentFactory.getJLabel(this.player.getImage().toString(), this.player.getLocation())));
-        listJLabel.add(ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getImage().toString()));
+        //listJLabel.add(ComponentFactory.getJLabel(this.player.getImage().toString(), this.player.getCoordinate())));
+        //listJLabel.add(ComponentFactory.getJLabel("mapa", this.player.getCurrentMap().getImage().toString()));
         //nextDoor = new NextDoor(new InterfaceGame(listJLabel));
         nextDoor = new OpenDoor(null);
     }
 
     @Test
     public void testDoorNull() {
-        player.setLocation(ICoordinate.getInstance(350, player.getLocation().y()));
+        player.setCoordinate(ICoordinate.getInstance(350, player.getCoordinate().y()));
         MapGame atualMap = player.getCurrentMap();
         nextDoor.run();
         assertEquals(atualMap, player.getCurrentMap());
@@ -47,7 +47,7 @@ public class NextDoorTest {
     public void testDoorFechada() {
         vilaDoor.setOpen(false);
         templeDoor.setOpen(false);
-        player.setLocation(ICoordinate.getInstance(370, 150));
+        player.setCoordinate(ICoordinate.getInstance(370, 150));
         nextDoor.run();
     }
 
@@ -55,7 +55,7 @@ public class NextDoorTest {
     public void testDoorAberta() {
         vilaDoor.setOpen(true);
         MapGame atualMap = player.getCurrentMap();
-        player.setLocation(ICoordinate.getInstance(370, 150));
+        player.setCoordinate(ICoordinate.getInstance(370, 150));
         nextDoor.run();
         assertNotEquals(atualMap.getName(), player.getCurrentMap().getName());
     }

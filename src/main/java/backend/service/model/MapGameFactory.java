@@ -34,7 +34,7 @@ public final class MapGameFactory {
                 .stream()
                 .map(v -> ItemRepository.getInstance().getById(v.idItem()))
                 .map(ItemFactory::create)
-                .collect(Collectors.toMap(Item::getLocation, item1 -> item1));
+                .collect(Collectors.toMap(Item::getCoordinate, item1 -> item1));
     }
 
     private static List<Exit> getExits(IMapGameEntity mapGameEntity) {

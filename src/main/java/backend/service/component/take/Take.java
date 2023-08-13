@@ -41,7 +41,7 @@ public final class Take {
     }
 
     private ICoordinate newCoordinate(Move move) {
-        var coordinate = this.player.getLocation();
+        var coordinate = this.player.getCoordinate();
         return move.coordinateByScenery(coordinate);
     }
 

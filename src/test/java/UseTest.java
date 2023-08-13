@@ -30,7 +30,7 @@ public class UseTest {
     public void validarUsoDaChave() {
         // Scenery village = (Scenery) RepositoryFactory.getRepositoryMapGame().get("vila");
         player.setCurrentMap(village);
-        player.setLocation(ICoordinate.getInstance(370, 150));
+        player.setCoordinate(ICoordinate.getInstance(370, 150));
 //        Use use = new Use(itens.get(0));
         assertTrue(use.run());
     }
@@ -39,7 +39,7 @@ public class UseTest {
     public void invalidarUsoDaChavePorItem() {
         //Scenery village = (Scenery) RepositoryFactory.getRepositoryMapGame().get("vila");
         player.setCurrentMap(village);
-        player.setLocation(ICoordinate.getInstance(370, 150));
+        player.setCoordinate(ICoordinate.getInstance(370, 150));
         //new Use(itens.get(2)).run();
     }
 
@@ -47,7 +47,7 @@ public class UseTest {
     public void invalidarUsoDaChavePorDoor() {
         // Scenery village = (Scenery) RepositoryFactory.getRepositoryMapGame().get("vila");
         player.setCurrentMap(village);
-        player.setLocation(ICoordinate.getInstance(0, 0));
+        player.setCoordinate(ICoordinate.getInstance(0, 0));
         // new Use(itens.get(0)).run();
     }
 
@@ -55,14 +55,14 @@ public class UseTest {
     public void invalidarUsoDaChavePorScenery() {
         Room temple = (Room) RepositoryFactory.getRepositoryMapGame().get("templo");
         player.setCurrentMap(temple);
-        player.setLocation(ICoordinate.getInstance(370, 150));
+        player.setCoordinate(ICoordinate.getInstance(370, 150));
         //new Use(itens.get(0)).run();
     }
 
     @Test
     public void validarUsoDaEscada() {
         Room temple = (Room) RepositoryFactory.getRepositoryMapGame().get("templo");
-        player.setLocation(ICoordinate.getInstance(260, 190));
+        player.setCoordinate(ICoordinate.getInstance(260, 190));
         player.setCurrentMap(temple);
         //Use use = new Use(itens.get(1));
         assertTrue(use.run());
@@ -72,7 +72,7 @@ public class UseTest {
     public void invalidarUsoDaEscadaPorDoor() {
         Room temple = (Room) RepositoryFactory.getRepositoryMapGame().get("templo");
         player.setCurrentMap(temple);
-        player.setLocation(ICoordinate.getInstance(0, 0));
+        player.setCoordinate(ICoordinate.getInstance(0, 0));
         //new Use(itens.get(1)).run();
     }
 
@@ -80,7 +80,7 @@ public class UseTest {
     public void invalidarUsoDaEscadaPorScenery() {
         //Scenery village = (Scenery) RepositoryFactory.getRepositoryMapGame().get("vila");
         player.setCurrentMap(village);
-        player.setLocation(ICoordinate.getInstance(250, 180));
+        player.setCoordinate(ICoordinate.getInstance(250, 180));
         //new Use(itens.get(1)).run();
     }
 
@@ -88,7 +88,7 @@ public class UseTest {
     public void invalidarUsoDaEscadaPorItem() {
         Room temple = (Room) RepositoryFactory.getRepositoryMapGame().get("templo");
         player.setCurrentMap(temple);
-        player.setLocation(ICoordinate.getInstance(250, 180));
+        player.setCoordinate(ICoordinate.getInstance(250, 180));
         //new Use(itens.get(2)).run();
     }
 

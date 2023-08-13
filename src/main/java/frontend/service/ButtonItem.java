@@ -23,7 +23,7 @@ public final class ButtonItem {
 
     public void create(IItemDTO item) {
         this.buttonItens[this.index] = ComponentFactory.getJButton(item, this.index);
-        if (item.specialization().contains("ItemCombinable")) this.indexCombinable.add(this.index);
+        if (item.combinable()) this.indexCombinable.add(this.index);
         this.index++;
     }
 

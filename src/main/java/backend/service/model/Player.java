@@ -28,11 +28,11 @@ public final class Player {
         return player;
     }
 
-    public ICoordinate getLocation() {
+    public ICoordinate getCoordinate() {
         return ICoordinate.getInstance(this.coordinate);
     }
 
-    public void setLocation(ICoordinate coordinate) {
+    public void setCoordinate(ICoordinate coordinate) {
         this.coordinate = ICoordinate.getInstance(coordinate);
     }
 

@@ -1,18 +1,23 @@
 package frontend.service;
 
-import frontend.model.component.ComponentFactory;
 import backend.controller.interfaces.IItemDTO;
+import backend.controller.interfaces.ISpecialization;
+import frontend.model.component.ComponentFactory;
 
 import javax.swing.*;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public final class ButtonAction {
 
     private int index;
     private IItemDTO item;
     private final JButton[] buttonActions;
+    private final Map<Integer, List<ISpecialization>> specialization;
 
-    public ButtonAction() {
+    public ButtonAction(Map<Integer, List<ISpecialization>> specialization) {
+        this.specialization = specialization;
         this.buttonActions = new JButton[6];
         this.index = 0;
     }
@@ -50,38 +55,24 @@ public final class ButtonAction {
         this.buttonActions[5].setVisible(true);
     }
 
-    //TODO resolver de outra forma o instanceof
     private void validEnable() {
-        boolean remove = false;
         Arrays.stream(buttonActions).limit(4)
                 .forEach(jButton -> {
                     jButton.setVisible(true);
                     jButton.setEnabled(false);
                     jButton.setBackground(Colors.GREY);
                 });
-        if (item.specialization().contains("ItemUsable")) {
-            this.buttonActions[0].setBackground(Colors.BLUE);
-            this.buttonActions[0].setEnabled(true);
-        }
-        if (item.specialization().contains("ItemEquipable")) {
-            this.buttonActions[1].setBackground(Colors.BLUE);
-            this.buttonActions[1].setEnabled(true);
-            remove = item.isEquipped();
-            setTextEquipable(remove);
-        }
-        if (item.specialization().contains("ItemCombinable")) {
-            this.buttonActions[2].setBackground(Colors.BLUE);
-            this.buttonActions[2].setEnabled(true);
-        }
-        if (!(item.specialization().contains("ItemMission")) && !remove) {
-            this.buttonActions[3].setBackground(Colors.BLUE);
-            this.buttonActions[3].setEnabled(true);
+        var listActionType = this.specialization.get(this.item.id());
+
+        for (int i = 0; i < 4; i++) {
+            this.buttonActions[i].setText(listActionType.get(i).text());
+            if (listActionType.get(i).enabled()) {
+                this.buttonActions[i].setBackground(Colors.BLUE);
+                this.buttonActions[i].setEnabled(true);
+            }
         }
     }
 
-    private void setTextEquipable(boolean isEquipped) {
-        this.buttonActions[1].setText(isEquipped ? "DESEQUIPAR" : "EQUIPAR");
-    }
 
     public JButton[] getButtonActions() {
         return this.buttonActions;

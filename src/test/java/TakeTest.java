@@ -35,7 +35,7 @@ public class TakeTest {
                 .coordinate(ICoordinate.getInstance(340, 340)).image(null).removable(true).visible(true).build();
         mapGame = player.getCurrentMap();
         var mapGame = this.player.getCurrentMap();
-        var coordinate = this.player.getLocation();
+        var coordinate = this.player.getCoordinate();
         if (new AddItemMapGame(mapGame, item, coordinate).run()) {
             mapGame.addItem(item);
         }
@@ -45,7 +45,7 @@ public class TakeTest {
 
     @Test
     public void testarItemValidoAFrente() {
-        player.setLocation(ICoordinate.getInstance(item.getLocation().x(), (item.getLocation().y() - 10)));
+        player.setCoordinate(ICoordinate.getInstance(item.getCoordinate().x(), (item.getCoordinate().y() - 10)));
         player.setCurrentMap(mapGame);
         assertTrue(take.run().isSucess());
     }
@@ -54,10 +54,10 @@ public class TakeTest {
     public void testarItemValidoAFrenteSemCapacitadadeNoInventario() {
         Item item = ItemUsableBuilder.builder().localUse("praia").name("pa1487").description("ferramenta usada para cavar").weight(30)
                 .coordinate(ICoordinate.getInstance(320, 320)).image(null).removable(true).visible(true).build();
-        player.setLocation(ICoordinate.getInstance(320, 320));
+        player.setCoordinate(ICoordinate.getInstance(320, 320));
         player.setM(Move.OESTE);
         var mapGame = this.player.getCurrentMap();
-        var coordinate = this.player.getLocation();
+        var coordinate = this.player.getCoordinate();
         if (new AddItemMapGame(mapGame, item, coordinate).run()) {
             mapGame.addItem(item);
         }
@@ -67,7 +67,7 @@ public class TakeTest {
 
     @Test
     public void testarItemInvalidoAFrente() {
-        player.setLocation(ICoordinate.getInstance(290, player.getLocation().y()));
+        player.setCoordinate(ICoordinate.getInstance(290, player.getCoordinate().y()));
         player.setCurrentMap(mapGame);
         assertFalse(take.run().isSucess());
     }

@@ -1,5 +1,7 @@
 package frontend.service;
 
+import backend.controller.interfaces.IComponentInfo;
+import frontend.enums.ComponentsProperties;
 import frontend.enums.NameJMenu;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
@@ -20,10 +22,11 @@ public final class InterfaceGame {
     private final SoundEffects soundEffects;
     private final List<JLabel> components;
 
-    public InterfaceGame(List<JLabel> components) {
-        this.components = components;
+    public InterfaceGame(IActionResponse action) {
         frame = ComponentFactory.getJFrame();
+        this.components = ComponentFactory.getJLabel(action.components());
         song = new Song();
+        song.play(action.song());
         soundEffects = new SoundEffects();
         settingsFrame();
         if (Objects.nonNull(components)) components.forEach(jLabel -> frame.getContentPane().add(jLabel));
@@ -43,26 +46,28 @@ public final class InterfaceGame {
         return this.components.get(0);
     }
 
-    public void updateComponentsMove(IActionResponse movePlayerVO) {
-        components.forEach(
-                jLabel -> {
-                    if (jLabel.getName().equals("player")) {
-                        jLabel.setIcon(new ImageIcon(movePlayerVO.iconPlayer()));
-                        jLabel.setLocation(new Point(movePlayerVO.coordinatePlayer().x(), movePlayerVO.coordinatePlayer().y()));
-                    }
-                    if (jLabel.getName().equals("mapa")) {
-                        jLabel.setIcon(new ImageIcon(movePlayerVO.iconMap()));
-                    }
-                }
-        );
-        if (Objects.nonNull(movePlayerVO.songMap())) {
-            this.song.play(movePlayerVO.songMap());
+    public void updateComponentsMove(IActionResponse action) {
+        action.components().forEach(info -> {
+            if (info.name().equals(ComponentsProperties.PLAYER.name())) {
+                getPlayerJLabel().setIcon(new ImageIcon(info.image()));
+                getPlayerJLabel().setLocation(info.point());
+            }else if (info.name().equals(ComponentsProperties.MAPA.name())) {
+                getMapGameJLabel().setIcon(new ImageIcon(info.image()));
+            }
+        });
+        var lisItem = action.components().stream()
+                .filter(v -> v.name().equals(ComponentsProperties.ITEM.name()))
+                .toList();
+
+        if (Objects.nonNull(action.song())) {
+            this.song.play(action.song());
         }
-        if (Objects.nonNull(movePlayerVO.itens())) {
-            clearJLabelItens();
-            setItensJLabel(movePlayerVO.itens(), movePlayerVO.indexItens());
-            getMapGameJLabel().repaint();
-        }
+        clearJLabelItens();
+        getMapGameJLabel().repaint();
+        if(lisItem.isEmpty()) return;
+        var index = 1;
+        setItensJLabel(lisItem, index);
+
     }
 
     private void settingsFrame() {
@@ -89,12 +94,12 @@ public final class InterfaceGame {
 
     public void clearJLabelItens() {
         Arrays.stream(frame.getContentPane().getComponents())
-                .filter(component -> component instanceof JLabel && component.getName().equals("item"))
+                .filter(component -> component instanceof JLabel && component.getName().equals(ComponentsProperties.ITEM.name()))
                 .forEach(component -> frame.getContentPane().remove(component));
         frame.getContentPane().repaint();
     }
 
-    public void setItensJLabel(List<IItemDTO> itens, int index) {
+    public void setItensJLabel(List<IComponentInfo> itens, int index) {
         var jLabelList = ComponentFactory.getJLabel(itens);
         jLabelList.forEach(jLabel -> frame.getContentPane().add(jLabel, index));
     }

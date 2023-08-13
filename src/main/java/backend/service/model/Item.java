@@ -48,12 +48,15 @@ public final class Item {
     public boolean isType(TypeItem type) {
         return this.listType.contains(type);
     }
+    public List<TypeItem> getType() {
+        return this.listType;
+    }
 
-    public ICoordinate getLocation() {
+    public ICoordinate getCoordinate() {
         return ICoordinate.getInstance(this.coordinate);
     }
 
-    public void setLocation(ICoordinate coordinate) {
+    public void setCoordinate(ICoordinate coordinate) {
         this.coordinate = ICoordinate.getInstance(coordinate);
     }
 

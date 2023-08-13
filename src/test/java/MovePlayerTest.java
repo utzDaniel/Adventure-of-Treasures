@@ -21,39 +21,39 @@ public class MovePlayerTest {
 
     @Test
     public void andarPlayerParaLeste() {
-        int positionX = player.getLocation().x();
+        int positionX = player.getCoordinate().x();
         new MovePlayerScenery(this.player, Move.LESTE).run();
-        assertEquals(positionX + 10, player.getLocation().x());
+        assertEquals(positionX + 10, player.getCoordinate().x());
     }
 
     @Test
     public void andarPlayerParaOeste() {
-        int positionX = player.getLocation().x();
+        int positionX = player.getCoordinate().x();
         new MovePlayerScenery(this.player, Move.OESTE).run();
-        assertEquals(positionX - 10, player.getLocation().x());
+        assertEquals(positionX - 10, player.getCoordinate().x());
     }
 
     @Test
     public void andarPlayerParaSul() {
-        int positionY = player.getLocation().y();
+        int positionY = player.getCoordinate().y();
         new MovePlayerScenery(this.player, Move.SUL).run();
-        assertEquals(positionY + 10, player.getLocation().y());
+        assertEquals(positionY + 10, player.getCoordinate().y());
     }
 
     @Test
     public void andarPlayerParaNorte() {
-        int positionY = player.getLocation().y();
+        int positionY = player.getCoordinate().y();
         new MovePlayerScenery(this.player, Move.NORTE).run();
-        assertEquals(positionY - 10, player.getLocation().y());
+        assertEquals(positionY - 10, player.getCoordinate().y());
     }
 
     @Test
     public void naoAndarPlayer() {
         player.setCurrentMap(RepositoryFactory.getRepositoryMapGame().get("cais"));
-        player.setLocation(ICoordinate.getInstance(10, 10));
-        int positionY = player.getLocation().y();
+        player.setCoordinate(ICoordinate.getInstance(10, 10));
+        int positionY = player.getCoordinate().y();
         new MovePlayerScenery(this.player, Move.SUL).run();
-        assertEquals(positionY, player.getLocation().y());
+        assertEquals(positionY, player.getCoordinate().y());
     }
 
 }

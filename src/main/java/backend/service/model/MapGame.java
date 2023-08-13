@@ -65,14 +65,14 @@ public final class MapGame {
     }
 
     public void removeItem(Item item) {
-        this.itens.remove(item.getLocation());
+        this.itens.remove(item.getCoordinate());
         //TODO ao pegar um item em um local que não deveria ter como o player passar, está podendeo passar. EX: pegar o item papel, na mesa
-        this.area.unlock(item.getLocation());
+        this.area.unlock(item.getCoordinate());
     }
 
     public void addItem(Item item) {
-        this.itens.put(item.getLocation(), item);
-        this.area.block(item.getLocation());
+        this.itens.put(item.getCoordinate(), item);
+        this.area.block(item.getCoordinate());
     }
 
     public List<Item> getItens() {

@@ -4,15 +4,8 @@ import java.util.List;
 
 public interface IActionResponse {
 
-    String iconMap();
+    List<IComponentInfo> components();
 
-    String songMap();
+    String song();
 
-    String iconPlayer();
-
-    ICoordinateDTO coordinatePlayer();
-
-    List<IItemDTO> itens();
-
-    int indexItens();
 }

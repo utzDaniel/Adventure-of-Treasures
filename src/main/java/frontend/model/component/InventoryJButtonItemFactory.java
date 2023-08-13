@@ -43,7 +43,7 @@ final class InventoryJButtonItemFactory {
         var jButton = new JButton();
         jButton.setActionCommand(item.name());
         jButton.setName(item.name());
-        jButton.setIcon(new ImageIcon(item.icon()));
+        jButton.setIcon(new ImageIcon(item.image()));
         jButton.setBackground(Colors.BROWN_2);
         return jButton;
     }

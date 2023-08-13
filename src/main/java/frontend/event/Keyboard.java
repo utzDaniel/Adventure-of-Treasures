@@ -1,7 +1,7 @@
 package frontend.event;
 
 import backend.controller.interfaces.IActionResponse;
-import backend.service.dto.Message;
+import frontend.enums.ComponentsProperties;
 import frontend.enums.Direction;
 import frontend.event.ioc.ContainerIoC;
 import frontend.event.protocolo.Request;
@@ -16,7 +16,6 @@ import frontend.service.InterfaceGame;
 import frontend.service.InterfaceInventory;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Map;
@@ -32,10 +31,10 @@ public class Keyboard {
     private final String pacoteBase;
     private final ContainerIoC container;
 
-    public Keyboard(InterfaceGame interfaceGame, Song song, SoundEffects soundEffects, String pacoteBase) {
-        this.song = song;
+    public Keyboard(InterfaceGame interfaceGame, String pacoteBase) {
+        this.song = interfaceGame.getSong();
         this.interfaceGame = interfaceGame;
-        this.soundEffects = soundEffects;
+        this.soundEffects = interfaceGame.getSoundEffects();
         interfaceInventory = new InterfaceInventory(interfaceGame, this);
         this.pacoteBase = pacoteBase;
         this.container = new ContainerIoC();
@@ -74,7 +73,7 @@ public class Keyboard {
                     var message = new MessageMapper().apply(actionRes);
                     var action = new ActionMapper().apply(actionRes);
 
-                    if ("finish".equalsIgnoreCase(action.songMap())) finish(action.songMap());
+                    if ("finish".equalsIgnoreCase(action.song())) finish(action.song());
 
                     if (Objects.nonNull(message)) {
                         var effect = message.effect();
@@ -119,12 +118,23 @@ public class Keyboard {
     }
 
     private void updateItensMapGame(IActionResponse action) {
-        this.interfaceGame.getMapGameJLabel().setIcon(new ImageIcon(action.iconMap()));
+        action.components().forEach(info -> {
+            if (info.name().equals(ComponentsProperties.PLAYER.name())) {
+                this.interfaceGame.getPlayerJLabel().setLocation(info.point());
+            }else if (info.name().equals(ComponentsProperties.MAPA.name())) {
+                this.interfaceGame.getMapGameJLabel().setIcon(new ImageIcon(info.image()));
+            }
+        });
         this.interfaceGame.clearJLabelItens();
-        this.interfaceGame.setItensJLabel(action.itens(), action.indexItens());
+        var lisItem = action.components().stream()
+                .filter(v -> v.name().equals(ComponentsProperties.ITEM.name()))
+                .toList();
+        if(!lisItem.isEmpty()){
+            var index = 1;
+            this.interfaceGame.setItensJLabel(lisItem, index);
+        }
         this.interfaceGame.getMapGameJLabel().repaint();
-        this.interfaceGame.getPlayerJLabel().setLocation(new Point(action.coordinatePlayer().x(),
-                action.coordinatePlayer().y()));
+
     }
 
     private void finish(String song) {

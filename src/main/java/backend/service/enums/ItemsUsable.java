@@ -17,7 +17,7 @@ public enum ItemsUsable {
     CHAVE("chave") {
         @Override
         public TypeMessage use() {
-            var door = player.getCurrentMap().getDoor(player.getLocation()).orElse(null);
+            var door = player.getCurrentMap().getDoor(player.getCoordinate()).orElse(null);
             if (Objects.isNull(door)) return TypeMessage.USABLE_NOT_LOCAL;
             door.setOpen(true);
             return TypeMessage.USABLE_SUCESS_KEY;
@@ -26,7 +26,7 @@ public enum ItemsUsable {
     ESCADA("escada") {
         @Override
         public TypeMessage use() {
-            var door = player.getCurrentMap().getDoor(player.getLocation()).orElse(null);
+            var door = player.getCurrentMap().getDoor(player.getCoordinate()).orElse(null);
             if (Objects.isNull(door)) return TypeMessage.USABLE_NOT_LOCAL;
             door.setOpen(true);
             new ActivateMapGame().run("escada");

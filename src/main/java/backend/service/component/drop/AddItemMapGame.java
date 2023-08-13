@@ -69,6 +69,6 @@ public class AddItemMapGame {
     }
 
     private void setItemNewCoordinate() {
-        this.item.setLocation(this.coordinate);
+        this.item.setCoordinate(this.coordinate);
     }
 }

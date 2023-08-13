@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ButtonActionTest {
 
-    private final ButtonAction buttonAction = new ButtonAction();
+   // private final ButtonAction buttonAction = new ButtonAction();
     private final ArrayList<Item> itens = new ArrayList<>();
     private final String[] button =
             {"usar", "equipar", "combinar", "remover",
@@ -142,7 +142,7 @@ public class ButtonActionTest {
     @Test(expected = ButtonException.class)
     @DisplayName("Verificar ao tentar criar um botão invalido, irá lançar ButtonException 'Nome do botão não encontrado'")
     public void createButtonInvalid() {
-        ButtonAction button = new ButtonAction();
+        //ButtonAction button = new ButtonAction();
         button.create("button");
     }
 }

@@ -4,6 +4,7 @@ import frontend.model.component.ComponentFactory;
 import backend.controller.interfaces.IItemDTO;
 
 import javax.swing.*;
+import java.util.List;
 
 public final class LabelInformation {
 
@@ -25,11 +26,10 @@ public final class LabelInformation {
         this.infoLabel[3].setText(String.format("<html>%s: %s</html>", this.infoLabel[3].getName(), item.description()));
     }
 
-    public void updateTextCapacity(int capacity, int maxCapacity) {
-        var space = this.infoLabel[0].getName().lastIndexOf(" ");
-        var text = String.format("%s %d/%d", this.infoLabel[0].getName().substring(0, space), capacity, maxCapacity);
-        this.infoLabel[0].setText(text);
-        this.infoLabel[0].setName(text);
+    public void setText(List<String> information) {
+        for (int i = 0; i < this.infoLabel.length; i++) {
+            this.infoLabel[i].setText(information.get(i));
+        }
     }
 
     public void resetText() {

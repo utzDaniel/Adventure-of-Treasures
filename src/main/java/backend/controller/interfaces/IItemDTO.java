@@ -1,19 +1,16 @@
 package backend.controller.interfaces;
 
 public interface IItemDTO {
+    int id();
 
     String name();
 
-    String description();
-
-    String icon();
-
     int weight();
 
-    ICoordinateDTO coordinate();
+    String description();
 
-    String specialization();
+    String image();
 
-    boolean isEquipped();
+    boolean combinable();
 
 }

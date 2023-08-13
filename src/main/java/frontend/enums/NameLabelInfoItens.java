@@ -2,7 +2,10 @@ package frontend.enums;
 
 public enum NameLabelInfoItens {
 
-    CAPICIDADE("Capacidade do inventario %d/%d"), NOME("Nome"), PESO("Peso"), DESCRICAO("Descrição");
+    CAPACIDADE("Capacidade do inventario %d/%d"),
+    NOME("Nome"),
+    PESO("Peso"),
+    DESCRICAO("Descrição");
 
     private final String name;
 

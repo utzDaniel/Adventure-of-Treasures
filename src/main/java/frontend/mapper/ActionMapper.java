@@ -11,12 +11,7 @@ public final class ActionMapper implements Function<Object, IActionResponse> {
     public IActionResponse apply(Object response) {
         var resp = (IResponse) response;
         var action = (IActionResponse) resp.obj();
-        return new Action(action.iconMap(),
-                action.songMap(),
-                action.iconPlayer(),
-                action.coordinatePlayer(),
-                action.itens(),
-                action.indexItens());
+        return new Action(action.components(), action.song());
     }
 
 }

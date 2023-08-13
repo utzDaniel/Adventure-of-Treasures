@@ -1,14 +1,12 @@
 package frontend.model.view;
 
-import backend.controller.interfaces.ICoordinateDTO;
 import backend.controller.interfaces.IItemDTO;
 
-public record Item(String name,
-                   String description,
-                   String icon,
+public record Item(int id,
+                   String name,
                    int weight,
-                   ICoordinateDTO coordinate,
-                   String specialization,
-                   boolean isEquipped) implements IItemDTO {
+                   String description,
+                   String image,
+                   boolean combinable) implements IItemDTO {
 
 }

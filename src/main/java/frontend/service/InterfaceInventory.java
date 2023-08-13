@@ -2,8 +2,9 @@ package frontend.service;
 
 import backend.controller.interfaces.IInventoryResponse;
 import backend.controller.interfaces.IItemDTO;
+import backend.controller.interfaces.ISpecialization;
+import frontend.enums.ComponentsProperties;
 import frontend.enums.NameButtonAction;
-import frontend.enums.NameLabelInfoItens;
 import frontend.event.Keyboard;
 import frontend.mapper.*;
 
@@ -37,14 +38,14 @@ public final class InterfaceInventory {
         this.items = new ArrayList<>();
         this.buttonItem = new ButtonItem();
         this.labelInformation = new LabelInformation();
-        this.buttonAction = new ButtonAction();
+        this.buttonAction = new ButtonAction(inventory.specialization());
         setSettings(inventory);
     }
 
     private void setSettings(IInventoryResponse inventory) {
         this.panelInventory.getButton().addActionListener(e -> quit());
         setItens(inventory);
-        setInfoItens(inventory.capacity(), inventory.maxCapacity());
+        setInfoItens(inventory.information());
         setButtonsActions();
         this.interfaceGame.getFrame().add(this.panelInventory.getPanel(), -1);
         this.panelInventory.getPanel().requestFocus();
@@ -67,17 +68,11 @@ public final class InterfaceInventory {
         });
     }
 
-    private void setInfoItens(int capacity, int maxCapacity) {
+    private void setInfoItens(List<String> information) {
         //TODO LabelInfoItens.CAPICIDADE deixa sempre aparecer e os depois so quando selecionar
         //TODO LabelInfoItens.CAPICIDADE ficar junto com o itens porque estão relacionado
 
-        Arrays.stream(NameLabelInfoItens.values())
-                .forEach(l ->{
-                        if(NameLabelInfoItens.CAPICIDADE == l)
-                            this.labelInformation.create(String.format(l.getName(), capacity, maxCapacity));
-                        else
-                            this.labelInformation.create(l.getName());
-                });
+        information.forEach(v -> this.labelInformation.create(v));
         Arrays.stream(this.labelInformation.getInfoLabel())
                 .forEach(jLabel -> this.labelSideEast.add(jLabel));
     }
@@ -148,7 +143,7 @@ public final class InterfaceInventory {
         var inventory = new InventoryMapper().apply(inventoryRes);
 
         if (message.sucess()) {
-            this.labelInformation.updateTextCapacity(inventory.capacity(), inventory.maxCapacity());
+            this.labelInformation.setText(inventory.information());
             updateAllItensComponents(inventory.itens());
         }
         this.interfaceGame.playEffects(message.effect(), null);
@@ -161,7 +156,7 @@ public final class InterfaceInventory {
         var inventory = new InventoryMapper().apply(inventoryRes);
 
         if (message.sucess()) {
-            this.labelInformation.updateTextCapacity(inventory.capacity(), inventory.maxCapacity());
+            this.labelInformation.setText(inventory.information());
             updateAllItensComponents(inventory.itens());
             this.interfaceGame.playEffects("Usar", message.effect());
         } else {
@@ -176,7 +171,7 @@ public final class InterfaceInventory {
         var inventory = new InventoryMapper().apply(inventoryRes);
 
         if (message.sucess()) {
-            this.labelInformation.updateTextCapacity(inventory.capacity(), inventory.maxCapacity());
+            this.labelInformation.setText(inventory.information());
             updateAllItensComponents(inventory.itens());
             this.interfaceGame.playEffects("Equipar", message.effect());
         } else {
@@ -196,7 +191,7 @@ public final class InterfaceInventory {
         var inventory = new InventoryMapper().apply(inventoryRes);
 
         if (message.sucess()) {
-            this.labelInformation.updateTextCapacity(inventory.capacity(), inventory.maxCapacity());
+            this.labelInformation.setText(inventory.information());
             updateAllItensComponents(inventory.itens());
             this.interfaceGame.playEffects("Combinar", message.effect());
         } else {
@@ -208,14 +203,24 @@ public final class InterfaceInventory {
 
         var actionRes = this.keyboard.executa("/action/refresh");
         var message = new MessageMapper().apply(actionRes);
-        var actionQuit = new ActionMapper().apply(actionRes);
+        var action = new ActionMapper().apply(actionRes);
+        var index = 1;
 
         if (message.sucess()) {
             this.interfaceGame.getFrame().getContentPane().remove(this.panelInventory.getPanel());
-            this.interfaceGame.getMapGameJLabel().setIcon(new ImageIcon(actionQuit.iconMap()));
-            if (Objects.nonNull(actionQuit.itens())) {
+
+            action.components().forEach(info -> {
+                if (info.name().equals(ComponentsProperties.MAPA.name())) {
+                    this.interfaceGame.getMapGameJLabel().setIcon(new ImageIcon(info.image()));
+                }
+            });
+            var lisItem = action.components().stream()
+                    .filter(v -> v.name().equals(ComponentsProperties.ITEM.name()))
+                    .toList();
+
+            if(!lisItem.isEmpty()) {
                 this.interfaceGame.clearJLabelItens();
-                this.interfaceGame.setItensJLabel(actionQuit.itens(), actionQuit.indexItens());
+                this.interfaceGame.setItensJLabel(lisItem, index);
                 this.interfaceGame.getMapGameJLabel().repaint();
             }
             this.interfaceGame.getFrame().repaint();

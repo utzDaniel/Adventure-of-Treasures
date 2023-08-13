@@ -1,6 +1,6 @@
 package frontend.model.component;
 
-import backend.controller.interfaces.ICoordinateDTO;
+import backend.controller.interfaces.IComponentInfo;
 import backend.controller.interfaces.IItemDTO;
 
 import javax.swing.*;
@@ -53,20 +53,8 @@ public final class ComponentFactory {
         return InventoryJPanelFactory.getInstance(name);
     }
 
-    public static JLabel getJLabel(String name, String icon) {
-        return GameJLabelFactory.getInstance(name, icon);
-    }
-
-    public static JLabel getJLabel(String icon, ICoordinateDTO coordinate) {
-        return GameJLabelFactory.getInstance(icon, coordinate);
-    }
-
-    public static JLabel getJLabel(IItemDTO item) {
-        return GameJLabelFactory.getInstance(item);
-    }
-
-    public static List<JLabel> getJLabel(List<IItemDTO> item) {
-        return GameJLabelFactory.getInstance(item);
+    public static List<JLabel> getJLabel(List<IComponentInfo> infos) {
+        return GameJLabelFactory.getInstance(infos);
     }
 
     public static JLabel getJLabel(String name) {

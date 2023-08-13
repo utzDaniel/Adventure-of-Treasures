@@ -18,7 +18,7 @@ public final class Open {
     public TypeMessage run() {
         if (isFinish()) return TypeMessage.GAME_SUCESS_FINISH;
 
-        var door = player.getCurrentMap().getDoor(player.getLocation()).orElse(null);
+        var door = player.getCurrentMap().getDoor(player.getCoordinate()).orElse(null);
 
         if (Objects.isNull(door))
             return TypeMessage.DOOR_NOT_EXIT;
@@ -33,7 +33,7 @@ public final class Open {
     }
 
     private boolean isFinish() {
-        var coordinate = player.getLocation();
+        var coordinate = player.getCoordinate();
         var item = player.getInventory().getItem(15);
         return coordinate.x() == 71 && coordinate.y() == 28 && Objects.nonNull(item);
     }
@@ -41,7 +41,7 @@ public final class Open {
     private void updatePositionPlayer(MapGame mapGame) {
         var idMapGame = player.getCurrentMap().getId();
         var door = mapGame.getDoor(idMapGame).get();
-        player.setLocation(door.getCoordinate());
+        player.setCoordinate(door.getCoordinate());
     }
 
 }

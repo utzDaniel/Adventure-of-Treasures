@@ -3,6 +3,7 @@ package backend.service.model;
 import backend.service.interfaces.ICoordinate;
 
 public final class Area {
+    private static final int STEP = 1;
     private static final int POSITION_MINIMUM = 0;
     private static final int POSITION_X_MAXIMUM = 56;
     private static final int POSITION_Y_MAXIMUM = 78;
@@ -22,7 +23,7 @@ public final class Area {
     }
 
     public static int maxY() {
-        return Area.POSITION_Y_MAXIMUM - 1;
+        return Area.POSITION_Y_MAXIMUM - STEP;
     }
 
     public static int minY() {
@@ -30,7 +31,7 @@ public final class Area {
     }
 
     public static int maxX() {
-        return Area.POSITION_X_MAXIMUM - 1;
+        return Area.POSITION_X_MAXIMUM - STEP;
     }
 
     public static int minX() {

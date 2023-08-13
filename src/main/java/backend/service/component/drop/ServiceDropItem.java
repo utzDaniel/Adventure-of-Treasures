@@ -24,7 +24,7 @@ public class ServiceDropItem {
         if (!typeMessage.isSucess()) return typeMessage;
 
         var mapGame = this.player.getCurrentMap();
-        var coordinate = this.player.getLocation();
+        var coordinate = this.player.getCoordinate();
 
         typeMessage = new AddItemMapGame(mapGame, item, coordinate).run();
         if (typeMessage.isSucess()) mapGame.addItem(item);

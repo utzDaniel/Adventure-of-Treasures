@@ -23,7 +23,7 @@ public final class MovePlayerScenery {
     }
 
     private ICoordinate newCoordinate() {
-        var coordinate = this.player.getLocation();
+        var coordinate = this.player.getCoordinate();
         return this.move.coordinateByScenery(coordinate);
     }
 
