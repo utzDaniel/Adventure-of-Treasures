@@ -42,7 +42,7 @@ public final class Combination {
 
         var isCombine = itens.stream()
                 .allMatch(item ->
-                        listNewCombinable.stream().anyMatch(v -> v.idItemNew() == item.getId())
+                        listNewCombinable.stream().anyMatch(v -> v.idItemOri() == item.getId())
                 );
         if (!isCombine)
             return TypeMessage.COMBINE_NOT_COMBINABLE;

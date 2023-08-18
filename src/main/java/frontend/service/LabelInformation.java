@@ -1,7 +1,7 @@
 package frontend.service;
 
-import frontend.model.component.ComponentFactory;
 import backend.controller.interfaces.IItemDTO;
+import frontend.model.component.ComponentFactory;
 
 import javax.swing.*;
 import java.util.List;
@@ -16,7 +16,7 @@ public final class LabelInformation {
     }
 
     public void create(String info) {
-        infoLabel[this.index] = ComponentFactory.getJLabel(info, this.index);
+        this.infoLabel[this.index] = ComponentFactory.getJLabel(info, this.index);
         this.index++;
     }
 
@@ -27,13 +27,15 @@ public final class LabelInformation {
     }
 
     public void setText(List<String> information) {
-        for (int i = 0; i < this.infoLabel.length; i++) {
+        for (int i = 0; i < infoLabel.length; i++) {
             this.infoLabel[i].setText(information.get(i));
         }
     }
 
     public void resetText() {
-        for (JLabel jLabel : this.infoLabel) jLabel.setText(jLabel.getName());
+        for (int i = 1; i < this.infoLabel.length; i++) {
+            this.infoLabel[i].setText(this.infoLabel[i].getName());
+        }
     }
 
     public JLabel[] getInfoLabel() {

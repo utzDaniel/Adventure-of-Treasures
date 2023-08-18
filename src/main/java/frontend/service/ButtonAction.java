@@ -14,7 +14,7 @@ public final class ButtonAction {
     private int index;
     private IItemDTO item;
     private final JButton[] buttonActions;
-    private final Map<Integer, List<ISpecialization>> specialization;
+    private Map<Integer, List<ISpecialization>> specialization;
 
     public ButtonAction(Map<Integer, List<ISpecialization>> specialization) {
         this.specialization = specialization;
@@ -55,20 +55,21 @@ public final class ButtonAction {
         this.buttonActions[5].setVisible(true);
     }
 
-    private void validEnable() {
-        Arrays.stream(buttonActions).limit(4)
-                .forEach(jButton -> {
-                    jButton.setVisible(true);
-                    jButton.setEnabled(false);
-                    jButton.setBackground(Colors.GREY);
-                });
-        var listActionType = this.specialization.get(this.item.id());
+    public void setSpecialization(Map<Integer, List<ISpecialization>> specialization){
+        this.specialization = specialization;
+    }
 
+    private void validEnable() {
+        var listActionType = this.specialization.get(this.item.id());
         for (int i = 0; i < 4; i++) {
+            this.buttonActions[i].setVisible(true);
             this.buttonActions[i].setText(listActionType.get(i).text());
             if (listActionType.get(i).enabled()) {
-                this.buttonActions[i].setBackground(Colors.BLUE);
                 this.buttonActions[i].setEnabled(true);
+                this.buttonActions[i].setBackground(Colors.BLUE);
+            }else{
+                this.buttonActions[i].setEnabled(false);
+                this.buttonActions[i].setBackground(Colors.GREY);
             }
         }
     }

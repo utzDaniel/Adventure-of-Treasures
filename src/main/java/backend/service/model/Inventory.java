@@ -13,14 +13,14 @@ public final class Inventory {
     private int maxCapacity;
     private boolean isInventory;
     private final Map<Integer, Item> itens;
-    private final List<Integer> itensAtivos;
+    private final Map<Integer, Item> itensAtivos;
 
     public Inventory(int capacity, int maxCapacity) {
         this.capacity = capacity;
         this.maxCapacity = maxCapacity;
         this.isInventory = false;
         this.itens = new HashMap<>();
-        this.itensAtivos = new ArrayList<>();
+        this.itensAtivos =  new HashMap<>();
         ItemRepository.getInstance().getAll()
                 .stream().map(ItemFactory::create)
                 .forEach(item -> itens.put(item.getId(), item));
@@ -60,11 +60,11 @@ public final class Inventory {
     }
 
     public boolean isAtivo(Item item) {
-        return this.itensAtivos.stream().anyMatch(id -> id == item.getId());
+        return this.itensAtivos.keySet().stream().anyMatch(id -> id == item.getId());
     }
 
     public void addItemAtivo(Item item) {
-        this.itensAtivos.add(item.getId());
+        this.itensAtivos.put(item.getId(), item);
     }
 
     public void removeItemAtivo(Item item) {

@@ -2,11 +2,12 @@ package frontend.service;
 
 import backend.controller.interfaces.IInventoryResponse;
 import backend.controller.interfaces.IItemDTO;
-import backend.controller.interfaces.ISpecialization;
 import frontend.enums.ComponentsProperties;
 import frontend.enums.NameButtonAction;
 import frontend.event.Keyboard;
-import frontend.mapper.*;
+import frontend.mapper.ActionMapper;
+import frontend.mapper.InventoryMapper;
+import frontend.mapper.MessageMapper;
 
 import javax.swing.*;
 import java.awt.*;
@@ -77,6 +78,14 @@ public final class InterfaceInventory {
                 .forEach(jLabel -> this.labelSideEast.add(jLabel));
     }
 
+    private void updateInfoItens(List<String> information) {
+        for (JLabel jLabel : this.labelInformation.getInfoLabel()) {
+            this.labelSideEast.remove(jLabel);
+        }
+        this.labelInformation = new LabelInformation();
+        setInfoItens(information);
+    }
+
     private void setButtonsActions() {
         Arrays.stream(NameButtonAction.values()).forEach(b -> buttonAction.create(b.getName()));
         JButton[] buttons = this.buttonAction.getButtonActions();
@@ -143,8 +152,7 @@ public final class InterfaceInventory {
         var inventory = new InventoryMapper().apply(inventoryRes);
 
         if (message.sucess()) {
-            this.labelInformation.setText(inventory.information());
-            updateAllItensComponents(inventory.itens());
+            updateAllItensComponents(inventory);
         }
         this.interfaceGame.playEffects(message.effect(), null);
     }
@@ -156,8 +164,7 @@ public final class InterfaceInventory {
         var inventory = new InventoryMapper().apply(inventoryRes);
 
         if (message.sucess()) {
-            this.labelInformation.setText(inventory.information());
-            updateAllItensComponents(inventory.itens());
+            updateAllItensComponents(inventory);
             this.interfaceGame.playEffects("Usar", message.effect());
         } else {
             this.interfaceGame.playEffects(message.effect(), null);
@@ -171,8 +178,7 @@ public final class InterfaceInventory {
         var inventory = new InventoryMapper().apply(inventoryRes);
 
         if (message.sucess()) {
-            this.labelInformation.setText(inventory.information());
-            updateAllItensComponents(inventory.itens());
+            updateAllItensComponents(inventory);
             this.interfaceGame.playEffects("Equipar", message.effect());
         } else {
             this.interfaceGame.playEffects(message.effect(), null);
@@ -191,8 +197,7 @@ public final class InterfaceInventory {
         var inventory = new InventoryMapper().apply(inventoryRes);
 
         if (message.sucess()) {
-            this.labelInformation.setText(inventory.information());
-            updateAllItensComponents(inventory.itens());
+            updateAllItensComponents(inventory);
             this.interfaceGame.playEffects("Combinar", message.effect());
         } else {
             this.interfaceGame.playEffects(message.effect(), null);
@@ -228,11 +233,13 @@ public final class InterfaceInventory {
         }
     }
 
-    private void updateAllItensComponents(List<IItemDTO> itens) {
+    private void updateAllItensComponents(IInventoryResponse inventory) {
+        this.labelInformation.setText(inventory.information());
+        this.buttonAction.setSpecialization(inventory.specialization());
         setActionCancel();
         removeAllItensComponents();
         this.buttonItem = new ButtonItem();
-        setItens(itens);
+        setItens(inventory.itens());
     }
 
     private void removeAllItensComponents() {
