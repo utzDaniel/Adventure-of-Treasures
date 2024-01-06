@@ -12,7 +12,7 @@ public final class Mission implements IMission {
     }
 
     @Override
-    public boolean isRemovable() {
+    public boolean isRemove() {
         return false;
     }
 

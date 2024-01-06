@@ -27,7 +27,7 @@ public final class Combinable implements ICombinable {
     }
 
     @Override
-    public boolean isRemovable() {
+    public boolean isRemove() {
         return true;
     }
 

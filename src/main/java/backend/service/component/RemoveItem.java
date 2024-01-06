@@ -19,7 +19,7 @@ public final class RemoveItem {
         if (this.item.isType(TypeItem.MISSION))
             return TypeMessage.INVENTORY_NOT_REMOVE;
 
-        if (!this.item.isRemovable())
+        if (!this.item.isRemove())
             return TypeMessage.INVENTORY_NOT_REMOVE_EQUIP;
 
         this.inventory.removeItem(this.item);

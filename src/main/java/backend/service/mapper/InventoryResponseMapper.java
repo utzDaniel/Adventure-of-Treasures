@@ -2,7 +2,6 @@ package backend.service.mapper;
 
 import backend.controller.interfaces.IInventoryResponse;
 import backend.controller.interfaces.ISpecialization;
-import backend.repository.interfaces.IEntity;
 import backend.service.dto.SpecializationDTO;
 import backend.service.dto.response.InventoryResponse;
 import backend.service.enums.ActionItem;
@@ -11,9 +10,7 @@ import backend.service.model.Inventory;
 import backend.service.model.Item;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -47,7 +44,7 @@ public final class InventoryResponseMapper implements Function<Inventory, IInven
         var key = inventory.isAtivo(item) ? ActionItem.UNEQUIP.getName() : ActionItem.EQUIP.getName();
         list.add(new SpecializationDTO(key, item.isType(TypeItem.EQUIPABLE)));
         list.add(new SpecializationDTO(ActionItem.COMBINE.getName(), item.isType(TypeItem.COMBINABLE)));
-        list.add(new SpecializationDTO(ActionItem.REMOVE.getName(), item.isRemovable()));
+        list.add(new SpecializationDTO(ActionItem.REMOVE.getName(), item.isRemove()));
         return list;
     }
 }

@@ -18,7 +18,7 @@ public final class Usable implements IUsable {
     }
 
     @Override
-    public boolean isRemovable() {
+    public boolean isRemove() {
         return true;
     }
 

@@ -6,12 +6,9 @@ import backend.repository.singleton.EquipableRepository;
 import backend.repository.singleton.MissionRepository;
 import backend.repository.singleton.UsableRepository;
 import backend.service.interfaces.ICoordinate;
-import backend.service.interfaces.ISpecialization;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 public final class ItemFactory {
 
@@ -24,28 +21,28 @@ public final class ItemFactory {
                 itemEntity.description(),
                 itemEntity.weight(),
                 itemEntity.image(),
-                getSetSpecialization(itemEntity.id()),
+                getSpecializationComposite(itemEntity.id()),
                 ICoordinate.getInstance(itemEntity.positionX(), itemEntity.positionY()));
     }
 
-    private static Set<ISpecialization> getSetSpecialization(int idItem) {
-        var set = new HashSet<ISpecialization>();
+    private static SpecializationComposite getSpecializationComposite(int idItem) {
+        var composite = new SpecializationComposite();
 
         var comb = getCombinable(idItem);
         if (!comb.isEmpty()) {
-            set.add(new Combinable(comb.get(0).idItemNew(), comb.size()));
+            composite.add(new Combinable(comb.get(0).idItemNew(), comb.size()));
         }
 
         var equipable = getEquipable(idItem);
-        equipable.ifPresent(e -> set.add(new Equipable(e.upCapacity())));
+        equipable.ifPresent(e -> composite.add(new Equipable(e.upCapacity())));
 
         var usable = getUsable(idItem);
-        usable.ifPresent(e -> set.add(new Usable(e.idMap())));
+        usable.ifPresent(e -> composite.add(new Usable(e.idMap())));
 
         var mission = getMission(idItem);
-        mission.ifPresent(e -> set.add(new Mission()));
+        mission.ifPresent(e -> composite.add(new Mission()));
 
-        return set;
+        return composite;
     }
 
     private static List<ICombinableEntity> getCombinable(int idItem) {

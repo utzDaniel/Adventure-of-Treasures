@@ -29,7 +29,7 @@ public final class Equipable implements IEquipable {
     }
 
     @Override
-    public boolean isRemovable() {
+    public boolean isRemove() {
         return !equip;
     }
 
