@@ -12,19 +12,24 @@ public final class ActivateMapGame {
         boolean activate = false;
         try {
             if (nameItem.equals("tocha")) {
-                MapGame templo = Cache.getMapGame(8);
-                Door openDoor = templo.getDoor(ICoordinate.getInstance(9, 24)).get();
+
+                var templo = Cache.getMapGame(8);
+                if(templo.isEmpty()) return activate;
+                Door openDoor = templo.get().getDoor(ICoordinate.getInstance(9, 24)).get();
                 openDoor.setOpen(!openDoor.isOpen());
                 activate = true;
             } else if (nameItem.equals("mapa")) {
-                MapGame praia = Cache.getMapGame(4);
-                praia.setImage("src/main/resources/image/map/praiaM.png");
+                var praia = Cache.getMapGame(4);
+                if(praia.isEmpty()) return activate;
+                praia.get().setImage("src/main/resources/image/map/praiaM.png");
             } else if (nameItem.equals("chave")) {
-                MapGame praia = Cache.getMapGame(4);
-                praia.setImage("src/main/resources/image/map/praia.png");
+                var praia = Cache.getMapGame(4);
+                if(praia.isEmpty()) return activate;
+                praia.get().setImage("src/main/resources/image/map/praia.png");
             } else if (nameItem.equals("escada")) {
-                MapGame templo = Cache.getMapGame(8);
-                templo.setImage("src/main/resources/image/map/temploF.png");
+                var templo = Cache.getMapGame(8);
+                if(templo.isEmpty()) return activate;
+                templo.get().setImage("src/main/resources/image/map/temploF.png");
             }
         } catch (Exception e) {
             System.out.println("Direção invalida!");

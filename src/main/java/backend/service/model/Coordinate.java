@@ -3,6 +3,7 @@ package backend.service.model;
 import backend.service.interfaces.ICoordinate;
 
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public final class Coordinate implements ICoordinate {
     private int x;
@@ -67,9 +68,11 @@ public final class Coordinate implements ICoordinate {
 
     @Override
     public String toString() {
-        return "Coordinate{" +
-                ", x =" + this.x +
-                ", y =" + this.y +
-                '}';
+        return """
+                {
+                    "x": %d,
+                    "y": %d
+                }
+                """.formatted(this.x, this.y);
     }
 }

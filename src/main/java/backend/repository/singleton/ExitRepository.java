@@ -28,26 +28,11 @@ public final class ExitRepository {
         this.map = new HashMap<>(map);
     }
 
-    public Optional<IExitEntity> getById(int id) {
-        return Optional.ofNullable(this.map.get(id));
-    }
-
     public List<IExitEntity> getByIdMapOri(int idMapOri) {
         return this.map.values()
                 .stream()
                 .filter(v -> v.idMapOri() == idMapOri)
                 .toList();
-    }
-
-    public List<IExitEntity> getByIdMapExt(int idMapExt) {
-        return this.map.values()
-                .stream()
-                .filter(v -> v.idMapExt() == idMapExt)
-                .toList();
-    }
-
-    public List<IExitEntity> getAll() {
-        return this.map.values().stream().toList();
     }
 
 }

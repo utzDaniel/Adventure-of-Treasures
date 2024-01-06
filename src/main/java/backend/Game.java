@@ -51,7 +51,7 @@ public class Game {
         var mapGame = Cache.getMapGame(Integer.parseInt(map));
 
         try {
-            new Player(image, coordinate, mapGame, inventory);
+            new Player(image, coordinate, mapGame.get(), inventory);
         } catch (Exception e) {
             e.getMessage();
         }

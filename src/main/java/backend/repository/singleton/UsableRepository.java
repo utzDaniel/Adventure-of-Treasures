@@ -1,6 +1,7 @@
 package backend.repository.singleton;
 
 import backend.repository.enums.Filename;
+import backend.repository.interfaces.IMissionEntity;
 import backend.repository.interfaces.IUsableEntity;
 import backend.repository.mapper.UsableEntityMapper;
 import backend.repository.util.Repository;
@@ -28,24 +29,12 @@ public final class UsableRepository {
         this.map = new HashMap<>(map);
     }
 
-    public Optional<IUsableEntity> getById(int id) {
-        return Optional.ofNullable(this.map.get(id));
-    }
-
-
     public Optional<IUsableEntity> getByIdItem(int idItem) {
         return this.map.values()
                 .stream()
                 .filter(v -> v.idItem() == idItem)
                 .findFirst();
 
-    }
-
-    public Optional<IUsableEntity> getByIdMap(int idMap) {
-        return this.map.values()
-                .stream()
-                .filter(v -> v.idMap() == idMap)
-                .findFirst();
     }
 
     public List<IUsableEntity> getAll() {

@@ -9,6 +9,7 @@ import backend.service.interfaces.ICoordinate;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public final class MapGameFactory {
@@ -32,7 +33,8 @@ public final class MapGameFactory {
     private static Map<ICoordinate, Item> getItens(IMapGameEntity mapGameEntity) {
         return ItemMapRepository.getInstance().getByIdMap(mapGameEntity.id())
                 .stream()
-                .map(v -> ItemRepository.getInstance().getById(v.idItem()))
+                .map(v -> ItemRepository.getInstance().getById(v.idItem()).orElse(null))
+                .filter(Objects::nonNull)
                 .map(ItemFactory::create)
                 .collect(Collectors.toMap(Item::getCoordinate, item1 -> item1));
     }

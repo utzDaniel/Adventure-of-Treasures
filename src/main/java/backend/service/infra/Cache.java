@@ -1,5 +1,6 @@
 package backend.service.infra;
 
+import backend.repository.interfaces.IMapGameEntity;
 import backend.repository.singleton.MapGameRepository;
 import backend.service.model.MapGame;
 import backend.service.model.MapGameFactory;
@@ -7,6 +8,7 @@ import backend.service.model.MapGameFactory;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 public final class Cache {
 
@@ -19,18 +21,23 @@ public final class Cache {
         Cache.mapGame.put(mapGame.getId(), mapGame);
     }
 
-    public static MapGame getMapGame(int idMap){
-        var mapGame1 = Cache.mapGame.get(idMap);
-        if(Objects.isNull(mapGame1)) {
-            mapGame1 = create(idMap);
-            addMapGame(mapGame1);
+    public static Optional<MapGame> getMapGame(int idMap){
+        var mapGame1 = Optional.ofNullable(Cache.mapGame.get(idMap));
+        if(mapGame1.isEmpty()) {
+            var entity = getMapGameEntity(idMap);
+            if(entity.isEmpty()) return Optional.empty();
+            mapGame1 = create(entity.get());
+            mapGame1.ifPresent(Cache::addMapGame);
         }
         return mapGame1;
     }
 
-    private static MapGame create(int idMap){
-        var entity = MapGameRepository.getInstance().getById(idMap);
-        return MapGameFactory.create(entity);
+    private static Optional<IMapGameEntity> getMapGameEntity(int idMap){
+        return MapGameRepository.getInstance().getById(idMap);
+    }
+
+    private static Optional<MapGame> create(IMapGameEntity entity){
+        return Optional.of(MapGameFactory.create(entity));
     }
 
 }

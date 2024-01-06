@@ -25,9 +25,11 @@ public final class Open {
         if (!door.isOpen())
             return TypeMessage.DOOR_CLOSED;
 
-        MapGame mapGame = Cache.getMapGame(door.getIdMapGame());
-        updatePositionPlayer(mapGame);
-        player.setCurrentMap(mapGame);
+        var mapGame = Cache.getMapGame(door.getIdMapGame());
+        if(mapGame.isEmpty()) return TypeMessage.DOOR_NOT_EXIT;
+
+        updatePositionPlayer(mapGame.get());
+        player.setCurrentMap(mapGame.get());
 
         return TypeMessage.DOOR_SUCESS_OPEN;
     }

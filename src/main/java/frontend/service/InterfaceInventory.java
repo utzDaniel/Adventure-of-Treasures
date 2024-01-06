@@ -108,7 +108,7 @@ public final class InterfaceInventory {
         this.buttonAction.visibleCancelAndConfirm(command);
         if (command.equals("combinar")) {
             IItemDTO item = this.buttonAction.getUseItem();
-            addListItem(item.name());
+            addListItem(String.valueOf(item.id()));
             this.buttonItem.enableIButtonItensNotCombinable();
             this.buttonItem.selectButtonItem(item);
             if (this.items.size() > 1) {
@@ -117,20 +117,20 @@ public final class InterfaceInventory {
         }
     }
 
-    private void addListItem(String name) {
+    private void addListItem(String idItem) {
         var addItem = this.items.stream()
-                .anyMatch(item1 -> item1.equals(name));
+                .anyMatch(item1 -> item1.equals(idItem));
         if (!addItem) {
-            this.items.add(name);
+            this.items.add(idItem);
         }
     }
 
     private void setActionConfirm(String command) {
         IItemDTO item = this.buttonAction.getUseItem();
         switch (command) {
-            case "remover" -> eventActionRemove(item.name());
-            case "equipar" -> eventActionEquip(item.name());
-            case "usar" -> eventActionUse(item.name());
+            case "remover" -> eventActionRemove(String.valueOf(item.id()));
+            case "equipar" -> eventActionEquip(String.valueOf(item.id()));
+            case "usar" -> eventActionUse(String.valueOf(item.id()));
             case "combinar" -> eventActionCombination(this.items);
             default -> System.err.println("comando invalido!");
         }
@@ -145,9 +145,9 @@ public final class InterfaceInventory {
         this.labelSideEast.repaint();//Atualizar os itens combinaveis
     }
 
-    private void eventActionRemove(String name) {
+    private void eventActionRemove(String idItem) {
 
-        var inventoryRes = this.keyboard.executa(String.format("/inventory/drop?arg0=%s", name));
+        var inventoryRes = this.keyboard.executa(String.format("/inventory/drop?arg0=%s", idItem));
         var message = new MessageMapper().apply(inventoryRes);
         var inventory = new InventoryMapper().apply(inventoryRes);
 
@@ -157,9 +157,9 @@ public final class InterfaceInventory {
         this.interfaceGame.playEffects(message.effect(), null);
     }
 
-    private void eventActionUse(String name) {
+    private void eventActionUse(String idItem) {
 
-        var inventoryRes = this.keyboard.executa(String.format("/inventory/use?arg0=%s", name));
+        var inventoryRes = this.keyboard.executa(String.format("/inventory/use?arg0=%s", idItem));
         var message = new MessageMapper().apply(inventoryRes);
         var inventory = new InventoryMapper().apply(inventoryRes);
 
@@ -171,9 +171,9 @@ public final class InterfaceInventory {
         }
     }
 
-    private void eventActionEquip(String name) {
+    private void eventActionEquip(String idItem) {
 
-        var inventoryRes = this.keyboard.executa(String.format("/inventory/equip?arg0=%s", name));
+        var inventoryRes = this.keyboard.executa(String.format("/inventory/equip?arg0=%s", idItem));
         var message = new MessageMapper().apply(inventoryRes);
         var inventory = new InventoryMapper().apply(inventoryRes);
 

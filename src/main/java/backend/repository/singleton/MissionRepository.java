@@ -28,20 +28,12 @@ public final class MissionRepository {
         this.map = new HashMap<>(map);
     }
 
-    public Optional<IMissionEntity> getById(int id) {
-        return Optional.ofNullable(this.map.get(id));
-    }
-
     public Optional<IMissionEntity> getByIdItem(int idItem) {
         return this.map.values()
                 .stream()
                 .filter(v -> v.idItem() == idItem)
                 .findFirst();
 
-    }
-
-    public List<IMissionEntity> getAll() {
-        return this.map.values().stream().toList();
     }
 
 }

@@ -25,10 +25,9 @@ public final class MovePlayerNextScenery {
             return TypeMessage.MOVE_MAP_NOT_EXIT;
 
         var nextScenery = Cache.getMapGame(idMap.get());
-        if (Objects.isNull(nextScenery))
-            return TypeMessage.MOVE_MAP_NOT_FOUND;
+        if(nextScenery.isEmpty()) return TypeMessage.MOVE_MAP_NOT_FOUND;
 
-        this.player.setCurrentMap(nextScenery);
+        this.player.setCurrentMap(nextScenery.get());
 
         return TypeMessage.MOVE_SUCESS;
     }

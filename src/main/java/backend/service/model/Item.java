@@ -2,8 +2,11 @@ package backend.service.model;
 
 import backend.service.enums.TypeItem;
 import backend.service.interfaces.ICoordinate;
+import backend.service.interfaces.ISpecialization;
 
-import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public final class Item {
 
@@ -12,16 +15,16 @@ public final class Item {
     private final String description;
     private final int weight;
     private final String image;
-    private final List<TypeItem> listType;
+    private final Set<ISpecialization> specializations;
     private ICoordinate coordinate;
 
-    Item(int id, String name, String description, int weight, String image, List<TypeItem> listType, ICoordinate coordinate) {
+    Item(int id, String name, String description, int weight, String image, Set<ISpecialization> specializations, ICoordinate coordinate) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.weight = weight;
         this.image = image;
-        this.listType = listType;
+        this.specializations = specializations;
         this.coordinate = coordinate;
     }
 
@@ -46,10 +49,14 @@ public final class Item {
     }
 
     public boolean isType(TypeItem type) {
-        return this.listType.contains(type);
+        for (ISpecialization specialization : this.specializations) {
+            if (specialization.isType(type)) return true;
+        }
+        return false;
     }
-    public List<TypeItem> getType() {
-        return this.listType;
+
+    public Optional<ISpecialization> getSpecialization(TypeItem type) {
+        return this.specializations.stream().filter(s -> s.isType(type)).findFirst();
     }
 
     public ICoordinate getCoordinate() {
@@ -60,23 +67,28 @@ public final class Item {
         this.coordinate = ICoordinate.getInstance(coordinate);
     }
 
+    public boolean isRemovable() {
+        var remove = true;
+        for (ISpecialization specialization : this.specializations) {
+            remove = remove && specialization.isRemovable();
+        }
+        return remove;
+    }
+
     @Override
     public String toString() {
         return """
                 {
-                    "id": "%d",
+                    "id": %d,
                     "name": "%s",
                     "description": "%s",
                     "weight": %d,
                     "coordinate": %s,
                     "image": "%s",
-                    "listType": %s
+                    "specializations": "%s"
                 }
                 """.formatted(this.id, this.name, this.description, this.weight, this.coordinate.toString(),
-                this.image, this.listType);
+                this.image, this.specializations.stream().map(Object::toString).collect(Collectors.joining(", ")));
     }
 
-    public boolean equipped() {
-        return this.listType.contains(TypeItem.EQUIPABLE); //&& item.isEquipped()
-    }
 }

@@ -14,10 +14,10 @@ public class ServiceDropItem {
         this.inventory = inventory;
     }
 
-    public TypeMessage run(String name) {
+    public TypeMessage run(Integer idItem) {
 
         var item = this.inventory.getItens().stream()
-                .filter(item1 -> item1.getName().equals(name))
+                .filter(item1 -> item1.getId() == idItem)
                 .findFirst().get();
 
         var typeMessage = new RemoveItem(this.inventory, item).run();

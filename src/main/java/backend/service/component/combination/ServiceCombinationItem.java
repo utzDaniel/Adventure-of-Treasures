@@ -6,7 +6,7 @@ import backend.service.model.Inventory;
 import backend.service.model.Item;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public final class ServiceCombinationItem {
@@ -16,14 +16,12 @@ public final class ServiceCombinationItem {
         this.inventory = inventory;
     }
 
-    public TypeMessage run(String... names) {
+    public TypeMessage run(List<Integer> idItens) {
 
         var itens = new ArrayList<Item>();
-        Arrays.stream(names)
-                .forEach(name1 -> itens.add(
-                        this.inventory.getItens().stream()
-                                .filter(item1 -> item1.getName().equals(name1))
-                                .findFirst().get()));
+        idItens.forEach(id -> itens.add(this.inventory.getItens().stream()
+                .filter(item1 -> item1.getId() == id)
+                .findFirst().get()));
 
         if (itens.isEmpty()) return TypeMessage.ITEM_NOT_FOUND;
 

@@ -1,5 +1,6 @@
 package backend.service.model;
 
+import backend.controller.enums.TypeMessage;
 import backend.repository.singleton.ItemRepository;
 
 import java.util.ArrayList;
@@ -21,13 +22,17 @@ public final class Inventory {
         this.isInventory = false;
         this.itens = new HashMap<>();
         this.itensAtivos =  new HashMap<>();
-        ItemRepository.getInstance().getAll()
-                .stream().map(ItemFactory::create)
-                .forEach(item -> itens.put(item.getId(), item));
+//        ItemRepository.getInstance().getAll()
+//                .stream().map(ItemFactory::create)
+//                .forEach(item -> itens.put(item.getId(), item));
     }
 
     public int getCapacity() {
         return this.capacity;
+    }
+
+    public boolean hasSpace(int weight) {
+        return weight + this.getCapacity() > this.getMaxCapacity();
     }
 
     public void updadeCapacity(int weight) {

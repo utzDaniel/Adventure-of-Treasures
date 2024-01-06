@@ -6,7 +6,7 @@ import backend.service.model.Player;
 
 public enum ItemsEquipable {
 
-    MOCHILA("mochila") {
+    MOCHILA("mochila",10) {
         @Override
         public TypeMessage equip() {
             player.getInventory().updadeMaxCapacity(UPDATE);
@@ -21,7 +21,7 @@ public enum ItemsEquipable {
             player.getInventory().updadeMaxCapacity(-UPDATE);
             return TypeMessage.UNEQUIP_SUCESS_SCHOOLBAG;
         }
-    }, TOCHA("tocha") {
+    }, TOCHA("tocha",16) {
         @Override
         public TypeMessage equip() {
             boolean openDoor = new ActivateMapGame().run("tocha");
@@ -40,16 +40,18 @@ public enum ItemsEquipable {
     private static final int UPDATE = 5;
     private static final Player player = Player.getInstance();
     private final String label;
+    private final int id;
 
     public abstract TypeMessage equip();
 
     public abstract TypeMessage unequip();
 
-    ItemsEquipable(String label) {
+    ItemsEquipable(String label, int id) {
         this.label = label;
+        this.id = id;
     }
 
-    public String getLabel() {
-        return this.label;
+    public int getId() {
+        return id;
     }
 }

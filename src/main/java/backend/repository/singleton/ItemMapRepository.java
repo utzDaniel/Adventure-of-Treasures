@@ -28,26 +28,11 @@ public final class ItemMapRepository {
         this.map = new HashMap<>(map);
     }
 
-    public Optional<IItemMapEntity> getById(int id) {
-        return Optional.ofNullable(this.map.get(id));
-    }
-
-    public List<IItemMapEntity> getByIdItem(int idItem) {
-        return this.map.values()
-                .stream()
-                .filter(v -> v.idItem() == idItem)
-                .toList();
-    }
-
     public List<IItemMapEntity> getByIdMap(int idMap) {
         return this.map.values()
                 .stream()
                 .filter(v -> v.idMap() == idMap)
                 .toList();
-    }
-
-    public List<IItemMapEntity> getAll() {
-        return this.map.values().stream().toList();
     }
 
 }

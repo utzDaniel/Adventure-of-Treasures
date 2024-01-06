@@ -28,20 +28,12 @@ public final class EquipableRepository {
         this.map = new HashMap<>(map);
     }
 
-    public Optional<IEquipableEntity> getById(int id) {
-        return Optional.ofNullable(this.map.get(id));
-    }
-
     public Optional<IEquipableEntity> getByIdItem(int idItem) {
         return this.map.values()
                 .stream()
                 .filter(v -> v.idItem() == idItem)
                 .findFirst();
 
-    }
-
-    public List<IEquipableEntity> getAll() {
-        return this.map.values().stream().toList();
     }
 
 }

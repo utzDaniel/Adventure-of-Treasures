@@ -6,10 +6,7 @@ import backend.repository.interfaces.IRepository;
 import backend.repository.mapper.MapGameEntityMapper;
 import backend.repository.util.Repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public final class MapGameRepository implements IRepository<IMapGameEntity, Integer> {
     private static MapGameRepository repository;
@@ -33,8 +30,8 @@ public final class MapGameRepository implements IRepository<IMapGameEntity, Inte
     }
 
     @Override
-    public IMapGameEntity getById(Integer id) {
-        return this.map.get(id);
+    public Optional<IMapGameEntity> getById(Integer id) {
+        return Optional.ofNullable(this.map.get(id));
     }
 
     @Override

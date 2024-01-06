@@ -6,10 +6,7 @@ import backend.repository.interfaces.IRepository;
 import backend.repository.mapper.ItemEntityMapper;
 import backend.repository.util.Repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public final class ItemRepository implements IRepository<IItemEntity, Integer> {
     private static ItemRepository repository;
@@ -33,8 +30,8 @@ public final class ItemRepository implements IRepository<IItemEntity, Integer> {
     }
 
     @Override
-    public IItemEntity getById(Integer id) {
-        return this.map.get(id);
+    public Optional<IItemEntity> getById(Integer id) {
+        return Optional.ofNullable(this.map.get(id));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package backend.service.component.combination;
 
 import backend.controller.enums.TypeMessage;
+import backend.repository.interfaces.IItemEntity;
 import backend.repository.singleton.CombinableRepository;
 import backend.repository.singleton.ItemRepository;
 import backend.service.component.ActivateMapGame;
@@ -12,7 +13,7 @@ import backend.service.model.ItemFactory;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
+import java.util.Optional;
 
 public final class Combination {
 
@@ -47,9 +48,10 @@ public final class Combination {
         if (!isCombine)
             return TypeMessage.COMBINE_NOT_COMBINABLE;
 
-        newItem = getItem(listNewCombinable.get(0).idItemNew());
-        if (Objects.isNull(newItem)) return TypeMessage.ITEM_NOT_FOUND;
+        var itemEntity = getItemEntity(listNewCombinable.get(0).idItemNew());
+        if (itemEntity.isEmpty()) return TypeMessage.ITEM_NOT_FOUND;
 
+        newItem = ItemFactory.create(itemEntity.get());
         updateMap();
         removeAllItemCombine();
         this.inventory.addItem(newItem);
@@ -60,8 +62,8 @@ public final class Combination {
     }
 
 
-    private Item getItem(int idItem) {
-        return ItemFactory.create(ItemRepository.getInstance().getById(idItem));
+    private Optional<IItemEntity> getItemEntity(int idItem) {
+        return ItemRepository.getInstance().getById(idItem);
     }
 
     private void updateMap() {

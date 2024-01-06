@@ -1,19 +1,22 @@
 package backend.service.model;
 
-import backend.repository.interfaces.IItemEntity;
+import backend.repository.interfaces.*;
 import backend.repository.singleton.CombinableRepository;
 import backend.repository.singleton.EquipableRepository;
 import backend.repository.singleton.MissionRepository;
 import backend.repository.singleton.UsableRepository;
-import backend.service.enums.TypeItem;
 import backend.service.interfaces.ICoordinate;
+import backend.service.interfaces.ISpecialization;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 public final class ItemFactory {
 
-    private ItemFactory(){}
+    private ItemFactory() {
+    }
 
     public static Item create(IItemEntity itemEntity) {
         return new Item(itemEntity.id(),
@@ -21,45 +24,43 @@ public final class ItemFactory {
                 itemEntity.description(),
                 itemEntity.weight(),
                 itemEntity.image(),
-                getListTypeItem(itemEntity),
+                getSetSpecialization(itemEntity.id()),
                 ICoordinate.getInstance(itemEntity.positionX(), itemEntity.positionY()));
     }
 
-    private static List<TypeItem> getListTypeItem(IItemEntity itemEntity) {
-        var list = new ArrayList<TypeItem>();
-        if (isCombinable(itemEntity))
-            list.add(TypeItem.COMBINABLE);
-        if (isEquipable(itemEntity))
-            list.add(TypeItem.EQUIPABLE);
-        if (isUsable(itemEntity))
-            list.add(TypeItem.USABLE);
-        if (isMission(itemEntity))
-            list.add(TypeItem.MISSION);
-        return list;
+    private static Set<ISpecialization> getSetSpecialization(int idItem) {
+        var set = new HashSet<ISpecialization>();
+
+        var comb = getCombinable(idItem);
+        if (!comb.isEmpty()) {
+            set.add(new Combinable(comb.get(0).idItemNew(), comb.size()));
+        }
+
+        var equipable = getEquipable(idItem);
+        equipable.ifPresent(e -> set.add(new Equipable(e.upCapacity())));
+
+        var usable = getUsable(idItem);
+        usable.ifPresent(e -> set.add(new Usable(e.idMap())));
+
+        var mission = getMission(idItem);
+        mission.ifPresent(e -> set.add(new Mission()));
+
+        return set;
     }
 
-    private static boolean isCombinable(IItemEntity itemEntity) {
-        return !CombinableRepository.getInstance()
-                .getByIdItemOri(itemEntity.id())
-                .isEmpty();
+    private static List<ICombinableEntity> getCombinable(int idItem) {
+        return CombinableRepository.getInstance().getByIdItemOriCombinable(idItem);
     }
 
-    private static boolean isEquipable(IItemEntity itemEntity) {
-        return EquipableRepository.getInstance()
-                .getByIdItem(itemEntity.id())
-                .isPresent();
+    private static Optional<IEquipableEntity> getEquipable(int idItem) {
+        return EquipableRepository.getInstance().getByIdItem(idItem);
     }
 
-    private static boolean isUsable(IItemEntity itemEntity) {
-        return UsableRepository.getInstance()
-                .getByIdItem(itemEntity.id())
-                .isPresent();
+    private static Optional<IUsableEntity> getUsable(int idItem) {
+        return UsableRepository.getInstance().getByIdItem(idItem);
     }
 
-    private static boolean isMission(IItemEntity itemEntity) {
-        return MissionRepository.getInstance()
-                .getByIdItem(itemEntity.id())
-                .isPresent();
+    private static Optional<IMissionEntity> getMission(int idItem) {
+        return MissionRepository.getInstance().getByIdItem(idItem);
     }
-
 }

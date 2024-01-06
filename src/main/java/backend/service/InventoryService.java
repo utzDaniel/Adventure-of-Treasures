@@ -11,6 +11,8 @@ import backend.service.dto.response.ServiceResponse;
 import backend.service.mapper.InventoryResponseMapper;
 import backend.service.model.Player;
 
+import java.util.List;
+
 public final class InventoryService implements IInventoryService {
     /**
      * O service é responsável por conter a lógica de negócio da aplicação.
@@ -23,9 +25,9 @@ public final class InventoryService implements IInventoryService {
     private static final Player PLAYER = Player.getInstance();
 
     @Override
-    public IServiceResponse combination(String... names) {
+    public IServiceResponse combination(List<Integer> idItens) {
         var inventory = PLAYER.getInventory();
-        var typeMessage = new ServiceCombinationItem(inventory).run(names);
+        var typeMessage = new ServiceCombinationItem(inventory).run(idItens);
 
         if (!typeMessage.isSucess())
             new ServiceResponse(typeMessage, null);
@@ -35,10 +37,10 @@ public final class InventoryService implements IInventoryService {
     }
 
     @Override
-    public IServiceResponse use(String name) {
+    public IServiceResponse use(Integer idItem) {
         var inventory = PLAYER.getInventory();
         var idMap = PLAYER.getCurrentMap().getId();
-        var typeMessage = new ServiceUseItem(inventory).run(name, idMap);
+        var typeMessage = new ServiceUseItem(inventory).run(idItem, idMap);
 
         if (!typeMessage.isSucess())
             new ServiceResponse(typeMessage, null);
@@ -48,9 +50,9 @@ public final class InventoryService implements IInventoryService {
     }
 
     @Override
-    public IServiceResponse equip(String name) {
+    public IServiceResponse equip(Integer idItem) {
         var inventory = PLAYER.getInventory();
-        var typeMessage = new ServiceEquipItem(inventory).run(name);
+        var typeMessage = new ServiceEquipItem(inventory).run(idItem);
 
         if (!typeMessage.isSucess())
             new ServiceResponse(typeMessage, null);
@@ -60,9 +62,9 @@ public final class InventoryService implements IInventoryService {
     }
 
     @Override
-    public IServiceResponse drop(String name) {
+    public IServiceResponse drop(Integer idItem) {
         var inventory = PLAYER.getInventory();
-        var typeMessage = new ServiceDropItem(inventory).run(name);
+        var typeMessage = new ServiceDropItem(inventory).run(idItem);
 
         if (!typeMessage.isSucess())
             new ServiceResponse(typeMessage, null);

@@ -1,6 +1,7 @@
 package backend.service.component.use;
 
 import backend.controller.enums.TypeMessage;
+import backend.repository.interfaces.IItemEntity;
 import backend.repository.singleton.ItemRepository;
 import backend.repository.singleton.UsableRepository;
 import backend.service.component.RemoveItem;
@@ -12,6 +13,7 @@ import backend.service.model.ItemFactory;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Optional;
 
 public final class ServiceUseItem {
 
@@ -21,10 +23,10 @@ public final class ServiceUseItem {
         this.inventory = inventory;
     }
 
-    public TypeMessage run(String name, int idMap) {
+    public TypeMessage run(Integer idItem, int idMap) {
 
         Item item = this.inventory.getItens().stream()
-                .filter(item1 -> item1.getName().equals(name))
+                .filter(item1 -> item1.getId() == idItem)
                 .findFirst().get();
 
         var typeMessage = TypeMessage.ITEM_NOT_FOUND;
@@ -43,10 +45,10 @@ public final class ServiceUseItem {
             typeMessage = usable1.use();
             if (!typeMessage.isSucess()) return typeMessage;
 
+            var itemEntity = getItemEntity();
+            if(itemEntity.isEmpty()) return TypeMessage.ITEM_NOT_FOUND;
 
-            var newItem = ItemFactory.create(ItemRepository.getInstance().getById(1));//chave
-            if (Objects.isNull(newItem))
-                return TypeMessage.ITEM_NOT_FOUND;
+            var newItem = ItemFactory.create(itemEntity.get());
 
             this.inventory.addItem(newItem);
 
@@ -55,6 +57,10 @@ public final class ServiceUseItem {
         }
 
         return typeMessage;
+    }
+
+    private Optional<IItemEntity> getItemEntity() {
+        return ItemRepository.getInstance().getById(1);//chave
     }
 
     private ItemsUsable getItemUsable(String name) {

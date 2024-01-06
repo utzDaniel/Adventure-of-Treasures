@@ -5,6 +5,8 @@ import backend.controller.interfaces.IInventoryController;
 import backend.controller.interfaces.IInventoryService;
 import backend.controller.interfaces.IResponse;
 
+import java.util.Arrays;
+
 public final class InventoryController implements IInventoryController {
 
     private final IInventoryService inventoryService;
@@ -12,6 +14,7 @@ public final class InventoryController implements IInventoryController {
     public InventoryController(IInventoryService service) {
         this.inventoryService = service;
     }
+
     /**
      * o controller valida os dados de entrada,
      * chama os métodos do service apropriados e
@@ -19,26 +22,29 @@ public final class InventoryController implements IInventoryController {
      */
 
     @Override
-    public IResponse combination(String names) {
-        var rsp = this.inventoryService.combination(names.split(","));
+    public IResponse combination(String idItens) {
+        var listIdItens = Arrays.stream(idItens.split(","))
+                .map(Integer::parseInt)
+                .toList();
+        var rsp = this.inventoryService.combination(listIdItens);
         return ResponseFactory.create(rsp);
     }
 
     @Override
-    public IResponse use(String name) {
-        var rsp = this.inventoryService.use(name);
+    public IResponse use(String idItem) {
+        var rsp = this.inventoryService.use(Integer.parseInt(idItem));
         return ResponseFactory.create(rsp);
     }
 
     @Override
-    public IResponse equip(String name) {
-        var rsp = this.inventoryService.equip(name);
+    public IResponse equip(String idItem) {
+        var rsp = this.inventoryService.equip(Integer.parseInt(idItem));
         return ResponseFactory.create(rsp);
     }
 
     @Override
-    public IResponse drop(String name) {
-        var rsp = this.inventoryService.drop(name);
+    public IResponse drop(String idItem) {
+        var rsp = this.inventoryService.drop(Integer.parseInt(idItem));
         return ResponseFactory.create(rsp);
     }
 

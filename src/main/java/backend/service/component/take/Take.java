@@ -29,8 +29,7 @@ public final class Take {
         if (Objects.isNull(item))
             return TypeMessage.ITEM_NOT_FOUND;
 
-        var newCapacity = item.getWeight() + inventory.getCapacity();
-        if (newCapacity > inventory.getMaxCapacity())
+        if (inventory.hasSpace(item.getWeight()))
             return TypeMessage.INVENTORY_FULL;
 
         inventory.addItem(item);

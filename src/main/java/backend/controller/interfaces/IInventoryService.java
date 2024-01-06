@@ -1,13 +1,15 @@
 package backend.controller.interfaces;
 
+import java.util.List;
+
 public interface IInventoryService {
-    IServiceResponse combination(String... names);
+    IServiceResponse combination(List<Integer> idItens);
 
-    IServiceResponse use(String name);
+    IServiceResponse use(Integer idItem);
 
-    IServiceResponse equip(String name);
+    IServiceResponse equip(Integer idItem);
 
-    IServiceResponse drop(String name);
+    IServiceResponse drop(Integer idItem);
 
     IServiceResponse open();
 }

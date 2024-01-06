@@ -36,18 +36,13 @@ public final class CombinableRepository {
         return this.map.get(id);
     }
 
-    public List<ICombinableEntity> getByIdItemNew(int idItemNew) {
-        return this.map.values()
-                .stream()
-                .filter(v -> v.idItemNew() == idItemNew)
-                .toList();
-    }
-
-    public List<ICombinableEntity> getByIdItemOri(int idItemOri) {
+    public List<ICombinableEntity> getByIdItemOriCombinable(int idItemOri) {
         return this.map.values()
                 .stream()
                 .filter(v -> v.idItemOri() == idItemOri)
-                .toList();
+                .findFirst()
+                .map(e -> this.map.values().stream().filter( v-> v.idItemNew() == e.idItemNew()).toList())
+                .orElse(List.of());
     }
 
     public List<ICombinableEntity> getAll() {

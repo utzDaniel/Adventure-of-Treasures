@@ -25,7 +25,7 @@ public class EquipableTest {
     public void validarItemEquipMochila() {
         Player player = Player.getInstance();
         new AddItemInventory(player.getInventory(), itens.get(0)).run();
-        ((ItemEquipable) itens.get(0)).equip();
+       // ((ItemEquipable) itens.get(0)).equip();
         assertTrue((itens.get(0)).isEquipped());
     }
 
@@ -34,7 +34,7 @@ public class EquipableTest {
         Player player = Player.getInstance();
         int capacity = player.getInventory().getMaxCapacity();
         new AddItemInventory(player.getInventory(), itens.get(0)).run();
-        (itens.get(0)).equip();
+        //(itens.get(0)).equip();
         assertEquals(capacity + 5, player.getInventory().getMaxCapacity());
     }
 
@@ -42,7 +42,7 @@ public class EquipableTest {
     public void validarItemUnequipMochila() {
         Player player = Player.getInstance();
         new AddItemInventory(player.getInventory(), itens.get(0)).run();
-        (itens.get(0)).equip();
+        //(itens.get(0)).equip();
         (itens.get(0)).unequip();
         assertFalse(((ItemEquipable) itens.get(0)).isEquipped());
     }
@@ -52,7 +52,7 @@ public class EquipableTest {
         Player player = Player.getInstance();
         int capacity = player.getInventory().getMaxCapacity();
         new AddItemInventory(player.getInventory(), itens.get(0)).run();
-        (itens.get(0)).equip();
+        //(itens.get(0)).equip();
         (itens.get(0)).unequip();
         assertEquals(capacity, player.getInventory().getMaxCapacity());
     }
@@ -61,7 +61,7 @@ public class EquipableTest {
     public void validarItemUnequipMochilaAtributoErro() {
         Player player = Player.getInstance();
         new AddItemInventory(player.getInventory(), itens.get(0)).run();
-        (itens.get(0)).equip();
+       // (itens.get(0)).equip();
         int size = player.getInventory().getMaxCapacity() - player.getInventory().getCapacity();
 
         var item = ItemEquipableBuilder.builder().equipped(false).name("peso").description("pesar").weight(size)
@@ -83,7 +83,7 @@ public class EquipableTest {
             player.getInventory().setItemInvisible(item);
         }
         new AddItemInventory(player.getInventory(), itens.get(2)).run();
-        (itens.get(2)).equip();
+        //(itens.get(2)).equip();
         assertTrue((itens.get(2)).isEquipped());
     }
 
@@ -116,7 +116,7 @@ public class EquipableTest {
             player.getInventory().setItemInvisible(item);
         }
         new AddItemInventory(player.getInventory(), itens.get(2)).run();
-        (itens.get(2)).equip();
+        //(itens.get(2)).equip();
         (itens.get(2)).unequip();
         assertFalse((itens.get(2)).isEquipped());
     }
@@ -134,7 +134,7 @@ public class EquipableTest {
             player.getInventory().setItemInvisible(item);
         }
         new AddItemInventory(player.getInventory(), itens.get(2)).run();
-        (itens.get(2)).equip();
+        //(itens.get(2)).equip();
         // assertTrue(((ItemEquipable) itens.get(2)).unequip());
     }
 

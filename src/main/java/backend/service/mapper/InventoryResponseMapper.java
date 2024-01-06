@@ -5,6 +5,7 @@ import backend.controller.interfaces.ISpecialization;
 import backend.repository.interfaces.IEntity;
 import backend.service.dto.SpecializationDTO;
 import backend.service.dto.response.InventoryResponse;
+import backend.service.enums.ActionItem;
 import backend.service.enums.TypeItem;
 import backend.service.model.Inventory;
 import backend.service.model.Item;
@@ -20,15 +21,11 @@ public final class InventoryResponseMapper implements Function<Inventory, IInven
 
     @Override
     public IInventoryResponse apply(Inventory inventory) {
-        
-        var map = inventory.getItens().stream()
-                .collect(Collectors.toMap(Item::getId, item -> createListSpecialization(item, inventory)));
+
+        var map = inventory.getItens().stream().collect(Collectors.toMap(Item::getId, item -> createListSpecialization(item, inventory)));
 
 
-
-        var itensDTO = inventory.getItens().stream()
-                .map(item -> new ItemDTOMapper().apply(item))
-                .toList();
+        var itensDTO = inventory.getItens().stream().map(item -> new ItemDTOMapper().apply(item)).toList();
 
         return new InventoryResponse(map, createListInformation(inventory), itensDTO);
     }
@@ -46,11 +43,11 @@ public final class InventoryResponseMapper implements Function<Inventory, IInven
 
     private List<ISpecialization> createListSpecialization(Item item, Inventory inventory) {
         var list = new ArrayList<ISpecialization>();
-        list.add(new SpecializationDTO("USAR", item.isType(TypeItem.USABLE)));
-        var key = inventory.isAtivo(item) ? "DESEQUIPAR" : "EQUIPAR";
+        list.add(new SpecializationDTO(ActionItem.USE.getName(), item.isType(TypeItem.USABLE)));
+        var key = inventory.isAtivo(item) ? ActionItem.UNEQUIP.getName() : ActionItem.EQUIP.getName();
         list.add(new SpecializationDTO(key, item.isType(TypeItem.EQUIPABLE)));
-        list.add(new SpecializationDTO("COMBINAR", item.isType(TypeItem.COMBINABLE)));
-        list.add(new SpecializationDTO("REMOVER", !item.isType(TypeItem.MISSION) && key.equals("EQUIPAR")));
+        list.add(new SpecializationDTO(ActionItem.COMBINE.getName(), item.isType(TypeItem.COMBINABLE)));
+        list.add(new SpecializationDTO(ActionItem.REMOVE.getName(), item.isRemovable()));
         return list;
     }
 }
