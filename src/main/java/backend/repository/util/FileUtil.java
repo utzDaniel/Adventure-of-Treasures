@@ -22,7 +22,7 @@ public final class FileUtil<T> {
             throw new IllegalArgumentException("Arquivo n�o encontrado");
         }
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file, StandardCharsets.ISO_8859_1))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file, StandardCharsets.UTF_8))) {
             return reader.lines()
                     .skip(1)
                     .map(mapper)

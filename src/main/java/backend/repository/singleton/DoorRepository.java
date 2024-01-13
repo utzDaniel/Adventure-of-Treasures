@@ -28,6 +28,10 @@ public final class DoorRepository {
         this.map = new HashMap<>(map);
     }
 
+    public List<IDoorEntity> getAll() {
+        return this.map.values().stream().toList();
+    }
+
     public List<IDoorEntity> getByIdMapOri(int idMapOri) {
         return this.map.values()
                 .stream()

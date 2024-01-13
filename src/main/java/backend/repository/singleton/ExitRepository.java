@@ -1,6 +1,7 @@
 package backend.repository.singleton;
 
 import backend.repository.enums.Filename;
+import backend.repository.interfaces.IDoorEntity;
 import backend.repository.interfaces.IExitEntity;
 import backend.repository.mapper.ExitEntityMapper;
 import backend.repository.util.Repository;
@@ -26,6 +27,10 @@ public final class ExitRepository {
 
     private ExitRepository(Map<Integer, IExitEntity> map) {
         this.map = new HashMap<>(map);
+    }
+
+    public List<IExitEntity> getAll() {
+        return this.map.values().stream().toList();
     }
 
     public List<IExitEntity> getByIdMapOri(int idMapOri) {

@@ -1,6 +1,7 @@
 package backend.repository.singleton;
 
 import backend.repository.enums.Filename;
+import backend.repository.interfaces.IEquipableEntity;
 import backend.repository.interfaces.IItemMapEntity;
 import backend.repository.mapper.ItemMapEntityMapper;
 import backend.repository.util.Repository;
@@ -26,6 +27,10 @@ public final class ItemMapRepository {
 
     private ItemMapRepository(Map<Integer, IItemMapEntity> map) {
         this.map = new HashMap<>(map);
+    }
+
+    public List<IItemMapEntity> getAll() {
+        return this.map.values().stream().toList();
     }
 
     public List<IItemMapEntity> getByIdMap(int idMap) {

@@ -173,7 +173,7 @@ public final class InterfaceInventory {
 
     private void eventActionEquip(String idItem) {
 
-        var inventoryRes = this.keyboard.executa(String.format("/inventory/equip?arg0=%s", idItem));
+        var inventoryRes = this.keyboard.executa(String.format("/inventory/equip?arg0=a%s", idItem));
         var message = new MessageMapper().apply(inventoryRes);
         var inventory = new InventoryMapper().apply(inventoryRes);
 

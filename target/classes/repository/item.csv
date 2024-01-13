@@ -1,4 +1,4 @@
-id;name;description;weight;position_x;position_y;image
+﻿id;name;description;weight;position_x;position_y;image
 1;chave;utilizada para abrir algo;3;30;58;src/main/resources/image/item/chave.png
 2;escada;utilizada para subir em algum lugar;5;20;41;src/main/resources/image/item/escada.png
 3;faca;serve para cortar algo;3;13;42;src/main/resources/image/item/faca.png

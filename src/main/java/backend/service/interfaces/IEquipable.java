@@ -5,4 +5,5 @@ public interface IEquipable extends ISpecialization {
     boolean isEquip();
 
     void setEquip(boolean equip);
+    int getUpCapacity();
 }

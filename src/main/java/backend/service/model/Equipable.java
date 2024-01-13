@@ -5,7 +5,7 @@ import backend.service.interfaces.IEquipable;
 
 public final class Equipable implements IEquipable {
 
-    private int upCapacity;
+    private final int upCapacity;
     //OBSERVE
     private boolean equip = false;
 
@@ -21,6 +21,11 @@ public final class Equipable implements IEquipable {
     @Override
     public void setEquip(boolean equip) {
         this.equip = equip;
+    }
+
+    @Override
+    public int getUpCapacity() {
+        return this.upCapacity;
     }
 
     @Override

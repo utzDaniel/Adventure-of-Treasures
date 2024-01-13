@@ -23,7 +23,7 @@ public final class RemoveItem {
             return TypeMessage.INVENTORY_NOT_REMOVE_EQUIP;
 
         this.inventory.removeItem(this.item);
-        this.inventory.updadeCapacity(-this.item.getWeight());
+
         return TypeMessage.DROP_SUCESS;
     }
 }

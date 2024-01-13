@@ -23,13 +23,9 @@ public final class ServiceUseItem {
         this.inventory = inventory;
     }
 
-    public TypeMessage run(Integer idItem, int idMap) {
+    public TypeMessage run(Item item, int idMap) {
 
-        Item item = this.inventory.getItens().stream()
-                .filter(item1 -> item1.getId() == idItem)
-                .findFirst().get();
-
-        var typeMessage = TypeMessage.ITEM_NOT_FOUND;
+        var typeMessage = TypeMessage.ITEM_NOT_USABLE;
         if (item.isType(TypeItem.USABLE)) {
 
             var listUsable = UsableRepository.getInstance().getAll();

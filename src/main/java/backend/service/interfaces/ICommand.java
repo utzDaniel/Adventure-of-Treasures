@@ -2,8 +2,11 @@ package backend.service.interfaces;
 
 import backend.controller.enums.TypeMessage;
 
-@FunctionalInterface
+import java.util.Optional;
+
 public interface ICommand {
 
-   TypeMessage run();
+    Optional<TypeMessage> execute();
+
+    void undo();
 }

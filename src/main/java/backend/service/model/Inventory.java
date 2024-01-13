@@ -1,12 +1,11 @@
 package backend.service.model;
 
-import backend.controller.enums.TypeMessage;
 import backend.repository.singleton.ItemRepository;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public final class Inventory {
 
@@ -14,17 +13,15 @@ public final class Inventory {
     private int maxCapacity;
     private boolean isInventory;
     private final Map<Integer, Item> itens;
-    private final Map<Integer, Item> itensAtivos;
 
     public Inventory(int capacity, int maxCapacity) {
         this.capacity = capacity;
         this.maxCapacity = maxCapacity;
         this.isInventory = false;
         this.itens = new HashMap<>();
-        this.itensAtivos =  new HashMap<>();
-//        ItemRepository.getInstance().getAll()
-//                .stream().map(ItemFactory::create)
-//                .forEach(item -> itens.put(item.getId(), item));
+        ItemRepository.getInstance().getAll()
+                .stream().map(ItemFactory::create)
+                .forEach(item -> itens.put(item.getId(), item));
     }
 
     public int getCapacity() {
@@ -32,10 +29,10 @@ public final class Inventory {
     }
 
     public boolean hasSpace(int weight) {
-        return weight + this.getCapacity() > this.getMaxCapacity();
+        return weight + this.getCapacity() <= this.getMaxCapacity();
     }
 
-    public void updadeCapacity(int weight) {
+    private void updadeCapacity(int weight) {
         this.capacity += weight;
     }
 
@@ -43,8 +40,13 @@ public final class Inventory {
         return this.maxCapacity;
     }
 
-    public void updadeMaxCapacity(int updade) {
+    public boolean updadeMaxCapacity(int updade) {
+        if (updade < 0) {
+            var newCapacity = this.getMaxCapacity() + updade;
+            if (this.getCapacity() > newCapacity) return false;
+        }
         this.maxCapacity += updade;
+        return true;
     }
 
     public Item getItem(int id) {
@@ -52,28 +54,19 @@ public final class Inventory {
     }
 
     public void addItem(Item item) {
-        this.itens.put(item.getId(), item);
-        this.updadeCapacity(item.getWeight());
+        if (this.hasSpace(item.getWeight())) {
+            this.itens.put(item.getId(), item);
+            this.updadeCapacity(item.getWeight());
+        }
     }
 
     public void removeItem(Item item) {
-        this.itens.remove(item.getId());
+        if (Objects.nonNull(this.itens.remove(item.getId())))
+            this.updadeCapacity(-item.getWeight());
     }
 
     public List<Item> getItens() {
         return this.itens.values().stream().toList();
-    }
-
-    public boolean isAtivo(Item item) {
-        return this.itensAtivos.keySet().stream().anyMatch(id -> id == item.getId());
-    }
-
-    public void addItemAtivo(Item item) {
-        this.itensAtivos.put(item.getId(), item);
-    }
-
-    public void removeItemAtivo(Item item) {
-        this.itensAtivos.remove(item.getId());
     }
 
     public boolean openInventory() {

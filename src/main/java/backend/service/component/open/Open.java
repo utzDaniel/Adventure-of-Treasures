@@ -42,7 +42,7 @@ public final class Open {
 
     private void updatePositionPlayer(MapGame mapGame) {
         var idMapGame = player.getCurrentMap().getId();
-        var door = mapGame.getDoor(idMapGame).get();
+        var door = mapGame.getDoorByMap(idMapGame).get();
         player.setCoordinate(door.getCoordinate());
     }
 

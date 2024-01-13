@@ -4,6 +4,7 @@ public enum TypeItem {
     COMBINABLE,
     EQUIPABLE,
     MISSION,
-    USABLE;
-    
+    USABLE,
+    EVENT;
+
 }

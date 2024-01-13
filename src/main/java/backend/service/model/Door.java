@@ -4,14 +4,20 @@ import backend.service.interfaces.ICoordinate;
 
 public final class Door {
 
+    private final int id;
     private final int idMapGame;
     private final ICoordinate coordinate;
     private boolean open;
 
-    public Door(int idMapGame, ICoordinate coordinate, boolean open) {
+    public Door(int id, int idMapGame,ICoordinate coordinate, boolean open) {
+        this.id = id;
         this.idMapGame = idMapGame;
         this.coordinate = coordinate;
         this.open = open;
+    }
+
+    public int getId() {
+        return this.id;
     }
 
     public int getIdMapGame() {

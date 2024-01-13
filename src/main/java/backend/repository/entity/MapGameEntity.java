@@ -20,7 +20,19 @@ public record MapGameEntity(int id,
                     "song": "%s",
                     "limits": %s,
                 }
-                """.formatted(this.id, this.name,this.image, this.song, Arrays.toString(this.limits));
+                """.formatted(this.id, this.name,this.image, this.song, byteArrayToString());
+    }
+
+    private String byteArrayToString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (byte[] b1 : this.limits) {
+            for (byte b : b1) {
+                stringBuilder.append((char) b);
+            }
+        }
+
+        return stringBuilder.toString();
     }
 
     @Override

@@ -12,10 +12,9 @@ public final class ActivateMapGame {
         boolean activate = false;
         try {
             if (nameItem.equals("tocha")) {
-
                 var templo = Cache.getMapGame(8);
                 if(templo.isEmpty()) return activate;
-                Door openDoor = templo.get().getDoor(ICoordinate.getInstance(9, 24)).get();
+                Door openDoor = templo.get().getDoor(ICoordinate.getInstance(24, 9)).get();
                 openDoor.setOpen(!openDoor.isOpen());
                 activate = true;
             } else if (nameItem.equals("mapa")) {

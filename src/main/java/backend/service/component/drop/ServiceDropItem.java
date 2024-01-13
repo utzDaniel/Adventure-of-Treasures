@@ -3,6 +3,7 @@ package backend.service.component.drop;
 import backend.controller.enums.TypeMessage;
 import backend.service.component.RemoveItem;
 import backend.service.model.Inventory;
+import backend.service.model.Item;
 import backend.service.model.Player;
 
 public class ServiceDropItem {
@@ -14,11 +15,7 @@ public class ServiceDropItem {
         this.inventory = inventory;
     }
 
-    public TypeMessage run(Integer idItem) {
-
-        var item = this.inventory.getItens().stream()
-                .filter(item1 -> item1.getId() == idItem)
-                .findFirst().get();
+    public TypeMessage run(Item item) {
 
         var typeMessage = new RemoveItem(this.inventory, item).run();
         if (!typeMessage.isSucess()) return typeMessage;

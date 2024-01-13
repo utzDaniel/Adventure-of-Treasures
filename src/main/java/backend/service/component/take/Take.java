@@ -29,7 +29,7 @@ public final class Take {
         if (Objects.isNull(item))
             return TypeMessage.ITEM_NOT_FOUND;
 
-        if (inventory.hasSpace(item.getWeight()))
+        if (!inventory.hasSpace(item.getWeight()))
             return TypeMessage.INVENTORY_FULL;
 
         inventory.addItem(item);

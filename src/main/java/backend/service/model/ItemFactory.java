@@ -1,10 +1,7 @@
 package backend.service.model;
 
 import backend.repository.interfaces.*;
-import backend.repository.singleton.CombinableRepository;
-import backend.repository.singleton.EquipableRepository;
-import backend.repository.singleton.MissionRepository;
-import backend.repository.singleton.UsableRepository;
+import backend.repository.singleton.*;
 import backend.service.interfaces.ICoordinate;
 
 import java.util.List;
@@ -12,7 +9,7 @@ import java.util.Optional;
 
 public final class ItemFactory {
 
-    private ItemFactory() {
+    ItemFactory() {
     }
 
     public static Item create(IItemEntity itemEntity) {
@@ -42,6 +39,9 @@ public final class ItemFactory {
         var mission = getMission(idItem);
         mission.ifPresent(e -> composite.add(new Mission()));
 
+        var event = getEvent(idItem);
+        event.ifPresent(e -> composite.add(new Event(e.idMap(), e.idDoor())));
+
         return composite;
     }
 
@@ -59,5 +59,9 @@ public final class ItemFactory {
 
     private static Optional<IMissionEntity> getMission(int idItem) {
         return MissionRepository.getInstance().getByIdItem(idItem);
+    }
+
+    private static Optional<IEventEntity> getEvent(int idItem) {
+        return EventRepository.getInstance().getByIdItem(idItem);
     }
 }

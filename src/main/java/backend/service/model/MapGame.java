@@ -54,11 +54,19 @@ public final class MapGame {
                 .findFirst();
     }
 
-    public Optional<Door> getDoor(int idMapGame) {
+    public Optional<Door> getDoorByMap(int idMapGame) {
         return this.doors.values().stream()
                 .filter(o -> o.isMap(idMapGame))
                 .findFirst();
     }
+
+
+    public Optional<Door> getDoor(int idDoor) {
+        return this.doors.values().stream()
+                .filter(v -> v.getId() == idDoor)
+                .findFirst();
+    }
+
 
     public Item getItem(ICoordinate coordinate) {
         return this.itens.get(coordinate);

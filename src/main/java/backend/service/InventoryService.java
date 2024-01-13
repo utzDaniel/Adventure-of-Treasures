@@ -1,17 +1,22 @@
 package backend.service;
 
+import backend.controller.enums.TypeMessage;
 import backend.controller.interfaces.IInventoryService;
 import backend.controller.interfaces.IServiceResponse;
+import backend.service.command.CommandTool;
 import backend.service.component.combination.ServiceCombinationItem;
 import backend.service.component.drop.ServiceDropItem;
-import backend.service.component.equip.ServiceEquipItem;
 import backend.service.component.inventory.open.InventoryOpen;
 import backend.service.component.use.ServiceUseItem;
 import backend.service.dto.response.ServiceResponse;
+import backend.service.enums.ActionItem;
 import backend.service.mapper.InventoryResponseMapper;
+import backend.service.model.Item;
 import backend.service.model.Player;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public final class InventoryService implements IInventoryService {
     /**
@@ -27,7 +32,14 @@ public final class InventoryService implements IInventoryService {
     @Override
     public IServiceResponse combination(List<Integer> idItens) {
         var inventory = PLAYER.getInventory();
-        var typeMessage = new ServiceCombinationItem(inventory).run(idItens);
+
+        var itens = new ArrayList<Item>();
+        idItens.forEach(id -> itens.add(getItem(id).orElse(null)));
+
+        var typeMessage = TypeMessage.ITEM_NOT_FOUND;
+
+        if (!itens.isEmpty())
+            typeMessage = new ServiceCombinationItem(inventory).run(itens);
 
         if (!typeMessage.isSucess())
             new ServiceResponse(typeMessage, null);
@@ -40,7 +52,12 @@ public final class InventoryService implements IInventoryService {
     public IServiceResponse use(Integer idItem) {
         var inventory = PLAYER.getInventory();
         var idMap = PLAYER.getCurrentMap().getId();
-        var typeMessage = new ServiceUseItem(inventory).run(idItem, idMap);
+
+        var item = getItem(idItem);
+        var typeMessage = TypeMessage.ITEM_NOT_FOUND;
+
+        if (item.isPresent())
+            typeMessage = new ServiceUseItem(inventory).run(item.get(), idMap);
 
         if (!typeMessage.isSucess())
             new ServiceResponse(typeMessage, null);
@@ -52,7 +69,14 @@ public final class InventoryService implements IInventoryService {
     @Override
     public IServiceResponse equip(Integer idItem) {
         var inventory = PLAYER.getInventory();
-        var typeMessage = new ServiceEquipItem(inventory).run(idItem);
+
+        var item = getItem(idItem);
+        var typeMessage = TypeMessage.ITEM_NOT_FOUND;
+
+        if (item.isPresent()){
+            var cmd = new CommandTool(ActionItem.EQUIP.getCommands(), item.get(), inventory);
+            typeMessage = cmd.execute();
+        }
 
         if (!typeMessage.isSucess())
             new ServiceResponse(typeMessage, null);
@@ -64,7 +88,12 @@ public final class InventoryService implements IInventoryService {
     @Override
     public IServiceResponse drop(Integer idItem) {
         var inventory = PLAYER.getInventory();
-        var typeMessage = new ServiceDropItem(inventory).run(idItem);
+
+        var item = getItem(idItem);
+        var typeMessage = TypeMessage.ITEM_NOT_FOUND;
+
+        if (item.isPresent())
+            typeMessage = new ServiceDropItem(inventory).run(item.get());
 
         if (!typeMessage.isSucess())
             new ServiceResponse(typeMessage, null);
@@ -83,5 +112,11 @@ public final class InventoryService implements IInventoryService {
 
         var obj = new InventoryResponseMapper().apply(inventory);
         return new ServiceResponse(typeMessage, obj);
+    }
+
+    private Optional<Item> getItem(Integer idItem) {
+        return PLAYER.getInventory().getItens().stream()
+                .filter(item1 -> item1.getId() == idItem)
+                .findFirst();
     }
 }
