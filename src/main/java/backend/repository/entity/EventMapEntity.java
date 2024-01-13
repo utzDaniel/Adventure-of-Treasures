@@ -1,11 +1,11 @@
 package backend.repository.entity;
 
-import backend.repository.interfaces.IEventEntity;
+import backend.repository.interfaces.IEventMapEntity;
 
-public record EventEntity(int id,
-                          int idItem,
-                          int idMap,
-                          int idDoor) implements IEventEntity {
+public record EventMapEntity(int id,
+                             int idItem,
+                             int idMap,
+                             int idDoor) implements IEventMapEntity {
     @Override
     public String toString() {
         return """

@@ -21,7 +21,7 @@ public final class CommandTool {
         this.stack = new ArrayDeque<>();
         this.commandMap = new EnumMap<>(Commands.class);
         this.commandMap.put(Commands.EQUIPAR, new EquipableCommand(item, inventory));
-        this.commandMap.put(Commands.EVENTO, new EventCommand(item));
+        this.commandMap.put(Commands.EVENTO, new EventMapCommand(item));
 
     }
 

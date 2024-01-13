@@ -3,8 +3,6 @@ package service;
 import backend.controller.enums.TypeMessage;
 import backend.repository.entity.ItemEntity;
 import backend.service.command.CommandTool;
-import backend.service.command.EventCommand;
-import backend.service.command.TypeMessageCombination;
 import backend.service.enums.ActionItem;
 import backend.service.enums.Commands;
 import backend.service.model.Inventory;
@@ -13,9 +11,7 @@ import backend.service.model.ItemFactory;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
@@ -124,7 +120,7 @@ public class EquipCommandTest {
         inventory.addItem(this.itens.get(16));
         this.tool = new CommandTool(new Commands[]{Commands.EVENTO}, this.itens.get(16), inventory);
         var msg = this.tool.execute();
-        assertEquals(TypeMessage.EVENT_TORCH, msg);
+        assertEquals(TypeMessage.EVENT_MAP_TORCH, msg);
     }
 
     @Test
@@ -133,7 +129,7 @@ public class EquipCommandTest {
         inventory.addItem(this.itens.get(16));
         this.tool = new CommandTool(ActionItem.EQUIP.getCommands(), this.itens.get(16), inventory);
         var msg = this.tool.execute();
-        assertEquals(TypeMessage.EQUIP_EVENT_TORCH, msg);
+        assertEquals(TypeMessage.EQUIP_EVENT_MAP_TORCH, msg);
     }
 
 

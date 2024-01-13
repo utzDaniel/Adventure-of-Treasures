@@ -13,7 +13,10 @@ public final class UsableEntityMapper implements IMapperEntity<IUsableEntity> {
         return new UsableEntity(
                 ValidUtil.parseInt(dados[0]),
                 ValidUtil.parseInt(dados[1]),
-                ValidUtil.parseInt(dados[2]));
+                ValidUtil.parseInt(dados[2]),
+                ValidUtil.parseInt(dados[3]),
+                ValidUtil.parseInt(dados[4]),
+                ValidUtil.parseBoolean(dados[5]));
     }
 
 }

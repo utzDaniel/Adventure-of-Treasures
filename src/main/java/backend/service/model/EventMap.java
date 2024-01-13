@@ -1,15 +1,15 @@
 package backend.service.model;
 
 import backend.service.enums.TypeItem;
-import backend.service.interfaces.IEvent;
+import backend.service.interfaces.IEventMap;
 
-public final class Event implements IEvent {
+public final class EventMap implements IEventMap {
 
     private final int idMap;
     private final int idDoor;
     private boolean active;
 
-    public Event(int idMap, int idDoor) {
+    public EventMap(int idMap, int idDoor) {
         this.idMap = idMap;
         this.idDoor = idDoor;
         this.active = false;
@@ -17,7 +17,7 @@ public final class Event implements IEvent {
 
     @Override
     public boolean isType(TypeItem type) {
-        return TypeItem.EVENT == type;
+        return TypeItem.EVENT_MAP == type;
     }
 
     @Override
@@ -27,7 +27,7 @@ public final class Event implements IEvent {
 
     @Override
     public String toString() {
-        return TypeItem.EVENT.toString();
+        return TypeItem.EVENT_MAP.toString();
     }
 
     @Override

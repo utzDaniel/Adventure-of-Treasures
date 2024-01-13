@@ -5,6 +5,7 @@ public enum TypeItem {
     EQUIPABLE,
     MISSION,
     USABLE,
-    EVENT;
+    EVENT_MAP,
+    EVENT_INVENTORY;
 
 }

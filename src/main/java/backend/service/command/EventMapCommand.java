@@ -4,27 +4,25 @@ import backend.controller.enums.TypeMessage;
 import backend.service.enums.TypeItem;
 import backend.service.infra.Cache;
 import backend.service.interfaces.ICommand;
-import backend.service.interfaces.ICoordinate;
-import backend.service.interfaces.IEvent;
-import backend.service.model.Door;
+import backend.service.interfaces.IEventMap;
 import backend.service.model.Item;
 
 import java.util.Optional;
 
-public final class EventCommand implements ICommand {
+public final class EventMapCommand implements ICommand {
 
     private final Item item;
 
 
-    public EventCommand(Item item) {
+    public EventMapCommand(Item item) {
         this.item = item;
     }
 
     @Override
     public Optional<TypeMessage> execute() {
-        var spec = this.item.getSpecialization(TypeItem.EVENT);
+        var spec = this.item.getSpecialization(TypeItem.EVENT_MAP);
         if (spec.isEmpty()) return Optional.empty();
-        var event = (IEvent) spec.get();
+        var event = (IEventMap) spec.get();
 
         var map = Cache.getMapGame(event.getIdMap());
         if (map.isEmpty()) return Optional.of(TypeMessage.EVENT_ERRO_MAP);
@@ -41,9 +39,9 @@ public final class EventCommand implements ICommand {
 
     @Override
     public void undo() {
-        var spec = this.item.getSpecialization(TypeItem.EVENT);
+        var spec = this.item.getSpecialization(TypeItem.EVENT_MAP);
         if (spec.isEmpty()) return;
-        var event = (IEvent) spec.get();
+        var event = (IEventMap) spec.get();
 
         var map = Cache.getMapGame(event.getIdMap());
         if (map.isEmpty()) return;
@@ -57,7 +55,7 @@ public final class EventCommand implements ICommand {
 
     private Optional<TypeMessage> getEventTypeMessageActive() {
         return switch (this.item.getId()) {
-            case 16 -> Optional.of(TypeMessage.EVENT_TORCH);
+            case 16 -> Optional.of(TypeMessage.EVENT_MAP_TORCH);
             default -> Optional.empty();
         };
     }

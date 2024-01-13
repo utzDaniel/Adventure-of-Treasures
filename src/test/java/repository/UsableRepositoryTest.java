@@ -19,9 +19,9 @@ public class UsableRepositoryTest {
     @Before
     public void create() {
         this.usable = new ArrayList<>();
-        this.usable.add(new UsableEntity(1, 11, 4));
-        this.usable.add(new UsableEntity(2, 2, 8));
-        this.usable.add(new UsableEntity(3, 1, 6));
+        this.usable.add(new UsableEntity(1, 11, 4,30,58, false));
+        this.usable.add(new UsableEntity(2, 2, 8,19,26, true));
+        this.usable.add(new UsableEntity(3, 1, 6,15,37, true));
 
         this.usableFile = UsableRepository.getInstance().getAll();
     }

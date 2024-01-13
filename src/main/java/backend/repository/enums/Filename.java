@@ -18,7 +18,8 @@ public enum Filename {
     MISSION("mission"),
 
     ITEM_MAP("item_map"),
-    EVENT("event");
+    EVENT_MAP("event_map"),
+    EVENT_INVENTORY("event_inventory");
 
     private final String path;
 

@@ -32,7 +32,7 @@ public final class ServiceUseItem {
             var usable = listUsable.stream().filter(v -> v.idItem() == item.getId()).findFirst().orElse(null);
 
             if (usable.idMap() != idMap)
-                return TypeMessage.USABLE_NOT_MAP;
+                return TypeMessage.USABLE_ERRO_MAP;
 
             var usable1 = getItemUsable(item.getName());
             if (Objects.isNull(usable1))

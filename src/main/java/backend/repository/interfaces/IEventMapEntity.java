@@ -1,6 +1,6 @@
 package backend.repository.interfaces;
 
-public interface IEventEntity extends IEntity {
+public interface IEventMapEntity extends IEntity {
 
     int idItem();
 

@@ -11,7 +11,7 @@ public enum ItemsUsable {
         @Override
         public TypeMessage use() {
             new ActivateMapGame().run("chave");
-            return TypeMessage.USABLE_SUCESS_SHOVEL;
+            return TypeMessage.USABLE_SHOVEL;
         }
     },
     CHAVE("chave") {
@@ -20,7 +20,7 @@ public enum ItemsUsable {
             var door = player.getCurrentMap().getDoor(player.getCoordinate()).orElse(null);
             if (Objects.isNull(door)) return TypeMessage.USABLE_NOT_LOCAL;
             door.setOpen(true);
-            return TypeMessage.USABLE_SUCESS_KEY;
+            return TypeMessage.USABLE_KEY;
         }
     },
     ESCADA("escada") {
@@ -30,7 +30,7 @@ public enum ItemsUsable {
             if (Objects.isNull(door)) return TypeMessage.USABLE_NOT_LOCAL;
             door.setOpen(true);
             new ActivateMapGame().run("escada");
-            return TypeMessage.USABLE_SUCESS_LADDER;
+            return TypeMessage.USABLE_LADDER;
         }
     };
 

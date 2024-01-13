@@ -1,6 +1,6 @@
 package backend.service.interfaces;
 
-public interface IEvent extends ISpecialization {
+public interface IEventMap extends ISpecialization {
 
     int getIdMap();
 

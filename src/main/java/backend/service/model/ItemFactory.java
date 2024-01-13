@@ -34,13 +34,16 @@ public final class ItemFactory {
         equipable.ifPresent(e -> composite.add(new Equipable(e.upCapacity())));
 
         var usable = getUsable(idItem);
-        usable.ifPresent(e -> composite.add(new Usable(e.idMap())));
+        usable.ifPresent(e -> composite.add(new Usable(e.idMap(), ICoordinate.getInstance(e.positionX(), e.positionY()), e.enabled())));
 
         var mission = getMission(idItem);
         mission.ifPresent(e -> composite.add(new Mission()));
 
-        var event = getEvent(idItem);
-        event.ifPresent(e -> composite.add(new Event(e.idMap(), e.idDoor())));
+        var eventMap = getEventMap(idItem);
+        eventMap.ifPresent(e -> composite.add(new EventMap(e.idMap(), e.idDoor())));
+
+        var eventInv = getEventInventory(idItem);
+        eventInv.ifPresent(e -> composite.add(new EventInventory(e.idItemNew())));
 
         return composite;
     }
@@ -61,7 +64,11 @@ public final class ItemFactory {
         return MissionRepository.getInstance().getByIdItem(idItem);
     }
 
-    private static Optional<IEventEntity> getEvent(int idItem) {
-        return EventRepository.getInstance().getByIdItem(idItem);
+    private static Optional<IEventMapEntity> getEventMap(int idItem) {
+        return EventMapRepository.getInstance().getByIdItem(idItem);
+    }
+
+    private static Optional<IEventInventoryEntity> getEventInventory(int idItem) {
+        return EventInventoryRepository.getInstance().getByIdItem(idItem);
     }
 }
