@@ -27,10 +27,10 @@ public final class Take {
         var inventory = this.player.getInventory();
 
         if (Objects.isNull(item))
-            return TypeMessage.ITEM_NOT_FOUND;
+            return TypeMessage.ITEM_ERRO_FOUND;
 
         if (!inventory.hasSpace(item.getWeight()))
-            return TypeMessage.INVENTORY_FULL;
+            return TypeMessage.INVENTORY_ERRO_FULL;
 
         inventory.addItem(item);
         var mapGame = this.player.getCurrentMap();

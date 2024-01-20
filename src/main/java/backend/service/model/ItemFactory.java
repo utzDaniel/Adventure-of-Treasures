@@ -40,7 +40,7 @@ public final class ItemFactory {
         mission.ifPresent(e -> composite.add(new Mission()));
 
         var eventMap = getEventMap(idItem);
-        eventMap.ifPresent(e -> composite.add(new EventMap(e.idMap(), e.idDoor())));
+        eventMap.ifPresent(e -> composite.add(new EventMap(e.idMap(), e.mapImage(), e.idDoor())));
 
         var eventInv = getEventInventory(idItem);
         eventInv.ifPresent(e -> composite.add(new EventInventory(e.idItemNew())));

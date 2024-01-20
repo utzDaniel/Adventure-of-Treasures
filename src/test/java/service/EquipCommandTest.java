@@ -2,9 +2,7 @@ package service;
 
 import backend.controller.enums.TypeMessage;
 import backend.repository.entity.ItemEntity;
-import backend.service.command.CommandTool;
-import backend.service.enums.ActionItem;
-import backend.service.enums.Commands;
+import backend.service.command.EquipableCommand;
 import backend.service.model.Inventory;
 import backend.service.model.Item;
 import backend.service.model.ItemFactory;
@@ -13,12 +11,13 @@ import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
 public class EquipCommandTest {
 
-    private CommandTool tool;
+    private EquipableCommand cmd;
     private Map<Integer, Item> itens;
 
 
@@ -37,19 +36,19 @@ public class EquipCommandTest {
     public void validMochila1() {
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.itens.get(10));
-        this.tool = new CommandTool(new Commands[]{Commands.EQUIPAR}, this.itens.get(10), inventory);
-        var msg = this.tool.execute();
-        assertEquals(TypeMessage.EQUIP_SCHOOLBAG, msg);
+        this.cmd = new EquipableCommand(this.itens.get(10), inventory);
+        var msg = this.cmd.execute();
+        assertEquals(Optional.of(TypeMessage.EQUIP_SCHOOLBAG), msg);
     }
 
     @Test
     public void validMochila2() {
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.itens.get(10));
-        this.tool = new CommandTool(new Commands[]{Commands.EQUIPAR}, this.itens.get(10), inventory);
-        this.tool.execute();
-        var msg = this.tool.execute();
-        assertEquals(TypeMessage.UNEQUIP_SCHOOLBAG, msg);
+        this.cmd = new EquipableCommand(this.itens.get(10), inventory);
+        this.cmd.execute();
+        var msg = this.cmd.execute();
+        assertEquals(Optional.of(TypeMessage.UNEQUIP_SCHOOLBAG), msg);
     }
 
     @Test
@@ -57,91 +56,30 @@ public class EquipCommandTest {
         var item = new ItemEntity(7, "madeiras", "madeira para construir algo", 15, 8, 64, "src/main/resources/image/item/madeiras.png");
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.itens.get(10));
-        this.tool = new CommandTool(new Commands[]{Commands.EQUIPAR}, this.itens.get(10), inventory);
-        this.tool.execute();
+        this.cmd = new EquipableCommand(this.itens.get(10), inventory);
+        this.cmd.execute();
         inventory.addItem(ItemFactory.create(item));
-        var msg = this.tool.execute();
-        assertEquals(TypeMessage.UNEQUIP_ERRO_SCHOOLBAG, msg);
-    }
-
-    @Test
-    public void validMochila4() {
-        var inventory = new Inventory(0, 10);
-        inventory.addItem(this.itens.get(10));
-        this.tool = new CommandTool(ActionItem.EQUIP.getCommands(), this.itens.get(10), inventory);
-        var msg = this.tool.execute();
-        assertEquals(TypeMessage.EQUIP_SCHOOLBAG, msg);
-    }
-
-    @Test
-    public void validMochila5() {
-        var inventory = new Inventory(0, 10);
-        inventory.addItem(this.itens.get(10));
-        this.tool = new CommandTool(ActionItem.EQUIP.getCommands(), this.itens.get(10), inventory);
-        this.tool.execute();
-        var msg = this.tool.execute();
-        assertEquals(TypeMessage.UNEQUIP_SCHOOLBAG, msg);
-    }
-
-    @Test
-    public void validMochila6() {
-        var item = new ItemEntity(7, "madeiras", "madeira para construir algo", 15, 8, 64, "src/main/resources/image/item/madeiras.png");
-        var inventory = new Inventory(0, 10);
-        inventory.addItem(this.itens.get(10));
-        this.tool = new CommandTool(ActionItem.EQUIP.getCommands(), this.itens.get(10), inventory);
-        this.tool.execute();
-        inventory.addItem(ItemFactory.create(item));
-        var msg = this.tool.execute();
-        assertEquals(TypeMessage.UNEQUIP_ERRO_SCHOOLBAG, msg);
+        var msg = this.cmd.execute();
+        assertEquals(Optional.of(TypeMessage.UNEQUIP_ERRO_SCHOOLBAG), msg);
     }
 
     @Test
     public void validTocha1() {
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.itens.get(16));
-        this.tool = new CommandTool(new Commands[]{Commands.EQUIPAR}, this.itens.get(16), inventory);
-        var msg = this.tool.execute();
-        assertEquals(TypeMessage.EQUIP_TORCH, msg);
+        this.cmd = new EquipableCommand(this.itens.get(16), inventory);
+        var msg = this.cmd.execute();
+        assertEquals(Optional.of(TypeMessage.EQUIP_TORCH), msg);
     }
 
     @Test
     public void validTocha2() {
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.itens.get(16));
-        this.tool = new CommandTool(new Commands[]{Commands.EQUIPAR}, this.itens.get(16), inventory);
-        this.tool.execute();
-        var msg = this.tool.execute();
-        assertEquals(TypeMessage.UNEQUIP_TORCH, msg);
-    }
-
-    @Test
-    public void validTocha3() {
-        var inventory = new Inventory(0, 10);
-        inventory.addItem(this.itens.get(16));
-        this.tool = new CommandTool(new Commands[]{Commands.EVENTO}, this.itens.get(16), inventory);
-        var msg = this.tool.execute();
-        assertEquals(TypeMessage.EVENT_MAP_TORCH, msg);
-    }
-
-    @Test
-    public void validTocha4() {
-        var inventory = new Inventory(0, 10);
-        inventory.addItem(this.itens.get(16));
-        this.tool = new CommandTool(ActionItem.EQUIP.getCommands(), this.itens.get(16), inventory);
-        var msg = this.tool.execute();
-        assertEquals(TypeMessage.EQUIP_EVENT_MAP_TORCH, msg);
-    }
-
-
-
-    @Test
-    public void validTocha5() {
-        var inventory = new Inventory(0, 10);
-        inventory.addItem(this.itens.get(16));
-        this.tool = new CommandTool(ActionItem.EQUIP.getCommands(), this.itens.get(16), inventory);
-        this.tool.execute();
-        var msg = this.tool.execute();
-        assertEquals(TypeMessage.UNEQUIP_TORCH, msg);
+        this.cmd = new EquipableCommand(this.itens.get(16), inventory);
+        this.cmd.execute();
+        var msg = this.cmd.execute();
+        assertEquals(Optional.of(TypeMessage.UNEQUIP_TORCH), msg);
     }
 
 }

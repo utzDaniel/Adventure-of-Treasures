@@ -19,7 +19,10 @@ public class EventMapRepositoryTest {
     @Before
     public void create() {
         this.event = new ArrayList<>();
-        this.event.add(new EventMapEntity(1, 16, 8, 10));
+        this.event.add(new EventMapEntity(1, 16, 8, null, 10));
+        this.event.add(new EventMapEntity(2, 11, 4, "src/main/resources/image/map/praia.png", -1));
+        this.event.add(new EventMapEntity(3, 2, 8, "src/main/resources/image/map/temploF.png", 9));
+        this.event.add(new EventMapEntity(4, 1, 6, null, 6));
 
         this.eventFile = EventMapRepository.getInstance().getAll();
     }

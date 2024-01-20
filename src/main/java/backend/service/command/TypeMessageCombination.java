@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public final class TypeMessageCombination {
 
@@ -29,15 +30,26 @@ public final class TypeMessageCombination {
     }
 
     private static Optional<TypeMessage> getTypeMessage(List<String> names) {
-        var nameEnum = getNameEnum(names);
-        return selectTypeMessage(nameEnum);
+        var initName = getInitName(names);
+        var lastName = getLastName(names);
+        Optional<TypeMessage> rsp = Optional.empty();
+        for (String name : lastName) {
+            rsp = selectTypeMessage(String.format("%s%s", initName, name));
+            if (rsp.isPresent()) break;
+        }
+        return rsp;
     }
 
-    private static String getNameEnum(List<String> names) {
+    private static String getInitName(List<String> names) {
         StringBuilder nameEnum = new StringBuilder();
         names.forEach(v -> nameEnum.append(v, 0, v.lastIndexOf("_") + 1));
-        nameEnum.append(names.get(0), names.get(0).lastIndexOf("_") + 1, names.get(0).length());
         return nameEnum.toString();
+    }
+
+    private static Set<String> getLastName(List<String> names) {
+        return names.stream()
+                .map(v -> v.substring(v.lastIndexOf("_") + 1))
+                .collect(Collectors.toSet());
     }
 
 

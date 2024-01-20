@@ -10,6 +10,26 @@ public record MapGameEntity(int id,
                             String image,
                             String song,
                             byte[][] limits) implements IMapGameEntity {
+
+    @Override
+    public byte[][] limits() {
+        return copyLimits(this.limits);
+    }
+
+    private static byte[][] copyLimits(byte[][] original) {
+        if (Objects.isNull(original)) return new byte[0][0];
+
+        int rows = original.length;
+        int cols = original[0].length;
+
+        byte[][] copy = new byte[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            System.arraycopy(original[i], 0, copy[i], 0, cols);
+        }
+
+        return copy;
+    }
+
     @Override
     public String toString() {
         return """
@@ -20,7 +40,7 @@ public record MapGameEntity(int id,
                     "song": "%s",
                     "limits": %s,
                 }
-                """.formatted(this.id, this.name,this.image, this.song, byteArrayToString());
+                """.formatted(this.id, this.name, this.image, this.song, byteArrayToString());
     }
 
     private String byteArrayToString() {
@@ -49,7 +69,7 @@ public record MapGameEntity(int id,
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(this.id, this.name,this.image, this.song);
+        int result = Objects.hash(this.id, this.name, this.image, this.song);
         result = 31 * result + Arrays.deepHashCode(this.limits);
         return result;
     }

@@ -30,7 +30,7 @@ public final class UsableCommand implements ICommand {
 
         if (usable.getIdMap() != this.idMap) return Optional.of(TypeMessage.USABLE_ERRO_MAP);
 
-        if (usable.getCoordinate().equals(this.coordinate)) return Optional.of(TypeMessage.USABLE_ERRO_COORDINATE);
+        if (!usable.getCoordinate().equals(this.coordinate)) return Optional.of(TypeMessage.USABLE_ERRO_COORDINATE);
 
         if (!usable.isEnabled()) return Optional.of(TypeMessage.USABLE_ERRO_ENABLE);
 

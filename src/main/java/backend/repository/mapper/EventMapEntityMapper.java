@@ -14,7 +14,8 @@ public final class EventMapEntityMapper implements IMapperEntity<IEventMapEntity
                 ValidUtil.parseInt(dados[0]),
                 ValidUtil.parseInt(dados[1]),
                 ValidUtil.parseInt(dados[2]),
-                ValidUtil.parseInt(dados[3]));
+                ValidUtil.parseString(dados[3]),
+                ValidUtil.parseInt(dados[4]));
     }
 
 }

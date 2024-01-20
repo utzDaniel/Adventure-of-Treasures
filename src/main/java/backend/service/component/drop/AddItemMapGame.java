@@ -27,7 +27,7 @@ public class AddItemMapGame {
         } while (!searchCoordinate(distance));
         setItemNewCoordinate();
         if (isAreaTraveledComplete()) return TypeMessage.MAP_FULL_ITEM;
-        return TypeMessage.DROP_SUCESS;
+        return TypeMessage.REMOVE_INVENTORY;
     }
 
     private boolean searchCoordinate(int distance) {

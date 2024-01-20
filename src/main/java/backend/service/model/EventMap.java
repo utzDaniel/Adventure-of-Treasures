@@ -6,11 +6,13 @@ import backend.service.interfaces.IEventMap;
 public final class EventMap implements IEventMap {
 
     private final int idMap;
+    private final String mapImage;
     private final int idDoor;
     private boolean active;
 
-    public EventMap(int idMap, int idDoor) {
+    public EventMap(int idMap, String mapImage, int idDoor) {
         this.idMap = idMap;
+        this.mapImage = mapImage;
         this.idDoor = idDoor;
         this.active = false;
     }
@@ -33,6 +35,11 @@ public final class EventMap implements IEventMap {
     @Override
     public int getIdMap() {
         return this.idMap;
+    }
+
+    @Override
+    public String getMapImage() {
+        return this.mapImage;
     }
 
     @Override

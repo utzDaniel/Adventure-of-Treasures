@@ -1,6 +1,6 @@
 package backend.service.model;
 
-import backend.repository.singleton.ItemRepository;
+import backend.service.infra.Cache;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,9 +19,8 @@ public final class Inventory {
         this.maxCapacity = maxCapacity;
         this.isInventory = false;
         this.itens = new HashMap<>();
-        ItemRepository.getInstance().getAll()
-                .stream().map(ItemFactory::create)
-                .forEach(item -> itens.put(item.getId(), item));
+//        List.of(5, 11, 12)
+//                .forEach(v -> itens.put(v, Cache.getItem(v).get()));
     }
 
     public int getCapacity() {

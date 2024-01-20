@@ -70,10 +70,7 @@ public final class EquipableCommand implements ICommand {
     }
 
     private Optional<TypeMessage> getUnequipTypeMessageErro() {
-        return switch (this.item.getId()) {
-            case 10 -> Optional.of(TypeMessage.UNEQUIP_ERRO_SCHOOLBAG);
-            default -> Optional.empty();
-        };
+        return this.item.getId() == 10 ? Optional.of(TypeMessage.UNEQUIP_ERRO_SCHOOLBAG) : Optional.empty();
     }
 
 }

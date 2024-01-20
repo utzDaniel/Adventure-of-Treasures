@@ -17,13 +17,13 @@ public final class RemoveItem {
 
     public TypeMessage run() {
         if (this.item.isType(TypeItem.MISSION))
-            return TypeMessage.INVENTORY_NOT_REMOVE;
+            return TypeMessage.REMOVE_INVENTORY_ERRO;
 
         if (!this.item.isRemove())
-            return TypeMessage.INVENTORY_NOT_REMOVE_EQUIP;
+            return TypeMessage.REMOVE_INVENTORY_ERRO_EQUIP;
 
         this.inventory.removeItem(this.item);
 
-        return TypeMessage.DROP_SUCESS;
+        return TypeMessage.REMOVE_INVENTORY;
     }
 }

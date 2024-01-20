@@ -7,7 +7,6 @@ import backend.service.command.CommandTool;
 import backend.service.component.combination.ServiceCombinationItem;
 import backend.service.component.drop.ServiceDropItem;
 import backend.service.component.inventory.open.InventoryOpen;
-import backend.service.component.use.ServiceUseItem;
 import backend.service.dto.response.ServiceResponse;
 import backend.service.enums.ActionItem;
 import backend.service.mapper.InventoryResponseMapper;
@@ -36,7 +35,7 @@ public final class InventoryService implements IInventoryService {
         var itens = new ArrayList<Item>();
         idItens.forEach(id -> itens.add(getItem(id).orElse(null)));
 
-        var typeMessage = TypeMessage.ITEM_NOT_FOUND;
+        var typeMessage = TypeMessage.ITEM_ERRO_FOUND;
 
         if (!itens.isEmpty())
             typeMessage = new ServiceCombinationItem(inventory).run(itens);
@@ -52,12 +51,15 @@ public final class InventoryService implements IInventoryService {
     public IServiceResponse use(Integer idItem) {
         var inventory = PLAYER.getInventory();
         var idMap = PLAYER.getCurrentMap().getId();
+        var coordinate = PLAYER.getCoordinate();
 
         var item = getItem(idItem);
-        var typeMessage = TypeMessage.ITEM_NOT_FOUND;
+        var typeMessage = TypeMessage.ITEM_ERRO_FOUND;
 
-        if (item.isPresent())
-            typeMessage = new ServiceUseItem(inventory).run(item.get(), idMap);
+        if (item.isPresent()) {
+            var cmd = new CommandTool(ActionItem.USE.getCommands(), item.get(), inventory, idMap, coordinate);
+            typeMessage = cmd.execute();
+        }
 
         if (!typeMessage.isSucess())
             new ServiceResponse(typeMessage, null);
@@ -69,12 +71,14 @@ public final class InventoryService implements IInventoryService {
     @Override
     public IServiceResponse equip(Integer idItem) {
         var inventory = PLAYER.getInventory();
+        var idMap = PLAYER.getCurrentMap().getId();
+        var coordinate = PLAYER.getCoordinate();
 
         var item = getItem(idItem);
-        var typeMessage = TypeMessage.ITEM_NOT_FOUND;
+        var typeMessage = TypeMessage.ITEM_ERRO_FOUND;
 
-        if (item.isPresent()){
-            var cmd = new CommandTool(ActionItem.EQUIP.getCommands(), item.get(), inventory);
+        if (item.isPresent()) {
+            var cmd = new CommandTool(ActionItem.EQUIP.getCommands(), item.get(), inventory, idMap, coordinate);
             typeMessage = cmd.execute();
         }
 
@@ -90,7 +94,7 @@ public final class InventoryService implements IInventoryService {
         var inventory = PLAYER.getInventory();
 
         var item = getItem(idItem);
-        var typeMessage = TypeMessage.ITEM_NOT_FOUND;
+        var typeMessage = TypeMessage.ITEM_ERRO_FOUND;
 
         if (item.isPresent())
             typeMessage = new ServiceDropItem(inventory).run(item.get());

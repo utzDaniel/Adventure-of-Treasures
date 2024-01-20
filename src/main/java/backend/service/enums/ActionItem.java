@@ -2,9 +2,9 @@ package backend.service.enums;
 
 public enum ActionItem {
     COMBINE("COMBINAR", null),
-    USE("USAR", null),
-    EQUIP("EQUIPAR", Commands.EQUIPAR, Commands.EVENTO),
-    UNEQUIP("DESEQUIPAR", Commands.EQUIPAR, Commands.EVENTO),
+    USE("USAR", Commands.USE, Commands.EVENT_MAP, Commands.EVENT_INVENTORY, Commands.REMOVE_INVENTORY),
+    EQUIP("EQUIPAR", Commands.EQUIP, Commands.EVENT_MAP),
+    UNEQUIP("DESEQUIPAR", Commands.EQUIP, Commands.EVENT_MAP),
     REMOVE("REMOVER", null);
 
     private final String name;

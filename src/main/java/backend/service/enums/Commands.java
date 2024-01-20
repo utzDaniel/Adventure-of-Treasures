@@ -1,5 +1,5 @@
 package backend.service.enums;
 
 public enum Commands {
-    EQUIPAR, EVENTO;
+    EQUIP, EVENT_MAP, EVENT_INVENTORY, REMOVE_INVENTORY, USE;
 }
