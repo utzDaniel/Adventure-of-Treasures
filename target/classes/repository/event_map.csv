@@ -1,5 +1,0 @@
-id;id_item;id_map;map_image;id_door
-1;16;8;null;10
-2;11;4;src/main/resources/image/map/praia.png;null
-3;2;8;src/main/resources/image/map/temploF.png;9
-4;1;6;null;6

@@ -1,9 +1,0 @@
-id;id_map_ori;direction;id_map_ext
-1;1;norte;5
-2;1;oeste;2
-3;1;leste;4
-4;2;leste;1
-5;4;oeste;1
-6;5;norte;6
-7;5;sul;1
-8;6;sul;5
