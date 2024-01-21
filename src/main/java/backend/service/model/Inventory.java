@@ -1,7 +1,5 @@
 package backend.service.model;
 
-import backend.service.infra.Cache;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

@@ -20,7 +20,7 @@ public final class InventoryResponseMapper implements Function<Inventory, IInven
     @Override
     public IInventoryResponse apply(Inventory inventory) {
 
-        var map = inventory.getItens().stream().collect(Collectors.toMap(Item::getId, item -> createListSpecialization(item, inventory)));
+        var map = inventory.getItens().stream().collect(Collectors.toMap(Item::getId, this::createListSpecialization));
 
 
         var itensDTO = inventory.getItens().stream().map(item -> new ItemDTOMapper().apply(item)).toList();
@@ -39,7 +39,7 @@ public final class InventoryResponseMapper implements Function<Inventory, IInven
         return list;
     }
 
-    private List<ISpecialization> createListSpecialization(Item item, Inventory inventory) {
+    private List<ISpecialization> createListSpecialization(Item item) {
         var list = new ArrayList<ISpecialization>();
 
         list.add(new SpecializationDTO(ActionItem.USE.getName(), item.isType(TypeItem.USABLE)));

@@ -3,7 +3,6 @@ package backend.service.model;
 import backend.service.interfaces.ICoordinate;
 
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public final class Coordinate implements ICoordinate {
     private int x;

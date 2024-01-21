@@ -5,8 +5,6 @@ import backend.service.enums.Move;
 import backend.service.infra.Cache;
 import backend.service.model.Player;
 
-import java.util.Objects;
-
 public final class MovePlayerNextScenery {
 
     private final Player player;
@@ -25,7 +23,7 @@ public final class MovePlayerNextScenery {
             return TypeMessage.MOVE_MAP_NOT_EXIT;
 
         var nextScenery = Cache.getMapGame(idMap.get());
-        if(nextScenery.isEmpty()) return TypeMessage.MOVE_MAP_NOT_FOUND;
+        if (nextScenery.isEmpty()) return TypeMessage.MOVE_MAP_NOT_FOUND;
 
         this.player.setCurrentMap(nextScenery.get());
 

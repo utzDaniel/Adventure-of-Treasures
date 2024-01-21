@@ -42,8 +42,9 @@ public final class Open {
 
     private void updatePositionPlayer(MapGame mapGame) {
         var idMapGame = player.getCurrentMap().getId();
-        var door = mapGame.getDoorByMap(idMapGame).get();
-        player.setCoordinate(door.getCoordinate());
+        var door = mapGame.getDoorByMap(idMapGame);
+        if(door.isEmpty()) return;
+        player.setCoordinate(door.get().getCoordinate());
     }
 
 }

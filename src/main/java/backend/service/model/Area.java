@@ -13,7 +13,6 @@ public final class Area {
     private final byte[][] limits;
 
     public static boolean isLimit(ICoordinate coordinate) {
-
         return !(Math.min(coordinate.x(), coordinate.y()) >= POSITION_MINIMUM &&
                 coordinate.x() < POSITION_X_MAXIMUM && coordinate.y() < POSITION_Y_MAXIMUM);
     }

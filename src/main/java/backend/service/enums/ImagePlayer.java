@@ -6,32 +6,31 @@ public enum ImagePlayer {
         @Override
         public String select() {
             char pos = CIMA.position == 'A' ? 'C' : CIMA.position;
-            return filename + String.format("cima_%s.png", pos);
+            return String.format("src/main/resources/image/player/cima_%s.png", pos);
         }
     },
     BAIXO {
         @Override
         public String select() {
             char pos = BAIXO.position == 'A' ? 'C' : BAIXO.position;
-            return filename + String.format("baixo_%s.png", pos);
+            return String.format("src/main/resources/image/player/baixo_%s.png", pos);
         }
     },
     DIREITA {
         @Override
         public String select() {
             char pos = DIREITA.position == 'A' ? 'C' : DIREITA.position;
-            return filename + String.format("direita_%s.png", pos);
+            return String.format("src/main/resources/image/player/direita_%s.png", pos);
         }
     },
     ESQUERDA {
         @Override
         public String select() {
             char pos = ESQUERDA.position == 'A' ? 'C' : ESQUERDA.position;
-            return filename + String.format("esquerda_%s.png", pos);
+            return String.format("src/main/resources/image/player/esquerda_%s.png", pos);
         }
     };
 
-    private static final String filename = "src/main/resources/image/player/";
     private static final String POSITIONS = "ECDA";
     private char position;
 

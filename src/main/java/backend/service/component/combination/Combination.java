@@ -1,20 +1,16 @@
 package backend.service.component.combination;
 
 import backend.controller.enums.TypeMessage;
-import backend.repository.interfaces.IItemEntity;
 import backend.repository.singleton.CombinableRepository;
-import backend.repository.singleton.ItemRepository;
 import backend.service.component.ActivateMapGame;
 import backend.service.component.RemoveItem;
 import backend.service.enums.ItemsCombination;
 import backend.service.infra.Cache;
 import backend.service.model.Inventory;
 import backend.service.model.Item;
-import backend.service.model.ItemFactory;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 public final class Combination {
 
@@ -33,23 +29,26 @@ public final class Combination {
         var listCombinable = CombinableRepository.getInstance().getAll();
         var combinable = listCombinable.stream()
                 .filter(v -> v.idItemOri() == itens.get(0).getId())
-                .findFirst().orElse(null);
+                .findFirst();
 
+        if(combinable.isEmpty()) return TypeMessage.ITEM_ERRO_FOUND;
         var listNewCombinable = listCombinable.stream()
-                .filter(v -> v.idItemNew() == combinable.idItemNew())
+                .filter(v -> v.idItemNew() == combinable.get().idItemNew())
                 .toList();
 
         if (itens.size() != listNewCombinable.size())
-            return TypeMessage.COMBINE_INCOMPLETE;
+            return TypeMessage.COMBINE_ERRO_INCOMPLETE;
 
         var isCombine = itens.stream()
                 .allMatch(item ->
                         listNewCombinable.stream().anyMatch(v -> v.idItemOri() == item.getId())
                 );
         if (!isCombine)
-            return TypeMessage.COMBINE_NOT_COMBINABLE;
+            return TypeMessage.COMBINE_ERRO_COMBINABLE;
+
 
         removeAllItemCombine();
+
 
         var item1 = Cache.getItem(listNewCombinable.get(0).idItemNew());
         if (item1.isEmpty()) return TypeMessage.ITEM_ERRO_FOUND;

@@ -6,6 +6,6 @@ public enum TypeItem {
     MISSION,
     USABLE,
     EVENT_MAP,
-    EVENT_INVENTORY;
+    EVENT_INVENTORY
 
 }

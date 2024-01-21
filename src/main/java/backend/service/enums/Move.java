@@ -3,8 +3,6 @@ package backend.service.enums;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.Area;
 
-import javax.swing.*;
-
 public enum Move {
 
     OESTE(ImagePlayer.ESQUERDA) {

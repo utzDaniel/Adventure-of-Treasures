@@ -21,7 +21,7 @@ public final class ServiceCombinationItem {
 
         for (Item item : itens) {
             if (!item.isType(TypeItem.COMBINABLE)) {
-                typeMessage = TypeMessage.COMBINE_NOT_ALL;
+                typeMessage = TypeMessage.COMBINE_ERRO_ALL;
                 break;
             }
         }

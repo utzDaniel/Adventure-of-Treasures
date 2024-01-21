@@ -13,14 +13,6 @@ public final class Combinable implements ICombinable {
         this.sizeCombination = sizeCombination;
     }
 
-    public int getNewItem() {
-        return newItem;
-    }
-
-    public int getSizeCombination() {
-        return sizeCombination;
-    }
-
     @Override
     public boolean isType(TypeItem type) {
         return TypeItem.COMBINABLE == type;
@@ -34,5 +26,15 @@ public final class Combinable implements ICombinable {
     @Override
     public String toString() {
         return TypeItem.COMBINABLE.toString();
+    }
+
+    @Override
+    public int getNewItem() {
+        return this.newItem;
+    }
+
+    @Override
+    public int getSizeCombination() {
+        return this.sizeCombination;
     }
 }
