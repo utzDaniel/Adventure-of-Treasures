@@ -4,54 +4,61 @@ import backend.controller.enums.TypeMessage;
 import backend.service.enums.TypeItem;
 import backend.service.interfaces.ICombinable;
 import backend.service.interfaces.ICommand;
+import backend.service.model.Inventory;
 import backend.service.model.Item;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public final class CombinationCommand implements ICommand {
 
     private final List<Item> itens;
+    private final CommandTool commands;
 
-    public CombinationCommand(List<Item> itens) {
+    public CombinationCommand(List<Item> itens, Inventory inventory) {
+        this.commands = new CommandTool();
         this.itens = itens;
+        this.itens.forEach(v -> this.commands.addCommand(new RemoveItemInventoryCommand(v, inventory)));
     }
 
     @Override
-    public Optional<TypeMessage> execute() {
-
+    public TypeMessage execute() {
         List<ICombinable> combinables = new ArrayList<>();
         this.itens.forEach(v -> {
             var spec = v.getSpecialization(TypeItem.COMBINABLE);
             spec.ifPresent(s -> combinables.add(((ICombinable) s)));
         });
 
-        if (this.itens.size() != combinables.size()) return Optional.of(TypeMessage.COMBINE_ERRO_ALL);
+        if (combinables.isEmpty()) return TypeMessage.ITEM_NOT_COMBINABLE;
+
+        if (this.itens.size() != combinables.size()) return TypeMessage.COMBINE_ERRO_ALL;
 
         if (combinables.get(0).getSizeCombination() > combinables.size())
-            return Optional.of(TypeMessage.COMBINE_ERRO_INCOMPLETE);
+            return TypeMessage.COMBINE_ERRO_INCOMPLETE;
 
         if (combinables.get(0).getSizeCombination() < combinables.size())
-            return Optional.of(TypeMessage.COMBINE_ERRO_INVALID);
+            return TypeMessage.COMBINE_ERRO_INVALID;
 
-        var isCombine = combinables.stream().allMatch(v -> v.getNewItem() == combinables.get(0).getNewItem());
-        if (!isCombine) return Optional.of(TypeMessage.COMBINE_ERRO_COMBINABLE);
+        var isCombine = combinables.stream().allMatch(v -> v.getCombination() == combinables.get(0).getCombination());
+        if (!isCombine) return TypeMessage.COMBINE_ERRO_COMBINABLE;
 
-        return getEquipTypeMessage(combinables.get(0).getNewItem());
+        var type = this.commands.execute();
+        if (!type.isSucess()) return type;
+
+        return getEquipTypeMessage(combinables.get(0).getCombination());
     }
 
     @Override
     public void undo() {
-        // not implements
+        this.commands.undo();
     }
 
-    private Optional<TypeMessage> getEquipTypeMessage(int idNewItem) {
-        return switch (idNewItem) {
-            case 8 -> Optional.of(TypeMessage.COMBINE_MAP);
-            case 2 -> Optional.of(TypeMessage.COMBINE_LADDER);
-            case 16 -> Optional.of(TypeMessage.COMBINE_TORCH);
-            default -> Optional.empty();
+    private TypeMessage getEquipTypeMessage(int combination) {
+        return switch (combination) {
+            case 1 -> TypeMessage.COMBINE_LADDER;
+            case 2 -> TypeMessage.COMBINE_MAP;
+            case 3 -> TypeMessage.COMBINE_TORCH;
+            default -> TypeMessage.COMBINE;
         };
     }
 

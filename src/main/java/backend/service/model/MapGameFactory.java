@@ -20,10 +20,7 @@ public final class MapGameFactory {
     public static MapGame create(IMapGameEntity entity) {
         var itens = getItens(entity);
         return new MapGame(
-                entity.id(),
-                entity.name(),
-                entity.song(),
-                entity.image(),
+                entity,
                 getArea(entity, itens),
                 getDoors(entity),
                 getItens(entity),

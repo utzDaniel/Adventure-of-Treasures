@@ -9,7 +9,6 @@ public final class Usable implements IUsable {
     private final int idMap;
     private final ICoordinate coordinate;
     private boolean enabled;
-
     public Usable(int idMap, ICoordinate coordinate, boolean enabled) {
         this.idMap = idMap;
         this.coordinate = coordinate;
@@ -50,4 +49,5 @@ public final class Usable implements IUsable {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+
 }

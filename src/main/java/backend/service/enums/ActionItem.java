@@ -1,7 +1,7 @@
 package backend.service.enums;
 
 public enum ActionItem {
-    COMBINE("COMBINAR", null),
+    COMBINE("COMBINAR", Commands.COMBINATION, Commands.EVENT_INVENTORY, Commands.EVENT_MAP),
     USE("USAR", Commands.USE, Commands.EVENT_MAP, Commands.EVENT_INVENTORY, Commands.REMOVE_INVENTORY),
     EQUIP("EQUIPAR", Commands.EQUIP, Commands.EVENT_MAP),
     UNEQUIP("DESEQUIPAR", Commands.EQUIP, Commands.EVENT_MAP),

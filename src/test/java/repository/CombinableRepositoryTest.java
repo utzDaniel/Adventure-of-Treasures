@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,15 +20,15 @@ public class CombinableRepositoryTest {
     @Before
     public void create() {
         this.combinable = new ArrayList<>();
-        this.combinable.add(new CombinableEntity(1, 8, 5));
-        this.combinable.add(new CombinableEntity(2, 8, 12));
-        this.combinable.add(new CombinableEntity(3, 2, 7));
-        this.combinable.add(new CombinableEntity(4, 2, 9));
-        this.combinable.add(new CombinableEntity(5, 2, 14));
-        this.combinable.add(new CombinableEntity(6, 16, 3));
-        this.combinable.add(new CombinableEntity(7, 16, 4));
-        this.combinable.add(new CombinableEntity(8, 16, 6));
-        this.combinable.add(new CombinableEntity(9, 16, 13));
+        this.combinable.add(new CombinableEntity(1, 3, 3));
+        this.combinable.add(new CombinableEntity(2, 4, 3));
+        this.combinable.add(new CombinableEntity(3, 5, 2));
+        this.combinable.add(new CombinableEntity(4, 6, 3));
+        this.combinable.add(new CombinableEntity(5, 7, 1));
+        this.combinable.add(new CombinableEntity(6, 9, 1));
+        this.combinable.add(new CombinableEntity(7, 12, 2));
+        this.combinable.add(new CombinableEntity(8, 13, 3));
+        this.combinable.add(new CombinableEntity(9, 14, 1));
 
         this.combinableFile = CombinableRepository.getInstance().getAll();
     }
@@ -36,6 +37,16 @@ public class CombinableRepositoryTest {
     public void validAll() {
         for (int i = 0; i < this.combinable.size(); i++) {
             assertEquals(this.combinable.get(i).toString(), this.combinableFile.get(i).toString());
+        }
+    }
+
+    @Test
+    public void validByIdItem() {
+        var list1 = CombinableRepository.getInstance().getByIdItem(this.combinable.get(0).idItem());
+        var list2 = this.combinable.stream().filter(v -> v.combination() == this.combinable.get(0).combination()).toList();
+        for (ICombinableEntity entity : list2) {
+            var item = list1.stream().filter(v -> v.id() == entity.id()).findFirst();
+            assertEquals(Optional.of(entity).toString(), item.toString());
         }
     }
 }

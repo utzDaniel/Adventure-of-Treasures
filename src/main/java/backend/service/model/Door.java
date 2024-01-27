@@ -9,7 +9,7 @@ public final class Door {
     private final ICoordinate coordinate;
     private boolean open;
 
-    public Door(int id, int idMapGame,ICoordinate coordinate, boolean open) {
+    public Door(int id, int idMapGame, ICoordinate coordinate, boolean open) {
         this.id = id;
         this.idMapGame = idMapGame;
         this.coordinate = coordinate;
@@ -48,10 +48,11 @@ public final class Door {
     public String toString() {
         return """
                 {
+                    "id": "%d",
                     "idMapGame": "%d",
                     "coordinate": %s,
                     "open": %b
                 }
-                """.formatted(this.idMapGame, this.coordinate.toString(), this.open);
+                """.formatted(this.id, this.idMapGame, this.coordinate.toString(), this.open);
     }
 }

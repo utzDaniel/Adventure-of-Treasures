@@ -1,12 +1,14 @@
 package backend.repository.singleton;
 
 import backend.repository.enums.Filename;
-import backend.repository.interfaces.IDoorEntity;
 import backend.repository.interfaces.IExitEntity;
 import backend.repository.mapper.ExitEntityMapper;
 import backend.repository.util.Repository;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public final class ExitRepository {
     private static ExitRepository repository;
@@ -21,8 +23,8 @@ public final class ExitRepository {
                 var map = rep.create();
                 repository = new ExitRepository(map);
             }
-            return repository;
         }
+        return repository;
     }
 
     private ExitRepository(Map<Integer, IExitEntity> map) {

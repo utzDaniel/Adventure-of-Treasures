@@ -34,6 +34,7 @@ public final class Open {
         return TypeMessage.DOOR_SUCESS_OPEN;
     }
 
+    // TODO colocar como event
     private boolean isFinish() {
         var coordinate = player.getCoordinate();
         var item = player.getInventory().getItem(15);

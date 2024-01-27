@@ -2,11 +2,10 @@ package backend.repository.entity;
 
 import backend.repository.interfaces.IExitEntity;
 
-public record ExitEntity(
-        int id,
-        int idMapOri,
-        String direction,
-        int idMapExt) implements IExitEntity {
+public record ExitEntity(int id,
+                        int idMapOri,
+                        String direction,
+                        int idMapExt) implements IExitEntity {
 
     @Override
     public String toString() {

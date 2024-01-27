@@ -6,4 +6,5 @@ public interface IExitEntity extends IEntity {
     String direction();
 
     int idMapExt();
+
 }

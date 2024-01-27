@@ -52,7 +52,7 @@ public final class InventoryResponseMapper implements Function<Inventory, IInven
 
         list.add(new SpecializationDTO(key, item.isType(TypeItem.EQUIPABLE)));
         list.add(new SpecializationDTO(ActionItem.COMBINE.getName(), item.isType(TypeItem.COMBINABLE)));
-        list.add(new SpecializationDTO(ActionItem.REMOVE.getName(), item.isRemove()));
+        list.add(new SpecializationDTO(ActionItem.REMOVE.getName(), item.isRemove().isSucess()));
         return list;
     }
 }

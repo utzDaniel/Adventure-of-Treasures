@@ -20,8 +20,8 @@ public final class DoorRepository {
                 var map = rep.create();
                 repository = new DoorRepository(map);
             }
-            return repository;
         }
+        return repository;
     }
 
     private DoorRepository(Map<Integer, IDoorEntity> map) {

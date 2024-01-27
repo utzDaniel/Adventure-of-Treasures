@@ -5,11 +5,11 @@ import backend.service.interfaces.ICombinable;
 
 public final class Combinable implements ICombinable {
 
-    private final int newItem;
+    private final int combination;
     private final int sizeCombination;
 
-    public Combinable(int newItem, int sizeCombination) {
-        this.newItem = newItem;
+    public Combinable(int combination, int sizeCombination) {
+        this.combination = combination;
         this.sizeCombination = sizeCombination;
     }
 
@@ -29,8 +29,8 @@ public final class Combinable implements ICombinable {
     }
 
     @Override
-    public int getNewItem() {
-        return this.newItem;
+    public int getCombination() {
+        return this.combination;
     }
 
     @Override

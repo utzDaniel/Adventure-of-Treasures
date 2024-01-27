@@ -7,8 +7,6 @@ import backend.service.interfaces.IEquipable;
 import backend.service.model.Inventory;
 import backend.service.model.Item;
 
-import java.util.Optional;
-
 public final class EquipableCommand implements ICommand {
 
     private final Item item;
@@ -20,10 +18,9 @@ public final class EquipableCommand implements ICommand {
     }
 
     @Override
-    public Optional<TypeMessage> execute() {
-
+    public TypeMessage execute() {
         var spec = this.item.getSpecialization(TypeItem.EQUIPABLE);
-        if (spec.isEmpty()) return Optional.empty();
+        if (spec.isEmpty()) return TypeMessage.ITEM_NOT_EQUIPABLE;
         var equipable = (IEquipable) spec.get();
 
         if (equipable.isEquip()) {
@@ -53,24 +50,24 @@ public final class EquipableCommand implements ICommand {
         }
     }
 
-    private Optional<TypeMessage> getEquipTypeMessageSucess() {
+    private TypeMessage getEquipTypeMessageSucess() {
         return switch (this.item.getId()) {
-            case 10 -> Optional.of(TypeMessage.EQUIP_SCHOOLBAG);
-            case 16 -> Optional.of(TypeMessage.EQUIP_TORCH);
-            default -> Optional.empty();
+            case 10 -> TypeMessage.EQUIP_SCHOOLBAG;
+            case 16 -> TypeMessage.EQUIP_TORCH;
+            default -> TypeMessage.EQUIP;
         };
     }
 
-    private Optional<TypeMessage> getUnequipTypeMessage() {
+    private TypeMessage getUnequipTypeMessage() {
         return switch (this.item.getId()) {
-            case 10 -> Optional.of(TypeMessage.UNEQUIP_SCHOOLBAG);
-            case 16 -> Optional.of(TypeMessage.UNEQUIP_TORCH);
-            default -> Optional.empty();
+            case 10 -> TypeMessage.UNEQUIP_SCHOOLBAG;
+            case 16 -> TypeMessage.UNEQUIP_TORCH;
+            default -> TypeMessage.UNEQUIP;
         };
     }
 
-    private Optional<TypeMessage> getUnequipTypeMessageErro() {
-        return this.item.getId() == 10 ? Optional.of(TypeMessage.UNEQUIP_ERRO_SCHOOLBAG) : Optional.empty();
+    private TypeMessage getUnequipTypeMessageErro() {
+        return this.item.getId() == 10 ? TypeMessage.UNEQUIP_ERRO_SCHOOLBAG : TypeMessage.UNEQUIP_ERRO;
     }
 
 }

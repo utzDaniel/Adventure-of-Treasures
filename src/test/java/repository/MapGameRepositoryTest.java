@@ -8,8 +8,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class MapGameRepositoryTest {
 
@@ -40,6 +41,27 @@ public class MapGameRepositoryTest {
         for (int i = 0; i < this.mapGame.size(); i++) {
             assertEquals(this.mapGame.get(i).toString(), this.mapGameFile.get(i).toString());
         }
+    }
+
+    @Test
+    public void validById() {
+        assertEquals(Optional.of(this.mapGame.get(0)).toString(), MapGameRepository.getInstance().getById(this.mapGame.get(0).id()).toString());
+    }
+
+    @Test
+    public void validCopyLimits() {
+        assertNotEquals(this.mapGame.get(0).limits(), this.mapGame.get(0).limits());
+    }
+
+    @Test
+    public void validEqualsEntity() {
+        var eq = Optional.of(this.mapGame.get(0)).equals(MapGameRepository.getInstance().getById(this.mapGame.get(0).id()));
+        assertTrue(eq);
+    }
+
+    @Test
+    public void validHashCodeEntity() {
+        assertEquals(Optional.of(this.mapGame.get(0)).hashCode(), MapGameRepository.getInstance().getById(this.mapGame.get(0).id()).hashCode());
     }
 
     private String srcImage(String name) {

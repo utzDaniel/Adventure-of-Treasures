@@ -1,12 +1,14 @@
 package backend.repository.singleton;
 
 import backend.repository.enums.Filename;
-import backend.repository.interfaces.IEquipableEntity;
 import backend.repository.interfaces.IItemMapEntity;
 import backend.repository.mapper.ItemMapEntityMapper;
 import backend.repository.util.Repository;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public final class ItemMapRepository {
     private static ItemMapRepository repository;
@@ -21,8 +23,8 @@ public final class ItemMapRepository {
                 var map = rep.create();
                 repository = new ItemMapRepository(map);
             }
-            return repository;
         }
+        return repository;
     }
 
     private ItemMapRepository(Map<Integer, IItemMapEntity> map) {

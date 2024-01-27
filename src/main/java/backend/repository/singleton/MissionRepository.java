@@ -1,7 +1,6 @@
 package backend.repository.singleton;
 
 import backend.repository.enums.Filename;
-import backend.repository.interfaces.IItemMapEntity;
 import backend.repository.interfaces.IMissionEntity;
 import backend.repository.mapper.MissionEntityMapper;
 import backend.repository.util.Repository;
@@ -21,8 +20,8 @@ public final class MissionRepository {
                 var map = rep.create();
                 repository = new MissionRepository(map);
             }
-            return repository;
         }
+        return repository;
     }
 
     private MissionRepository(Map<Integer, IMissionEntity> map) {

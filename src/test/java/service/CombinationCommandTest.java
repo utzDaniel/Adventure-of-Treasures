@@ -3,6 +3,7 @@ package service;
 import backend.controller.enums.TypeMessage;
 import backend.repository.entity.ItemEntity;
 import backend.service.command.CombinationCommand;
+import backend.service.model.Inventory;
 import backend.service.model.Item;
 import backend.service.model.ItemFactory;
 import org.junit.Before;
@@ -10,8 +11,8 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
@@ -37,178 +38,99 @@ public class CombinationCommandTest {
         itensE.add(new ItemEntity(6, "madeira", "cabo de madeira velho", 5, 20, 41, "src/main/resources/image/item/madeira.png"));
         itensE.add(new ItemEntity(13, "pederneira", "item específico para fazer fogo", 2, 20, 44, "src/main/resources/image/item/pederneira.png"));
 
+        itensE.add(new ItemEntity(10, "mochila", "utilizada para carregar mais coisas", 0, 22, 65, "src/main/resources/image/item/mochila.png"));
+
         itensE.forEach(v -> this.itens.put(v.id(), ItemFactory.create(v)));
     }
 
-    @Test
-    public void validMap1() {
-        var list = new ArrayList<Item>();
-        list.add(this.itens.get(5));
-        list.add(this.itens.get(12));
-        this.cmd = new CombinationCommand(list);
-        var msg = this.cmd.execute();
-        assertEquals(Optional.of(TypeMessage.COMBINE_MAP), msg);
+    private Inventory createInventory(List<Item> itens) {
+        var inventory = new Inventory(0, 15);
+        itens.forEach(inventory::addItem);
+        return inventory;
     }
 
     @Test
-    public void validMap2() {
+    public void validErro1() {
+        var list = new ArrayList<Item>();
+        list.add(this.itens.get(10));
+        this.cmd = new CombinationCommand(list, createInventory(list));
+        var msg = this.cmd.execute();
+        assertEquals(TypeMessage.ITEM_NOT_COMBINABLE, msg);
+    }
+
+    @Test
+    public void validErro2() {
         var item1 = new ItemEntity(10, "mochila", "utilizada para carregar mais coisas", 0, 22, 65, "src/main/resources/image/item/mochila.png");
         var item = ItemFactory.create(item1);
         var list = new ArrayList<Item>();
         list.add(this.itens.get(5));
         list.add(item);
-        this.cmd = new CombinationCommand(list);
+        this.cmd = new CombinationCommand(list, createInventory(list));
         var msg = this.cmd.execute();
-        assertEquals(Optional.of(TypeMessage.COMBINE_ERRO_ALL), msg);
+        assertEquals(TypeMessage.COMBINE_ERRO_ALL, msg);
     }
 
     @Test
-    public void validMap3() {
+    public void validErro3() {
         var list = new ArrayList<Item>();
         list.add(this.itens.get(5));
-        this.cmd = new CombinationCommand(list);
+        this.cmd = new CombinationCommand(list, createInventory(list));
         var msg = this.cmd.execute();
-        assertEquals(Optional.of(TypeMessage.COMBINE_ERRO_INCOMPLETE), msg);
+        assertEquals(TypeMessage.COMBINE_ERRO_INCOMPLETE, msg);
     }
 
     @Test
-    public void validMap4() {
-        var list = new ArrayList<Item>();
-        list.add(this.itens.get(5));
-        list.add(this.itens.get(7));
-        this.cmd = new CombinationCommand(list);
-        var msg = this.cmd.execute();
-        assertEquals(Optional.of(TypeMessage.COMBINE_ERRO_COMBINABLE), msg);
-    }
-
-    @Test
-    public void validMap5() {
+    public void validErro4() {
         var list = new ArrayList<Item>();
         list.add(this.itens.get(5));
         list.add(this.itens.get(12));
         list.add(this.itens.get(7));
-        this.cmd = new CombinationCommand(list);
+        this.cmd = new CombinationCommand(list, createInventory(list));
         var msg = this.cmd.execute();
-        assertEquals(Optional.of(TypeMessage.COMBINE_ERRO_INVALID), msg);
+        assertEquals(TypeMessage.COMBINE_ERRO_INVALID, msg);
     }
 
     @Test
-    public void validEscada1() {
+    public void validErro5() {
+        var list = new ArrayList<Item>();
+        list.add(this.itens.get(5));
+        list.add(this.itens.get(7));
+        this.cmd = new CombinationCommand(list, createInventory(list));
+        var msg = this.cmd.execute();
+        assertEquals(TypeMessage.COMBINE_ERRO_COMBINABLE, msg);
+    }
+
+    @Test
+    public void validMap() {
+        var list = new ArrayList<Item>();
+        list.add(this.itens.get(5));
+        list.add(this.itens.get(12));
+        this.cmd = new CombinationCommand(list, createInventory(list));
+        var msg = this.cmd.execute();
+        assertEquals(TypeMessage.COMBINE_MAP, msg);
+    }
+
+    @Test
+    public void validEscada() {
         var list = new ArrayList<Item>();
         list.add(this.itens.get(7));
         list.add(this.itens.get(9));
         list.add(this.itens.get(14));
-        this.cmd = new CombinationCommand(list);
+        this.cmd = new CombinationCommand(list, createInventory(list));
         var msg = this.cmd.execute();
-        assertEquals(Optional.of(TypeMessage.COMBINE_LADDER), msg);
+        assertEquals(TypeMessage.COMBINE_LADDER, msg);
     }
 
-    @Test
-    public void validEscada2() {
-        var item1 = new ItemEntity(10, "mochila", "utilizada para carregar mais coisas", 0, 22, 65, "src/main/resources/image/item/mochila.png");
-        var item = ItemFactory.create(item1);
-        var list = new ArrayList<Item>();
-        list.add(this.itens.get(7));
-        list.add(this.itens.get(9));
-        list.add(item);
-        this.cmd = new CombinationCommand(list);
-        var msg = this.cmd.execute();
-        assertEquals(Optional.of(TypeMessage.COMBINE_ERRO_ALL), msg);
-    }
 
     @Test
-    public void validEscada3() {
-        var list = new ArrayList<Item>();
-        list.add(this.itens.get(7));
-        list.add(this.itens.get(9));
-        this.cmd = new CombinationCommand(list);
-        var msg = this.cmd.execute();
-        assertEquals(Optional.of(TypeMessage.COMBINE_ERRO_INCOMPLETE), msg);
-    }
-
-    @Test
-    public void validEscada4() {
-        var list = new ArrayList<Item>();
-        list.add(this.itens.get(7));
-        list.add(this.itens.get(9));
-        list.add(this.itens.get(3));
-        this.cmd = new CombinationCommand(list);
-        var msg = this.cmd.execute();
-        assertEquals(Optional.of(TypeMessage.COMBINE_ERRO_COMBINABLE), msg);
-    }
-
-    @Test
-    public void validEscada5() {
-        var list = new ArrayList<Item>();
-        list.add(this.itens.get(7));
-        list.add(this.itens.get(9));
-        list.add(this.itens.get(14));
-        list.add(this.itens.get(3));
-        this.cmd = new CombinationCommand(list);
-        var msg = this.cmd.execute();
-        assertEquals(Optional.of(TypeMessage.COMBINE_ERRO_INVALID), msg);
-    }
-
-    @Test
-    public void validTocha1() {
+    public void validTocha() {
         var list = new ArrayList<Item>();
         list.add(this.itens.get(3));
         list.add(this.itens.get(4));
         list.add(this.itens.get(6));
         list.add(this.itens.get(13));
-        this.cmd = new CombinationCommand(list);
+        this.cmd = new CombinationCommand(list, createInventory(list));
         var msg = this.cmd.execute();
-        assertEquals(Optional.of(TypeMessage.COMBINE_TORCH), msg);
+        assertEquals(TypeMessage.COMBINE_TORCH, msg);
     }
-
-    @Test
-    public void validTocha2() {
-        var item1 = new ItemEntity(10, "mochila", "utilizada para carregar mais coisas", 0, 22, 65, "src/main/resources/image/item/mochila.png");
-        var item = ItemFactory.create(item1);
-        var list = new ArrayList<Item>();
-        list.add(this.itens.get(3));
-        list.add(this.itens.get(4));
-        list.add(this.itens.get(6));
-        list.add(item);
-        this.cmd = new CombinationCommand(list);
-        var msg = this.cmd.execute();
-        assertEquals(Optional.of(TypeMessage.COMBINE_ERRO_ALL), msg);
-    }
-
-    @Test
-    public void validTocha3() {
-        var list = new ArrayList<Item>();
-        list.add(this.itens.get(3));
-        list.add(this.itens.get(4));
-        list.add(this.itens.get(6));
-        this.cmd = new CombinationCommand(list);
-        var msg = this.cmd.execute();
-        assertEquals(Optional.of(TypeMessage.COMBINE_ERRO_INCOMPLETE), msg);
-    }
-
-    @Test
-    public void validTocha4() {
-        var list = new ArrayList<Item>();
-        list.add(this.itens.get(3));
-        list.add(this.itens.get(4));
-        list.add(this.itens.get(6));
-        list.add(this.itens.get(7));
-        this.cmd = new CombinationCommand(list);
-        var msg = this.cmd.execute();
-        assertEquals(Optional.of(TypeMessage.COMBINE_ERRO_COMBINABLE), msg);
-    }
-
-    @Test
-    public void validTocha5() {
-        var list = new ArrayList<Item>();
-        list.add(this.itens.get(3));
-        list.add(this.itens.get(4));
-        list.add(this.itens.get(6));
-        list.add(this.itens.get(13));
-        list.add(this.itens.get(7));
-        this.cmd = new CombinationCommand(list);
-        var msg = this.cmd.execute();
-        assertEquals(Optional.of(TypeMessage.COMBINE_ERRO_INVALID), msg);
-    }
-
 }

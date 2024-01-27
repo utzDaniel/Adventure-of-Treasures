@@ -19,7 +19,9 @@ public enum Filename {
 
     ITEM_MAP("item_map"),
     EVENT_MAP("event_map"),
-    EVENT_INVENTORY("event_inventory");
+    EVENT_INVENTORY("event_inventory"),
+    EVENT_ITEM("event_item"),
+    EVENT_DOOR("event_door");
 
     private final String path;
 

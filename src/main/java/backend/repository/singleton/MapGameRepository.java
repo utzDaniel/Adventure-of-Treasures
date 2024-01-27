@@ -21,8 +21,8 @@ public final class MapGameRepository implements IRepository<IMapGameEntity, Inte
                 var map = rep.create();
                 repository = new MapGameRepository(map);
             }
-            return repository;
         }
+        return repository;
     }
 
     private MapGameRepository(Map<Integer, IMapGameEntity> map) {

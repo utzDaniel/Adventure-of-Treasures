@@ -5,4 +5,5 @@ public interface IEquipableEntity extends IEntity {
     int idItem();
 
     int upCapacity();
+
 }

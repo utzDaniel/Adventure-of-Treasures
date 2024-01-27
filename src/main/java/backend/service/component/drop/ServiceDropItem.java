@@ -1,7 +1,6 @@
 package backend.service.component.drop;
 
 import backend.controller.enums.TypeMessage;
-import backend.service.component.RemoveItem;
 import backend.service.model.Inventory;
 import backend.service.model.Item;
 import backend.service.model.Player;
@@ -17,12 +16,11 @@ public class ServiceDropItem {
 
     public TypeMessage run(Item item) {
 
-        var typeMessage = new RemoveItem(this.inventory, item).run();
-        if (!typeMessage.isSucess()) return typeMessage;
+        this.inventory.removeItem(item);
 
         var mapGame = this.player.getCurrentMap();
         var coordinate = this.player.getCoordinate();
-        typeMessage = new AddItemMapGame(mapGame, item, coordinate).run();
+        var typeMessage = new AddItemMapGame(mapGame, item, coordinate).run();
         if (typeMessage.isSucess()) mapGame.addItem(item);
 
         return typeMessage;

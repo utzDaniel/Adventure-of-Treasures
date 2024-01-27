@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,10 +20,10 @@ public class EventMapRepositoryTest {
     @Before
     public void create() {
         this.event = new ArrayList<>();
-        this.event.add(new EventMapEntity(1, 16, 8, null, 10));
-        this.event.add(new EventMapEntity(2, 11, 4, "src/main/resources/image/map/praia.png", -1));
-        this.event.add(new EventMapEntity(3, 2, 8, "src/main/resources/image/map/temploF.png", 9));
-        this.event.add(new EventMapEntity(4, 1, 6, null, 6));
+        this.event.add(new EventMapEntity(1, 2, 8, "src/main/resources/image/map/temploF.png"));
+        this.event.add(new EventMapEntity(2, 5, 4, "src/main/resources/image/map/praiaM.png"));
+        this.event.add(new EventMapEntity(3, 11, 4, "src/main/resources/image/map/praia.png"));
+        this.event.add(new EventMapEntity(4, 12, 4, "src/main/resources/image/map/praiaM.png"));
 
         this.eventFile = EventMapRepository.getInstance().getAll();
     }
@@ -33,4 +34,11 @@ public class EventMapRepositoryTest {
             assertEquals(this.event.get(i).toString(), this.eventFile.get(i).toString());
         }
     }
+
+    @Test
+    public void validByIdItem() {
+        assertEquals(Optional.of(this.event.get(0)).toString(),
+                EventMapRepository.getInstance().getByIdItem(this.event.get(0).idItem()).toString());
+    }
+
 }

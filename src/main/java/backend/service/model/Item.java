@@ -1,49 +1,45 @@
 package backend.service.model;
 
+import backend.controller.enums.TypeMessage;
+import backend.repository.interfaces.IItemEntity;
 import backend.service.enums.TypeItem;
-import backend.service.interfaces.ICoordinate;
-import backend.service.interfaces.ISpecialization;
+import backend.service.interfaces.*;
 
+import java.util.List;
 import java.util.Optional;
 
-public final class Item {
+public final class Item implements IObservable {
 
-    private final int id;
-    private final String name;
-    private final String description;
-    private final int weight;
-    private final String image;
+    private final IItemEntity entity;
     private final SpecializationComposite specialization;
     private ICoordinate coordinate;
+    private final List<IObserver> observers;
 
-    Item(int id, String name, String description, int weight, String image, SpecializationComposite specialization, ICoordinate coordinate) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.weight = weight;
-        this.image = image;
+    Item(IItemEntity entity, SpecializationComposite specialization, List<IObserver> observers) {
+        this.entity = entity;
         this.specialization = specialization;
-        this.coordinate = coordinate;
-    }
-
-    public String getImage() {
-        return this.image;
+        this.coordinate = ICoordinate.getInstance(entity.positionX(), entity.positionY());
+        this.observers = observers;
     }
 
     public int getId() {
-        return this.id;
+        return this.entity.id();
     }
 
     public String getName() {
-        return this.name;
+        return this.entity.name();
     }
 
     public String getDescription() {
-        return this.description;
+        return this.entity.description();
     }
 
     public int getWeight() {
-        return this.weight;
+        return this.entity.weight();
+    }
+
+    public String getImage() {
+        return this.entity.image();
     }
 
     public ICoordinate getCoordinate() {
@@ -62,8 +58,18 @@ public final class Item {
         return this.specialization.getSpecialization(type);
     }
 
-    public boolean isRemove() {
-        return this.specialization.isRemove();
+    public TypeMessage isRemove() {
+        if (this.getSpecialization(TypeItem.MISSION).isPresent())
+            return TypeMessage.REMOVE_ITEM_ERRO;
+        var spec = this.getSpecialization(TypeItem.EQUIPABLE);
+        if (spec.isPresent() && ((IEquipable) spec.get()).isEquip())
+            return TypeMessage.REMOVE_ITEM_ERRO_EQUIP;
+        return TypeMessage.REMOVE_ITEM;
+    }
+
+    @Override
+    public void warn() {
+        this.observers.forEach(IObserver::update);
     }
 
     @Override
@@ -78,8 +84,8 @@ public final class Item {
                     "image": "%s",
                     "specializations": %s
                 }
-                """.formatted(this.id, this.name, this.description, this.weight, this.coordinate.toString(),
-                this.image, this.specialization);
+                """.formatted(this.entity.id(), this.entity.name(), this.entity.description(), this.entity.weight(),
+                this.coordinate.toString(), this.entity.image(), this.specialization);
     }
 
 }

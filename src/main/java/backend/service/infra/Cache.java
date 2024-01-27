@@ -4,10 +4,7 @@ import backend.repository.interfaces.IItemEntity;
 import backend.repository.interfaces.IMapGameEntity;
 import backend.repository.singleton.ItemRepository;
 import backend.repository.singleton.MapGameRepository;
-import backend.service.model.Item;
-import backend.service.model.ItemFactory;
-import backend.service.model.MapGame;
-import backend.service.model.MapGameFactory;
+import backend.service.model.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +14,7 @@ public final class Cache {
 
     // TODO usar o padrao Flyweight
     private static final Map<Integer, MapGame> mapGame = new HashMap<>();
+    private static final Map<Integer, Door> doors = new HashMap<>();
     private static final Map<Integer, Item> itens = new HashMap<>();
 
     private Cache() {
@@ -25,10 +23,14 @@ public final class Cache {
     private static void addMapGame(MapGame mapGame) {
         Cache.mapGame.put(mapGame.getId(), mapGame);
         mapGame.getItens().forEach(Cache::addItem);
+        mapGame.getDoors().forEach(Cache::addDoor);
     }
 
     private static void addItem(Item item) {
         Cache.itens.put(item.getId(), item);
+    }
+    private static void addDoor(Door door) {
+        Cache.doors.put(door.getId(), door);
     }
 
     public static Optional<MapGame> getMapGame(int idMap) {
@@ -40,6 +42,10 @@ public final class Cache {
             mapGame1.ifPresent(Cache::addMapGame);
         }
         return mapGame1;
+    }
+
+    public static Optional<Door> getDoor(int idDoor) {
+        return Optional.ofNullable(Cache.doors.get(idDoor));
     }
 
     private static Optional<IMapGameEntity> getMapGameEntity(int idMap) {
@@ -59,6 +65,10 @@ public final class Cache {
             item1.ifPresent(Cache::addItem);
         }
         return item1;
+    }
+
+    public static Inventory getInventory() {
+        return Player.getInstance().getInventory();
     }
 
     private static Optional<IItemEntity> getItemEntity(int idItem) {

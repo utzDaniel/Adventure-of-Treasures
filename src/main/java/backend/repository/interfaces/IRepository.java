@@ -9,4 +9,5 @@ public interface IRepository<T, I extends Serializable> {
     Optional<T> getById(I id);
 
     List<T> getAll();
+
 }

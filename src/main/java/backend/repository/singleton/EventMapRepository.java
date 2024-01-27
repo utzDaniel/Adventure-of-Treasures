@@ -20,8 +20,8 @@ public final class EventMapRepository {
                 var map = rep.create();
                 repository = new EventMapRepository(map);
             }
-            return repository;
         }
+        return repository;
     }
 
     private EventMapRepository(Map<Integer, IEventMapEntity> map) {

@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,9 +20,9 @@ public class UsableRepositoryTest {
     @Before
     public void create() {
         this.usable = new ArrayList<>();
-        this.usable.add(new UsableEntity(1, 11, 4,29,56, false));
-        this.usable.add(new UsableEntity(2, 2, 8,19,26, true));
-        this.usable.add(new UsableEntity(3, 1, 6,15,37, true));
+        this.usable.add(new UsableEntity(1, 11, 4, 29, 56, false));
+        this.usable.add(new UsableEntity(2, 2, 8, 19, 26, true));
+        this.usable.add(new UsableEntity(3, 1, 6, 15, 37, true));
 
         this.usableFile = UsableRepository.getInstance().getAll();
     }
@@ -31,5 +32,11 @@ public class UsableRepositoryTest {
         for (int i = 0; i < this.usable.size(); i++) {
             assertEquals(this.usable.get(i).toString(), this.usableFile.get(i).toString());
         }
+    }
+
+    @Test
+    public void validByIdItem() {
+        assertEquals(Optional.of(this.usable.get(0)).toString(),
+                UsableRepository.getInstance().getByIdItem(this.usable.get(0).idItem()).toString());
     }
 }

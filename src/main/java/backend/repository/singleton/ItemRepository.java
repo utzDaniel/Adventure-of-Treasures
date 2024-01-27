@@ -21,8 +21,8 @@ public final class ItemRepository implements IRepository<IItemEntity, Integer> {
                 var map = rep.create();
                 repository = new ItemRepository(map);
             }
-            return repository;
         }
+        return repository;
     }
 
     private ItemRepository(Map<Integer, IItemEntity> map) {

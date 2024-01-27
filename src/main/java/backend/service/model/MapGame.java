@@ -1,5 +1,6 @@
 package backend.service.model;
 
+import backend.repository.interfaces.IMapGameEntity;
 import backend.service.enums.Move;
 import backend.service.interfaces.ICoordinate;
 
@@ -8,20 +9,16 @@ import java.util.Map;
 import java.util.Optional;
 
 public final class MapGame {
-    private final int id;
-    private final String name;
-    private final String song;
+    IMapGameEntity entity;
     private String image;
     private final Area area;
     private final Map<ICoordinate, Door> doors;
     private final Map<ICoordinate, Item> itens;
     private final List<Exit> exits;
 
-    MapGame(int id, String name, String song, String image, Area area, Map<ICoordinate, Door> doors, Map<ICoordinate, Item> itens, List<Exit> exits) {
-        this.id = id;
-        this.name = name;
-        this.song = song;
-        this.image = image;
+    MapGame(IMapGameEntity entity, Area area, Map<ICoordinate, Door> doors, Map<ICoordinate, Item> itens, List<Exit> exits) {
+        this.entity = entity;
+        this.image = entity.image();
         this.area = area;
         this.doors = doors;
         this.itens = itens;
@@ -29,11 +26,15 @@ public final class MapGame {
     }
 
     public int getId() {
-        return this.id;
+        return this.entity.id();
     }
 
     public String getName() {
-        return this.name;
+        return this.entity.name();
+    }
+
+    public String getSong() {
+        return this.entity.song();
     }
 
     public String getImage() {
@@ -87,12 +88,13 @@ public final class MapGame {
         return this.itens.values().stream().toList();
     }
 
-    public String getSong() {
-        return this.song;
+    public List<Door> getDoors() {
+        return this.doors.values().stream().toList();
     }
 
+
     public Optional<Integer> getExit(Move move) {
-        return exits.stream()
+        return this.exits.stream()
                 .filter(exit -> exit.direction().name().equals(move.name()))
                 .map(Exit::idMap)
                 .findFirst();
@@ -102,15 +104,16 @@ public final class MapGame {
     public String toString() {
         return """
                 {
+                    "id": %d,
                     "name": "%s",
-                    "icon": "%s",
+                    "image": "%s",
                     "area": %s,
                     "doors": %s,
                     "itens": %s,
                     "song": "%s",
                     "exits": "%s"
                 }
-                """.formatted(this.name, this.image, this.area, this.doors.values(),
-                this.itens.values(), this.song, this.exits);
+                """.formatted(this.entity.id(), this.entity.name(), this.image, this.area, this.doors.values(),
+                this.itens.values(), this.entity.song(), this.exits);
     }
 }

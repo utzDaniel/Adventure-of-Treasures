@@ -1,7 +1,6 @@
 package backend.repository.singleton;
 
 import backend.repository.enums.Filename;
-import backend.repository.interfaces.IMissionEntity;
 import backend.repository.interfaces.IUsableEntity;
 import backend.repository.mapper.UsableEntityMapper;
 import backend.repository.util.Repository;
@@ -21,8 +20,8 @@ public final class UsableRepository {
                 var map = rep.create();
                 repository = new UsableRepository(map);
             }
-            return repository;
         }
+        return repository;
     }
 
     private UsableRepository(Map<Integer, IUsableEntity> map) {

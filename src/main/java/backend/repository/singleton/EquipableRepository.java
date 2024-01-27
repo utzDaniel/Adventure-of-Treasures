@@ -1,7 +1,6 @@
 package backend.repository.singleton;
 
 import backend.repository.enums.Filename;
-import backend.repository.interfaces.IDoorEntity;
 import backend.repository.interfaces.IEquipableEntity;
 import backend.repository.mapper.EquipableEntityMapper;
 import backend.repository.util.Repository;
@@ -21,8 +20,8 @@ public final class EquipableRepository {
                 var map = rep.create();
                 repository = new EquipableRepository(map);
             }
-            return repository;
         }
+        return repository;
     }
 
     private EquipableRepository(Map<Integer, IEquipableEntity> map) {
@@ -38,7 +37,6 @@ public final class EquipableRepository {
                 .stream()
                 .filter(v -> v.idItem() == idItem)
                 .findFirst();
-
     }
 
 }

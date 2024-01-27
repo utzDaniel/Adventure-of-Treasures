@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
@@ -40,14 +41,19 @@ public class ItemRepositoryTest {
 
     }
 
+    private String srcImage(String name) {
+        return String.format("src/main/resources/image/item/%s.png", name);
+    }
+
     @Test
     public void validAll() {
-        for (int i = 0; i < itens.size(); i++) {
-            assertEquals(itens.get(i).toString(), itensFile.get(i).toString());
+        for (int i = 0; i < this.itens.size(); i++) {
+            assertEquals(this.itens.get(i).toString(), this.itensFile.get(i).toString());
         }
     }
 
-    private String srcImage(String name) {
-        return String.format("src/main/resources/image/item/%s.png", name);
+    @Test
+    public void validById() {
+        assertEquals(Optional.of(this.itens.get(0)).toString(), ItemRepository.getInstance().getById(this.itens.get(0).id()).toString());
     }
 }

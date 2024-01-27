@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
@@ -30,5 +31,11 @@ public class EquipableRepositoryTest {
         for (int i = 0; i < this.equipable.size(); i++) {
             assertEquals(this.equipable.get(i).toString(), this.equipableFile.get(i).toString());
         }
+    }
+
+    @Test
+    public void validByIdItem() {
+        assertEquals(Optional.of(this.equipable.get(0)).toString(),
+                EquipableRepository.getInstance().getByIdItem(this.equipable.get(0).idItem()).toString());
     }
 }

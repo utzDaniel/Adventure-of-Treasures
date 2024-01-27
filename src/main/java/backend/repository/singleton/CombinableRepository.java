@@ -24,24 +24,20 @@ public final class CombinableRepository {
                 var map = rep.create();
                 repository = new CombinableRepository(map);
             }
-            return repository;
         }
+        return repository;
     }
 
     private CombinableRepository(Map<Integer, ICombinableEntity> map) {
         this.map = new HashMap<>(map);
     }
 
-    public ICombinableEntity get(int id) {
-        return this.map.get(id);
-    }
-
-    public List<ICombinableEntity> getByIdItemOriCombinable(int idItemOri) {
+    public List<ICombinableEntity> getByIdItem(int idItem) {
         return this.map.values()
                 .stream()
-                .filter(v -> v.idItemOri() == idItemOri)
+                .filter(v -> v.idItem() == idItem)
                 .findFirst()
-                .map(e -> this.map.values().stream().filter( v-> v.idItemNew() == e.idItemNew()).toList())
+                .map(e -> this.map.values().stream().filter(v -> v.combination() == e.combination()).toList())
                 .orElse(List.of());
     }
 

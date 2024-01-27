@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
@@ -30,5 +31,11 @@ public class MissionRepositoryTest {
         for (int i = 0; i < this.mission.size(); i++) {
             assertEquals(this.mission.get(i).toString(), this.missionFile.get(i).toString());
         }
+    }
+
+    @Test
+    public void validByIdItem() {
+        assertEquals(Optional.of(this.mission.get(0)).toString(),
+                MissionRepository.getInstance().getByIdItem(this.mission.get(0).idItem()).toString());
     }
 }

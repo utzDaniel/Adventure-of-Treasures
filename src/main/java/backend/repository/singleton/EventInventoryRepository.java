@@ -20,8 +20,8 @@ public final class EventInventoryRepository {
                 var map = rep.create();
                 repository = new EventInventoryRepository(map);
             }
-            return repository;
         }
+        return repository;
     }
 
     private EventInventoryRepository(Map<Integer, IEventInventoryEntity> map) {

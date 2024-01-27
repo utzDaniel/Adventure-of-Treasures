@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
@@ -41,6 +42,16 @@ public class DoorRepositoryTest {
     public void validAll() {
         for (int i = 0; i < this.doors.size(); i++) {
             assertEquals(this.doors.get(i).toString(), this.doorsFile.get(i).toString());
+        }
+    }
+
+    @Test
+    public void validByIdMapOri() {
+        var list1 = DoorRepository.getInstance().getByIdMapOri(this.doors.get(0).idMapOri());
+        var list2 = this.doors.stream().filter(v -> v.idMapOri() == this.doors.get(0).idMapOri()).toList();
+        for (IDoorEntity entity : list2) {
+            var item = list1.stream().filter(v -> v.id() == entity.id()).findFirst();
+            assertEquals(Optional.of(entity).toString(), item.toString());
         }
     }
 }

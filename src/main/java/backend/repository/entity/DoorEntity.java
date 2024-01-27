@@ -2,13 +2,12 @@ package backend.repository.entity;
 
 import backend.repository.interfaces.IDoorEntity;
 
-public record DoorEntity(
-        int id,
-        int idMapOri,
-        int idMapDor,
-        int positionX,
-        int positionY,
-        boolean open) implements IDoorEntity {
+public record DoorEntity(int id,
+                        int idMapOri,
+                        int idMapDor,
+                        int positionX,
+                        int positionY,
+                        boolean open) implements IDoorEntity {
 
     @Override
     public String toString() {

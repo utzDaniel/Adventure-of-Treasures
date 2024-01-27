@@ -44,27 +44,27 @@ public record MapGameEntity(int id,
     }
 
     private String byteArrayToString() {
-        StringBuilder stringBuilder = new StringBuilder();
+        var sb = new StringBuilder();
 
         for (byte[] b1 : this.limits) {
             for (byte b : b1) {
-                stringBuilder.append((char) b);
+                sb.append((char) b);
             }
         }
 
-        return stringBuilder.toString();
+        return sb.toString();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MapGameEntity mapGameEntity = (MapGameEntity) o;
-        return Arrays.deepEquals(this.limits, mapGameEntity.limits) &&
-                Objects.equals(this.id, mapGameEntity.id) &&
-                Objects.equals(this.name, mapGameEntity.name) &&
-                Objects.equals(this.image, mapGameEntity.image) &&
-                Objects.equals(this.song, mapGameEntity.song);
+        var entity = (IMapGameEntity) o;
+        return Arrays.deepEquals(this.limits, entity.limits()) &&
+                Objects.equals(this.id, entity.id()) &&
+                Objects.equals(this.name, entity.name()) &&
+                Objects.equals(this.image, entity.image()) &&
+                Objects.equals(this.song, entity.song());
     }
 
     @Override

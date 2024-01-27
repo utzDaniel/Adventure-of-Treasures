@@ -9,5 +9,7 @@ public interface IUsableEntity extends IEntity {
     int positionX();
 
     int positionY();
+
     boolean enabled();
+
 }
