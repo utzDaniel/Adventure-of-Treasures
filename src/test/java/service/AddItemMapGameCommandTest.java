@@ -37,7 +37,7 @@ public class AddItemMapGameCommandTest {
             }
         }
         var map = new MapGame(new MapGameEntity(0, null, null, null, limits), new HashMap<>(),
-                new HashMap<>(), new ArrayList<>(), Optional.empty());
+                new HashMap<>(), new ArrayList<>(), null);
         this.cmd = new AddItemMapGameCommand(this.item, map);
         var msg = this.cmd.execute();
         assertEquals(TypeMessage.MAP_ADD_ERRO_FULL, msg);

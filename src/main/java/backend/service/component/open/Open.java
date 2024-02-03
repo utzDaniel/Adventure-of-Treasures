@@ -26,7 +26,7 @@ public final class Open {
         var npc = this.player.getCurrentMap().getNPC();
         Optional<TypeMessage> msg = Optional.empty();
         if (npc.isPresent())
-            msg = npc.get().isAction(this.player.getCurrentMap().getId(), door.getId(), this.player.getInventory().getItens());
+            msg = npc.get().isAction(door.getId(), this.player.getInventory().getItens());
         if (msg.isPresent() && msg.get() == TypeMessage.GAME_FINISH) return msg.get();
 
         if (!door.isOpen())

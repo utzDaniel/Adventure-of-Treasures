@@ -14,13 +14,13 @@ public final class NPC {
         this.entity = entity;
     }
 
-    public Optional<TypeMessage> isAction(int idMap, int idDoor, List<Item> itens) {
+    public Optional<TypeMessage> isAction(int idDoor, List<Item> itens) {
         Optional<TypeMessage> msg = this.entity.idItem() == 15 ? Optional.of(TypeMessage.GAME_FINISH) : Optional.empty();
-        return isValid(idMap, idDoor, itens) ? msg : Optional.empty();
+        return isValid(idDoor, itens) ? msg : Optional.empty();
     }
 
-    private boolean isValid(int idMap, int idDoor, List<Item> itens) {
-        return this.entity.idMap() == idMap && this.entity.idDoor() == idDoor && isRequerid(itens);
+    private boolean isValid(int idDoor, List<Item> itens) {
+        return this.entity.idDoor() == idDoor && isRequerid(itens);
     }
 
     private boolean isRequerid(List<Item> itens) {

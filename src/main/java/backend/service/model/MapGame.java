@@ -11,13 +11,13 @@ import java.util.Optional;
 public final class MapGame {
     private final IMapGameEntity entity;
     private String image;
-    private final Optional<NPC> npc;
+    private final NPC npc;
     private final Area area;
     private final Map<ICoordinate, Door> doors;
     private final Map<ICoordinate, Item> itens;
     private final List<Exit> exits;
 
-    public MapGame(IMapGameEntity entity, Map<ICoordinate, Door> doors, Map<ICoordinate, Item> itens, List<Exit> exits, Optional<NPC> npc) {
+    public MapGame(IMapGameEntity entity, Map<ICoordinate, Door> doors, Map<ICoordinate, Item> itens, List<Exit> exits, NPC npc) {
         this.entity = entity;
         this.image = entity.image();
         this.doors = doors;
@@ -110,7 +110,7 @@ public final class MapGame {
     }
 
     public Optional<NPC> getNPC() {
-        return this.npc;
+        return Optional.of(this.npc);
     }
 
     @Override
