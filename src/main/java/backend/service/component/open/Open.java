@@ -2,10 +2,11 @@ package backend.service.component.open;
 
 import backend.controller.enums.TypeMessage;
 import backend.service.infra.Cache;
-import backend.service.model.Player;
 import backend.service.model.MapGame;
+import backend.service.model.Player;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public final class Open {
 
@@ -16,36 +17,35 @@ public final class Open {
     }
 
     public TypeMessage run() {
-        if (isFinish()) return TypeMessage.GAME_FINISH;
 
         var door = player.getCurrentMap().getDoor(player.getCoordinate()).orElse(null);
 
         if (Objects.isNull(door))
             return TypeMessage.DOOR_NOT_EXIT;
+
+        var npc = this.player.getCurrentMap().getNPC();
+        Optional<TypeMessage> msg = Optional.empty();
+        if (npc.isPresent())
+            msg = npc.get().isAction(this.player.getCurrentMap().getId(), door.getId(), this.player.getInventory().getItens());
+        if (msg.isPresent() && msg.get() == TypeMessage.GAME_FINISH) return msg.get();
+
         if (!door.isOpen())
             return TypeMessage.DOOR_CLOSED;
 
         var mapGame = Cache.getMapGame(door.getIdMapGame());
-        if(mapGame.isEmpty()) return TypeMessage.DOOR_NOT_EXIT;
+        if (mapGame.isEmpty()) return TypeMessage.DOOR_NOT_EXIT;
 
         updatePositionPlayer(mapGame.get());
-        player.setCurrentMap(mapGame.get());
+        this.player.setCurrentMap(mapGame.get());
 
         return TypeMessage.DOOR_OPEN;
     }
 
-    // TODO colocar como event
-    private boolean isFinish() {
-        var coordinate = player.getCoordinate();
-        var item = player.getInventory().getItem(15);
-        return coordinate.x() == 71 && coordinate.y() == 28 && Objects.nonNull(item);
-    }
-
     private void updatePositionPlayer(MapGame mapGame) {
-        var idMapGame = player.getCurrentMap().getId();
+        var idMapGame = this.player.getCurrentMap().getId();
         var door = mapGame.getDoorByMap(idMapGame);
-        if(door.isEmpty()) return;
-        player.setCoordinate(door.get().getCoordinate());
+        if (door.isEmpty()) return;
+        this.player.setCoordinate(door.get().getCoordinate());
     }
 
 }

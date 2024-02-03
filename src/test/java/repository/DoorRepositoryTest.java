@@ -34,6 +34,7 @@ public class DoorRepositoryTest {
         this.doors.add(new DoorEntity(12, 10, 8, 15, 10, true));
         this.doors.add(new DoorEntity(13, 11, 6, 51, 37, true));
         this.doors.add(new DoorEntity(14, 12, 1, 32, 7, true));
+        this.doors.add(new DoorEntity(15, 12, 1, 28, 71, false));
 
         this.doorsFile = DoorRepository.getInstance().getAll();
     }

@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -36,7 +36,8 @@ public class AddItemMapGameCommandTest {
                 limits[i][i1] = Area.CODE_BLOCK;
             }
         }
-        var map = new MapGame(new MapGameEntity(0,null,null,null, limits), new HashMap<>(), new HashMap<>(), new ArrayList<>());
+        var map = new MapGame(new MapGameEntity(0, null, null, null, limits), new HashMap<>(),
+                new HashMap<>(), new ArrayList<>(), Optional.empty());
         this.cmd = new AddItemMapGameCommand(this.item, map);
         var msg = this.cmd.execute();
         assertEquals(TypeMessage.MAP_ADD_ERRO_FULL, msg);

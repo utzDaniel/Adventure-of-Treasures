@@ -11,17 +11,19 @@ import java.util.Optional;
 public final class MapGame {
     private final IMapGameEntity entity;
     private String image;
+    private final Optional<NPC> npc;
     private final Area area;
     private final Map<ICoordinate, Door> doors;
     private final Map<ICoordinate, Item> itens;
     private final List<Exit> exits;
 
-    public MapGame(IMapGameEntity entity, Map<ICoordinate, Door> doors, Map<ICoordinate, Item> itens, List<Exit> exits) {
+    public MapGame(IMapGameEntity entity, Map<ICoordinate, Door> doors, Map<ICoordinate, Item> itens, List<Exit> exits, Optional<NPC> npc) {
         this.entity = entity;
         this.image = entity.image();
         this.doors = doors;
         this.itens = itens;
         this.exits = exits;
+        this.npc = npc;
         this.area = new Area(entity.limits());
         itens.keySet().forEach(this.area::block);
     }
@@ -105,6 +107,10 @@ public final class MapGame {
 
     public int areaSize() {
         return this.entity.limits().length * this.entity.limits()[0].length;
+    }
+
+    public Optional<NPC> getNPC() {
+        return this.npc;
     }
 
     @Override

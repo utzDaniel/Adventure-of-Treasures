@@ -73,15 +73,17 @@ public class Keyboard {
                     var message = new MessageMapper().apply(actionRes);
                     var action = new ActionMapper().apply(actionRes);
 
-                    if ("finish".equalsIgnoreCase(action.song())) finish(action.song());
+                    if (Objects.isNull(message)) return;
 
-                    if (Objects.nonNull(message)) {
-                        var effect = message.effect();
-                        if (message.sucess())
-                            updateItensMapGame(action);
-                        else if (Objects.nonNull(effect))
-                            soundEffects.play(effect);
+                    var effect = message.effect();
+                    if (effect.contains("finish")) {
+                        finish(effect);
                     }
+                    if (message.sucess())
+                        updateItensMapGame(action);
+
+                    if (Objects.nonNull(effect))
+                        soundEffects.play(effect);
 
 
                     //PEGAR ITEM
@@ -121,7 +123,7 @@ public class Keyboard {
         action.components().forEach(info -> {
             if (info.name().equals(ComponentsProperties.PLAYER.name())) {
                 this.interfaceGame.getPlayerJLabel().setLocation(info.point());
-            }else if (info.name().equals(ComponentsProperties.MAPA.name())) {
+            } else if (info.name().equals(ComponentsProperties.MAPA.name())) {
                 this.interfaceGame.getMapGameJLabel().setIcon(new ImageIcon(info.image()));
             }
         });
@@ -129,7 +131,7 @@ public class Keyboard {
         var lisItem = action.components().stream()
                 .filter(v -> v.name().equals(ComponentsProperties.ITEM.name()))
                 .toList();
-        if(!lisItem.isEmpty()){
+        if (!lisItem.isEmpty()) {
             var index = 1;
             this.interfaceGame.setItensJLabel(lisItem, index);
         }

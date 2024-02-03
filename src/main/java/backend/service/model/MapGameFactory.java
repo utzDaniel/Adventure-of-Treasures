@@ -1,15 +1,13 @@
 package backend.service.model;
 
 import backend.repository.interfaces.IMapGameEntity;
-import backend.repository.singleton.DoorRepository;
-import backend.repository.singleton.ExitRepository;
-import backend.repository.singleton.ItemMapRepository;
-import backend.repository.singleton.ItemRepository;
+import backend.repository.singleton.*;
 import backend.service.interfaces.ICoordinate;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public final class MapGameFactory {
@@ -22,7 +20,8 @@ public final class MapGameFactory {
                 entity,
                 getDoors(entity),
                 getItens(entity),
-                getExits(entity));
+                getExits(entity),
+                getNPC(entity));
     }
 
     private static Map<ICoordinate, Item> getItens(IMapGameEntity mapGameEntity) {
@@ -48,6 +47,14 @@ public final class MapGameFactory {
                 .stream()
                 .map(DoorFactory::create)
                 .collect(Collectors.toMap(Door::getCoordinate, door1 -> door1));
+    }
+
+    private static Optional<NPC> getNPC(IMapGameEntity mapGameEntity) {
+        return NPCRepository.getInstance()
+                .getByIdMap(mapGameEntity.id())
+                .stream()
+                .map(NPC::new)
+                .findFirst();
     }
 
 }
