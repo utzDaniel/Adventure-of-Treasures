@@ -68,7 +68,7 @@ public class RemoveItemInventoryCommandTest {
         inventory.addItem(this.itens.get(10));
         this.cmd = new RemoveItemInventoryCommand(this.itens.get(10), inventory);
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.REMOVE_INVENTORY, msg);
+        assertEquals(TypeMessage.REMOVE_ITEM_INVENTORY, msg);
     }
 
     @Test
@@ -77,7 +77,7 @@ public class RemoveItemInventoryCommandTest {
         inventory.addItem(this.itens.get(1));
         this.cmd = new RemoveItemInventoryCommand(this.itens.get(1), inventory);
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.REMOVE_INVENTORY, msg);
+        assertEquals(TypeMessage.REMOVE_ITEM_INVENTORY, msg);
     }
 
     @Test
@@ -86,7 +86,7 @@ public class RemoveItemInventoryCommandTest {
         inventory.addItem(this.itens.get(5));
         this.cmd = new RemoveItemInventoryCommand(this.itens.get(5), inventory);
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.REMOVE_INVENTORY, msg);
+        assertEquals(TypeMessage.REMOVE_ITEM_INVENTORY, msg);
     }
 
 }

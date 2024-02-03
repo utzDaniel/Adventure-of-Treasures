@@ -24,7 +24,7 @@ public final class RemoveItemInventoryCommand implements ICommand {
         if (Objects.isNull(this.inventory.getItem(this.item.getId())))
             return TypeMessage.INVENTORY_ITEM_ERRO;
         this.inventory.removeItem(this.item);
-        return TypeMessage.REMOVE_INVENTORY;
+        return TypeMessage.REMOVE_ITEM_INVENTORY;
     }
 
     @Override

@@ -4,6 +4,7 @@ import backend.controller.interfaces.IActionService;
 import backend.controller.interfaces.IInventoryService;
 import backend.service.ActionService;
 import backend.service.InventoryService;
+import backend.service.enums.Move;
 import backend.service.infra.Cache;
 import backend.service.interfaces.ICoordinate;
 import backend.service.mapper.ActionResponseMapper;
@@ -51,7 +52,8 @@ public class Game {
         var mapGame = Cache.getMapGame(Integer.parseInt(map));
 
         try {
-            new Player(image, coordinate, mapGame.get(), inventory);
+            new Player(image, coordinate, mapGame.get(), inventory)
+                    .setMove(Move.SUL);
         } catch (Exception e) {
             e.getMessage();
         }

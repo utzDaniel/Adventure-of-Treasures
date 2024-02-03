@@ -19,7 +19,7 @@ public final class InventoryOpen {
 
         this.inventory.setOpenInventory();
 
-        return TypeMessage.INVENTORY_SUCESS_OPEN;
+        return TypeMessage.INVENTORY_OPEN;
     }
 
 }

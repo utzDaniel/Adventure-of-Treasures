@@ -45,9 +45,10 @@ public class AddItemMapGameCommandTest {
 
     @Test
     public void validAdd() {
+        this.map.removeItem(this.item);
         this.cmd = new AddItemMapGameCommand(this.item, this.map);
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.MAP_ADD, msg);
+        assertEquals(TypeMessage.ADD_ITEM_MAP, msg);
     }
 
     @Test

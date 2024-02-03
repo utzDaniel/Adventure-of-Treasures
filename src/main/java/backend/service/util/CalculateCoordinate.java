@@ -29,37 +29,36 @@ public final class CalculateCoordinate {
     }
 
     private static void updateDistance() {
-        if (CalculateCoordinate.direction == Direction.LESTE &&
-                limits.get(Direction.LESTE) == CalculateCoordinate.coordinate.y()) {
-            CalculateCoordinate.distance++;
+        if (direction == Direction.LESTE && limits.get(Direction.LESTE) == coordinate.y()) {
+            distance++;
             startingPoint();
         }
     }
 
     private static void reset(ICoordinate coordinate) {
-        CalculateCoordinate.distance = 1;
+        distance = 1;
         CalculateCoordinate.coordinate = coordinate;
         startingPoint();
     }
 
     private static void startingPoint() {
-        CalculateCoordinate.direction = Direction.NORTE;
-        CalculateCoordinate.limits.clear();
-        CalculateCoordinate.limits.put(Direction.NORTE, CalculateCoordinate.coordinate.x() - CalculateCoordinate.distance * Move.STEP);
-        CalculateCoordinate.limits.put(Direction.OESTE, CalculateCoordinate.coordinate.y() - CalculateCoordinate.distance * Move.STEP);
-        CalculateCoordinate.limits.put(Direction.SUL, CalculateCoordinate.coordinate.x() + CalculateCoordinate.distance * Move.STEP);
-        CalculateCoordinate.limits.put(Direction.LESTE, CalculateCoordinate.coordinate.y() + CalculateCoordinate.distance * Move.STEP);
-        CalculateCoordinate.coordinate.updateY(Move.STEP);
-        CalculateCoordinate.coordinate.updateX(Move.STEP);
+        direction = Direction.NORTE;
+        limits.clear();
+        limits.put(Direction.NORTE, coordinate.x() - distance * Move.STEP);
+        limits.put(Direction.OESTE, coordinate.y() - distance * Move.STEP);
+        limits.put(Direction.SUL, coordinate.x() + distance * Move.STEP);
+        limits.put(Direction.LESTE, coordinate.y() + distance * Move.STEP);
+        coordinate.updateY(Move.STEP);
+        coordinate.updateX(Move.STEP);
     }
 
     private static void updateDirection() {
-        var limit = CalculateCoordinate.limits.get(CalculateCoordinate.direction);
-        CalculateCoordinate.direction = switch (CalculateCoordinate.direction) {
-            case NORTE -> limit == CalculateCoordinate.coordinate.x() ? Direction.OESTE : CalculateCoordinate.direction;
-            case OESTE -> limit == CalculateCoordinate.coordinate.y() ? Direction.SUL : CalculateCoordinate.direction;
-            case SUL -> limit == CalculateCoordinate.coordinate.x() ? Direction.LESTE : CalculateCoordinate.direction;
-            case LESTE -> limit == CalculateCoordinate.coordinate.y() ? Direction.NORTE : CalculateCoordinate.direction;
+        var limit = limits.get(direction);
+        direction = switch (direction) {
+            case NORTE -> limit == coordinate.x() ? Direction.OESTE : direction;
+            case OESTE -> limit == coordinate.y() ? Direction.SUL : direction;
+            case SUL -> limit == coordinate.x() ? Direction.LESTE : direction;
+            case LESTE -> limit == coordinate.y() ? Direction.NORTE : direction;
         };
     }
 

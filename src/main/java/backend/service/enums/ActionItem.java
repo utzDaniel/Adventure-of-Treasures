@@ -1,25 +1,20 @@
 package backend.service.enums;
 
 public enum ActionItem {
-    COMBINE("COMBINAR", Commands.COMBINATION, Commands.EVENT_INVENTORY, Commands.EVENT_MAP),
-    USE("USAR", Commands.USE, Commands.EVENT_MAP, Commands.EVENT_INVENTORY, Commands.REMOVE_INVENTORY),
-    EQUIP("EQUIPAR", Commands.EQUIP, Commands.EVENT_MAP),
-    UNEQUIP("DESEQUIPAR", Commands.EQUIP, Commands.EVENT_MAP),
-    REMOVE("REMOVER", null);
+    COMBINE("COMBINAR"),
+    USE("USAR"),
+    EQUIP("EQUIPAR"),
+    UNEQUIP("DESEQUIPAR"),
+    REMOVE("REMOVER");
 
     private final String name;
-    private final Commands[] commands;
 
-    ActionItem(String name, Commands... commands) {
+    ActionItem(String name) {
         this.name = name;
-        this.commands = commands;
     }
 
     public String getName() {
         return this.name;
     }
 
-    public Commands[] getCommands() {
-        return this.commands;
-    }
 }

@@ -3,10 +3,10 @@ package backend.service;
 import backend.controller.enums.TypeMessage;
 import backend.controller.interfaces.IActionService;
 import backend.controller.interfaces.IServiceResponse;
+import backend.service.command.TakeItemCommand;
 import backend.service.component.inventory.quit.InventoryQuit;
 import backend.service.component.move.MovePlayer;
 import backend.service.component.open.Open;
-import backend.service.component.take.Take;
 import backend.service.dto.response.ServiceResponse;
 import backend.service.enums.Move;
 import backend.service.mapper.ActionResponseMapper;
@@ -14,7 +14,7 @@ import backend.service.model.Player;
 
 import java.util.Locale;
 
-public final class ActionService<T> implements IActionService {
+public final class ActionService implements IActionService {
 
     private static final Player PLAYER = Player.getInstance();
 
@@ -40,7 +40,7 @@ public final class ActionService<T> implements IActionService {
 
     @Override
     public IServiceResponse take() {
-        var typeMessage = new Take(PLAYER).run();
+        var typeMessage = new TakeItemCommand(PLAYER).execute();
 
         if (!typeMessage.isSucess())
             new ServiceResponse(typeMessage, null);

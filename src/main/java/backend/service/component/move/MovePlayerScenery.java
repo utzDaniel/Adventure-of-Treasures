@@ -19,7 +19,7 @@ public final class MovePlayerScenery {
         var newCoordate = newCoordinate();
         if (!validCoordinate(newCoordate))
             return TypeMessage.MOVE_BLOCKED;
-        return TypeMessage.MOVE_SUCESS;
+        return TypeMessage.MOVE;
     }
 
     private ICoordinate newCoordinate() {

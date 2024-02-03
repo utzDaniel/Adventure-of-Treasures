@@ -33,12 +33,12 @@ public final class AddItemMapGameCommand implements ICommand {
 
         this.item.setCoordinate(coordinate);
         this.mapGame.addItem(item);
-        return TypeMessage.MAP_ADD;
+        return TypeMessage.ADD_ITEM_MAP;
     }
 
     @Override
     public void undo() {
-        this.mapGame.removeItem(this.item);
+        new RemoveItemMapGameCommand(this.item, this.mapGame).execute();
         this.item.setCoordinate(this.oldCoordinate);
     }
 

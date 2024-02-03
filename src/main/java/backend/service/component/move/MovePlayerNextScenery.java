@@ -27,6 +27,6 @@ public final class MovePlayerNextScenery {
 
         this.player.setCurrentMap(nextScenery.get());
 
-        return TypeMessage.MOVE_SUCESS;
+        return TypeMessage.MOVE;
     }
 }

@@ -15,6 +15,6 @@ public final class InventoryQuit {
         var isOpen = this.inventory.openInventory();
         if (!isOpen) return TypeMessage.INVENTORY_NOT_CLOSED;
         this.inventory.setOpenInventory();
-        return TypeMessage.INVENTORY_SUCESS_CLOSED;
+        return TypeMessage.INVENTORY_CLOSED;
     }
 }

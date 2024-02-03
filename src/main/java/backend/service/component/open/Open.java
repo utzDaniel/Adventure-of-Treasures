@@ -16,7 +16,7 @@ public final class Open {
     }
 
     public TypeMessage run() {
-        if (isFinish()) return TypeMessage.GAME_SUCESS_FINISH;
+        if (isFinish()) return TypeMessage.GAME_FINISH;
 
         var door = player.getCurrentMap().getDoor(player.getCoordinate()).orElse(null);
 
@@ -31,7 +31,7 @@ public final class Open {
         updatePositionPlayer(mapGame.get());
         player.setCurrentMap(mapGame.get());
 
-        return TypeMessage.DOOR_SUCESS_OPEN;
+        return TypeMessage.DOOR_OPEN;
     }
 
     // TODO colocar como event

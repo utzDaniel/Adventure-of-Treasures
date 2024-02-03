@@ -18,10 +18,6 @@ public final class Area {
                 coordinate.x() < POSITION_X_MAXIMUM && coordinate.y() < POSITION_Y_MAXIMUM);
     }
 
-    public static int getTotalArea() {
-        return POSITION_X_MAXIMUM * POSITION_Y_MAXIMUM;
-    }
-
     public static int maxY() {
         return Area.POSITION_Y_MAXIMUM - STEP;
     }

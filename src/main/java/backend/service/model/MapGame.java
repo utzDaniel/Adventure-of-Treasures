@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public final class MapGame {
-    IMapGameEntity entity;
+    private final IMapGameEntity entity;
     private String image;
     private final Area area;
     private final Map<ICoordinate, Door> doors;

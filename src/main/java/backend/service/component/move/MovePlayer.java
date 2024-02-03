@@ -27,7 +27,7 @@ public final class MovePlayer {
             newCoordinate = this.move.coordinateByScenery(coordinate);
         }
 
-        if (TypeMessage.MOVE_SUCESS.equals(typeMessage))
+        if (TypeMessage.MOVE.equals(typeMessage))
             updateLocationPlayer(newCoordinate);
 
         updateImagePlayer();
