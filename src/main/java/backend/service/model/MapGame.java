@@ -16,7 +16,7 @@ public final class MapGame {
     private final Map<ICoordinate, Item> itens;
     private final List<Exit> exits;
 
-    MapGame(IMapGameEntity entity, Area area, Map<ICoordinate, Door> doors, Map<ICoordinate, Item> itens, List<Exit> exits) {
+    public MapGame(IMapGameEntity entity, Area area, Map<ICoordinate, Door> doors, Map<ICoordinate, Item> itens, List<Exit> exits) {
         this.entity = entity;
         this.image = entity.image();
         this.area = area;
@@ -98,6 +98,15 @@ public final class MapGame {
                 .filter(exit -> exit.direction().name().equals(move.name()))
                 .map(Exit::idMap)
                 .findFirst();
+    }
+
+    public boolean invalidCoordinate(ICoordinate coordinate) {
+        return Area.isLimit(coordinate) ||
+                !this.getArea().isAccessible(coordinate);
+    }
+
+    public int areaSize(){
+        return this.entity.limits().length * this.entity.limits()[0].length;
     }
 
     @Override

@@ -29,6 +29,6 @@ public final class MovePlayerScenery {
 
     private boolean validCoordinate(ICoordinate coordinate) {
         var area = this.player.getCurrentMap().getArea();
-        return area.isBlock(coordinate);
+        return area.isAccessible(coordinate);
     }
 }

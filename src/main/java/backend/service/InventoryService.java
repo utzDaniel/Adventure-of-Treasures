@@ -4,9 +4,9 @@ import backend.controller.enums.TypeMessage;
 import backend.controller.interfaces.IInventoryService;
 import backend.controller.interfaces.IServiceResponse;
 import backend.service.command.CombinationCommand;
+import backend.service.command.DropItemCommand;
 import backend.service.command.EquipableCommand;
 import backend.service.command.UsableCommand;
-import backend.service.component.drop.ServiceDropItem;
 import backend.service.component.inventory.open.InventoryOpen;
 import backend.service.dto.response.ServiceResponse;
 import backend.service.mapper.InventoryResponseMapper;
@@ -101,8 +101,10 @@ public final class InventoryService implements IInventoryService {
         var item = getItem(idItem);
         var typeMessage = TypeMessage.ITEM_ERRO_FOUND;
 
-        if (item.isPresent())
-            typeMessage = new ServiceDropItem(inventory).run(item.get());
+        if (item.isPresent()) {
+            var cmd = new DropItemCommand(item.get(), PLAYER);
+            typeMessage = cmd.execute();
+        }
 
         if (!typeMessage.isSucess())
             new ServiceResponse(typeMessage, null);

@@ -14,11 +14,12 @@ public final class CombinationCommand implements ICommand {
 
     private final List<Item> itens;
     private final CommandTool commands;
+    private final Inventory inventory;
 
     public CombinationCommand(List<Item> itens, Inventory inventory) {
         this.commands = new CommandTool();
         this.itens = itens;
-        this.itens.forEach(v -> this.commands.addCommand(new RemoveItemInventoryCommand(v, inventory)));
+        this.inventory = inventory;
     }
 
     @Override
@@ -41,6 +42,8 @@ public final class CombinationCommand implements ICommand {
 
         var isCombine = combinables.stream().allMatch(v -> v.getCombination() == combinables.get(0).getCombination());
         if (!isCombine) return TypeMessage.COMBINE_ERRO_COMBINABLE;
+
+        this.itens.forEach(v -> this.commands.addCommand(new RemoveItemInventoryCommand(v, inventory)));
 
         var type = this.commands.execute();
         if (!type.isSucess()) return type;

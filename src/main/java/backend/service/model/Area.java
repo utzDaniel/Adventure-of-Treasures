@@ -7,6 +7,7 @@ public final class Area {
     private static final int POSITION_MINIMUM = 0;
     private static final int POSITION_X_MAXIMUM = 56;
     private static final int POSITION_Y_MAXIMUM = 78;
+    //TODO novo code tento em vista que tem NPC
     public static final int CODE_PASS = 49;
     public static final int CODE_ITEM = 50;
 
@@ -41,7 +42,7 @@ public final class Area {
         this.limits = limits;
     }
 
-    public boolean isBlock(ICoordinate coordinate) {
+    public boolean isAccessible(ICoordinate coordinate) {
         return this.limits[coordinate.x()][coordinate.y()] == CODE_PASS;
     }
 

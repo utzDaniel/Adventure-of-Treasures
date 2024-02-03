@@ -1,4 +1,4 @@
-package backend.service.component.drop;
+package backend.service.util;
 
 import backend.service.enums.Direction;
 import backend.service.enums.Move;

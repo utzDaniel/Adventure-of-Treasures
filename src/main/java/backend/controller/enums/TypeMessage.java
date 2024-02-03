@@ -8,7 +8,9 @@ public enum TypeMessage {
     MOVE_SUCESS(true, "Direção e movimentação valida", ""),
     INVENTORY_SUCESS_CLOSED(true, "Inventário foi fechado!", ""),
     INVENTORY_SUCESS_OPEN(true, "Inventário foi aberto", ""),
-    REMOVE_INVENTORY(true, "Item removido do inventário", "remover"),
+    REMOVE_INVENTORY(true, "Item removido do inventário", ""),
+    MAP_ADD(true, "Item adicionado no map", ""),
+    DROP_ITEM(true, "Item removido do inventário e adicionado no map", "remover"),
     USABLE(true, "Item foi usado!", ""),
     USABLE_KEY(true, "A chave abriu a porta do templo, e removida do inventário", "chave"),
     USABLE_SHOVEL(true, "A pá foi usada e removida do inventário, você achou uma chave enterrada", "pa"),
@@ -50,7 +52,7 @@ public enum TypeMessage {
     USABLE_ERRO_MAP(false, "Esse item não pode ser usado nesse mapa", "erro"),
     USABLE_ERRO_COORDINATE(false, "Esse item não pode ser usado nesse local", "erro"),
     USABLE_ERRO_ENABLE(false, "Esse item não pode ser usado, pois está desabilitado", "erro"),
-    MAP_FULL_ITEM(false, "Map está cheio, não é possível remover o item", ""),
+    MAP_ADD_ERRO_FULL(false, "Map está cheio, não é possível remover o item", ""),
     DIRECTION_INVALID(false, "Direção inválida!", ""),
     COMMAND_ERRO(false, "Command inválido!", "");
 

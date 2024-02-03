@@ -1,6 +1,6 @@
 package service;
 
-import backend.service.component.drop.CalculateCoordinate;
+import backend.service.util.CalculateCoordinate;
 import backend.service.enums.Direction;
 import backend.service.enums.Move;
 import backend.service.interfaces.ICoordinate;
