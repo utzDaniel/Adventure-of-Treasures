@@ -16,13 +16,14 @@ public final class MapGame {
     private final Map<ICoordinate, Item> itens;
     private final List<Exit> exits;
 
-    public MapGame(IMapGameEntity entity, Area area, Map<ICoordinate, Door> doors, Map<ICoordinate, Item> itens, List<Exit> exits) {
+    public MapGame(IMapGameEntity entity, Map<ICoordinate, Door> doors, Map<ICoordinate, Item> itens, List<Exit> exits) {
         this.entity = entity;
         this.image = entity.image();
-        this.area = area;
         this.doors = doors;
         this.itens = itens;
         this.exits = exits;
+        this.area = new Area(entity.limits());
+        itens.keySet().forEach(this.area::block);
     }
 
     public int getId() {
@@ -61,13 +62,11 @@ public final class MapGame {
                 .findFirst();
     }
 
-
     public Optional<Door> getDoor(int idDoor) {
         return this.doors.values().stream()
                 .filter(v -> v.getId() == idDoor)
                 .findFirst();
     }
-
 
     public Item getItem(ICoordinate coordinate) {
         return this.itens.get(coordinate);
@@ -75,7 +74,6 @@ public final class MapGame {
 
     public void removeItem(Item item) {
         this.itens.remove(item.getCoordinate());
-        //TODO ao pegar um item em um local que não deveria ter como o player passar, está podendeo passar. EX: pegar o item papel, na mesa
         this.area.unlock(item.getCoordinate());
     }
 
@@ -105,7 +103,7 @@ public final class MapGame {
                 !this.getArea().isAccessible(coordinate);
     }
 
-    public int areaSize(){
+    public int areaSize() {
         return this.entity.limits().length * this.entity.limits()[0].length;
     }
 

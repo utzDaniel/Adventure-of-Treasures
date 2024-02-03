@@ -2,16 +2,19 @@ package backend.service.model;
 
 import backend.service.interfaces.ICoordinate;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public final class Area {
     private static final int STEP = 1;
     private static final int POSITION_MINIMUM = 0;
     private static final int POSITION_X_MAXIMUM = 56;
     private static final int POSITION_Y_MAXIMUM = 78;
-    //TODO novo code tento em vista que tem NPC
+    public static final int CODE_BLOCK = 48;
     public static final int CODE_PASS = 49;
-    public static final int CODE_ITEM = 50;
 
     private final byte[][] limits;
+    private final Set<ICoordinate> blocks;
 
     public static boolean isLimit(ICoordinate coordinate) {
         return !(Math.min(coordinate.x(), coordinate.y()) >= POSITION_MINIMUM &&
@@ -36,18 +39,19 @@ public final class Area {
 
     public Area(byte[][] limits) {
         this.limits = limits;
+        this.blocks = new HashSet<>();
     }
 
     public boolean isAccessible(ICoordinate coordinate) {
-        return this.limits[coordinate.x()][coordinate.y()] == CODE_PASS;
+        return this.limits[coordinate.x()][coordinate.y()] == CODE_PASS && !this.blocks.contains(coordinate);
     }
 
     public void unlock(ICoordinate coordinate) {
-        this.limits[coordinate.x()][coordinate.y()] = CODE_PASS;
+        this.blocks.remove(coordinate);
     }
 
     public void block(ICoordinate coordinate) {
-        this.limits[coordinate.x()][coordinate.y()] = CODE_ITEM;
+        this.blocks.add(coordinate);
     }
 
     @Override

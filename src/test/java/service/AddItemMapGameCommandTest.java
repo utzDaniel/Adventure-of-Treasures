@@ -2,6 +2,7 @@ package service;
 
 import backend.controller.enums.TypeMessage;
 import backend.repository.entity.ItemEntity;
+import backend.repository.entity.MapGameEntity;
 import backend.repository.singleton.MapGameRepository;
 import backend.service.command.AddItemMapGameCommand;
 import backend.service.model.*;
@@ -32,12 +33,10 @@ public class AddItemMapGameCommandTest {
         var limits = new byte[56][78];
         for (int i = 0; i < limits.length; i++) {
             for (int i1 = 0; i1 < limits[0].length; i1++) {
-                limits[i][i1] = Area.CODE_ITEM;
+                limits[i][i1] = Area.CODE_BLOCK;
             }
         }
-        var map = new MapGame(
-                Objects.requireNonNull(MapGameRepository.getInstance().getById(3).orElse(null)),
-                new Area(limits), new HashMap<>(), new HashMap<>(), new ArrayList<>());
+        var map = new MapGame(new MapGameEntity(0,null,null,null, limits), new HashMap<>(), new HashMap<>(), new ArrayList<>());
         this.cmd = new AddItemMapGameCommand(this.item, map);
         var msg = this.cmd.execute();
         assertEquals(TypeMessage.MAP_ADD_ERRO_FULL, msg);

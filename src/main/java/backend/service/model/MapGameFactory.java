@@ -18,10 +18,8 @@ public final class MapGameFactory {
     }
 
     public static MapGame create(IMapGameEntity entity) {
-        var itens = getItens(entity);
         return new MapGame(
                 entity,
-                getArea(entity, itens),
                 getDoors(entity),
                 getItens(entity),
                 getExits(entity));
@@ -50,12 +48,6 @@ public final class MapGameFactory {
                 .stream()
                 .map(DoorFactory::create)
                 .collect(Collectors.toMap(Door::getCoordinate, door1 -> door1));
-    }
-
-    private static Area getArea(IMapGameEntity entity, Map<ICoordinate, Item> itens) {
-        var area = new Area(entity.limits());
-        itens.keySet().forEach(area::block);
-        return area;
     }
 
 }
