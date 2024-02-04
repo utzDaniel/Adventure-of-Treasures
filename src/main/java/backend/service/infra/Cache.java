@@ -1,5 +1,6 @@
 package backend.service.infra;
 
+import backend.Game;
 import backend.repository.interfaces.IItemEntity;
 import backend.repository.interfaces.IMapGameEntity;
 import backend.repository.singleton.ItemRepository;
@@ -68,7 +69,7 @@ public final class Cache {
     }
 
     public static Inventory getInventory() {
-        return Player.getInstance().getInventory();
+        return Game.player.getInventory();
     }
 
     private static Optional<IItemEntity> getItemEntity(int idItem) {

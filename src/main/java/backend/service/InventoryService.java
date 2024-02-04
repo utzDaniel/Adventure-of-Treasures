@@ -1,5 +1,6 @@
 package backend.service;
 
+import backend.Game;
 import backend.controller.enums.TypeMessage;
 import backend.controller.interfaces.IInventoryService;
 import backend.controller.interfaces.IServiceResponse;
@@ -11,7 +12,6 @@ import backend.service.component.inventory.open.InventoryOpen;
 import backend.service.dto.response.ServiceResponse;
 import backend.service.mapper.InventoryResponseMapper;
 import backend.service.model.Item;
-import backend.service.model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +26,10 @@ public final class InventoryService implements IInventoryService {
      * O service também pode realizar validações adicionais,
      * orquestrar várias operações do repository e aplicar regras de negócio mais complexas.
      */
-    private static final Player PLAYER = Player.getInstance();
 
     @Override
     public IServiceResponse combination(List<Integer> idItens) {
-        var inventory = PLAYER.getInventory();
+        var inventory = Game.player.getInventory();
 
         var itens = new ArrayList<Item>();
         idItens.forEach(id -> itens.add(getItem(id).orElse(null)));
@@ -54,9 +53,9 @@ public final class InventoryService implements IInventoryService {
 
     @Override
     public IServiceResponse use(Integer idItem) {
-        var inventory = PLAYER.getInventory();
-        var idMap = PLAYER.getCurrentMap().getId();
-        var coordinate = PLAYER.getCoordinate();
+        var inventory = Game.player.getInventory();
+        var idMap = Game.player.getCurrentMap().getId();
+        var coordinate = Game.player.getCoordinate();
 
         var item = getItem(idItem);
         var typeMessage = TypeMessage.ITEM_ERRO_FOUND;
@@ -76,7 +75,7 @@ public final class InventoryService implements IInventoryService {
 
     @Override
     public IServiceResponse equip(Integer idItem) {
-        var inventory = PLAYER.getInventory();
+        var inventory = Game.player.getInventory();
 
         var item = getItem(idItem);
         var typeMessage = TypeMessage.ITEM_ERRO_FOUND;
@@ -96,13 +95,13 @@ public final class InventoryService implements IInventoryService {
 
     @Override
     public IServiceResponse drop(Integer idItem) {
-        var inventory = PLAYER.getInventory();
+        var inventory = Game.player.getInventory();
 
         var item = getItem(idItem);
         var typeMessage = TypeMessage.ITEM_ERRO_FOUND;
 
         if (item.isPresent()) {
-            var cmd = new DropItemCommand(item.get(), PLAYER);
+            var cmd = new DropItemCommand(item.get(), Game.player);
             typeMessage = cmd.execute();
         }
 
@@ -115,7 +114,7 @@ public final class InventoryService implements IInventoryService {
 
     @Override
     public IServiceResponse open() {
-        var inventory = PLAYER.getInventory();
+        var inventory = Game.player.getInventory();
         var typeMessage = new InventoryOpen(inventory).run();
 
         if (!typeMessage.isSucess())
@@ -126,7 +125,7 @@ public final class InventoryService implements IInventoryService {
     }
 
     private Optional<Item> getItem(Integer idItem) {
-        return PLAYER.getInventory().getItens().stream()
+        return Game.player.getInventory().getItens().stream()
                 .filter(item1 -> item1.getId() == idItem)
                 .findFirst();
     }

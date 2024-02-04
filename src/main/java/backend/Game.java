@@ -19,14 +19,10 @@ import java.util.Properties;
 
 public class Game {
 
-    private final Properties properties;
-    private final Player player;
+    private static final Properties properties = getProp();
+    public static final Player player = createPlayer();
 
-    public Game(Properties properties) {
-        this.properties = properties;
-        createPlayer();
-        this.player = Player.getInstance();
-
+    public Game() {
         var action = new ActionResponseMapper().apply(player);
         InterfaceGame interfaceGame = new InterfaceGame(action);
 
@@ -37,31 +33,30 @@ public class Game {
         keyboard.run();
     }
 
-    private void createPlayer() {
+    private static Player createPlayer() {
 
-        var capacity = Integer.parseInt(this.properties.getProperty("backend.inventory.capacity"));
-        var maxCapacity = Integer.parseInt(this.properties.getProperty("backend.inventory.maxCapacity"));
+        var capacity = Integer.parseInt(properties.getProperty("backend.inventory.capacity"));
+        var maxCapacity = Integer.parseInt(properties.getProperty("backend.inventory.maxCapacity"));
         var inventory = new Inventory(capacity, maxCapacity);
 
-        var path = this.properties.getProperty("backend.player.path");
-        int x = Integer.parseInt(this.properties.getProperty("backend.player.position.x"));
-        int y = Integer.parseInt(this.properties.getProperty("backend.player.position.y"));
+        var path = properties.getProperty("backend.player.path");
+        int x = Integer.parseInt(properties.getProperty("backend.player.position.x"));
+        int y = Integer.parseInt(properties.getProperty("backend.player.position.y"));
         var coordinate = ICoordinate.getInstance(x, y);
         var move = new Move(path, coordinate);
 
-        var map = this.properties.getProperty("backend.player.map");
+        var map = properties.getProperty("backend.player.map");
         var mapGame = Cache.getMapGame(Integer.parseInt(map));
 
         try {
-            new Player(move, mapGame.orElse(null), inventory);
+            return new Player(move, mapGame.orElse(null), inventory);
         } catch (Exception e) {
-            e.getMessage();
+            return null;
         }
-
     }
 
     public static void main(String[] args) {
-        new Game(getProp());
+        new Game();
     }
 
     public static Properties getProp() {
