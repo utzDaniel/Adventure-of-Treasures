@@ -3,9 +3,10 @@ package backend.service.enums;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.Area;
 
-public enum Move {
+public enum MoveCommand2 {
 
-    OESTE(ImagePlayer.ESQUERDA) {
+    // TODO refatorando com um command
+    OESTE {
         @Override
         public boolean isNextScenery(ICoordinate coordinate) {
             return coordinate.y() <= Area.minY();
@@ -14,7 +15,7 @@ public enum Move {
         @Override
         public ICoordinate coordinateByScenery(ICoordinate coordinate) {
             var x = coordinate.x();
-            var y = coordinate.y() - Move.STEP;
+            var y = coordinate.y() - Movement.STEP;
             return ICoordinate.getInstance(x, y);
         }
 
@@ -25,7 +26,7 @@ public enum Move {
             return ICoordinate.getInstance(x, y);
         }
     },
-    NORTE(ImagePlayer.CIMA) {
+    NORTE {
         @Override
         public boolean isNextScenery(ICoordinate coordinate) {
             return coordinate.x() <= Area.minX();
@@ -33,7 +34,7 @@ public enum Move {
 
         @Override
         public ICoordinate coordinateByScenery(ICoordinate coordinate) {
-            var x = coordinate.x() - Move.STEP;
+            var x = coordinate.x() - Movement.STEP;
             var y = coordinate.y();
             return ICoordinate.getInstance(x, y);
         }
@@ -45,7 +46,7 @@ public enum Move {
             return ICoordinate.getInstance(x, y);
         }
     },
-    LESTE(ImagePlayer.DIREITA) {
+    LESTE {
         @Override
         public boolean isNextScenery(ICoordinate coordinate) {
             return coordinate.y() >= Area.maxY();
@@ -54,7 +55,7 @@ public enum Move {
         @Override
         public ICoordinate coordinateByScenery(ICoordinate coordinate) {
             var x = coordinate.x();
-            var y = coordinate.y() + Move.STEP;
+            var y = coordinate.y() + Movement.STEP;
             return ICoordinate.getInstance(x, y);
         }
 
@@ -65,7 +66,7 @@ public enum Move {
             return ICoordinate.getInstance(x, y);
         }
     },
-    SUL(ImagePlayer.BAIXO) {
+    SUL {
         @Override
         public boolean isNextScenery(ICoordinate coordinate) {
             return coordinate.x() >= Area.maxX();
@@ -73,7 +74,7 @@ public enum Move {
 
         @Override
         public ICoordinate coordinateByScenery(ICoordinate coordinate) {
-            var x = coordinate.x() + Move.STEP;
+            var x = coordinate.x() + Movement.STEP;
             var y = coordinate.y();
             return ICoordinate.getInstance(x, y);
         }
@@ -86,25 +87,11 @@ public enum Move {
         }
     };
 
-    public static final int STEP = 1;
-    private final ImagePlayer imagePlayer;
-
-    Move(ImagePlayer imagePlayer) {
-        this.imagePlayer = imagePlayer;
-    }
 
     public abstract boolean isNextScenery(ICoordinate coordinate);
 
     public abstract ICoordinate coordinateByScenery(ICoordinate coordinate);
 
     public abstract ICoordinate coordinateByNextScenery(ICoordinate coordinate);
-
-    public String getImage() {
-        return this.imagePlayer.select();
-    }
-
-    public void run() {
-        this.imagePlayer.run();
-    }
 
 }

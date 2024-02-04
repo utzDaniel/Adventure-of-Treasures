@@ -1,16 +1,19 @@
 package backend.service.component.move;
 
 import backend.controller.enums.TypeMessage;
-import backend.service.enums.Move;
+import backend.service.enums.Direction;
+import backend.service.enums.MoveCommand2;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.Player;
 
+import java.util.Locale;
+
 public final class MovePlayer {
     private final Player player;
-    private final Move move;
+    private final Direction direction;
 
-    public MovePlayer(Move move, Player player) {
-        this.move = move;
+    public MovePlayer(Direction direction, Player player) {
+        this.direction = direction;
         this.player = player;
     }
 
@@ -19,32 +22,22 @@ public final class MovePlayer {
         TypeMessage typeMessage;
         ICoordinate newCoordinate;
 
-        if (this.move.isNextScenery(coordinate)) {
-            typeMessage = new MovePlayerNextScenery(this.player, this.move).run();
-            newCoordinate = this.move.coordinateByNextScenery(coordinate);
+        MoveCommand2 move = Enum.valueOf(MoveCommand2.class, this.direction.name().toUpperCase(Locale.ROOT));
+
+        if (move.isNextScenery(coordinate)) {
+            typeMessage = new MovePlayerNextScenery(this.player, move).run();
+            newCoordinate = move.coordinateByNextScenery(coordinate);
         } else {
-            typeMessage = new MovePlayerScenery(this.player, this.move).run();
-            newCoordinate = this.move.coordinateByScenery(coordinate);
+            typeMessage = new MovePlayerScenery(this.player, move).run();
+            newCoordinate = move.coordinateByScenery(coordinate);
         }
 
-        if (TypeMessage.MOVE.equals(typeMessage))
-            updateLocationPlayer(newCoordinate);
+        if (TypeMessage.MOVE.equals(typeMessage)) {
+            this.player.updateMove(this.direction, newCoordinate);
+        }
 
-        updateImagePlayer();
-        updateMovePlayer();
+        this.player.updateMove(this.direction, this.player.getCoordinate());
         return typeMessage;
     }
 
-    private void updateImagePlayer() {
-        this.move.run();
-        this.player.setImage(this.move.getImage());
-    }
-
-    private void updateMovePlayer() {
-        this.player.setMove(move);
-    }
-
-    private void updateLocationPlayer(ICoordinate coordinate) {
-        this.player.setCoordinate(coordinate);
-    }
 }

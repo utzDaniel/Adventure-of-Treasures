@@ -1,10 +1,8 @@
 package backend.service.command;
 
 import backend.controller.enums.TypeMessage;
-import backend.service.enums.Direction;
 import backend.service.interfaces.ICommand;
 import backend.service.model.Player;
-import backend.service.util.CalculateCoordinate;
 
 import java.util.Objects;
 
@@ -21,8 +19,8 @@ public final class TakeItemCommand implements ICommand {
     @Override
     public TypeMessage execute() {
 
-        var direction = Direction.getInstance(this.player.getMove().name());
-        var coordinate = CalculateCoordinate.next(this.player.getCoordinate(), direction);
+        var coordinate = this.player.getCoordinate();
+        coordinate.move(this.player.getDirection().getMove());
 
         var mapGame = this.player.getCurrentMap();
         var item = mapGame.getItem(coordinate);

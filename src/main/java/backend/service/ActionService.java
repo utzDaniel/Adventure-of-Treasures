@@ -8,11 +8,11 @@ import backend.service.component.inventory.quit.InventoryQuit;
 import backend.service.component.move.MovePlayer;
 import backend.service.component.open.Open;
 import backend.service.dto.response.ServiceResponse;
-import backend.service.enums.Move;
+import backend.service.enums.Direction;
 import backend.service.mapper.ActionResponseMapper;
 import backend.service.model.Player;
 
-import java.util.Locale;
+import java.util.Objects;
 
 public final class ActionService implements IActionService {
 
@@ -62,13 +62,11 @@ public final class ActionService implements IActionService {
 
     @Override
     public IServiceResponse move(String direction) {
-        Move move;
-        try {
-            move = Enum.valueOf(Move.class, direction.toUpperCase(Locale.ROOT));
-        } catch (Exception e) {
-            return new ServiceResponse(TypeMessage.DIRECTION_INVALID, null);
-        }
-        var typeMessage = new MovePlayer(move, PLAYER).run();
+        var direction1 = Direction.getInstance(direction);
+
+        if (Objects.isNull(direction1)) return new ServiceResponse(TypeMessage.DIRECTION_INVALID, null);
+
+        var typeMessage = new MovePlayer(direction1, PLAYER).run();
 
         if (!typeMessage.isSucess())
             new ServiceResponse(typeMessage, null);

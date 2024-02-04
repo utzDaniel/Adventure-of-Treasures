@@ -4,11 +4,11 @@ import backend.controller.interfaces.IActionService;
 import backend.controller.interfaces.IInventoryService;
 import backend.service.ActionService;
 import backend.service.InventoryService;
-import backend.service.enums.Move;
 import backend.service.infra.Cache;
 import backend.service.interfaces.ICoordinate;
 import backend.service.mapper.ActionResponseMapper;
 import backend.service.model.Inventory;
+import backend.service.model.Move;
 import backend.service.model.Player;
 import frontend.event.Keyboard;
 import frontend.service.InterfaceGame;
@@ -43,17 +43,17 @@ public class Game {
         var maxCapacity = Integer.parseInt(this.properties.getProperty("backend.inventory.maxCapacity"));
         var inventory = new Inventory(capacity, maxCapacity);
 
-        var image = this.properties.getProperty("backend.player.image");
+        var path = this.properties.getProperty("backend.player.path");
         int x = Integer.parseInt(this.properties.getProperty("backend.player.position.x"));
         int y = Integer.parseInt(this.properties.getProperty("backend.player.position.y"));
         var coordinate = ICoordinate.getInstance(x, y);
+        var move = new Move(path, coordinate);
 
         var map = this.properties.getProperty("backend.player.map");
         var mapGame = Cache.getMapGame(Integer.parseInt(map));
 
         try {
-            new Player(image, coordinate, mapGame.get(), inventory)
-                    .setMove(Move.SUL);
+            new Player(move, mapGame.orElse(null), inventory);
         } catch (Exception e) {
             e.getMessage();
         }

@@ -1,7 +1,7 @@
 package backend.service.model;
 
 import backend.repository.interfaces.IMapGameEntity;
-import backend.service.enums.Move;
+import backend.service.enums.MoveCommand2;
 import backend.service.interfaces.ICoordinate;
 
 import java.util.List;
@@ -93,7 +93,7 @@ public final class MapGame {
     }
 
 
-    public Optional<Integer> getExit(Move move) {
+    public Optional<Integer> getExit(MoveCommand2 move) {
         return this.exits.stream()
                 .filter(exit -> exit.direction().name().equals(move.name()))
                 .map(Exit::idMap)

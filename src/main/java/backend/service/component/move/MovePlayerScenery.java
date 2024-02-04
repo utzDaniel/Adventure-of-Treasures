@@ -1,16 +1,16 @@
 package backend.service.component.move;
 
 import backend.controller.enums.TypeMessage;
-import backend.service.enums.Move;
+import backend.service.enums.MoveCommand2;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.Player;
 
 public final class MovePlayerScenery {
 
     private final Player player;
-    private final Move move;
+    private final MoveCommand2 move;
 
-    public MovePlayerScenery(Player player, Move move) {
+    public MovePlayerScenery(Player player, MoveCommand2 move) {
         this.move = move;
         this.player = player;
     }

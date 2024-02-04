@@ -1,14 +1,11 @@
 package frontend.model.component;
 
 import backend.controller.interfaces.IComponentInfo;
-import backend.service.enums.Move;
 import frontend.enums.ComponentsProperties;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
 
 final class GameJLabelFactory {
 

@@ -35,17 +35,17 @@ public final class Open {
         var mapGame = Cache.getMapGame(door.getIdMapGame());
         if (mapGame.isEmpty()) return TypeMessage.DOOR_NOT_EXIT;
 
-        updatePositionPlayer(mapGame.get());
+        updateMove(mapGame.get());
         this.player.setCurrentMap(mapGame.get());
 
         return TypeMessage.DOOR_OPEN;
     }
 
-    private void updatePositionPlayer(MapGame mapGame) {
+    private void updateMove(MapGame mapGame) {
         var idMapGame = this.player.getCurrentMap().getId();
         var door = mapGame.getDoorByMap(idMapGame);
         if (door.isEmpty()) return;
-        this.player.setCoordinate(door.get().getCoordinate());
+        this.player.updateMove(this.player.getDirection(), door.get().getCoordinate());
     }
 
 }

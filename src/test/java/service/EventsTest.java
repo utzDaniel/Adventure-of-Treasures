@@ -29,7 +29,7 @@ public class EventsTest {
         this.itens = new HashMap<>();
         this.doors = new HashMap<>();
         try {
-            new Player(null, null, null, new Inventory(0, 10));
+            new Player(null, null, new Inventory(0, 10));
         } catch (Exception e) {
             System.out.println();
         }
