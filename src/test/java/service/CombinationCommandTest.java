@@ -55,7 +55,7 @@ public class CombinationCommandTest {
         list.add(this.itens.get(10));
         this.cmd = new CombinationCommand(list, createInventory(list));
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.ITEM_NOT_COMBINABLE, msg);
+        assertEquals(TypeMessage.ITEM_ERRO_COMBINABLE, msg);
     }
 
     @Test

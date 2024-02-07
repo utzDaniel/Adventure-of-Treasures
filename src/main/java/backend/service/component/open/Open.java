@@ -21,7 +21,7 @@ public final class Open {
         var door = player.getCurrentMap().getDoor(player.getCoordinate()).orElse(null);
 
         if (Objects.isNull(door))
-            return TypeMessage.DOOR_NOT_EXIT;
+            return TypeMessage.DOOR_ERRO_EXIT;
 
         var npc = this.player.getCurrentMap().getNPC();
         Optional<TypeMessage> msg = Optional.empty();
@@ -30,10 +30,10 @@ public final class Open {
         if (msg.isPresent() && msg.get() == TypeMessage.GAME_FINISH) return msg.get();
 
         if (!door.isOpen())
-            return TypeMessage.DOOR_CLOSED;
+            return TypeMessage.DOOR_ERRO_CLOSED;
 
         var mapGame = Cache.getMapGame(door.getIdMapGame());
-        if (mapGame.isEmpty()) return TypeMessage.DOOR_NOT_EXIT;
+        if (mapGame.isEmpty()) return TypeMessage.DOOR_ERRO_EXIT;
 
         updateMove(mapGame.get());
         this.player.setCurrentMap(mapGame.get());

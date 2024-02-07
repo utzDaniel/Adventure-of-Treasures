@@ -4,9 +4,9 @@ import backend.Game;
 import backend.controller.enums.TypeMessage;
 import backend.controller.interfaces.IActionService;
 import backend.controller.interfaces.IServiceResponse;
+import backend.service.command.MoveCommand;
 import backend.service.command.TakeItemCommand;
 import backend.service.component.inventory.quit.InventoryQuit;
-import backend.service.component.move.MovePlayer;
 import backend.service.component.open.Open;
 import backend.service.dto.response.ServiceResponse;
 import backend.service.enums.Direction;
@@ -62,9 +62,10 @@ public final class ActionService implements IActionService {
     public IServiceResponse move(String direction) {
         var direction1 = Direction.getInstance(direction);
 
-        if (Objects.isNull(direction1)) return new ServiceResponse(TypeMessage.DIRECTION_INVALID, null);
+        if (Objects.isNull(direction1)) return new ServiceResponse(TypeMessage.DIRECTION_ERRO_INVALID, null);
 
-        var typeMessage = new MovePlayer(direction1, Game.player).run();
+        var cmd = new MoveCommand(Game.player, direction1);
+        var typeMessage = cmd.execute();
 
         if (!typeMessage.isSucess())
             new ServiceResponse(typeMessage, null);

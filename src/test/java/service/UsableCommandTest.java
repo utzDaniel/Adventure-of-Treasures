@@ -41,7 +41,7 @@ public class UsableCommandTest {
         var coordinate = ICoordinate.getInstance(0, 0);
         this.cmd = new UsableCommand(this.itens.get(5), idMap, coordinate, new Inventory(0, 10));
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.ITEM_NOT_USABLE, msg);
+        assertEquals(TypeMessage.ITEM_ERRO_USABLE, msg);
     }
 
     @Test

@@ -20,7 +20,7 @@ public final class EquipableCommand implements ICommand {
     @Override
     public TypeMessage execute() {
         var spec = this.item.getSpecialization(TypeItem.EQUIPABLE);
-        if (spec.isEmpty()) return TypeMessage.ITEM_NOT_EQUIPABLE;
+        if (spec.isEmpty()) return TypeMessage.ITEM_ERRO_EQUIPABLE;
         var equipable = (IEquipable) spec.get();
 
         if (equipable.isEquip()) {

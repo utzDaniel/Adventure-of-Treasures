@@ -30,7 +30,7 @@ public final class CombinationCommand implements ICommand {
             spec.ifPresent(s -> combinables.add(((ICombinable) s)));
         });
 
-        if (combinables.isEmpty()) return TypeMessage.ITEM_NOT_COMBINABLE;
+        if (combinables.isEmpty()) return TypeMessage.ITEM_ERRO_COMBINABLE;
 
         if (this.itens.size() != combinables.size()) return TypeMessage.COMBINE_ERRO_ALL;
 

@@ -13,7 +13,7 @@ public final class InventoryQuit {
 
     public TypeMessage run() {
         var isOpen = this.inventory.openInventory();
-        if (!isOpen) return TypeMessage.INVENTORY_NOT_CLOSED;
+        if (!isOpen) return TypeMessage.INVENTORY_ERRO_CLOSED;
         this.inventory.setOpenInventory();
         return TypeMessage.INVENTORY_CLOSED;
     }

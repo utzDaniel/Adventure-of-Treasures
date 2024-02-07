@@ -1,7 +1,7 @@
 package backend.service.model;
 
 import backend.repository.interfaces.IMapGameEntity;
-import backend.service.enums.MoveCommand2;
+import backend.service.enums.Direction;
 import backend.service.interfaces.ICoordinate;
 
 import java.util.List;
@@ -93,16 +93,23 @@ public final class MapGame {
     }
 
 
-    public Optional<Integer> getExit(MoveCommand2 move) {
+    public Optional<Integer> getExit(Direction direction) {
         return this.exits.stream()
-                .filter(exit -> exit.direction().name().equals(move.name()))
+                .filter(exit -> exit.direction().equals(direction))
                 .map(Exit::idMap)
                 .findFirst();
     }
 
+    public boolean isNextScenery(ICoordinate coordinate) {
+        return this.area.outside(coordinate);
+    }
+
+    public ICoordinate nextScenery(ICoordinate coordinate) {
+        return this.area.next(coordinate);
+    }
+
     public boolean invalidCoordinate(ICoordinate coordinate) {
-        return Area.isLimit(coordinate) ||
-                !this.getArea().isAccessible(coordinate);
+        return this.area.outside(coordinate) || this.getArea().blocked(coordinate);
     }
 
     public int areaSize() {

@@ -37,7 +37,7 @@ public class EquipCommandTest {
         inventory.addItem(this.itens.get(5));
         this.cmd = new EquipableCommand(this.itens.get(5), inventory);
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.ITEM_NOT_EQUIPABLE, msg);
+        assertEquals(TypeMessage.ITEM_ERRO_EQUIPABLE, msg);
     }
 
     @Test

@@ -27,7 +27,7 @@ public final class UsableCommand implements ICommand {
     @Override
     public TypeMessage execute() {
         var spec = this.item.getSpecialization(TypeItem.USABLE);
-        if (spec.isEmpty()) return TypeMessage.ITEM_NOT_USABLE;
+        if (spec.isEmpty()) return TypeMessage.ITEM_ERRO_USABLE;
         var usable = (IUsable) spec.get();
 
         if (usable.getIdMap() != this.idMap) return TypeMessage.USABLE_ERRO_MAP;
