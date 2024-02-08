@@ -114,4 +114,15 @@ public class UsableCommandTest {
         assertEquals(TypeMessage.USABLE_SHOVEL, msg);
     }
 
+    @Test
+    public void validUndo() {
+        var idMap = 6;
+        var coordinate = ICoordinate.getInstance(15, 37);
+        var inventory = new Inventory(0, 10);
+        inventory.addItem(this.itens.get(1));
+        this.cmd = new UsableCommand(this.itens.get(1), idMap, coordinate, inventory);
+        this.cmd.execute();
+        this.cmd.undo();
+        assertEquals(this.itens.get(1), inventory.getItem(1));
+    }
 }

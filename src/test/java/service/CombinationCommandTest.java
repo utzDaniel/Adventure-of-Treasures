@@ -121,7 +121,6 @@ public class CombinationCommandTest {
         assertEquals(TypeMessage.COMBINE_LADDER, msg);
     }
 
-
     @Test
     public void validTocha() {
         var list = new ArrayList<Item>();
@@ -132,5 +131,18 @@ public class CombinationCommandTest {
         this.cmd = new CombinationCommand(list, createInventory(list));
         var msg = this.cmd.execute();
         assertEquals(TypeMessage.COMBINE_TORCH, msg);
+    }
+
+    @Test
+    public void validUndo() {
+        var list = new ArrayList<Item>();
+        list.add(this.itens.get(5));
+        list.add(this.itens.get(12));
+        var inventario = createInventory(list);
+        this.cmd = new CombinationCommand(list, inventario);
+        this.cmd.execute();
+        this.cmd.undo();
+        assertEquals(this.itens.get(5), inventario.getItem(5));
+        assertEquals(this.itens.get(12), inventario.getItem(12));
     }
 }

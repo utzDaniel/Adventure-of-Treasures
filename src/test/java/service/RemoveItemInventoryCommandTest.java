@@ -89,4 +89,14 @@ public class RemoveItemInventoryCommandTest {
         assertEquals(TypeMessage.REMOVE_ITEM_INVENTORY, msg);
     }
 
+    @Test
+    public void validUndo() {
+        var inventory = new Inventory(0, 10);
+        inventory.addItem(this.itens.get(10));
+        this.cmd = new RemoveItemInventoryCommand(this.itens.get(10), inventory);
+        this.cmd.execute();
+        this.cmd.undo();
+        assertEquals(this.itens.get(10), inventory.getItem(10));
+    }
+
 }

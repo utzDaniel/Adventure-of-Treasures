@@ -43,13 +43,13 @@ public class Game {
         int x = Integer.parseInt(properties.getProperty("backend.player.position.x"));
         int y = Integer.parseInt(properties.getProperty("backend.player.position.y"));
         var coordinate = ICoordinate.getInstance(x, y);
-        var move = new Move(path, coordinate);
 
         var map = properties.getProperty("backend.player.map");
         var mapGame = Cache.getMapGame(Integer.parseInt(map));
+        var move = new Move(path, coordinate, mapGame.orElse(null));
 
         try {
-            return new Player(move, mapGame.orElse(null), inventory);
+            return new Player(move, inventory);
         } catch (Exception e) {
             return null;
         }

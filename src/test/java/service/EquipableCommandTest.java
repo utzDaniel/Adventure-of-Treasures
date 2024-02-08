@@ -15,7 +15,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-public class EquipCommandTest {
+public class EquipableCommandTest {
 
     private EquipableCommand cmd;
     private Map<Integer, Item> itens;
@@ -88,6 +88,27 @@ public class EquipCommandTest {
         this.cmd.execute();
         var msg = this.cmd.execute();
         assertEquals(TypeMessage.UNEQUIP_TORCH, msg);
+    }
+
+    @Test
+    public void validUndo1() {
+        var inventory = new Inventory(0, 10);
+        inventory.addItem(this.itens.get(10));
+        this.cmd = new EquipableCommand(this.itens.get(10), inventory);
+        this.cmd.execute();
+        this.cmd.undo();
+        assertEquals(10, inventory.getMaxCapacity());
+    }
+
+    @Test
+    public void validUndo2() {
+        var inventory = new Inventory(0, 10);
+        inventory.addItem(this.itens.get(10));
+        this.cmd = new EquipableCommand(this.itens.get(10), inventory);
+        this.cmd.execute();
+        this.cmd.execute();
+        this.cmd.undo();
+        assertEquals(15, inventory.getMaxCapacity());
     }
 
 }

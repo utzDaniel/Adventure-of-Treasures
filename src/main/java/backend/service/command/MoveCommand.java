@@ -5,56 +5,55 @@ import backend.service.enums.Direction;
 import backend.service.infra.Cache;
 import backend.service.interfaces.ICommand;
 import backend.service.interfaces.ICoordinate;
+import backend.service.interfaces.IMove;
 import backend.service.model.MapGame;
-import backend.service.model.Player;
 
 public final class MoveCommand implements ICommand {
 
-    private final Player player;
+    private final IMove person;
     private final Direction direction;
     private final ICoordinate oldCoordinate;
     private final Direction oldDirection;
     private final MapGame oldScenery;
 
-    public MoveCommand(Player player, Direction direction) {
-        this.player = player;
+    public MoveCommand(IMove person, Direction direction) {
+        this.person = person;
         this.direction = direction;
-        this.oldCoordinate = ICoordinate.getInstance(player.getCoordinate());
-        this.oldDirection = player.getDirection();
-        this.oldScenery = player.getCurrentMap();
+        this.oldCoordinate = ICoordinate.getInstance(person.getCoordinate());
+        this.oldDirection = person.getDirection();
+        this.oldScenery = person.getCurrentMap();
     }
 
     @Override
     public TypeMessage execute() {
-        var coordinate = ICoordinate.getInstance(this.player.getCoordinate());
+        var coordinate = ICoordinate.getInstance(this.person.getCoordinate());
         coordinate.move(this.direction.getMove());
 
-        if (!this.player.getCurrentMap().isNextScenery(coordinate)) {
-
-            var area = this.player.getCurrentMap().getArea();
+        if (!this.person.getCurrentMap().isNextScenery(coordinate)) {
+            var area = this.person.getCurrentMap().getArea();
             if (area.blocked(coordinate)) {
-                this.player.updateMove(this.direction, this.oldCoordinate);
+                this.person.updateMove(this.direction, this.oldCoordinate);
                 return TypeMessage.MOVE_BLOCKED;
             }
 
-            this.player.updateMove(this.direction, coordinate);
+            this.person.updateMove(this.direction, coordinate);
         } else {
 
-            var idMap = this.player.getCurrentMap().getExit(this.direction);
+            var idMap = this.person.getCurrentMap().getExit(this.direction);
             if (idMap.isEmpty()) {
-                this.player.updateMove(this.direction, this.oldCoordinate);
+                this.person.updateMove(this.direction, this.oldCoordinate);
                 return TypeMessage.MOVE_NEXT_SCENERY_NOT_EXIT;
             }
 
             var nextScenery = Cache.getMapGame(idMap.get());
             if (nextScenery.isEmpty()) {
-                this.player.updateMove(this.direction, this.oldCoordinate);
+                this.person.updateMove(this.direction, this.oldCoordinate);
                 return TypeMessage.MAP_NOT_FOUND;
             }
 
-            var newCoordinate = this.player.getCurrentMap().nextScenery(coordinate);
-            this.player.updateMove(this.direction, newCoordinate);
-            this.player.setCurrentMap(nextScenery.get());
+            var newCoordinate = this.person.getCurrentMap().nextScenery(coordinate);
+            this.person.updateMove(this.direction, newCoordinate);
+            this.person.setCurrentMap(nextScenery.get());
         }
 
         return TypeMessage.MOVE;
@@ -62,7 +61,7 @@ public final class MoveCommand implements ICommand {
 
     @Override
     public void undo() {
-        this.player.setCurrentMap(this.oldScenery);
-        this.player.updateMove(this.oldDirection, this.oldCoordinate);
+        this.person.setCurrentMap(this.oldScenery);
+        this.person.updateMove(this.oldDirection, this.oldCoordinate);
     }
 }
