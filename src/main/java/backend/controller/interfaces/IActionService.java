@@ -6,6 +6,7 @@ public interface IActionService {
     IServiceResponse take();
 
     IServiceResponse open();
+    IServiceResponse interact();
 
     IServiceResponse move(String direction);
 }

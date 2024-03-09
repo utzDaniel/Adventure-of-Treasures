@@ -20,8 +20,8 @@ public class NPCRepositoryTest {
     @Before
     public void create() {
         this.npcs = new ArrayList<>();
-        this.npcs.add(new NPCEntity(1, 1, 1, -1));
-        this.npcs.add(new NPCEntity(2, 12, 15, 15));
+        this.npcs.add(new NPCEntity(1, 1, 52, 30, 1, -1));
+        this.npcs.add(new NPCEntity(2, 12, 28, 71, -1, 15));
 
         this.npcsFile = NPCRepository.getInstance().getAll();
     }

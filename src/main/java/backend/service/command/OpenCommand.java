@@ -1,44 +1,50 @@
-package backend.service.component.open;
+package backend.service.command;
 
 import backend.controller.enums.TypeMessage;
 import backend.service.infra.Cache;
+import backend.service.interfaces.ICommand;
+import backend.service.interfaces.ICoordinate;
 import backend.service.model.MapGame;
 import backend.service.model.Player;
 
 import java.util.Objects;
-import java.util.Optional;
 
-public final class Open {
+public final class OpenCommand implements ICommand {
 
     private final Player player;
+    private final MapGame oldMapGame;
+    private final ICoordinate oldCoordinate;
 
-    public Open(Player player) {
+    public OpenCommand(Player player) {
         this.player = player;
+        this.oldMapGame = player.getCurrentMap();
+        this.oldCoordinate = ICoordinate.getInstance(player.getCoordinate());
     }
 
-    public TypeMessage run() {
+    @Override
+    public TypeMessage execute() {
 
-        var door = player.getCurrentMap().getDoor(player.getCoordinate()).orElse(null);
+        var door = this.player.getCurrentMap().getDoor(this.player.getCoordinate()).orElse(null);
 
         if (Objects.isNull(door))
             return TypeMessage.DOOR_ERRO_EXIT;
-
-        var npc = this.player.getCurrentMap().getNPC();
-        Optional<TypeMessage> msg = Optional.empty();
-        if (npc.isPresent())
-            msg = npc.get().isAction(door.getId(), this.player.getInventory().getItens());
-        if (msg.isPresent() && msg.get() == TypeMessage.GAME_FINISH) return msg.get();
 
         if (!door.isOpen())
             return TypeMessage.DOOR_ERRO_CLOSED;
 
         var mapGame = Cache.getMapGame(door.getIdMapGame());
-        if (mapGame.isEmpty()) return TypeMessage.DOOR_ERRO_EXIT;
+        if (mapGame.isEmpty()) return TypeMessage.MAP_NOT_FOUND;
 
         updateMove(mapGame.get());
         this.player.setCurrentMap(mapGame.get());
 
         return TypeMessage.DOOR_OPEN;
+    }
+
+    @Override
+    public void undo() {
+        this.player.setCurrentMap(this.oldMapGame);
+        this.player.updateMove(this.player.getDirection(), this.oldCoordinate);
     }
 
     private void updateMove(MapGame mapGame) {

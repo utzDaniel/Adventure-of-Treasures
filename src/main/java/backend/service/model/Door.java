@@ -33,7 +33,7 @@ public final class Door {
     }
 
     public boolean isOpen() {
-        return open;
+        return this.open;
     }
 
     public boolean isDoor(ICoordinate coordinate) {

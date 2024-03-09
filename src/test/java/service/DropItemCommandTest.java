@@ -4,7 +4,6 @@ import backend.controller.enums.TypeMessage;
 import backend.repository.entity.ItemEntity;
 import backend.repository.singleton.MapGameRepository;
 import backend.service.command.DropItemCommand;
-import backend.service.command.UsableCommand;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.*;
 import org.junit.Before;

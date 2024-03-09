@@ -6,6 +6,7 @@ import backend.service.interfaces.ICoordinate;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 public final class MapGame {
@@ -116,8 +117,8 @@ public final class MapGame {
         return this.entity.limits().length * this.entity.limits()[0].length;
     }
 
-    public Optional<NPC> getNPC() {
-        return Optional.of(this.npc);
+    public Optional<NPC> getNPC(ICoordinate coordinate) {
+        return Objects.nonNull(this.npc) && this.npc.getCoordinate().equals(coordinate) ? Optional.of(this.npc) : Optional.empty();
     }
 
     @Override

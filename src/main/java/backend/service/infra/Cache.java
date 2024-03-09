@@ -1,8 +1,10 @@
 package backend.service.infra;
 
 import backend.Game;
+import backend.repository.interfaces.IDoorEntity;
 import backend.repository.interfaces.IItemEntity;
 import backend.repository.interfaces.IMapGameEntity;
+import backend.repository.singleton.DoorRepository;
 import backend.repository.singleton.ItemRepository;
 import backend.repository.singleton.MapGameRepository;
 import backend.service.model.*;
@@ -46,7 +48,18 @@ public final class Cache {
     }
 
     public static Optional<Door> getDoor(int idDoor) {
-        return Optional.ofNullable(Cache.doors.get(idDoor));
+        var door1 = Optional.ofNullable(Cache.doors.get(idDoor));
+        if (door1.isEmpty()) {
+            var entity = getDoorEntity(idDoor);
+            if (entity.isEmpty()) return Optional.empty();
+            door1 = create(entity.get());
+            door1.ifPresent(Cache::addDoor);
+        }
+        return door1;
+    }
+
+    private static Optional<IDoorEntity> getDoorEntity(int idDoor) {
+        return DoorRepository.getInstance().getById(idDoor);
     }
 
     private static Optional<IMapGameEntity> getMapGameEntity(int idMap) {
@@ -78,6 +91,10 @@ public final class Cache {
 
     private static Optional<Item> create(IItemEntity entity) {
         return Optional.of(ItemFactory.create(entity));
+    }
+
+    private static Optional<Door> create(IDoorEntity entity) {
+        return Optional.of(DoorFactory.create(entity));
     }
 
 

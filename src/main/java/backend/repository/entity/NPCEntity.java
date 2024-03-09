@@ -4,6 +4,8 @@ import backend.repository.interfaces.INPCEntity;
 
 public record NPCEntity(int id,
                         int idMap,
+                        int positionX,
+                        int positionY,
                         int idDoor,
                         int idItem) implements INPCEntity {
 
@@ -13,9 +15,11 @@ public record NPCEntity(int id,
                 {
                     "id": %d,
                     "idMap": "%d",
+                    "positionX": "%d",
+                    "positionY": "%d",
                     "idDoor": "%d",
                     "idItem": %d
                 }
-                """.formatted(this.id, this.idMap, this.idDoor, this.idItem);
+                """.formatted(this.id, this.idMap, this.positionX, this.positionY, this.idDoor, this.idItem);
     }
 }

@@ -31,9 +31,10 @@ public final class GameJOptionPaneFactory {
                         ← - Mover para o Oeste
                         → - Mover para o Leste
                         ↓ - Mover para o Sul
-                        1 - Abrir porta e Interagir com o Capitao do barco
+                        1 - Abrir porta
                         2 - Pegar item
-                        3 - Abrir inventario
+                        3 - Interagir com npc
+                        0 - Abrir inventario
                         """, "Comandos",
                 JOptionPane.INFORMATION_MESSAGE);
     }

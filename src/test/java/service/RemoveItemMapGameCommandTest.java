@@ -3,21 +3,15 @@ package service;
 import backend.controller.enums.TypeMessage;
 import backend.repository.entity.ItemEntity;
 import backend.repository.singleton.MapGameRepository;
-import backend.service.command.AddItemMapGameCommand;
-import backend.service.command.RemoveItemInventoryCommand;
 import backend.service.command.RemoveItemMapGameCommand;
-import backend.service.enums.TypeItem;
-import backend.service.interfaces.IEquipable;
-import backend.service.model.*;
+import backend.service.model.Item;
+import backend.service.model.ItemFactory;
+import backend.service.model.MapGame;
+import backend.service.model.MapGameFactory;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 public class RemoveItemMapGameCommandTest {
 

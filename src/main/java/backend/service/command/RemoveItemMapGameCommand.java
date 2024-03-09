@@ -23,7 +23,7 @@ public final class RemoveItemMapGameCommand implements ICommand {
 
     @Override
     public void undo() {
-        new AddItemMapGameCommand(this.item, this.mapGame).execute();
+        this.mapGame.addItem(item);
     }
 
 }

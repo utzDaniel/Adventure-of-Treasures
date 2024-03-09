@@ -76,9 +76,7 @@ public class Keyboard {
                     if (Objects.isNull(message)) return;
 
                     var effect = message.effect();
-                    if (effect.contains("finish")) {
-                        finish(effect);
-                    }
+
                     if (message.sucess())
                         updateItensMapGame(action);
 
@@ -101,13 +99,35 @@ public class Keyboard {
                     if (message.sucess()) updateItensMapGame(action);
 
                     //INVENTARIO
-                } else if (keyCode == 99) {
+                } else if (keyCode == 96) {
 
                     var inventoryOpenRes = executa("/inventory/open");
                     var message = new MessageMapper().apply(inventoryOpenRes);
                     var inventoryOpen = new InventoryMapper().apply(inventoryOpenRes);
 
                     if (message.sucess()) interfaceInventory.open(inventoryOpen);
+
+                } else if (keyCode == 99) {
+
+                    var actionRes = executa("/action/interact");
+
+                    var message = new MessageMapper().apply(actionRes);
+                    var action = new ActionMapper().apply(actionRes);
+
+                    if (Objects.isNull(message)) return;
+
+                    var effect = message.effect();
+
+                    if (effect.contains("finish")) {
+                        finish(effect);
+                    }
+
+                    if (message.sucess())
+                        updateItensMapGame(action);
+
+                    if (Objects.nonNull(effect))
+                        soundEffects.play(effect);
+
                 }
 
             }

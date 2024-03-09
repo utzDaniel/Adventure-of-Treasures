@@ -20,7 +20,7 @@ public class DoorRepositoryTest {
     @Before
     public void create() {
         this.doors = new ArrayList<>();
-        this.doors.add(new DoorEntity(1, 1, 12, 52, 30, true));
+        this.doors.add(new DoorEntity(1, 1, 12, 52, 30, false));
         this.doors.add(new DoorEntity(2, 2, 3, 24, 27, true));
         this.doors.add(new DoorEntity(3, 3, 2, 26, 72, true));
         this.doors.add(new DoorEntity(4, 6, 7, 38, 14, true));

@@ -14,7 +14,9 @@ public final class NPCEntityMapper implements IMapperEntity<INPCEntity> {
                 ValidUtil.parseInt(dados[0]),
                 ValidUtil.parseInt(dados[1]),
                 ValidUtil.parseInt(dados[2]),
-                ValidUtil.parseInt(dados[3]));
+                ValidUtil.parseInt(dados[3]),
+                ValidUtil.parseInt(dados[4]),
+                ValidUtil.parseInt(dados[5]));
     }
 
 }

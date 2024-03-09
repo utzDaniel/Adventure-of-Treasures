@@ -4,6 +4,7 @@ public enum TypeMessage {
 
     GAME_FINISH(true, "Fim do game!", "finish"),
     DOOR_OPEN(true, "Abrindo e entrando pela porta", ""),
+    INTERACT(true, "Interação realizada", ""),
     MOVE(true, "Movimentação valida", ""),
     INVENTORY_CLOSED(true, "Inventário foi fechado!", ""),
     INVENTORY_OPEN(true, "Inventário foi aberto", ""),
@@ -34,6 +35,8 @@ public enum TypeMessage {
     MOVE_NEXT_SCENERY_NOT_EXIT(true, "Não existe saída para essa direção", ""),
     DOOR_ERRO_CLOSED(false, "Porta está fechada!", "erro"),
     DOOR_ERRO_EXIT(false, "Porta não existe!", ""),
+    INTERACT_ERRO(false, "Sem interação!", ""),
+    INTERACT_ERRO_INCOMPLETE(true, "Interação realizada, mas incompleta", ""),
     REMOVE_ITEM_ERRO(false, "Item não pode ser removido!", "erro"),
     REMOVE_ITEM_ERRO_EQUIP(false, "Não pode remover item equipado!", "erro"),
     REMOVE_ITEM(true, "Item pode ser removido!", ""),

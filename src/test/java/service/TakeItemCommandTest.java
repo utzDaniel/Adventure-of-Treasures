@@ -59,7 +59,7 @@ public class TakeItemCommandTest {
         this.cmd.execute();
         this.cmd.undo();
         assertNull(inventario.getItem(this.item.getId()));
-        assertEquals(this.item, this.map.getItem(ICoordinate.getInstance(48, 31)));
+        assertEquals(this.item, this.map.getItem(ICoordinate.getInstance(48, 30)));
     }
 
 }

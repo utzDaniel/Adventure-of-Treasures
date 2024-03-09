@@ -39,4 +39,7 @@ public final class DoorRepository {
                 .toList();
     }
 
+    public Optional<IDoorEntity> getById(int idDoor) {
+        return Optional.of(this.map.get(idDoor));
+    }
 }

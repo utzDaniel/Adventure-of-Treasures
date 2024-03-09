@@ -1,5 +1,5 @@
 id;id_map_ori;id_map_dor;position_x;position_y;open
-1;1;12;52;30;true
+1;1;12;52;30;false
 2;2;3;24;27;true
 3;3;2;26;72;true
 4;6;7;38;14;true

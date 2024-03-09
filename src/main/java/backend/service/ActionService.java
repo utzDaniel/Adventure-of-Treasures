@@ -4,10 +4,11 @@ import backend.Game;
 import backend.controller.enums.TypeMessage;
 import backend.controller.interfaces.IActionService;
 import backend.controller.interfaces.IServiceResponse;
+import backend.service.command.InteractCommand;
 import backend.service.command.MoveCommand;
+import backend.service.command.OpenCommand;
 import backend.service.command.TakeItemCommand;
 import backend.service.component.inventory.quit.InventoryQuit;
-import backend.service.component.open.Open;
 import backend.service.dto.response.ServiceResponse;
 import backend.service.enums.Direction;
 import backend.service.mapper.ActionResponseMapper;
@@ -49,7 +50,18 @@ public final class ActionService implements IActionService {
 
     @Override
     public IServiceResponse open() {
-        var typeMessage = new Open(Game.player).run();
+        var typeMessage = new OpenCommand(Game.player).execute();
+
+        if (!typeMessage.isSucess())
+            new ServiceResponse(typeMessage, null);
+
+        var obj = new ActionResponseMapper().apply(Game.player);
+        return new ServiceResponse(typeMessage, obj);
+    }
+
+    @Override
+    public IServiceResponse interact() {
+        var typeMessage = new InteractCommand(Game.player).execute();
 
         if (!typeMessage.isSucess())
             new ServiceResponse(typeMessage, null);

@@ -2,6 +2,7 @@ package backend.service.model;
 
 import backend.controller.enums.TypeMessage;
 import backend.repository.interfaces.INPCEntity;
+import backend.service.interfaces.ICoordinate;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,18 +10,24 @@ import java.util.Optional;
 public final class NPC {
 
     private final INPCEntity entity;
+    private final ICoordinate coordinate;
 
     public NPC(INPCEntity entity) {
         this.entity = entity;
+        this.coordinate = ICoordinate.getInstance(entity.positionX(), entity.positionY());
     }
 
-    public Optional<TypeMessage> isAction(int idDoor, List<Item> itens) {
+    public Optional<TypeMessage> isAction(List<Item> itens) {
         Optional<TypeMessage> msg = this.entity.idItem() == 15 ? Optional.of(TypeMessage.GAME_FINISH) : Optional.empty();
-        return isValid(idDoor, itens) ? msg : Optional.empty();
+        return isRequerid(itens) ? msg : Optional.empty();
     }
 
-    private boolean isValid(int idDoor, List<Item> itens) {
-        return this.entity.idDoor() == idDoor && isRequerid(itens);
+    public ICoordinate getCoordinate() {
+        return this.coordinate;
+    }
+
+    public int getIdDoor() {
+        return this.entity.idDoor();
     }
 
     private boolean isRequerid(List<Item> itens) {

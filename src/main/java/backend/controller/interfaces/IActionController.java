@@ -6,6 +6,7 @@ public interface IActionController {
     IResponse take();
 
     IResponse open();
+    IResponse interact();
 
     IResponse move(String direction);
 

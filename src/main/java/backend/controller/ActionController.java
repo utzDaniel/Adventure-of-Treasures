@@ -41,6 +41,12 @@ public final class ActionController implements IActionController {
     }
 
     @Override
+    public IResponse interact() {
+        var rsp = this.actionService.interact();
+        return ResponseFactory.create(rsp);
+    }
+
+    @Override
     public IResponse move(String direction) {
         var rsp = this.actionService.move(direction);
         return ResponseFactory.create(rsp);
