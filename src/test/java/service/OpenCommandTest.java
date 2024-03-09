@@ -1,0 +1,74 @@
+package service;
+
+import backend.controller.enums.TypeMessage;
+import backend.repository.singleton.MapGameRepository;
+import backend.service.command.OpenCommand;
+import backend.service.interfaces.ICoordinate;
+import backend.service.model.*;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+
+public class OpenCommandTest {
+    private OpenCommand cmd;
+
+    private Map<Integer, MapGame> mapGame;
+
+    @Before
+    public void create() {
+        this.mapGame = new HashMap<>();
+        this.mapGame.put(2, MapGameFactory.create(MapGameRepository.getInstance().getById(1).orElse(null)));
+        this.mapGame.put(6, MapGameFactory.create(MapGameRepository.getInstance().getById(6).orElse(null)));
+    }
+
+    @Test
+    public void validErro1() {
+        var move = new Move("", ICoordinate.getInstance(47, 30), this.mapGame.get(2));
+        var inventory = new Inventory(0, 10);
+        var player = new Player(move, inventory);
+        this.cmd = new OpenCommand(player);
+        var msg = this.cmd.execute();
+        assertEquals(TypeMessage.DOOR_ERRO_EXIT, msg);
+    }
+
+    @Test
+    public void validErro2() {
+        var move = new Move("", ICoordinate.getInstance(15, 37), this.mapGame.get(6));
+        var inventory = new Inventory(0, 10);
+        var player = new Player(move, inventory);
+        this.cmd = new OpenCommand(player);
+        var msg = this.cmd.execute();
+        assertEquals(TypeMessage.DOOR_ERRO_CLOSED, msg);
+    }
+
+    @Test
+    public void valid() {
+        var move = new Move("", ICoordinate.getInstance(31, 72), this.mapGame.get(6));
+        var inventory = new Inventory(0, 10);
+        var player = new Player(move, inventory);
+        this.cmd = new OpenCommand(player);
+        var msg = this.cmd.execute();
+        assertEquals(TypeMessage.DOOR_OPEN, msg);
+        assertEquals(ICoordinate.getInstance(51, 37), player.getCoordinate());
+        assertEquals(11, player.getCurrentMap().getId());
+    }
+
+    @Test
+    public void validUndo() {
+        var move = new Move("", ICoordinate.getInstance(31, 72), this.mapGame.get(6));
+        var inventory = new Inventory(0, 10);
+        var player = new Player(move, inventory);
+        var oldCoordinate = ICoordinate.getInstance(player.getCoordinate());
+        this.cmd = new OpenCommand(player);
+        this.cmd.execute();
+        this.cmd.undo();
+        assertEquals(oldCoordinate, player.getCoordinate());
+        assertEquals(this.mapGame.get(6).getId(), player.getCurrentMap().getId());
+    }
+
+
+}
