@@ -6,7 +6,6 @@ import backend.service.event.EventDoor;
 import backend.service.event.EventInventory;
 import backend.service.event.EventItem;
 import backend.service.event.EventMap;
-import backend.service.interfaces.ICoordinate;
 import backend.service.interfaces.IFactory;
 import backend.service.interfaces.IObserver;
 
@@ -37,9 +36,9 @@ public final class ItemFactory implements IFactory<Item> {
             composite.add(new Combinable(comb.get(0).combination(), comb.size()));
         }
 
-        getEquipable(id).ifPresent(e -> composite.add(new Equipable(e.upCapacity())));
+        getEquipable(id).ifPresent(e -> composite.add(new Equipable(e)));
 
-        getUsable(id).ifPresent(e -> composite.add(new Usable(e.idMap(), ICoordinate.getInstance(e.positionX(), e.positionY()), e.enabled())));
+        getUsable(id).ifPresent(e -> composite.add(new Usable(e)));
 
         getMission(id).ifPresent(e -> composite.add(new Mission()));
 

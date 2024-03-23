@@ -5,7 +5,6 @@ import backend.service.interfaces.IMission;
 
 public final class Mission implements IMission {
 
-
     @Override
     public boolean isType(TypeItem type) {
         return TypeItem.MISSION == type;

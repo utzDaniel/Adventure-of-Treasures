@@ -12,7 +12,11 @@ import backend.service.component.inventory.quit.InventoryQuit;
 import backend.service.dto.response.ServiceResponse;
 import backend.service.enums.Direction;
 import backend.service.mapper.ActionResponseMapper;
+import backend.service.mapper.PlayerSaveReadMapper;
+import backend.service.model.Player;
+import backend.service.util.FileUtil;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public final class ActionService implements IActionService {
@@ -86,4 +90,27 @@ public final class ActionService implements IActionService {
         return new ServiceResponse(typeMessage, obj);
     }
 
+    @Override
+    public IServiceResponse load() {
+        var filename = "src/main/resources/save/player.txt";
+        var fileUtil = new FileUtil<Player>(filename);
+        try {
+            Game.player = fileUtil.readFile(new PlayerSaveReadMapper());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return move(Game.player.getDirection().name());
+    }
+
+    @Override
+    public IServiceResponse save() {
+        var filename = "src/main/resources/save/player.txt";
+        var fileUtil = new FileUtil<Player>(filename);
+        try {
+            fileUtil.writeFile(Game.player);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return refresh();
+    }
 }

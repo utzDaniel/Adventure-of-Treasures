@@ -1,16 +1,18 @@
 package backend.service.model;
 
+import backend.repository.interfaces.IEquipableEntity;
 import backend.service.enums.TypeItem;
 import backend.service.interfaces.IEquipable;
 
 public final class Equipable implements IEquipable {
 
-    private final int upCapacity;
-    //OBSERVE
-    private boolean equip = false;
+    private final IEquipableEntity entity;
 
-    public Equipable(int upCapacity) {
-        this.upCapacity = upCapacity;
+    private boolean equip;
+
+    public Equipable(IEquipableEntity entity) {
+        this.entity = entity;
+        this.equip = false;
     }
 
     @Override
@@ -25,7 +27,7 @@ public final class Equipable implements IEquipable {
 
     @Override
     public int getUpCapacity() {
-        return this.upCapacity;
+        return this.entity.upCapacity();
     }
 
     @Override
@@ -35,7 +37,7 @@ public final class Equipable implements IEquipable {
 
     @Override
     public boolean isRemove() {
-        return !equip;
+        return !this.equip;
     }
 
     @Override

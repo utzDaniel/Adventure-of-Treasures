@@ -9,4 +9,7 @@ public interface IActionService {
     IServiceResponse interact();
 
     IServiceResponse move(String direction);
+
+    IServiceResponse load();
+    IServiceResponse save();
 }

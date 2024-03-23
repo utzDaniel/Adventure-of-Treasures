@@ -1,18 +1,18 @@
 package backend.service.model;
 
+import backend.repository.interfaces.IUsableEntity;
 import backend.service.enums.TypeItem;
 import backend.service.interfaces.ICoordinate;
 import backend.service.interfaces.IUsable;
 
 public final class Usable implements IUsable {
 
-    private final int idMap;
-    private final ICoordinate coordinate;
+    private final IUsableEntity entity;
     private boolean enabled;
-    public Usable(int idMap, ICoordinate coordinate, boolean enabled) {
-        this.idMap = idMap;
-        this.coordinate = coordinate;
-        this.enabled = enabled;
+
+    public Usable(IUsableEntity entity) {
+        this.entity = entity;
+        this.enabled = entity.enabled();
     }
 
     @Override
@@ -32,12 +32,12 @@ public final class Usable implements IUsable {
 
     @Override
     public int getIdMap() {
-        return this.idMap;
+        return this.entity.idMap();
     }
 
     @Override
     public ICoordinate getCoordinate() {
-        return this.coordinate;
+        return ICoordinate.getInstance(this.entity.positionX(), this.entity.positionY());
     }
 
     @Override

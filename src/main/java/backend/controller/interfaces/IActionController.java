@@ -10,4 +10,7 @@ public interface IActionController {
 
     IResponse move(String direction);
 
+    IResponse load();
+    IResponse save();
+
 }

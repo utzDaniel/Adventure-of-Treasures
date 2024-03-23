@@ -6,6 +6,7 @@ import backend.service.ActionService;
 import backend.service.InventoryService;
 import backend.service.infra.CacheService;
 import backend.service.interfaces.ICoordinate;
+import backend.service.interfaces.IMove;
 import backend.service.mapper.ActionResponseMapper;
 import backend.service.model.Inventory;
 import backend.service.model.Move;
@@ -20,7 +21,7 @@ import java.util.Properties;
 public class Game {
 
     private static final Properties properties = getProp();
-    public static final Player player = createPlayer();
+    public static Player player = new Player(createMove(), createInventory());
 
     public Game() {
         var action = new ActionResponseMapper().apply(player);
@@ -33,27 +34,23 @@ public class Game {
         keyboard.run();
     }
 
-    private static Player createPlayer() {
-
+    private static Inventory createInventory() {
         var capacity = Integer.parseInt(properties.getProperty("backend.inventory.capacity"));
         var maxCapacity = Integer.parseInt(properties.getProperty("backend.inventory.maxCapacity"));
-        var inventory = new Inventory(capacity, maxCapacity);
+        return new Inventory(capacity, maxCapacity);
+    }
 
+    private static IMove createMove() {
         var path = properties.getProperty("backend.player.path");
         int x = Integer.parseInt(properties.getProperty("backend.player.position.x"));
         int y = Integer.parseInt(properties.getProperty("backend.player.position.y"));
         var coordinate = ICoordinate.getInstance(x, y);
-
         var map = properties.getProperty("backend.player.map");
         var mapGame = CacheService.getMapGame(Integer.parseInt(map));
-        var move = new Move(path, coordinate, mapGame.orElse(null));
-
-        try {
-            return new Player(move, inventory);
-        } catch (Exception e) {
-            return null;
-        }
+        return new Move(path, coordinate, mapGame.orElse(null));
     }
+
+
 
     public static void main(String[] args) {
         new Game();

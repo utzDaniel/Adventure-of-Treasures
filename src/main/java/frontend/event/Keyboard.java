@@ -128,6 +128,19 @@ public class Keyboard {
                     if (Objects.nonNull(effect))
                         soundEffects.play(effect);
 
+                }else if (keyCode == 116) {
+
+                    var actionRes = executa("/action/load");
+                    var message = new MessageMapper().apply(actionRes);
+                    var action = new ActionMapper().apply(actionRes);
+
+                    if (message.sucess())
+                        interfaceGame.updateComponentsMove(action);
+
+                }else if (keyCode == 117) {
+
+                    executa("/action/save");
+
                 }
 
             }

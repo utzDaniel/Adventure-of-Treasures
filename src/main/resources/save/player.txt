@@ -1,0 +1,1 @@
+LEFT_FOOT_TOGETHER;5;OESTE;21;35;src/main/resources/image/player;6;10;false;5;7;;

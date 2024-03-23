@@ -19,6 +19,14 @@ public final class Inventory {
         this.itens = new HashMap<>();
     }
 
+    public Inventory(int capacity, int maxCapacity, boolean isInventory, List<Item> itens) {
+        this.capacity = capacity;
+        this.maxCapacity = maxCapacity;
+        this.isInventory = isInventory;
+        this.itens = new HashMap<>();
+        itens.forEach(v -> this.itens.put(v.getId(), v));
+    }
+
     public int getCapacity() {
         return this.capacity;
     }
@@ -71,4 +79,22 @@ public final class Inventory {
     public void setOpenInventory() {
         this.isInventory = !openInventory();
     }
+
+
+    public String extrinsecos() {
+        return """
+                %d;
+                %d;
+                %b;
+                %s;
+                """.formatted(this.capacity, this.maxCapacity, this.isInventory, this.ids())
+                .replace("\n", "");
+    }
+
+    private String ids() {
+        var str = new StringBuilder();
+        this.itens.values().forEach(v -> str.append(v.id()).append(";"));
+        return str.toString();
+    }
+
 }

@@ -10,12 +10,20 @@ public final class Move implements IMove {
     private MapGame currentMapGame;
     private Direction direction;
     private ICoordinate coordinate;
-    private final String path;
+    private String path;
 
     public Move(String path, ICoordinate coordinate, MapGame mapGame) {
         this.path = path;
         this.movementImage = MovementImage.RIGHT_FOOT_TOGETHER;
         this.direction = Direction.SUL;
+        this.coordinate = coordinate;
+        this.currentMapGame = mapGame;
+    }
+
+    public Move(String path, ICoordinate coordinate, MapGame mapGame, MovementImage movementImage, Direction direction) {
+        this.path = path;
+        this.movementImage = movementImage;
+        this.direction = direction;
         this.coordinate = coordinate;
         this.currentMapGame = mapGame;
     }
@@ -50,6 +58,20 @@ public final class Move implements IMove {
     @Override
     public ICoordinate getCoordinate() {
         return ICoordinate.getInstance(this.coordinate);
+    }
+
+    @Override
+    public String extrinsic() {
+        return """
+                %s;
+                %d;
+                %s;
+                %d;
+                %d;
+                %s;
+                """.formatted(this.movementImage.name(), this.currentMapGame.getId(),
+                this.direction.name(), this.coordinate.x(), this.coordinate.y(), this.path)
+                .replace("\n", "");
     }
 
 }

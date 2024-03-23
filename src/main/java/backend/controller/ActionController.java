@@ -51,4 +51,16 @@ public final class ActionController implements IActionController {
         var rsp = this.actionService.move(direction);
         return ResponseFactory.create(rsp);
     }
+
+    @Override
+    public IResponse load() {
+        var rsp = this.actionService.load();
+        return ResponseFactory.create(rsp);
+    }
+
+    @Override
+    public IResponse save() {
+        var rsp = this.actionService.save();
+        return ResponseFactory.create(rsp);
+    }
 }
