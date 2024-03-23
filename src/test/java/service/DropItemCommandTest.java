@@ -4,6 +4,7 @@ import backend.controller.enums.TypeMessage;
 import backend.repository.entity.ItemEntity;
 import backend.repository.singleton.MapGameRepository;
 import backend.service.command.DropItemCommand;
+import backend.service.model.ItemFactory;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.*;
 import org.junit.Before;
@@ -20,8 +21,9 @@ public class DropItemCommandTest {
 
     @Before
     public void create() {
-        this.item = ItemFactory.create(new ItemEntity(10, "mochila", "utilizada para carregar mais coisas", 0, 22, 65, "src/main/resources/image/item/mochila.png"));
-        this.map = MapGameFactory.create(MapGameRepository.getInstance().getById(1).orElse(null));
+        var factory = new ItemFactory();
+        this.item = factory.create(new ItemEntity(10, "mochila", "utilizada para carregar mais coisas", 0, 22, 65, "src/main/resources/image/item/mochila.png"));
+        this.map = new MapGameFactory().create(MapGameRepository.getInstance().getById(1).orElse(null));
 
     }
 

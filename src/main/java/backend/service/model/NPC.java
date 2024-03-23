@@ -10,26 +10,23 @@ import java.util.Optional;
 public final class NPC {
 
     private final INPCEntity entity;
-    private final ICoordinate coordinate;
 
     public NPC(INPCEntity entity) {
         this.entity = entity;
-        this.coordinate = ICoordinate.getInstance(entity.positionX(), entity.positionY());
-    }
-
-    public Optional<TypeMessage> isAction(List<Item> itens) {
-        Optional<TypeMessage> msg = this.entity.idItem() == 15 ? Optional.of(TypeMessage.GAME_FINISH) : Optional.empty();
-        return isRequerid(itens) ? msg : Optional.empty();
     }
 
     public ICoordinate getCoordinate() {
-        return this.coordinate;
+        return ICoordinate.getInstance(entity.positionX(), entity.positionY());
     }
 
     public int getIdDoor() {
         return this.entity.idDoor();
     }
 
+    public Optional<TypeMessage> isAction(List<Item> itens) {
+        Optional<TypeMessage> msg = this.entity.idItem() == 15 ? Optional.of(TypeMessage.GAME_FINISH) : Optional.empty();
+        return isRequerid(itens) ? msg : Optional.empty();
+    }
     private boolean isRequerid(List<Item> itens) {
         var requerid = this.entity.idItem() == -1;
         if (!requerid) {

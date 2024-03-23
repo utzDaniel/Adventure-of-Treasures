@@ -3,7 +3,7 @@ package backend.service.interfaces;
 import backend.service.enums.Direction;
 import backend.service.model.MapGame;
 
-public interface IMove {
+public interface IMove extends IImage {
     void updateMove(Direction direction, ICoordinate coordinate);
 
     MapGame getCurrentMap();

@@ -1,7 +1,7 @@
 package backend.service.command;
 
 import backend.controller.enums.TypeMessage;
-import backend.service.infra.Cache;
+import backend.service.infra.CacheService;
 import backend.service.interfaces.ICommand;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.MapGame;
@@ -31,11 +31,11 @@ public final class InteractCommand implements ICommand {
 
         if (msg.isPresent() && msg.get().isSucess()) return msg.get();
 
-        if(npc.get().getIdDoor() == -1) return TypeMessage.INTERACT_ERRO_INCOMPLETE;
+        if (npc.get().getIdDoor() == -1) return TypeMessage.INTERACT_ERRO_INCOMPLETE;
 
-        var door = Cache.getDoor(npc.get().getIdDoor());
+        var door = CacheService.getDoor(npc.get().getIdDoor());
         if (door.isEmpty()) return TypeMessage.MAP_NOT_FOUND;
-        var mapGame = Cache.getMapGame(door.get().getIdMapGame());
+        var mapGame = CacheService.getMapGame(door.get().getIdMapGame());
         if (mapGame.isEmpty()) return TypeMessage.MAP_NOT_FOUND;
 
         updateMove(mapGame.get());

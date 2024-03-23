@@ -1,7 +1,8 @@
 package backend.service.event;
 
+import backend.Game;
 import backend.repository.interfaces.IEventInventoryEntity;
-import backend.service.infra.Cache;
+import backend.service.infra.CacheService;
 import backend.service.interfaces.IObserver;
 
 public final class EventInventory implements IObserver {
@@ -13,8 +14,8 @@ public final class EventInventory implements IObserver {
 
     @Override
     public void update() {
-        var item = Cache.getItem(this.event.idItemNew());
+        var item = CacheService.getItem(this.event.idItemNew());
         if (item.isEmpty()) return;
-        Cache.getInventory().addItem(item.get());
+        Game.player.getInventory().addItem(item.get());
     }
 }

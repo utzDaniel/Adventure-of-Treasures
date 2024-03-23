@@ -1,6 +1,7 @@
 package backend.service.model;
 
 import backend.controller.enums.TypeMessage;
+import backend.repository.interfaces.IEntity;
 import backend.repository.interfaces.IItemEntity;
 import backend.service.enums.TypeItem;
 import backend.service.interfaces.*;
@@ -8,18 +9,23 @@ import backend.service.interfaces.*;
 import java.util.List;
 import java.util.Optional;
 
-public final class Item implements IObservable {
+public final class Item implements IObservable, IImage, IEntity {
 
     private final IItemEntity entity;
     private final SpecializationComposite specialization;
-    private ICoordinate coordinate;
     private final List<IObserver> observers;
+    private ICoordinate coordinate;
 
-    Item(IItemEntity entity, SpecializationComposite specialization, List<IObserver> observers) {
+    public Item(IItemEntity entity, SpecializationComposite specialization, List<IObserver> observers) {
         this.entity = entity;
         this.specialization = specialization;
         this.coordinate = ICoordinate.getInstance(entity.positionX(), entity.positionY());
         this.observers = observers;
+    }
+
+    @Override
+    public int id() {
+        return this.entity.id();
     }
 
     public int getId() {
@@ -38,6 +44,7 @@ public final class Item implements IObservable {
         return this.entity.weight();
     }
 
+    @Override
     public String getImage() {
         return this.entity.image();
     }

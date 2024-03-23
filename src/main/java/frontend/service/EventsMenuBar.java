@@ -21,11 +21,11 @@ public final class EventsMenuBar {
 
     public void action(String name) {
         switch (name) {
-            case "Historia" -> GameJOptionPaneFactory.openHistory(container);
-            case "Comandos" -> GameJOptionPaneFactory.openCommand(container);
-            case "Ajuda" -> GameJOptionPaneFactory.openHelp(container);
-            case "Musica" -> song.onPlayer();// TODO Tentar remover esse evento daqui
-            case "Efeitos" -> soundEffects.onPlayer();// TODO Tentar remover esse evento daqui
+            case "Historia" -> GameJOptionPaneFactory.openHistory(this.container);
+            case "Comandos" -> GameJOptionPaneFactory.openCommand(this.container);
+            case "Ajuda" -> GameJOptionPaneFactory.openHelp(this.container);
+            case "Musica" -> this.song.onPlayer();// TODO Tentar remover esse evento daqui
+            case "Efeitos" -> this.soundEffects.onPlayer();// TODO Tentar remover esse evento daqui
             case "Sair" -> System.exit(0);
             default -> throw new EventException("Nome do evento não encontrado");
         }

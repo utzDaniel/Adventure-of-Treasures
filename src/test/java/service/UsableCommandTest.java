@@ -32,7 +32,7 @@ public class UsableCommandTest {
         itensE.add(new ItemEntity(2, "escada", "utilizada para subir em algum lugar", 5, 20, 41, "src/main/resources/image/item/escada.png"));
         itensE.add(new ItemEntity(11, "pa", "ferramenta usada para cavar", 3, 28, 20, "src/main/resources/image/item/pa.png"));
         itensE.add(new ItemEntity(5, "livro", "livro antigo usado para decifrar escrita antiga", 1, 39, 49, "src/main/resources/image/item/livro.png"));
-        itensE.forEach(v -> this.itens.put(v.id(), ItemFactory.create(v)));
+        itensE.forEach(v -> this.itens.put(v.id(), new ItemFactory().create(v)));
     }
 
     @Test

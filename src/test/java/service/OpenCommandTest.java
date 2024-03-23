@@ -21,8 +21,8 @@ public class OpenCommandTest {
     @Before
     public void create() {
         this.mapGame = new HashMap<>();
-        this.mapGame.put(2, MapGameFactory.create(MapGameRepository.getInstance().getById(1).orElse(null)));
-        this.mapGame.put(6, MapGameFactory.create(MapGameRepository.getInstance().getById(6).orElse(null)));
+        this.mapGame.put(2, new MapGameFactory().create(MapGameRepository.getInstance().getById(1).orElse(null)));
+        this.mapGame.put(6, new MapGameFactory().create(MapGameRepository.getInstance().getById(6).orElse(null)));
     }
 
     @Test

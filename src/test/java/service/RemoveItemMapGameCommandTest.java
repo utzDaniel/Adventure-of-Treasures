@@ -21,8 +21,8 @@ public class RemoveItemMapGameCommandTest {
 
     @Before
     public void create() {
-        this.item = ItemFactory.create(new ItemEntity(10, "mochila", "utilizada para carregar mais coisas", 0, 22, 65, "src/main/resources/image/item/mochila.png"));
-        this.map = MapGameFactory.create(MapGameRepository.getInstance().getById(3).orElse(null));
+        this.item = new ItemFactory().create(new ItemEntity(10, "mochila", "utilizada para carregar mais coisas", 0, 22, 65, "src/main/resources/image/item/mochila.png"));
+        this.map = new MapGameFactory().create(MapGameRepository.getInstance().getById(3).orElse(null));
     }
 
     @Test

@@ -5,6 +5,7 @@ import backend.repository.entity.ItemEntity;
 import backend.repository.entity.MapGameEntity;
 import backend.repository.singleton.MapGameRepository;
 import backend.service.command.AddItemMapGameCommand;
+import backend.service.model.ItemFactory;
 import backend.service.model.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,8 +24,9 @@ public class AddItemMapGameCommandTest {
 
     @Before
     public void create() {
-        this.item = ItemFactory.create(new ItemEntity(10, "mochila", "utilizada para carregar mais coisas", 0, 22, 65, "src/main/resources/image/item/mochila.png"));
-        this.map = MapGameFactory.create(MapGameRepository.getInstance().getById(3).orElse(null));
+        var factory = new ItemFactory();
+        this.item = factory.create(new ItemEntity(10, "mochila", "utilizada para carregar mais coisas", 0, 22, 65, "src/main/resources/image/item/mochila.png"));
+        this.map = new MapGameFactory().create(MapGameRepository.getInstance().getById(3).orElse(null));
     }
 
     @Test

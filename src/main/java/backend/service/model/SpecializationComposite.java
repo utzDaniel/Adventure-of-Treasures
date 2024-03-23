@@ -41,7 +41,9 @@ public final class SpecializationComposite implements ISpecialization {
                 [
                     "%s"
                 ]
-                """.formatted(this.specializations.stream().map(Object::toString).collect(Collectors.joining(", ")));
+                """.formatted(this.specializations.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(", ")));
     }
 
 }

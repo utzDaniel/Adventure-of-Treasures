@@ -2,7 +2,7 @@ package backend.service.interfaces;
 
 public interface ICombinable extends ISpecialization {
 
-    int getCombination();
+    int combination();
 
-    int getSizeCombination();
+    int sizeCombination();
 }

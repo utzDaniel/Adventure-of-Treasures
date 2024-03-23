@@ -7,89 +7,91 @@ import backend.service.event.EventInventory;
 import backend.service.event.EventItem;
 import backend.service.event.EventMap;
 import backend.service.interfaces.ICoordinate;
+import backend.service.interfaces.IFactory;
 import backend.service.interfaces.IObserver;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public final class ItemFactory {
+public final class ItemFactory implements IFactory<Item> {
 
-    ItemFactory() {
+    @Override
+    public Optional<Item> create(int id) {
+        return getEntity(id).map(this::create);
     }
 
-    public static Item create(IItemEntity itemEntity) {
-        return new Item(itemEntity,
-                getSpecializationComposite(itemEntity.id()),
-                getObservers(itemEntity.id()));
+    @Override
+    public Item create(IEntity entity) {
+        if(entity instanceof IItemEntity itemEntity){
+            return new Item(itemEntity, getSpecializationComposite(entity.id()), getObservers(entity.id()));
+        }
+        return null;
     }
 
-    private static SpecializationComposite getSpecializationComposite(int idItem) {
+    private SpecializationComposite getSpecializationComposite(int id) {
         var composite = new SpecializationComposite();
 
-        var comb = getCombinable(idItem);
+        var comb = getCombinable(id);
         if (!comb.isEmpty()) {
             composite.add(new Combinable(comb.get(0).combination(), comb.size()));
         }
 
-        getEquipable(idItem)
-                .ifPresent(e -> composite.add(new Equipable(e.upCapacity())));
+        getEquipable(id).ifPresent(e -> composite.add(new Equipable(e.upCapacity())));
 
-        getUsable(idItem)
-                .ifPresent(e -> composite.add(new Usable(e.idMap(), ICoordinate.getInstance(e.positionX(), e.positionY()), e.enabled())));
+        getUsable(id).ifPresent(e -> composite.add(new Usable(e.idMap(), ICoordinate.getInstance(e.positionX(), e.positionY()), e.enabled())));
 
-        getMission(idItem)
-                .ifPresent(e -> composite.add(new Mission()));
+        getMission(id).ifPresent(e -> composite.add(new Mission()));
 
         return composite;
     }
 
-    private static List<IObserver> getObservers(int idItem) {
+    private List<IObserver> getObservers(int id) {
         var observers = new ArrayList<IObserver>();
-        getEventMap(idItem)
-                .ifPresent(e -> observers.add(new EventMap(e)));
+        getEventMap(id).ifPresent(e -> observers.add(new EventMap(e)));
 
-        getEventInventory(idItem)
-                .ifPresent(e -> observers.add(new EventInventory(e)));
+        getEventInventory(id).ifPresent(e -> observers.add(new EventInventory(e)));
 
-        getEventDoor(idItem)
-                .ifPresent(e -> observers.add(new EventDoor(e)));
+        getEventDoor(id).ifPresent(e -> observers.add(new EventDoor(e)));
 
-        getEventItem(idItem)
-                .ifPresent(e -> observers.add(new EventItem(e)));
+        getEventItem(id).ifPresent(e -> observers.add(new EventItem(e)));
 
         return observers;
     }
 
-    private static List<ICombinableEntity> getCombinable(int idItem) {
-        return CombinableRepository.getInstance().getByIdItem(idItem);
+    private Optional<IItemEntity> getEntity(int id) {
+        return ItemRepository.getInstance().getById(id);
     }
 
-    private static Optional<IEquipableEntity> getEquipable(int idItem) {
-        return EquipableRepository.getInstance().getByIdItem(idItem);
+    private List<ICombinableEntity> getCombinable(int id) {
+        return CombinableRepository.getInstance().getByIdItem(id);
     }
 
-    private static Optional<IUsableEntity> getUsable(int idItem) {
-        return UsableRepository.getInstance().getByIdItem(idItem);
+    private Optional<IEquipableEntity> getEquipable(int id) {
+        return EquipableRepository.getInstance().getByIdItem(id);
     }
 
-    private static Optional<IMissionEntity> getMission(int idItem) {
-        return MissionRepository.getInstance().getByIdItem(idItem);
+    private Optional<IUsableEntity> getUsable(int id) {
+        return UsableRepository.getInstance().getByIdItem(id);
     }
 
-    private static Optional<IEventMapEntity> getEventMap(int idItem) {
-        return EventMapRepository.getInstance().getByIdItem(idItem);
+    private Optional<IMissionEntity> getMission(int id) {
+        return MissionRepository.getInstance().getByIdItem(id);
     }
 
-    private static Optional<IEventInventoryEntity> getEventInventory(int idItem) {
-        return EventInventoryRepository.getInstance().getByIdItem(idItem);
+    private Optional<IEventMapEntity> getEventMap(int id) {
+        return EventMapRepository.getInstance().getByIdItem(id);
     }
 
-    private static Optional<IEventDoorEntity> getEventDoor(int idItem) {
-        return EventIDoorRepository.getInstance().getByIdItem(idItem);
+    private Optional<IEventInventoryEntity> getEventInventory(int id) {
+        return EventInventoryRepository.getInstance().getByIdItem(id);
     }
 
-    private static Optional<IEventItemEntity> getEventItem(int idItem) {
-        return EventItemRepository.getInstance().getByIdItem(idItem);
+    private Optional<IEventDoorEntity> getEventDoor(int id) {
+        return EventIDoorRepository.getInstance().getByIdItem(id);
+    }
+
+    private Optional<IEventItemEntity> getEventItem(int id) {
+        return EventItemRepository.getInstance().getByIdItem(id);
     }
 }

@@ -1,24 +1,27 @@
 package backend.service.model;
 
+import backend.repository.interfaces.IEntity;
+import backend.repository.interfaces.IExitEntity;
 import backend.repository.interfaces.IMapGameEntity;
 import backend.service.enums.Direction;
 import backend.service.interfaces.ICoordinate;
+import backend.service.interfaces.IImage;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class MapGame {
+public final class MapGame implements IImage, IEntity {
     private final IMapGameEntity entity;
     private String image;
     private final NPC npc;
     private final Area area;
     private final Map<ICoordinate, Door> doors;
     private final Map<ICoordinate, Item> itens;
-    private final List<Exit> exits;
+    private final List<IExitEntity> exits;
 
-    public MapGame(IMapGameEntity entity, Map<ICoordinate, Door> doors, Map<ICoordinate, Item> itens, List<Exit> exits, NPC npc) {
+    public MapGame(IMapGameEntity entity, Map<ICoordinate, Door> doors, Map<ICoordinate, Item> itens, List<IExitEntity> exits, NPC npc) {
         this.entity = entity;
         this.image = entity.image();
         this.doors = doors;
@@ -33,6 +36,12 @@ public final class MapGame {
         return this.entity.id();
     }
 
+
+    @Override
+    public int id() {
+        return this.entity.id();
+    }
+
     public String getName() {
         return this.entity.name();
     }
@@ -41,6 +50,7 @@ public final class MapGame {
         return this.entity.song();
     }
 
+    @Override
     public String getImage() {
         return this.image;
     }
@@ -96,8 +106,8 @@ public final class MapGame {
 
     public Optional<Integer> getExit(Direction direction) {
         return this.exits.stream()
-                .filter(exit -> exit.direction().equals(direction))
-                .map(Exit::idMap)
+                .filter(exit -> exit.direction().equalsIgnoreCase(direction.name()))
+                .map(IExitEntity::idMapExt)
                 .findFirst();
     }
 
@@ -137,4 +147,5 @@ public final class MapGame {
                 """.formatted(this.entity.id(), this.entity.name(), this.image, this.area, this.doors.values(),
                 this.itens.values(), this.entity.song(), this.exits);
     }
+
 }

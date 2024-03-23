@@ -4,6 +4,7 @@ import backend.controller.enums.TypeMessage;
 import backend.repository.entity.ItemEntity;
 import backend.repository.singleton.MapGameRepository;
 import backend.service.command.InteractCommand;
+import backend.service.model.ItemFactory;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.*;
 import org.junit.Before;
@@ -24,12 +25,12 @@ public class InteractCommandTest {
     @Before
     public void create() {
         this.mapGame = new HashMap<>();
-        this.mapGame.put(1, MapGameFactory.create(MapGameRepository.getInstance().getById(1).orElse(null)));
-        this.mapGame.put(12, MapGameFactory.create(MapGameRepository.getInstance().getById(12).orElse(null)));
+        this.mapGame.put(1, new MapGameFactory().create(MapGameRepository.getInstance().getById(1).orElse(null)));
+        this.mapGame.put(12, new MapGameFactory().create(MapGameRepository.getInstance().getById(12).orElse(null)));
         this.itens = new HashMap<>();
         var itensE = new ArrayList<ItemEntity>();
         itensE.add(new ItemEntity(15, "tesouro", "tesouro lendário dos templários", 3, 24, 62, null));
-        itensE.forEach(v -> this.itens.put(v.id(), ItemFactory.create(v)));
+        itensE.forEach(v -> this.itens.put(v.id(), new ItemFactory().create(v)));
 
     }
 

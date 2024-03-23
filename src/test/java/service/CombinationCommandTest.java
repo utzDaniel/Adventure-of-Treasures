@@ -24,6 +24,7 @@ public class CombinationCommandTest {
 
     @Before
     public void create() {
+        var factory = new ItemFactory();
         this.itens = new HashMap<>();
         var itensE = new ArrayList<ItemEntity>();
         itensE.add(new ItemEntity(5, "livro", "livro antigo usado para decifrar escrita antiga", 1, 39, 49, "src/main/resources/image/item/livro.png"));
@@ -40,7 +41,7 @@ public class CombinationCommandTest {
 
         itensE.add(new ItemEntity(10, "mochila", "utilizada para carregar mais coisas", 0, 22, 65, "src/main/resources/image/item/mochila.png"));
 
-        itensE.forEach(v -> this.itens.put(v.id(), ItemFactory.create(v)));
+        itensE.forEach(v -> this.itens.put(v.id(), factory.create(v)));
     }
 
     private Inventory createInventory(List<Item> itens) {
@@ -60,8 +61,9 @@ public class CombinationCommandTest {
 
     @Test
     public void validErro2() {
+        var factory = new ItemFactory();
         var item1 = new ItemEntity(10, "mochila", "utilizada para carregar mais coisas", 0, 22, 65, "src/main/resources/image/item/mochila.png");
-        var item = ItemFactory.create(item1);
+        var item = factory.create(item1);
         var list = new ArrayList<Item>();
         list.add(this.itens.get(5));
         list.add(item);

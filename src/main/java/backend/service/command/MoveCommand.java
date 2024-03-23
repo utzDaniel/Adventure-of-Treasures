@@ -2,7 +2,7 @@ package backend.service.command;
 
 import backend.controller.enums.TypeMessage;
 import backend.service.enums.Direction;
-import backend.service.infra.Cache;
+import backend.service.infra.CacheService;
 import backend.service.interfaces.ICommand;
 import backend.service.interfaces.ICoordinate;
 import backend.service.interfaces.IMove;
@@ -45,7 +45,7 @@ public final class MoveCommand implements ICommand {
                 return TypeMessage.MOVE_NEXT_SCENERY_NOT_EXIT;
             }
 
-            var nextScenery = Cache.getMapGame(idMap.get());
+            var nextScenery = CacheService.getMapGame(idMap.get());
             if (nextScenery.isEmpty()) {
                 this.person.updateMove(this.direction, this.oldCoordinate);
                 return TypeMessage.MAP_NOT_FOUND;

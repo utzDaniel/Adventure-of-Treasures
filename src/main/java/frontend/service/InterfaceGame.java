@@ -6,11 +6,9 @@ import frontend.enums.NameJMenu;
 import frontend.model.Song;
 import frontend.model.SoundEffects;
 import frontend.model.component.ComponentFactory;
-import backend.controller.interfaces.IItemDTO;
 import backend.controller.interfaces.IActionResponse;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -23,14 +21,14 @@ public final class InterfaceGame {
     private final List<JLabel> components;
 
     public InterfaceGame(IActionResponse action) {
-        frame = ComponentFactory.getJFrame();
+        this.frame = ComponentFactory.getJFrame();
         this.components = ComponentFactory.getJLabel(action.components());
-        song = new Song();
-        song.play(action.song());
-        soundEffects = new SoundEffects();
+        this.song = new Song();
+        this.song.play(action.song());
+        this.soundEffects = new SoundEffects();
         settingsFrame();
-        if (Objects.nonNull(components)) components.forEach(jLabel -> frame.getContentPane().add(jLabel));
-        frame.getContentPane().repaint();
+        if (Objects.nonNull( this.components))  this.components.forEach(jLabel ->  this.frame.getContentPane().add(jLabel));
+        this.frame.getContentPane().repaint();
         //history();
     }
 

@@ -4,7 +4,7 @@ import backend.controller.interfaces.IActionService;
 import backend.controller.interfaces.IInventoryService;
 import backend.service.ActionService;
 import backend.service.InventoryService;
-import backend.service.infra.Cache;
+import backend.service.infra.CacheService;
 import backend.service.interfaces.ICoordinate;
 import backend.service.mapper.ActionResponseMapper;
 import backend.service.model.Inventory;
@@ -45,7 +45,7 @@ public class Game {
         var coordinate = ICoordinate.getInstance(x, y);
 
         var map = properties.getProperty("backend.player.map");
-        var mapGame = Cache.getMapGame(Integer.parseInt(map));
+        var mapGame = CacheService.getMapGame(Integer.parseInt(map));
         var move = new Move(path, coordinate, mapGame.orElse(null));
 
         try {

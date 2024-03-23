@@ -34,13 +34,13 @@ public final class CombinationCommand implements ICommand {
 
         if (this.itens.size() != combinables.size()) return TypeMessage.COMBINE_ERRO_ALL;
 
-        if (combinables.get(0).getSizeCombination() > combinables.size())
+        if (combinables.get(0).sizeCombination() > combinables.size())
             return TypeMessage.COMBINE_ERRO_INCOMPLETE;
 
-        if (combinables.get(0).getSizeCombination() < combinables.size())
+        if (combinables.get(0).sizeCombination() < combinables.size())
             return TypeMessage.COMBINE_ERRO_INVALID;
 
-        var isCombine = combinables.stream().allMatch(v -> v.getCombination() == combinables.get(0).getCombination());
+        var isCombine = combinables.stream().allMatch(v -> v.combination() == combinables.get(0).combination());
         if (!isCombine) return TypeMessage.COMBINE_ERRO_COMBINABLE;
 
         this.itens.forEach(v -> this.commands.addCommand(new RemoveItemInventoryCommand(v, inventory)));
@@ -48,7 +48,7 @@ public final class CombinationCommand implements ICommand {
         var type = this.commands.execute();
         if (!type.isSucess()) return type;
 
-        return getEquipTypeMessage(combinables.get(0).getCombination());
+        return getEquipTypeMessage(combinables.get(0).combination());
     }
 
     @Override

@@ -1,7 +1,7 @@
 package backend.service.command;
 
 import backend.controller.enums.TypeMessage;
-import backend.service.infra.Cache;
+import backend.service.infra.CacheService;
 import backend.service.interfaces.ICommand;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.MapGame;
@@ -32,7 +32,7 @@ public final class OpenCommand implements ICommand {
         if (!door.isOpen())
             return TypeMessage.DOOR_ERRO_CLOSED;
 
-        var mapGame = Cache.getMapGame(door.getIdMapGame());
+        var mapGame = CacheService.getMapGame(door.getIdMapGame());
         if (mapGame.isEmpty()) return TypeMessage.MAP_NOT_FOUND;
 
         updateMove(mapGame.get());

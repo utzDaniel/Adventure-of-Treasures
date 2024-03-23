@@ -21,13 +21,15 @@ public class AddItemInventoryCommandTest {
     private AddItemInventoryCommand cmd;
     private Map<Integer, Item> itens;
 
+
     @Before
     public void create() {
+        var factory = new ItemFactory();
         this.itens = new HashMap<>();
         var itensE = new ArrayList<ItemEntity>();
         itensE.add(new ItemEntity(3, "faca", "serve para cortar algo", 30, 13, 42, "src/main/resources/image/item/faca.png"));
         itensE.add(new ItemEntity(10, "mochila", "utilizada para carregar mais coisas", 0, 22, 65, "src/main/resources/image/item/mochila.png"));
-        itensE.forEach(v -> this.itens.put(v.id(), ItemFactory.create(v)));
+        itensE.forEach(v -> this.itens.put(v.id(), factory.create(v)));
     }
 
     @Test

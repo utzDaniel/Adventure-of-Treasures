@@ -1,31 +1,32 @@
 package backend.service.model;
 
+import backend.repository.interfaces.IDoorEntity;
+import backend.repository.interfaces.IEntity;
 import backend.service.interfaces.ICoordinate;
 
-public final class Door {
-
-    private final int id;
-    private final int idMapGame;
-    private final ICoordinate coordinate;
+public final class Door implements IEntity {
+    private final IDoorEntity entity;
     private boolean open;
 
-    public Door(int id, int idMapGame, ICoordinate coordinate, boolean open) {
-        this.id = id;
-        this.idMapGame = idMapGame;
-        this.coordinate = coordinate;
-        this.open = open;
+    public Door(IDoorEntity entity) {
+        this.entity = entity;
+        this.open = entity.open();
     }
 
+    @Override
+    public int id() {
+        return this.entity.id();
+    }
     public int getId() {
-        return this.id;
+        return this.entity.id();
     }
 
     public int getIdMapGame() {
-        return this.idMapGame;
+        return this.entity.idMapDor();
     }
 
     public ICoordinate getCoordinate() {
-        return this.coordinate;
+        return ICoordinate.getInstance(this.entity.positionX(), this.entity.positionY());
     }
 
     public void setOpen(boolean open) {
@@ -37,11 +38,11 @@ public final class Door {
     }
 
     public boolean isDoor(ICoordinate coordinate) {
-        return this.coordinate.equals(coordinate);
+        return ICoordinate.getInstance(this.entity.positionX(), this.entity.positionY()).equals(coordinate);
     }
 
     public boolean isMap(int idMapGame) {
-        return this.idMapGame == idMapGame;
+        return this.entity.idMapDor() == idMapGame;
     }
 
     @Override
@@ -53,6 +54,7 @@ public final class Door {
                     "coordinate": %s,
                     "open": %b
                 }
-                """.formatted(this.id, this.idMapGame, this.coordinate.toString(), this.open);
+                """.formatted(this.entity.id(), this.entity.idMapDor(),
+                ICoordinate.getInstance(this.entity.positionX(), this.entity.positionY()).toString(), this.open);
     }
 }

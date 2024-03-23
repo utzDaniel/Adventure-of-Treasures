@@ -24,9 +24,9 @@ public class MoveCommandTest {
     @Before
     public void create() {
         this.mapGame = new HashMap<>();
-        this.mapGame.put(1, MapGameFactory.create(MapGameRepository.getInstance().getById(1).orElse(null)));
-        this.mapGame.put(5, MapGameFactory.create(MapGameRepository.getInstance().getById(5).orElse(null)));
-        this.mapGame.put(6, MapGameFactory.create(MapGameRepository.getInstance().getById(6).orElse(null)));
+        this.mapGame.put(1, new MapGameFactory().create(MapGameRepository.getInstance().getById(1).orElse(null)));
+        this.mapGame.put(5, new MapGameFactory().create(MapGameRepository.getInstance().getById(5).orElse(null)));
+        this.mapGame.put(6, new MapGameFactory().create(MapGameRepository.getInstance().getById(6).orElse(null)));
     }
 
     @Test

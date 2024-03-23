@@ -17,8 +17,6 @@ public final class Inventory {
         this.maxCapacity = maxCapacity;
         this.isInventory = false;
         this.itens = new HashMap<>();
-//        List.of(5, 11, 12)
-//                .forEach(v -> itens.put(v, Cache.getItem(v).get()));
     }
 
     public int getCapacity() {

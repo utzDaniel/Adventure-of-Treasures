@@ -31,7 +31,7 @@ public class RemoveItemInventoryCommandTest {
         itensE.add(new ItemEntity(15, "tesouro", "tesouro lendário dos templários", 3, 24, 62, "src/main/resources/image/item/tesouro.png"));
         itensE.add(new ItemEntity(5, "livro", "livro antigo usado para decifrar escrita antiga", 1, 39, 49, "src/main/resources/image/item/livro.png"));
 
-        itensE.forEach(v -> this.itens.put(v.id(), ItemFactory.create(v)));
+        itensE.forEach(v -> this.itens.put(v.id(), new ItemFactory().create(v)));
     }
 
     @Test

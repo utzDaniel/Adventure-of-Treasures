@@ -4,6 +4,7 @@ import backend.controller.enums.TypeMessage;
 import backend.repository.entity.ItemEntity;
 import backend.repository.singleton.MapGameRepository;
 import backend.service.command.TakeItemCommand;
+import backend.service.model.ItemFactory;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.*;
 import org.junit.Before;
@@ -20,8 +21,8 @@ public class TakeItemCommandTest {
 
     @Before
     public void create() {
-        this.item = ItemFactory.create(new ItemEntity(10, "mochila", "utilizada para carregar mais coisas", 0, 48, 30, "src/main/resources/image/item/mochila.png"));
-        this.map = MapGameFactory.create(MapGameRepository.getInstance().getById(1).orElse(null));
+        this.item = new ItemFactory().create(new ItemEntity(10, "mochila", "utilizada para carregar mais coisas", 0, 48, 30, "src/main/resources/image/item/mochila.png"));
+        this.map = new MapGameFactory().create(MapGameRepository.getInstance().getById(1).orElse(null));
 
     }
 

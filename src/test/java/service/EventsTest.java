@@ -1,10 +1,12 @@
 package service;
 
+import backend.Game;
 import backend.repository.singleton.DoorRepository;
 import backend.repository.singleton.ItemRepository;
 import backend.repository.singleton.MapGameRepository;
 import backend.service.enums.TypeItem;
-import backend.service.infra.Cache;
+import backend.service.infra.CacheService;
+import backend.service.model.ItemFactory;
 import backend.service.interfaces.IUsable;
 import backend.service.model.*;
 import org.junit.Before;
@@ -38,14 +40,14 @@ public class EventsTest {
     @Before
     public void create() throws Exception {
         MapGameRepository.getInstance().getAll()
-                .forEach(v -> this.mapGame.put(v.id(), MapGameFactory.create(v)));
+                .forEach(v -> this.mapGame.put(v.id(), new MapGameFactory().create(v)));
         ItemRepository.getInstance().getAll()
-                .forEach(v -> this.itens.put(v.id(), ItemFactory.create(v)));
+                .forEach(v -> this.itens.put(v.id(), new ItemFactory().create(v)));
         DoorRepository.getInstance().getAll()
-                .forEach(v -> this.doors.put(v.id(), DoorFactory.create(v)));
-        this.mapGame.values().forEach(v -> Cache.getMapGame(v.getId()));
-        this.doors.values().forEach(v -> Cache.getDoor(v.getId()));
-        this.itens.values().forEach(v -> Cache.getItem(v.getId()));
+                .forEach(v -> this.doors.put(v.id(), new Door(v)));
+        this.mapGame.values().forEach(v -> CacheService.getMapGame(v.getId()));
+        this.doors.values().forEach(v -> CacheService.getDoor(v.getId()));
+        this.itens.values().forEach(v -> CacheService.getItem(v.getId()));
     }
 
 
@@ -54,7 +56,7 @@ public class EventsTest {
         this.itens.get(1).warn();
         var door = this.doors.get(6);
         door.setOpen(true);
-        assertEquals(Optional.of(door).toString(), Cache.getDoor(6).toString());
+        assertEquals(Optional.of(door).toString(),CacheService.getDoor(6).toString());
         door.setOpen(false);
     }
 
@@ -63,11 +65,11 @@ public class EventsTest {
         this.itens.get(2).warn();
         var door = this.doors.get(9);
         door.setOpen(true);
-        assertEquals(Optional.of(door).toString(), Cache.getDoor(9).toString());
+        assertEquals(Optional.of(door).toString(), CacheService.getDoor(9).toString());
         var map = this.mapGame.get(8);
         map.getDoor(9).ifPresent(v -> v.setOpen(true));
         map.setImage("src/main/resources/image/map/temploF.png");
-        assertEquals(map.getImage(), Objects.requireNonNull(Cache.getMapGame(8).orElse(null)).getImage());
+        assertEquals(map.getImage(), Objects.requireNonNull(CacheService.getMapGame(8).orElse(null)).getImage());
         door.setOpen(false);
         map.getDoor(9).ifPresent(v -> v.setOpen(false));
     }
@@ -78,8 +80,8 @@ public class EventsTest {
         for (int id : ids) {
             this.itens.get(id).warn();
             var item = this.itens.get(16);
-            assertEquals(item.toString(), Cache.getInventory().getItem(16).toString());
-            Cache.getInventory().removeItem(item);
+            assertEquals(item.toString(), Game.player.getInventory().getItem(16).toString());
+            Game.player.getInventory().removeItem(item);
         }
     }
 
@@ -89,17 +91,17 @@ public class EventsTest {
         for (int id : ids) {
             this.itens.get(id).warn();
             var item = this.itens.get(8);
-            assertEquals(item.toString(), Cache.getInventory().getItem(8).toString());
-            Cache.getInventory().removeItem(item);
+            assertEquals(item.toString(), Game.player.getInventory().getItem(8).toString());
+            Game.player.getInventory().removeItem(item);
             var map = this.mapGame.get(4);
             map.setImage("src/main/resources/image/map/praiaM.png");
-            assertEquals(map.getImage(), Objects.requireNonNull(Cache.getMapGame(4).orElse(null)).getImage());
+            assertEquals(map.getImage(), Objects.requireNonNull(CacheService.getMapGame(4).orElse(null)).getImage());
             map.setImage("src/main/resources/image/map/praia.png");
             var itens = new ArrayList<IUsable>();
             this.itens.get(11)
                     .getSpecialization(TypeItem.USABLE)
                     .ifPresent(v -> itens.add(((IUsable) v)));
-            Cache.getItem(11)
+            CacheService.getItem(11)
                     .flatMap(i -> i.getSpecialization(TypeItem.USABLE))
                     .ifPresent(v -> itens.add(((IUsable) v)));
             itens.get(0).setEnabled(true);
@@ -114,8 +116,8 @@ public class EventsTest {
         for (int id : ids) {
             this.itens.get(id).warn();
             var item = this.itens.get(2);
-            assertEquals(item.toString(), Cache.getInventory().getItem(2).toString());
-            Cache.getInventory().removeItem(item);
+            assertEquals(item.toString(), Game.player.getInventory().getItem(2).toString());
+            Game.player.getInventory().removeItem(item);
         }
     }
 
@@ -125,7 +127,7 @@ public class EventsTest {
         this.itens.get(11).warn();
         var map = this.mapGame.get(4);
         map.setImage("src/main/resources/image/map/praia.png");
-        assertEquals(map.getImage(), Objects.requireNonNull(Cache.getMapGame(4).orElse(null)).getImage());
+        assertEquals(map.getImage(), Objects.requireNonNull(CacheService.getMapGame(4).orElse(null)).getImage());
         map.setImage("src/main/resources/image/map/praiaM.png");
     }
 
@@ -135,7 +137,7 @@ public class EventsTest {
         this.itens.get(16).warn();
         var door = this.doors.get(10);
         door.setOpen(true);
-        assertEquals(Optional.of(door).toString(), Cache.getDoor(10).toString());
+        assertEquals(Optional.of(door).toString(), CacheService.getDoor(10).toString());
         door.setOpen(false);
     }
 
