@@ -31,9 +31,7 @@ public final class GameJOptionPaneFactory {
                         ← - Mover para o Oeste
                         → - Mover para o Leste
                         ↓ - Mover para o Sul
-                        1 - Abrir porta
-                        2 - Pegar item
-                        3 - Interagir com npc
+                        1 - Interagir (item, porta, NPC)
                         0 - Abrir inventario
                         """, "Comandos",
                 JOptionPane.INFORMATION_MESSAGE);

@@ -3,7 +3,7 @@ package service;
 import backend.controller.enums.TypeMessage;
 import backend.repository.entity.ItemEntity;
 import backend.repository.singleton.MapGameRepository;
-import backend.service.command.InteractCommand;
+import backend.service.command.InteractNPCCommand;
 import backend.service.model.ItemFactory;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.*;
@@ -16,8 +16,8 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-public class InteractCommandTest {
-    private InteractCommand cmd;
+public class InteractNPCCommandTest {
+    private InteractNPCCommand cmd;
 
     private Map<Integer, MapGame> mapGame;
     private Map<Integer, Item> itens;
@@ -39,9 +39,9 @@ public class InteractCommandTest {
         var move = new Move("", ICoordinate.getInstance(47, 30), this.mapGame.get(1));
         var inventory = new Inventory(0, 10);
         var player = new Player(move, inventory);
-        this.cmd = new InteractCommand(player);
+        this.cmd = new InteractNPCCommand(player);
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.INTERACT_ERRO, msg);
+        assertEquals(TypeMessage.NPC_ERRO_FOUND, msg);
     }
 
     @Test
@@ -49,9 +49,9 @@ public class InteractCommandTest {
         var move = new Move("", ICoordinate.getInstance(28, 71), this.mapGame.get(12));
         var inventory = new Inventory(0, 10);
         var player = new Player(move, inventory);
-        this.cmd = new InteractCommand(player);
+        this.cmd = new InteractNPCCommand(player);
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.INTERACT_ERRO_INCOMPLETE, msg);
+        assertEquals(TypeMessage.NPC_ERRO_INCOMPLETE, msg);
     }
 
     @Test
@@ -60,7 +60,7 @@ public class InteractCommandTest {
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.itens.get(15));
         var player = new Player(move, inventory);
-        this.cmd = new InteractCommand(player);
+        this.cmd = new InteractNPCCommand(player);
         var msg = this.cmd.execute();
         assertEquals(TypeMessage.GAME_FINISH, msg);
     }
@@ -70,9 +70,9 @@ public class InteractCommandTest {
         var move = new Move("", ICoordinate.getInstance(52, 30), this.mapGame.get(1));
         var inventory = new Inventory(0, 10);
         var player = new Player(move, inventory);
-        this.cmd = new InteractCommand(player);
+        this.cmd = new InteractNPCCommand(player);
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.INTERACT, msg);
+        assertEquals(TypeMessage.NPC_INTERACT, msg);
         assertEquals(ICoordinate.getInstance(32, 7), player.getCoordinate());
         assertEquals(12, player.getCurrentMap().getId());
     }
@@ -83,7 +83,7 @@ public class InteractCommandTest {
         var inventory = new Inventory(0, 10);
         var player = new Player(move, inventory);
         var oldCoordinate = ICoordinate.getInstance(player.getCoordinate());
-        this.cmd = new InteractCommand(player);
+        this.cmd = new InteractNPCCommand(player);
         this.cmd.execute();
         this.cmd.undo();
         assertEquals(oldCoordinate, player.getCoordinate());

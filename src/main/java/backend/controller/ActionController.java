@@ -27,19 +27,6 @@ public final class ActionController implements IActionController {
         return ResponseFactory.create(rsp);
     }
 
-
-    @Override
-    public IResponse take() {
-        var rsp = this.actionService.take();
-        return ResponseFactory.create(rsp);
-    }
-
-    @Override
-    public IResponse open() {
-        var rsp = this.actionService.open();
-        return ResponseFactory.create(rsp);
-    }
-
     @Override
     public IResponse interact() {
         var rsp = this.actionService.interact();

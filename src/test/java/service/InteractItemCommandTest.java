@@ -3,7 +3,7 @@ package service;
 import backend.controller.enums.TypeMessage;
 import backend.repository.entity.ItemEntity;
 import backend.repository.singleton.MapGameRepository;
-import backend.service.command.TakeItemCommand;
+import backend.service.command.InteractItemCommand;
 import backend.service.model.ItemFactory;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.*;
@@ -13,9 +13,9 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-public class TakeItemCommandTest {
+public class InteractItemCommandTest {
 
-    private TakeItemCommand cmd;
+    private InteractItemCommand cmd;
     private Item item;
     private MapGame map;
 
@@ -32,7 +32,7 @@ public class TakeItemCommandTest {
         var move = new Move("", ICoordinate.getInstance(45, 30), this.map);
         var inventario = new Inventory(0, 0);
         var player = new Player(move, inventario);
-        this.cmd = new TakeItemCommand(player);
+        this.cmd = new InteractItemCommand(player);
         var msg = this.cmd.execute();
         assertEquals(TypeMessage.ITEM_ERRO_FOUND, msg);
     }
@@ -43,7 +43,7 @@ public class TakeItemCommandTest {
         var move = new Move("", ICoordinate.getInstance(47, 30), this.map);
         var inventario = new Inventory(0, 0);
         var player = new Player(move, inventario);
-        this.cmd = new TakeItemCommand(player);
+        this.cmd = new InteractItemCommand(player);
         var msg = this.cmd.execute();
         assertNull(this.map.getItem(ICoordinate.getInstance(48, 30)));
         assertEquals(this.item, inventario.getItem(this.item.getId()));
@@ -56,7 +56,7 @@ public class TakeItemCommandTest {
         var move = new Move("", ICoordinate.getInstance(47, 30), this.map);
         var inventario = new Inventory(0, 0);
         var player = new Player(move, inventario);
-        this.cmd = new TakeItemCommand(player);
+        this.cmd = new InteractItemCommand(player);
         this.cmd.execute();
         this.cmd.undo();
         assertNull(inventario.getItem(this.item.getId()));

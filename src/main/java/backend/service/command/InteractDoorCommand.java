@@ -9,13 +9,13 @@ import backend.service.model.Player;
 
 import java.util.Objects;
 
-public final class OpenCommand implements ICommand {
+public final class InteractDoorCommand implements ICommand {
 
     private final Player player;
     private final MapGame oldMapGame;
     private final ICoordinate oldCoordinate;
 
-    public OpenCommand(Player player) {
+    public InteractDoorCommand(Player player) {
         this.player = player;
         this.oldMapGame = player.getCurrentMap();
         this.oldCoordinate = ICoordinate.getInstance(player.getCoordinate());
@@ -27,7 +27,7 @@ public final class OpenCommand implements ICommand {
         var door = this.player.getCurrentMap().getDoor(this.player.getCoordinate()).orElse(null);
 
         if (Objects.isNull(door))
-            return TypeMessage.DOOR_ERRO_EXIT;
+            return TypeMessage.DOOR_ERRO_FOUND;
 
         if (!door.isOpen())
             return TypeMessage.DOOR_ERRO_CLOSED;

@@ -6,12 +6,12 @@ import backend.service.model.Player;
 
 import java.util.Objects;
 
-public final class TakeItemCommand implements ICommand {
+public final class InteractItemCommand implements ICommand {
 
     private final Player player;
     private final CommandTool commands;
 
-    public TakeItemCommand(Player player) {
+    public InteractItemCommand(Player player) {
         this.player = player;
         this.commands = new CommandTool();
     }

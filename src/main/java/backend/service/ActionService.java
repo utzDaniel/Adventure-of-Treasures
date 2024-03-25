@@ -4,10 +4,7 @@ import backend.Game;
 import backend.controller.enums.TypeMessage;
 import backend.controller.interfaces.IActionService;
 import backend.controller.interfaces.IServiceResponse;
-import backend.service.command.InteractCommand;
-import backend.service.command.MoveCommand;
-import backend.service.command.OpenCommand;
-import backend.service.command.TakeItemCommand;
+import backend.service.command.*;
 import backend.service.component.inventory.quit.InventoryQuit;
 import backend.service.dto.response.ServiceResponse;
 import backend.service.enums.Direction;
@@ -33,28 +30,6 @@ public final class ActionService implements IActionService {
     public IServiceResponse refresh() {
         var inventory = Game.player.getInventory();
         var typeMessage = new InventoryQuit(inventory).run();
-
-        if (!typeMessage.isSucess())
-            new ServiceResponse(typeMessage, null);
-
-        var obj = new ActionResponseMapper().apply(Game.player);
-        return new ServiceResponse(typeMessage, obj);
-    }
-
-    @Override
-    public IServiceResponse take() {
-        var typeMessage = new TakeItemCommand(Game.player).execute();
-
-        if (!typeMessage.isSucess())
-            new ServiceResponse(typeMessage, null);
-
-        var obj = new ActionResponseMapper().apply(Game.player);
-        return new ServiceResponse(typeMessage, obj);
-    }
-
-    @Override
-    public IServiceResponse open() {
-        var typeMessage = new OpenCommand(Game.player).execute();
 
         if (!typeMessage.isSucess())
             new ServiceResponse(typeMessage, null);

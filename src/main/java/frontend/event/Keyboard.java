@@ -65,11 +65,9 @@ public class Keyboard {
                         interfaceGame.updateComponentsMove(action);
 
 
-                    //ENTRA NA PORTA
                 } else if (keyCode == 97) {
 
-                    var actionRes = executa("/action/open");
-
+                    var actionRes = executa("/action/interact");
                     var message = new MessageMapper().apply(actionRes);
                     var action = new ActionMapper().apply(actionRes);
 
@@ -77,28 +75,16 @@ public class Keyboard {
 
                     var effect = message.effect();
 
-                    if (message.sucess())
-                        updateItensMapGame(action);
-
-                    if (Objects.nonNull(effect))
-                        soundEffects.play(effect);
-
-
-                    //PEGAR ITEM
-                } else if (keyCode == 98) {
-
-                    var actionRes = executa("/action/take");
-                    var message = new MessageMapper().apply(actionRes);
-                    var action = new ActionMapper().apply(actionRes);
-
-                    var effect = message.effect();
-                    if (Objects.nonNull(effect) && !effect.isEmpty()) {
-                        soundEffects.play(effect);
+                    if (Objects.nonNull(effect) && effect.contains("finish")) {
+                        finish(effect);
                     }
 
                     if (message.sucess()) updateItensMapGame(action);
 
-                    //INVENTARIO
+                    if (Objects.nonNull(effect) && !effect.isEmpty()) {
+                        soundEffects.play(effect);
+                    }
+
                 } else if (keyCode == 96) {
 
                     var inventoryOpenRes = executa("/inventory/open");
@@ -107,28 +93,7 @@ public class Keyboard {
 
                     if (message.sucess()) interfaceInventory.open(inventoryOpen);
 
-                } else if (keyCode == 99) {
-
-                    var actionRes = executa("/action/interact");
-
-                    var message = new MessageMapper().apply(actionRes);
-                    var action = new ActionMapper().apply(actionRes);
-
-                    if (Objects.isNull(message)) return;
-
-                    var effect = message.effect();
-
-                    if (effect.contains("finish")) {
-                        finish(effect);
-                    }
-
-                    if (message.sucess())
-                        updateItensMapGame(action);
-
-                    if (Objects.nonNull(effect))
-                        soundEffects.play(effect);
-
-                }else if (keyCode == 116) {
+                } else if (keyCode == 116) {
 
                     var actionRes = executa("/action/load");
                     var message = new MessageMapper().apply(actionRes);
@@ -137,7 +102,7 @@ public class Keyboard {
                     if (message.sucess())
                         interfaceGame.updateComponentsMove(action);
 
-                }else if (keyCode == 117) {
+                } else if (keyCode == 117) {
 
                     executa("/action/save");
 
