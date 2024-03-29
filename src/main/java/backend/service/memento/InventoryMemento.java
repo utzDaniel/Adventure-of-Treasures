@@ -22,7 +22,7 @@ public record InventoryMemento(
     private String ids() {
         var str = new StringBuilder();
         str.append("[");
-        this.idItens.forEach(v -> str.append(v).append(","));
+        this.idItens.stream().sorted().forEach(v -> str.append(v).append(","));
         str.append("]");
         return str.toString();
     }

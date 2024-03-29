@@ -2,9 +2,8 @@ package backend.service.command;
 
 import backend.controller.enums.TypeMessage;
 import backend.service.interfaces.ICommand;
-import backend.service.memento.BackupMementoMapper;
 import backend.service.memento.BackupMemento;
-import backend.service.memento.BackupMementoFactory;
+import backend.service.memento.BackupMementoMapper;
 import backend.util.FileUtil;
 
 import java.io.IOException;
@@ -15,18 +14,18 @@ public final class SaveCommand implements ICommand {
 
     private final FileUtil<BackupMemento> fileUtil;
     private List<String> backup;
+    private final BackupMemento memento;
 
-    public SaveCommand() {
-        var filename = "src/main/resources/save/player.txt";
+    public SaveCommand(String filename, BackupMemento memento) {
         this.fileUtil = new FileUtil<>(filename);
+        this.memento = memento;
     }
 
     @Override
     public TypeMessage execute() {
         if (!backup()) return TypeMessage.BACKUP_ERRO;
-        var memento = new BackupMementoFactory().create();
         var list = new ArrayList<>(this.backup);
-        list.add(memento.extrinsic());
+        list.add(this.memento.extrinsic());
         return save(list);
     }
 

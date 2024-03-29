@@ -15,11 +15,6 @@ public final class InventoryController implements IInventoryController {
         this.inventoryService = service;
     }
 
-    /**
-     * o controller valida os dados de entrada,
-     * chama os métodos do service apropriados e
-     * retorna as respostas HTTP adequadas, como códigos de status e conteúdo da resposta.
-     */
 
     @Override
     public IResponse combination(String idItens) {

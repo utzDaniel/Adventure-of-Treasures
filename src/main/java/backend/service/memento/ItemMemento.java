@@ -4,7 +4,7 @@ public record ItemMemento(
         int id,
         int x,
         int y,
-        SpecializationCompositeMemento specializationCompositeMemento) implements IMemento {
+        SpecializationCompositeMemento specializationCompositeMemento) implements IMemento, Comparable<ItemMemento> {
 
     @Override
     public String extrinsic() {
@@ -15,5 +15,10 @@ public record ItemMemento(
                 %sitem;
                 """.formatted(this.id, this.x, this.y, this.specializationCompositeMemento.extrinsic())
                 .replace("\n", "");
+    }
+
+    @Override
+    public int compareTo(ItemMemento o) {
+        return Integer.compare(this.id, o.id);
     }
 }

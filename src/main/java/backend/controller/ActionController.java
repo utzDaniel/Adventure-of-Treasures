@@ -15,12 +15,6 @@ public final class ActionController implements IActionController {
         this.actionService = service;
     }
 
-    /**
-    * o controller valida os dados de entrada,
-    * chama os métodos do service apropriados e
-    * retorna as respostas HTTP adequadas, como códigos de status e conteúdo da resposta.
-    */
-
     @Override
     public IResponse refresh() {
         var rsp = this.actionService.refresh();

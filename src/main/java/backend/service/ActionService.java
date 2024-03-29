@@ -12,19 +12,14 @@ import backend.service.component.inventory.quit.InventoryQuit;
 import backend.service.dto.response.ServiceResponse;
 import backend.service.enums.Direction;
 import backend.service.mapper.ActionResponseMapper;
+import backend.service.memento.BackupMementoFactory;
 
 import java.util.Objects;
 
 public final class ActionService implements IActionService {
 
-    /**
-     * O service é responsável por conter a lógica de negócio da aplicação.
-     * Ele encapsula as operações e regras de negócio que são necessárias para realizar as tarefas desejadas.
-     * O service recebe os dados do controller, executa a lógica necessária e se comunica com o repository,
-     * se for necessário acessar dados persistentes.
-     * O service também pode realizar validações adicionais,
-     * orquestrar várias operações do repository e aplicar regras de negócio mais complexas.
-     */
+    private static final String SAVE_FILENAME = "src/main/resources/save/player.txt";
+
     @Override
     public IServiceResponse refresh() {
         var inventory = Game.player.getInventory();
@@ -66,7 +61,7 @@ public final class ActionService implements IActionService {
 
     @Override
     public IServiceResponse load() {
-        var typeMessage = new LoadCommand().execute();
+        var typeMessage = new LoadCommand(SAVE_FILENAME).execute();
         if (!typeMessage.isSucess())
             new ServiceResponse(typeMessage, null);
 
@@ -76,7 +71,8 @@ public final class ActionService implements IActionService {
 
     @Override
     public IServiceResponse save() {
-        var typeMessage = new SaveCommand().execute();
+        var memento = new BackupMementoFactory().create();
+        var typeMessage = new SaveCommand(SAVE_FILENAME, memento).execute();
         return new ServiceResponse(typeMessage, null);
     }
 }

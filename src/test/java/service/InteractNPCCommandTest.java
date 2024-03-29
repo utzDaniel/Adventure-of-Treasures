@@ -4,7 +4,6 @@ import backend.controller.enums.TypeMessage;
 import backend.repository.entity.ItemEntity;
 import backend.repository.singleton.MapGameRepository;
 import backend.service.command.InteractNPCCommand;
-import backend.service.model.ItemFactory;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.*;
 import org.junit.Before;
@@ -18,7 +17,6 @@ import static org.junit.Assert.assertEquals;
 
 public class InteractNPCCommandTest {
     private InteractNPCCommand cmd;
-
     private Map<Integer, MapGame> mapGame;
     private Map<Integer, Item> itens;
 
