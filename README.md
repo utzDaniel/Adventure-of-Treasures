@@ -1,6 +1,6 @@
 # 💡 Ideia do projeto 
 
-<b> Adventure of Treasures </b> - Desenvolvimento de um jogo com interface gráfica com intuito de melhorar as Habilidades de POO.
+<b> Adventure of Treasures </b> - Desenvolvimento de um jogo com interface gráfica com intuito de melhorar as Habilidades de Programação Orientada a Objetos - POO.
 
 # 💻 Demonstração
 
