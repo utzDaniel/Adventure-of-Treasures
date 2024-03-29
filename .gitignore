@@ -35,3 +35,8 @@ build/
 # Arquivos específicos de sistema operacional
 *.DS_Store
 Thumbs.db
+
+# Package Files #
+*.jar
+*.war
+*.ear
