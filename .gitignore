@@ -12,10 +12,10 @@ out/
 # Arquivos de compilação do Maven
 *.class
 
-# Logs e arquivos temporários
+# Logs, save e arquivos temporários
 *.log
 *.swp
-*~
+src/main/resources/save/
 
 # Dependendo do ambiente de desenvolvimento, você também pode adicionar diretórios específicos, como:
 
@@ -25,20 +25,9 @@ out/
 # NetBeans
 nb-configuration.xml
 
-# IntelliJ IDEA
-.idea/
-*.iml
-*.iws
-*.ipr
-*.iws
-
 # Gradle
 .gradle/
 build/
-
-# Spring Boot
-/target/
-*.log
 
 # Arquivos de configuração do Git
 .gitattributes
