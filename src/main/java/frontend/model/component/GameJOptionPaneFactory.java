@@ -27,12 +27,14 @@ public final class GameJOptionPaneFactory {
     public static void openCommand(Container container) {
         JOptionPane.showMessageDialog(container,
                 """
-                        ↑ - Mover para o Norte
-                        ← - Mover para o Oeste
-                        → - Mover para o Leste
-                        ↓ - Mover para o Sul
-                        1 - Interagir (item, porta, NPC)
-                        0 - Abrir inventario
+                         ↑ - Mover para o Norte
+                         ← - Mover para o Oeste
+                         → - Mover para o Leste
+                         ↓ - Mover para o Sul
+                         1 - Interagir (item, porta, NPC)
+                         0 - Abrir inventario
+                        F5 - Carregar jogo salvo
+                        F6 - Salvar jogo
                         """, "Comandos",
                 JOptionPane.INFORMATION_MESSAGE);
     }
