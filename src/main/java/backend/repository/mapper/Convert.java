@@ -1,8 +1,8 @@
-package backend.repository.util;
+package backend.repository.mapper;
 
-public final class ValidUtil {
+public final class Convert {
 
-    private ValidUtil(){}
+    private Convert(){}
 
     public static boolean parseBoolean(String dado) {
         var value = dado.trim();

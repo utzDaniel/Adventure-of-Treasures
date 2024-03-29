@@ -3,7 +3,6 @@ package backend.repository.singleton;
 import backend.repository.enums.Filename;
 import backend.repository.interfaces.IEventItemEntity;
 import backend.repository.mapper.EventItemEntityMapper;
-import backend.repository.util.Repository;
 
 import java.util.*;
 

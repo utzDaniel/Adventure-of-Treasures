@@ -2,21 +2,13 @@ package backend.repository.enums;
 
 public enum Filename {
     DOOR("door"),
-
-    EQUIPABLE("equipable"),
-
+    EQUIPPABLE("equippable"),
     EXIT("exit"),
-
     ITEM("item"),
-
-    MAPGAME("map"),
-
+    MAP_GAME("map"),
     USABLE("usable"),
-
     COMBINABLE("combinable"),
-
     MISSION("mission"),
-
     ITEM_MAP("item_map"),
     EVENT_MAP("event_map"),
     EVENT_INVENTORY("event_inventory"),
@@ -31,7 +23,7 @@ public enum Filename {
     }
 
     public String getPath() {
-        return String.format("repository/%s.csv", this.path);
+        return String.format("src/main/resources/repository/%s.csv", this.path);
     }
 
 }

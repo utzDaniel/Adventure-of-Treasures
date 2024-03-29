@@ -1,15 +1,19 @@
 package backend.service.model;
 
 import backend.service.enums.TypeItem;
+import backend.service.interfaces.IEquipable;
 import backend.service.interfaces.IRemovable;
 import backend.service.interfaces.ISpecialization;
+import backend.service.interfaces.IUsable;
+import backend.service.interfaces.IBackup;
+import backend.service.memento.SpecializationCompositeMemento;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public final class SpecializationComposite implements ISpecialization {
+public final class SpecializationComposite implements ISpecialization, IBackup<SpecializationCompositeMemento> {
 
     private final List<ISpecialization> specializations;
 
@@ -46,4 +50,29 @@ public final class SpecializationComposite implements ISpecialization {
                 .collect(Collectors.joining(", ")));
     }
 
+    @Override
+    public SpecializationCompositeMemento save() {
+        Boolean equip = null;
+        var equipable = getSpecialization(TypeItem.EQUIPABLE);
+        if (equipable.isPresent()) {
+            equip = ((IEquipable) equipable.get()).isEquip();
+        }
+
+        Boolean enabled = null;
+        var usable = getSpecialization(TypeItem.USABLE);
+        if (usable.isPresent()) {
+            enabled = ((IUsable) usable.get()).isEnabled();
+        }
+
+        return new SpecializationCompositeMemento(equip, enabled);
+    }
+
+    @Override
+    public void restore(SpecializationCompositeMemento memento) {
+        getSpecialization(TypeItem.EQUIPABLE)
+                .ifPresent(s -> ((IEquipable) s).setEquip(memento.equip()));
+
+        getSpecialization(TypeItem.USABLE)
+                .ifPresent(s -> ((IUsable) s).setEnabled(memento.enabled()));
+    }
 }

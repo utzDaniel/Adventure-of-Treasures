@@ -4,7 +4,6 @@ import backend.repository.enums.Filename;
 import backend.repository.interfaces.IMapGameEntity;
 import backend.repository.interfaces.IRepository;
 import backend.repository.mapper.MapGameEntityMapper;
-import backend.repository.util.Repository;
 
 import java.util.*;
 
@@ -17,7 +16,7 @@ public final class MapGameRepository implements IRepository<IMapGameEntity, Inte
         synchronized (MapGameRepository.class) {
             if (Objects.isNull(repository)) {
                 var mapper = new MapGameEntityMapper();
-                var rep = new Repository<>(Filename.MAPGAME, mapper);
+                var rep = new Repository<>(Filename.MAP_GAME, mapper);
                 var map = rep.create();
                 repository = new MapGameRepository(map);
             }

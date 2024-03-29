@@ -4,10 +4,7 @@ import backend.repository.interfaces.IEntity;
 import backend.service.interfaces.ICache;
 import backend.service.interfaces.IFactory;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public final class Cache<T extends IEntity> implements ICache<T> {
 
@@ -19,7 +16,11 @@ public final class Cache<T extends IEntity> implements ICache<T> {
     }
 
     public Optional<T> get(int id) {
-        return Objects.isNull(this.memory.get(id)) ? create(id) : Optional.of(memory.get(id));
+        return Objects.isNull(this.memory.get(id)) ? create(id) : Optional.of(this.memory.get(id));
+    }
+
+    public Collection<T> getAll() {
+        return this.memory.values();
     }
 
     private Optional<T> create(int id) {
@@ -29,6 +30,12 @@ public final class Cache<T extends IEntity> implements ICache<T> {
     }
 
     public void add(T model) {
-        memory.put(model.id(), model);
+        this.memory.put(model.id(), model);
     }
+
+    @Override
+    public void clear() {
+        this.memory.clear();
+    }
+
 }

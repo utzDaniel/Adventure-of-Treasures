@@ -4,16 +4,15 @@ import backend.Game;
 import backend.controller.enums.TypeMessage;
 import backend.controller.interfaces.IActionService;
 import backend.controller.interfaces.IServiceResponse;
-import backend.service.command.*;
+import backend.service.command.InteractCommand;
+import backend.service.command.LoadCommand;
+import backend.service.command.MoveCommand;
+import backend.service.command.SaveCommand;
 import backend.service.component.inventory.quit.InventoryQuit;
 import backend.service.dto.response.ServiceResponse;
 import backend.service.enums.Direction;
 import backend.service.mapper.ActionResponseMapper;
-import backend.service.mapper.PlayerSaveReadMapper;
-import backend.service.model.Player;
-import backend.service.util.FileUtil;
 
-import java.io.IOException;
 import java.util.Objects;
 
 public final class ActionService implements IActionService {
@@ -67,25 +66,17 @@ public final class ActionService implements IActionService {
 
     @Override
     public IServiceResponse load() {
-        var filename = "src/main/resources/save/player.txt";
-        var fileUtil = new FileUtil<Player>(filename);
-        try {
-            Game.player = fileUtil.readFile(new PlayerSaveReadMapper());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return move(Game.player.getDirection().name());
+        var typeMessage = new LoadCommand().execute();
+        if (!typeMessage.isSucess())
+            new ServiceResponse(typeMessage, null);
+
+        var obj = new ActionResponseMapper().apply(Game.player);
+        return new ServiceResponse(typeMessage, obj);
     }
 
     @Override
     public IServiceResponse save() {
-        var filename = "src/main/resources/save/player.txt";
-        var fileUtil = new FileUtil<Player>(filename);
-        try {
-            fileUtil.writeFile(Game.player);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return refresh();
+        var typeMessage = new SaveCommand().execute();
+        return new ServiceResponse(typeMessage, null);
     }
 }

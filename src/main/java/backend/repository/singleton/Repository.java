@@ -1,7 +1,8 @@
-package backend.repository.util;
+package backend.repository.singleton;
 
 import backend.repository.enums.Filename;
 import backend.repository.interfaces.IEntity;
+import backend.util.FileUtil;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -23,8 +24,7 @@ public final class Repository<T extends IEntity> {
     public Map<Integer, T> create() {
         try {
             this.map.putAll(
-                    this.fileUtil.readFile(
-                                    this.mapper)
+                    this.fileUtil.readFile(this.mapper, 1)
                             .stream().collect(Collectors.toMap(IEntity::id, entity -> entity)));
         } catch (IOException e) {
             System.exit(0);

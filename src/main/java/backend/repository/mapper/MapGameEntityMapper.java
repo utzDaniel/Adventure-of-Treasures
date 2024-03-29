@@ -3,7 +3,6 @@ package backend.repository.mapper;
 import backend.repository.entity.MapGameEntity;
 import backend.repository.interfaces.IMapGameEntity;
 import backend.repository.interfaces.IMapperEntity;
-import backend.repository.util.ValidUtil;
 
 public final class MapGameEntityMapper implements IMapperEntity<IMapGameEntity> {
 
@@ -14,10 +13,10 @@ public final class MapGameEntityMapper implements IMapperEntity<IMapGameEntity> 
     public IMapGameEntity apply(String linha) {
         var dados = split(linha);
         return new MapGameEntity(
-                ValidUtil.parseInt(dados[0]),
-                ValidUtil.parseString(dados[1]),
-                ValidUtil.parseString(dados[2]),
-                ValidUtil.parseString(dados[3]),
+                Convert.parseInt(dados[0]),
+                Convert.parseString(dados[1]),
+                Convert.parseString(dados[2]),
+                Convert.parseString(dados[3]),
                 createLimits(dados[4])
         );
     }

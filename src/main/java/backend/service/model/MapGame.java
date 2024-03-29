@@ -4,15 +4,19 @@ import backend.repository.interfaces.IEntity;
 import backend.repository.interfaces.IExitEntity;
 import backend.repository.interfaces.IMapGameEntity;
 import backend.service.enums.Direction;
+import backend.service.infra.CacheService;
 import backend.service.interfaces.ICoordinate;
 import backend.service.interfaces.IImage;
+import backend.service.interfaces.IBackup;
+import backend.service.memento.MapGameMemento;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-public final class MapGame implements IImage, IEntity {
+public final class MapGame implements IImage, IEntity, IBackup<MapGameMemento> {
     private final IMapGameEntity entity;
     private String image;
     private final NPC npc;
@@ -35,7 +39,6 @@ public final class MapGame implements IImage, IEntity {
     public int getId() {
         return this.entity.id();
     }
-
 
     @Override
     public int id() {
@@ -99,11 +102,6 @@ public final class MapGame implements IImage, IEntity {
         return this.itens.values().stream().toList();
     }
 
-    public List<Door> getDoors() {
-        return this.doors.values().stream().toList();
-    }
-
-
     public Optional<Integer> getExit(Direction direction) {
         return this.exits.stream()
                 .filter(exit -> exit.direction().equalsIgnoreCase(direction.name()))
@@ -148,4 +146,21 @@ public final class MapGame implements IImage, IEntity {
                 this.itens.values(), this.entity.song(), this.exits);
     }
 
+    @Override
+    public MapGameMemento save() {
+        return new MapGameMemento(this.entity.id(), this.image,
+                this.itens.values().stream().map(Item::getId).collect(Collectors.toSet()));
+    }
+
+    @Override
+    public void restore(MapGameMemento memento) {
+        this.image = memento.image();
+        this.itens.keySet().forEach(this.area::unlock);
+        this.itens.clear();
+        memento.idItens()
+                .stream()
+                .map(id -> CacheService.getItem(id).orElse(null))
+                .filter(Objects::nonNull)
+                .forEach(this::addItem);
+    }
 }

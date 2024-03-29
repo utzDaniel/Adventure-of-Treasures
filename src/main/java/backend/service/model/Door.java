@@ -3,8 +3,10 @@ package backend.service.model;
 import backend.repository.interfaces.IDoorEntity;
 import backend.repository.interfaces.IEntity;
 import backend.service.interfaces.ICoordinate;
+import backend.service.memento.DoorMemento;
+import backend.service.interfaces.IBackup;
 
-public final class Door implements IEntity {
+public final class Door implements IEntity, IBackup<DoorMemento> {
     private final IDoorEntity entity;
     private boolean open;
 
@@ -17,6 +19,7 @@ public final class Door implements IEntity {
     public int id() {
         return this.entity.id();
     }
+
     public int getId() {
         return this.entity.id();
     }
@@ -56,5 +59,15 @@ public final class Door implements IEntity {
                 }
                 """.formatted(this.entity.id(), this.entity.idMapDor(),
                 ICoordinate.getInstance(this.entity.positionX(), this.entity.positionY()).toString(), this.open);
+    }
+
+    @Override
+    public DoorMemento save() {
+        return new DoorMemento(this.entity.id(), this.open);
+    }
+
+    @Override
+    public void restore(DoorMemento memento) {
+        this.open = memento.open();
     }
 }

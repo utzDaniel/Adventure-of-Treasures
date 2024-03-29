@@ -5,7 +5,7 @@ import backend.service.interfaces.ICommand;
 import backend.service.interfaces.ICoordinate;
 import backend.service.model.Item;
 import backend.service.model.MapGame;
-import backend.service.util.CalculateCoordinate;
+import backend.service.CalculateCoordinate;
 
 public final class AddItemMapGameCommand implements ICommand {
 

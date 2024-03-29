@@ -3,7 +3,6 @@ package backend.repository.singleton;
 import backend.repository.enums.Filename;
 import backend.repository.interfaces.IUsableEntity;
 import backend.repository.mapper.UsableEntityMapper;
-import backend.repository.util.Repository;
 
 import java.util.*;
 

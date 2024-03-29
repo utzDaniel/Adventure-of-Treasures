@@ -1,4 +1,4 @@
-package backend.service.util;
+package backend.service;
 
 import backend.service.enums.Direction;
 import backend.service.enums.Movement;

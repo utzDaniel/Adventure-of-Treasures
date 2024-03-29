@@ -2,7 +2,7 @@ package service;
 
 import backend.service.enums.Movement;
 import backend.service.interfaces.ICoordinate;
-import backend.service.util.CalculateCoordinate;
+import backend.service.CalculateCoordinate;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

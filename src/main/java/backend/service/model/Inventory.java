@@ -1,11 +1,15 @@
 package backend.service.model;
 
+import backend.service.infra.CacheService;
+import backend.service.interfaces.IBackup;
+import backend.service.memento.InventoryMemento;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public final class Inventory {
+public final class Inventory implements IBackup<InventoryMemento> {
 
     private int capacity;
     private int maxCapacity;
@@ -19,14 +23,6 @@ public final class Inventory {
         this.itens = new HashMap<>();
     }
 
-    public Inventory(int capacity, int maxCapacity, boolean isInventory, List<Item> itens) {
-        this.capacity = capacity;
-        this.maxCapacity = maxCapacity;
-        this.isInventory = isInventory;
-        this.itens = new HashMap<>();
-        itens.forEach(v -> this.itens.put(v.getId(), v));
-    }
-
     public int getCapacity() {
         return this.capacity;
     }
@@ -35,7 +31,7 @@ public final class Inventory {
         return weight + this.getCapacity() <= this.getMaxCapacity();
     }
 
-    private void updadeCapacity(int weight) {
+    private void updateCapacity(int weight) {
         this.capacity += weight;
     }
 
@@ -43,12 +39,12 @@ public final class Inventory {
         return this.maxCapacity;
     }
 
-    public boolean updadeMaxCapacity(int updade) {
-        if (updade < 0) {
-            var newCapacity = this.getMaxCapacity() + updade;
+    public boolean updateMaxCapacity(int update) {
+        if (update < 0) {
+            var newCapacity = this.getMaxCapacity() + update;
             if (this.getCapacity() > newCapacity) return false;
         }
-        this.maxCapacity += updade;
+        this.maxCapacity += update;
         return true;
     }
 
@@ -59,13 +55,13 @@ public final class Inventory {
     public void addItem(Item item) {
         if (this.hasSpace(item.getWeight())) {
             this.itens.put(item.getId(), item);
-            this.updadeCapacity(item.getWeight());
+            this.updateCapacity(item.getWeight());
         }
     }
 
     public void removeItem(Item item) {
         if (Objects.nonNull(this.itens.remove(item.getId())))
-            this.updadeCapacity(-item.getWeight());
+            this.updateCapacity(-item.getWeight());
     }
 
     public List<Item> getItens() {
@@ -80,21 +76,23 @@ public final class Inventory {
         this.isInventory = !openInventory();
     }
 
-
-    public String extrinsecos() {
-        return """
-                %d;
-                %d;
-                %b;
-                %s;
-                """.formatted(this.capacity, this.maxCapacity, this.isInventory, this.ids())
-                .replace("\n", "");
+    @Override
+    public InventoryMemento save() {
+        return new InventoryMemento(this.capacity, this.maxCapacity, this.isInventory, this.itens.keySet());
     }
 
-    private String ids() {
-        var str = new StringBuilder();
-        this.itens.values().forEach(v -> str.append(v.id()).append(";"));
-        return str.toString();
+    @Override
+    public void restore(InventoryMemento memento) {
+        this.capacity = memento.capacity();
+        this.maxCapacity = memento.maxCapacity();
+        this.isInventory = memento.isInventory();
+        this.itens.clear();
+        memento.idItens()
+                .stream()
+                .map(id -> CacheService.getItem(id).orElse(null))
+                .filter(Objects::nonNull)
+                .forEach(v -> this.itens.put(v.getId(), v));
+
     }
 
 }

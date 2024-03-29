@@ -3,6 +3,9 @@ package backend.controller.enums;
 public enum TypeMessage {
 
     GAME_FINISH(true, "Fim do game!", "finish"),
+    SAVE(true, "Jogo salvo!", ""),
+    LOAD(true, "Jogo carregado!", ""),
+    BACKUP(true, "Backup carregado!", ""),
     DOOR_OPEN(true, "Abrindo e entrando pela porta", ""),
     NPC_INTERACT(true, "Interação realizada com NPC", ""),
     MOVE(true, "Movimentação valida", ""),
@@ -58,7 +61,10 @@ public enum TypeMessage {
     USABLE_ERRO_ENABLE(false, "Esse item não pode ser usado, pois está desabilitado", "erro"),
     MAP_ADD_ERRO_FULL(false, "Map está cheio, não é possível remover o item", ""),
     DIRECTION_ERRO_INVALID(false, "Direção inválida!", ""),
-    COMMAND_ERRO(false, "Comando inválido!", "");
+    COMMAND_ERRO(false, "Comando inválido!", ""),
+    BACKUP_ERRO(false, "Erro ao fazer backup jogo!", ""),
+    SAVE_ERRO(false, "Erro ao salvar jogo!", ""),
+    LOAD_ERRO(false, "Erro ao carregar jogo!", "");
 
     private final boolean sucess;
     private final String text;

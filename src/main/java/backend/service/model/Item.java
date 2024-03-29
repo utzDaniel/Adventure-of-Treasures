@@ -5,11 +5,13 @@ import backend.repository.interfaces.IEntity;
 import backend.repository.interfaces.IItemEntity;
 import backend.service.enums.TypeItem;
 import backend.service.interfaces.*;
+import backend.service.interfaces.IBackup;
+import backend.service.memento.ItemMemento;
 
 import java.util.List;
 import java.util.Optional;
 
-public final class Item implements IObservable, IImage, IEntity {
+public final class Item implements IObservable, IImage, IEntity, IBackup<ItemMemento> {
 
     private final IItemEntity entity;
     private final SpecializationComposite specialization;
@@ -95,4 +97,15 @@ public final class Item implements IObservable, IImage, IEntity {
                 this.coordinate.toString(), this.entity.image(), this.specialization);
     }
 
+    @Override
+    public ItemMemento save() {
+        var memento = this.specialization.save();
+        return new ItemMemento(this.entity.id(), this.coordinate.x(), this.coordinate.y(), memento);
+    }
+
+    @Override
+    public void restore(ItemMemento memento) {
+        this.coordinate = ICoordinate.getInstance(memento.x(), memento.y());
+        this.specialization.restore(memento.specializationCompositeMemento());
+    }
 }

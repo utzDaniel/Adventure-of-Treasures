@@ -3,7 +3,6 @@ package backend.repository.singleton;
 import backend.repository.enums.Filename;
 import backend.repository.interfaces.IExitEntity;
 import backend.repository.mapper.ExitEntityMapper;
-import backend.repository.util.Repository;
 
 import java.util.HashMap;
 import java.util.List;

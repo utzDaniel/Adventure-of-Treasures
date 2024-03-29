@@ -2,10 +2,13 @@ package backend.service.model;
 
 import backend.service.enums.Direction;
 import backend.service.enums.MovementImage;
+import backend.service.infra.CacheService;
 import backend.service.interfaces.ICoordinate;
 import backend.service.interfaces.IMove;
+import backend.service.interfaces.IBackup;
+import backend.service.memento.MoveMemento;
 
-public final class Move implements IMove {
+public final class Move implements IMove, IBackup<MoveMemento> {
     private MovementImage movementImage;
     private MapGame currentMapGame;
     private Direction direction;
@@ -16,14 +19,6 @@ public final class Move implements IMove {
         this.path = path;
         this.movementImage = MovementImage.RIGHT_FOOT_TOGETHER;
         this.direction = Direction.SUL;
-        this.coordinate = coordinate;
-        this.currentMapGame = mapGame;
-    }
-
-    public Move(String path, ICoordinate coordinate, MapGame mapGame, MovementImage movementImage, Direction direction) {
-        this.path = path;
-        this.movementImage = movementImage;
-        this.direction = direction;
         this.coordinate = coordinate;
         this.currentMapGame = mapGame;
     }
@@ -61,18 +56,18 @@ public final class Move implements IMove {
     }
 
     @Override
-    public String extrinsic() {
-        return """
-                %s;
-                %d;
-                %s;
-                %d;
-                %d;
-                %s;
-                """.formatted(this.movementImage.name(), this.currentMapGame.getId(),
-                this.direction.name(), this.coordinate.x(), this.coordinate.y(), this.path)
-                .replace("\n", "");
+    public MoveMemento save() {
+        return new MoveMemento(this.movementImage.name(), this.currentMapGame.getId(),
+                this.direction.name(), this.coordinate.x(), this.coordinate.y(), this.path);
     }
 
+    @Override
+    public void restore(MoveMemento memento) {
+        this.path = memento.path();
+        this.movementImage = Enum.valueOf(MovementImage.class, memento.movementImage());
+        this.direction = Enum.valueOf(Direction.class, memento.direction());
+        this.coordinate = ICoordinate.getInstance(memento.x(), memento.y());
+        this.currentMapGame = CacheService.getMapGame(memento.idMapGame()).orElse(null);
+    }
 }
 

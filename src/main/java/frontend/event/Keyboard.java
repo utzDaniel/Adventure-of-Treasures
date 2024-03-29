@@ -102,9 +102,13 @@ public class Keyboard {
                     if (message.sucess())
                         interfaceGame.updateComponentsMove(action);
 
+                    System.out.println(message.text());
+
                 } else if (keyCode == 117) {
 
-                    executa("/action/save");
+                    var actionRes = executa("/action/save");
+                    var message = new MessageMapper().apply(actionRes);
+                    System.out.println(message.text());
 
                 }
 

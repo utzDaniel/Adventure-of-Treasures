@@ -3,9 +3,11 @@ package backend.service.model;
 import backend.service.enums.Direction;
 import backend.service.interfaces.ICoordinate;
 import backend.service.interfaces.IMove;
+import backend.service.interfaces.IBackup;
+import backend.service.memento.PlayerMemento;
 
 
-public final class Player implements IMove {
+public final class Player implements IMove, IBackup<PlayerMemento> {
 
     private final IMove move;
     private final Inventory inventory;
@@ -49,14 +51,15 @@ public final class Player implements IMove {
         return this.move.getDirection();
     }
 
-    @Override
-    public String extrinsic() {
-        return """
-                %s
-                %s
-                """.formatted(this.move.extrinsic(), this.inventory.extrinsecos())
-                .replace("\n", "");
+    public PlayerMemento save() {
+        var moveMemento = ((Move) this.move).save();
+        var inventoryMemento = this.inventory.save();
+        return new PlayerMemento(moveMemento, inventoryMemento);
     }
 
+    public void restore(PlayerMemento memento) {
+        ((Move) this.move).restore(memento.move());
+        this.inventory.restore(memento.inventory());
+    }
 
 }

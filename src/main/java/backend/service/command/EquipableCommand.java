@@ -24,12 +24,12 @@ public final class EquipableCommand implements ICommand {
         var equipable = (IEquipable) spec.get();
 
         if (equipable.isEquip()) {
-            if (!this.inventory.updadeMaxCapacity(-equipable.getUpCapacity()))
+            if (!this.inventory.updateMaxCapacity(-equipable.getUpCapacity()))
                 return getUnequipTypeMessageErro();
             equipable.setEquip(!equipable.isEquip());
             return getUnequipTypeMessage();
         } else {
-            this.inventory.updadeMaxCapacity(equipable.getUpCapacity());
+            this.inventory.updateMaxCapacity(equipable.getUpCapacity());
             equipable.setEquip(!equipable.isEquip());
             return getEquipTypeMessageSucess();
         }
@@ -42,10 +42,10 @@ public final class EquipableCommand implements ICommand {
         var equipable = (IEquipable) spec.get();
 
         if (equipable.isEquip()) {
-            this.inventory.updadeMaxCapacity(-equipable.getUpCapacity());
+            this.inventory.updateMaxCapacity(-equipable.getUpCapacity());
             equipable.setEquip(!equipable.isEquip());
         } else {
-            this.inventory.updadeMaxCapacity(equipable.getUpCapacity());
+            this.inventory.updateMaxCapacity(equipable.getUpCapacity());
             equipable.setEquip(!equipable.isEquip());
         }
     }

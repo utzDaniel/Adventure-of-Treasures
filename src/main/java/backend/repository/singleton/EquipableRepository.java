@@ -3,7 +3,6 @@ package backend.repository.singleton;
 import backend.repository.enums.Filename;
 import backend.repository.interfaces.IEquipableEntity;
 import backend.repository.mapper.EquipableEntityMapper;
-import backend.repository.util.Repository;
 
 import java.util.*;
 
@@ -16,7 +15,7 @@ public final class EquipableRepository {
         synchronized (EquipableRepository.class) {
             if (Objects.isNull(repository)) {
                 var mapper = new EquipableEntityMapper();
-                var rep = new Repository<>(Filename.EQUIPABLE, mapper);
+                var rep = new Repository<>(Filename.EQUIPPABLE, mapper);
                 var map = rep.create();
                 repository = new EquipableRepository(map);
             }
