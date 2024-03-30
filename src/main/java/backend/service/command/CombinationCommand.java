@@ -24,31 +24,31 @@ public final class CombinationCommand implements ICommand {
 
     @Override
     public TypeMessage execute() {
-        List<ICombinable> combinables = new ArrayList<>();
+        List<ICombinable> combinable = new ArrayList<>();
         this.itens.forEach(v -> {
             var spec = v.getSpecialization(TypeItem.COMBINABLE);
-            spec.ifPresent(s -> combinables.add(((ICombinable) s)));
+            spec.ifPresent(s -> combinable.add(((ICombinable) s)));
         });
 
-        if (combinables.isEmpty()) return TypeMessage.ITEM_ERRO_COMBINABLE;
+        if (combinable.isEmpty()) return TypeMessage.ITEM_ERRO_COMBINABLE;
 
-        if (this.itens.size() != combinables.size()) return TypeMessage.COMBINE_ERRO_ALL;
+        if (this.itens.size() != combinable.size()) return TypeMessage.COMBINE_ERRO_ALL;
 
-        if (combinables.get(0).sizeCombination() > combinables.size())
+        if (combinable.get(0).sizeCombination() > combinable.size())
             return TypeMessage.COMBINE_ERRO_INCOMPLETE;
 
-        if (combinables.get(0).sizeCombination() < combinables.size())
+        if (combinable.get(0).sizeCombination() < combinable.size())
             return TypeMessage.COMBINE_ERRO_INVALID;
 
-        var isCombine = combinables.stream().allMatch(v -> v.combination() == combinables.get(0).combination());
+        var isCombine = combinable.stream().allMatch(v -> v.combination() == combinable.get(0).combination());
         if (!isCombine) return TypeMessage.COMBINE_ERRO_COMBINABLE;
 
         this.itens.forEach(v -> this.commands.addCommand(new RemoveItemInventoryCommand(v, inventory)));
 
         var type = this.commands.execute();
-        if (!type.isSucess()) return type;
+        if (!type.isSuccess()) return type;
 
-        return getEquipTypeMessage(combinables.get(0).combination());
+        return getEquipTypeMessage(combinable.get(0).combination());
     }
 
     @Override

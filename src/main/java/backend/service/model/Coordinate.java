@@ -27,11 +27,6 @@ public final class Coordinate implements ICoordinate {
     }
 
     @Override
-    public void updateX(int x) {
-        this.x += x;
-    }
-
-    @Override
     public int y() {
         return this.y;
     }
@@ -39,11 +34,6 @@ public final class Coordinate implements ICoordinate {
     @Override
     public void setY(int y) {
         this.y = y;
-    }
-
-    @Override
-    public void updateY(int y) {
-        this.y += y;
     }
 
     @Override

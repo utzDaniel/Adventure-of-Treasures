@@ -31,7 +31,7 @@ public final class EquippableCommand implements ICommand {
         } else {
             this.inventory.updateMaxCapacity(equippable.getUpCapacity());
             equippable.setEquip(!equippable.isEquip());
-            return getEquipTypeMessageSucess();
+            return getEquipTypeMessageSuccess();
         }
     }
 
@@ -50,7 +50,7 @@ public final class EquippableCommand implements ICommand {
         }
     }
 
-    private TypeMessage getEquipTypeMessageSucess() {
+    private TypeMessage getEquipTypeMessageSuccess() {
         return switch (this.item.getId()) {
             case 10 -> TypeMessage.EQUIP_SCHOOLBAG;
             case 16 -> TypeMessage.EQUIP_TORCH;

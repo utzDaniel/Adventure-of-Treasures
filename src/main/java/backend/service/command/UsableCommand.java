@@ -35,7 +35,7 @@ public final class UsableCommand implements ICommand {
         if (!usable.isEnabled()) return TypeMessage.USABLE_ERRO_ENABLE;
 
         var type = this.commands.execute();
-        if (!type.isSucess()) return type;
+        if (!type.isSuccess()) return type;
 
         return getEventTypeMessage();
     }

@@ -7,8 +7,10 @@ public record SpecializationCompositeMemento(
     @Override
     public String extrinsic() {
         return """
-                %b;
-                %b;
-                """.formatted(this.equip, this.enabled).replace("\n", "");
+                %b%s
+                %b
+                """.formatted(this.equip, Separator.FIELD,
+                        this.enabled)
+                .replace("\n", "");
     }
 }

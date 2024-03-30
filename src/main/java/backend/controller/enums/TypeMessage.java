@@ -66,18 +66,18 @@ public enum TypeMessage {
     SAVE_ERRO(false, "Erro ao salvar jogo!", ""),
     LOAD_ERRO(false, "Erro ao carregar jogo!", "");
 
-    private final boolean sucess;
+    private final boolean success;
     private final String text;
     private final String effect;
 
-    TypeMessage(boolean sucess, String text, String effect) {
-        this.sucess = sucess;
+    TypeMessage(boolean success, String text, String effect) {
+        this.success = success;
         this.text = text;
         this.effect = effect;
     }
 
-    public boolean isSucess() {
-        return this.sucess;
+    public boolean isSuccess() {
+        return this.success;
     }
 
     public String getText() {

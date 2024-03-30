@@ -7,9 +7,11 @@ public record DoorMemento(
     @Override
     public String extrinsic() {
         return """
-                %d;
-                %b;door;
-                """.formatted(this.id, this.open).replace("\n", "");
+                %d%s
+                %b%s
+                """.formatted(this.id, Separator.FIELD,
+                        this.open, Separator.DOOR)
+                .replace("\n", "");
 
     }
 

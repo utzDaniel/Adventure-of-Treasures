@@ -3,7 +3,7 @@ package backend.service.dto;
 import backend.controller.interfaces.IMessage;
 
 public record Message(
-        boolean sucess,
+        boolean success,
 
         String text,
 

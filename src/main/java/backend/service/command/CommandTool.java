@@ -28,7 +28,7 @@ public final class CommandTool implements ICommand {
         for (ICommand cmd : this.commands) {
             temp = cmd.execute();
             this.stack.add(cmd);
-            if (!temp.isSucess()) {
+            if (!temp.isSuccess()) {
                 undo();
                 break;
             }

@@ -2,7 +2,7 @@ package backend.controller.interfaces;
 
 public interface IMessage {
 
-    boolean sucess();
+    boolean success();
 
     String text();
 

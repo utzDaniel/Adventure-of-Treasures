@@ -21,7 +21,7 @@ import java.util.Properties;
 public class Game {
 
     private static final Properties properties = getProp();
-    public static Player player = new Player(createMove(), createInventory());
+    public static final Player player = new Player(createMove(), createInventory());
 
     public Game() {
         var action = new ActionResponseMapper().apply(player);

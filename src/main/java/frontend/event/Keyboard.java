@@ -61,7 +61,7 @@ public class Keyboard {
                     var message = new MessageMapper().apply(actionRes);
                     var action = new ActionMapper().apply(actionRes);
 
-                    if (message.sucess())
+                    if (message.success())
                         interfaceGame.updateComponentsMove(action);
 
 
@@ -79,7 +79,7 @@ public class Keyboard {
                         finish(effect);
                     }
 
-                    if (message.sucess()) updateItensMapGame(action);
+                    if (message.success()) updateItensMapGame(action);
 
                     if (Objects.nonNull(effect) && !effect.isEmpty()) {
                         soundEffects.play(effect);
@@ -91,7 +91,7 @@ public class Keyboard {
                     var message = new MessageMapper().apply(inventoryOpenRes);
                     var inventoryOpen = new InventoryMapper().apply(inventoryOpenRes);
 
-                    if (message.sucess()) interfaceInventory.open(inventoryOpen);
+                    if (message.success()) interfaceInventory.open(inventoryOpen);
 
                 } else if (keyCode == 116) {
 
@@ -99,7 +99,7 @@ public class Keyboard {
                     var message = new MessageMapper().apply(actionRes);
                     var action = new ActionMapper().apply(actionRes);
 
-                    if (message.sucess())
+                    if (message.success())
                         interfaceGame.updateComponentsMove(action);
 
                     System.out.println(message.text());

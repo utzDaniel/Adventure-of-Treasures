@@ -15,11 +15,7 @@ public interface ICoordinate extends ICoordinateDTO {
 
     void setX(int x);
 
-    void updateX(int x);
-
     void setY(int y);
-
-    void updateY(int y);
 
     void move(ICoordinate coordinate);
 

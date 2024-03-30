@@ -33,10 +33,10 @@ public final class InventoryService implements IInventoryService {
             typeMessage = cmd.execute();
         }
 
-        if (!typeMessage.isSucess())
+        if (!typeMessage.isSuccess())
             new ServiceResponse(typeMessage, null);
 
-        if (!itens.isEmpty() && typeMessage.isSucess())
+        if (!itens.isEmpty() && typeMessage.isSuccess())
             itens.get(0).warn();
 
         var obj = new InventoryResponseMapper().apply(inventory);
@@ -57,7 +57,7 @@ public final class InventoryService implements IInventoryService {
             typeMessage = cmd.execute();
         }
 
-        if (!typeMessage.isSucess())
+        if (!typeMessage.isSuccess())
             new ServiceResponse(typeMessage, null);
         else item.ifPresent(Item::warn);
 
@@ -77,7 +77,7 @@ public final class InventoryService implements IInventoryService {
             typeMessage = cmd.execute();
         }
 
-        if (!typeMessage.isSucess())
+        if (!typeMessage.isSuccess())
             new ServiceResponse(typeMessage, null);
         else item.ifPresent(Item::warn);
 
@@ -97,7 +97,7 @@ public final class InventoryService implements IInventoryService {
             typeMessage = cmd.execute();
         }
 
-        if (!typeMessage.isSucess())
+        if (!typeMessage.isSuccess())
             new ServiceResponse(typeMessage, null);
 
         var obj = new InventoryResponseMapper().apply(inventory);
@@ -109,7 +109,7 @@ public final class InventoryService implements IInventoryService {
         var inventory = Game.player.getInventory();
         var typeMessage = new InventoryOpen(inventory).run();
 
-        if (!typeMessage.isSucess())
+        if (!typeMessage.isSuccess())
             new ServiceResponse(typeMessage, null);
 
         var obj = new InventoryResponseMapper().apply(inventory);

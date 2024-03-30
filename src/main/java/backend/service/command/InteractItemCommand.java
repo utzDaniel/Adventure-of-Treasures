@@ -33,7 +33,7 @@ public final class InteractItemCommand implements ICommand {
         this.commands.addCommand(new RemoveItemMapGameCommand(item, mapGame));
 
         var type = this.commands.execute();
-        if (!type.isSucess()) return type;
+        if (!type.isSuccess()) return type;
 
         return TypeMessage.TAKE_ITEM;
     }

@@ -24,7 +24,7 @@ public final class DropItemCommand implements ICommand {
         this.commands.addCommand(new AddItemMapGameCommand(this.item, this.player.getCurrentMap()));
 
         var type = this.commands.execute();
-        if (!type.isSucess()) return type;
+        if (!type.isSuccess()) return type;
 
         return TypeMessage.DROP_ITEM;
     }

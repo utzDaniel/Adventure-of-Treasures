@@ -25,7 +25,7 @@ public final class ActionService implements IActionService {
         var inventory = Game.player.getInventory();
         var typeMessage = new InventoryQuit(inventory).run();
 
-        if (!typeMessage.isSucess())
+        if (!typeMessage.isSuccess())
             new ServiceResponse(typeMessage, null);
 
         var obj = new ActionResponseMapper().apply(Game.player);
@@ -36,7 +36,7 @@ public final class ActionService implements IActionService {
     public IServiceResponse interact() {
         var typeMessage = new InteractCommand(Game.player).execute();
 
-        if (!typeMessage.isSucess())
+        if (!typeMessage.isSuccess())
             new ServiceResponse(typeMessage, null);
 
         var obj = new ActionResponseMapper().apply(Game.player);
@@ -52,7 +52,7 @@ public final class ActionService implements IActionService {
         var cmd = new MoveCommand(Game.player, direction1);
         var typeMessage = cmd.execute();
 
-        if (!typeMessage.isSucess())
+        if (!typeMessage.isSuccess())
             new ServiceResponse(typeMessage, null);
 
         var obj = new ActionResponseMapper().apply(Game.player);
@@ -62,7 +62,7 @@ public final class ActionService implements IActionService {
     @Override
     public IServiceResponse load() {
         var typeMessage = new LoadCommand(SAVE_FILENAME).execute();
-        if (!typeMessage.isSucess())
+        if (!typeMessage.isSuccess())
             new ServiceResponse(typeMessage, null);
 
         var obj = new ActionResponseMapper().apply(Game.player);

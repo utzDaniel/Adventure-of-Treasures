@@ -9,11 +9,14 @@ public record ItemMemento(
     @Override
     public String extrinsic() {
         return """
-                %d;
-                %d;
-                %d;
-                %sitem;
-                """.formatted(this.id, this.x, this.y, this.specializationCompositeMemento.extrinsic())
+                %d%s
+                %d%s
+                %d%s
+                %s%s
+                """.formatted(this.id, Separator.FIELD,
+                        this.x, Separator.FIELD,
+                        this.y, Separator.FIELD,
+                        this.specializationCompositeMemento.extrinsic(), Separator.ITEM)
                 .replace("\n", "");
     }
 

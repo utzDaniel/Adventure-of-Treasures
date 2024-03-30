@@ -11,13 +11,18 @@ public record MoveMemento(
     @Override
     public String extrinsic() {
         return """
-                %s;
-                %d;
-                %s;
-                %d;
-                %d;
-                %s;
-                """.formatted(this.movementImage, this.idMapGame, this.direction, this.x, this.y, this.path)
+                %s%s
+                %d%s
+                %s%s
+                %d%s
+                %d%s
+                %s
+                """.formatted(this.movementImage, Separator.FIELD,
+                        this.idMapGame, Separator.FIELD,
+                        this.direction, Separator.FIELD,
+                        this.x, Separator.FIELD,
+                        this.y, Separator.FIELD,
+                        this.path)
                 .replace("\n", "");
     }
 }

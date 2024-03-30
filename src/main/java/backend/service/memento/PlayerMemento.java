@@ -7,9 +7,10 @@ public record PlayerMemento(
     @Override
     public String extrinsic() {
         return """
-                %s
-                %splayer;
-                """.formatted(this.move.extrinsic(), this.inventory.extrinsic())
+                %s%s
+                %s%s
+                """.formatted(this.move.extrinsic(), Separator.FIELD,
+                        this.inventory.extrinsic(), Separator.PLAYER)
                 .replace("\n", "");
     }
 }

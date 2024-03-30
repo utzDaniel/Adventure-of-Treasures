@@ -151,7 +151,7 @@ public final class InterfaceInventory {
         var message = new MessageMapper().apply(inventoryRes);
         var inventory = new InventoryMapper().apply(inventoryRes);
 
-        if (message.sucess()) {
+        if (message.success()) {
             updateAllItensComponents(inventory);
         }
         this.interfaceGame.playEffects(message.effect(), null);
@@ -163,7 +163,7 @@ public final class InterfaceInventory {
         var message = new MessageMapper().apply(inventoryRes);
         var inventory = new InventoryMapper().apply(inventoryRes);
 
-        if (message.sucess()) {
+        if (message.success()) {
             updateAllItensComponents(inventory);
             this.interfaceGame.playEffects("Usar", message.effect());
         } else {
@@ -177,7 +177,7 @@ public final class InterfaceInventory {
         var message = new MessageMapper().apply(inventoryRes);
         var inventory = new InventoryMapper().apply(inventoryRes);
 
-        if (message.sucess()) {
+        if (message.success()) {
             updateAllItensComponents(inventory);
             this.interfaceGame.playEffects("Equipar", message.effect());
         } else {
@@ -196,7 +196,7 @@ public final class InterfaceInventory {
         var message = new MessageMapper().apply(inventoryRes);
         var inventory = new InventoryMapper().apply(inventoryRes);
 
-        if (message.sucess()) {
+        if (message.success()) {
             updateAllItensComponents(inventory);
             this.interfaceGame.playEffects("Combinar", message.effect());
         } else {
@@ -211,7 +211,7 @@ public final class InterfaceInventory {
         var action = new ActionMapper().apply(actionRes);
         var index = 1;
 
-        if (message.sucess()) {
+        if (message.success()) {
             this.interfaceGame.getFrame().getContentPane().remove(this.panelInventory.getPanel());
 
             action.components().forEach(info -> {

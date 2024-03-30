@@ -25,14 +25,14 @@ public final class NPC {
 
     public Optional<TypeMessage> isAction(List<Item> itens) {
         Optional<TypeMessage> msg = this.entity.idItem() == 15 ? Optional.of(TypeMessage.GAME_FINISH) : Optional.empty();
-        return isRequerid(itens) ? msg : Optional.empty();
+        return isRequired(itens) ? msg : Optional.empty();
     }
-    private boolean isRequerid(List<Item> itens) {
-        var requerid = this.entity.idItem() == -1;
-        if (!requerid) {
-            requerid = itens.stream().anyMatch(v -> v.getId() == this.entity.idItem());
+    private boolean isRequired(List<Item> itens) {
+        var required = this.entity.idItem() == -1;
+        if (!required) {
+            required = itens.stream().anyMatch(v -> v.getId() == this.entity.idItem());
         }
-        return requerid;
+        return required;
     }
 
     @Override

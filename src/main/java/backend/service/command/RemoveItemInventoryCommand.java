@@ -20,7 +20,7 @@ public final class RemoveItemInventoryCommand implements ICommand {
     @Override
     public TypeMessage execute() {
         var isRemove = this.item.isRemove();
-        if (!isRemove.isSucess()) return isRemove;
+        if (!isRemove.isSuccess()) return isRemove;
         if (Objects.isNull(this.inventory.getItem(this.item.getId())))
             return TypeMessage.INVENTORY_ITEM_ERRO;
         this.inventory.removeItem(this.item);

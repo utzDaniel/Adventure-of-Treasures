@@ -10,7 +10,7 @@ public final class MessageMapper implements Function<Object, IMessage> {
     @Override
     public IMessage apply(Object response) {
         var resp = (IResponse) response;
-        return new Message(resp.msg().sucess(),
+        return new Message(resp.msg().success(),
                 resp.msg().text(),
                 resp.msg().effect());
     }

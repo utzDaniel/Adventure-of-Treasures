@@ -11,19 +11,22 @@ public record InventoryMemento(
     @Override
     public String extrinsic() {
         return """
-                %d;
-                %d;
-                %b;
-                %s;
-                """.formatted(this.capacity, this.maxCapacity, this.isInventory, this.ids())
+                %d%s
+                %d%s
+                %b%s
+                %s
+                """.formatted(this.capacity, Separator.FIELD,
+                        this.maxCapacity, Separator.FIELD,
+                        this.isInventory, Separator.FIELD,
+                        this.ids())
                 .replace("\n", "");
     }
 
     private String ids() {
         var str = new StringBuilder();
-        str.append("[");
-        this.idItens.stream().sorted().forEach(v -> str.append(v).append(","));
-        str.append("]");
+        str.append(Separator.LIST_START);
+        this.idItens.stream().sorted().forEach(v -> str.append(v).append(Separator.LIST_ID));
+        str.append(Separator.LIST_END);
         return str.toString();
     }
 }

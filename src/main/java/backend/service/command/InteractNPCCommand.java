@@ -29,7 +29,7 @@ public final class InteractNPCCommand implements ICommand {
 
         var msg = npc.get().isAction(this.player.getInventory().getItens());
 
-        if (msg.isPresent() && msg.get().isSucess()) return msg.get();
+        if (msg.isPresent() && msg.get().isSuccess()) return msg.get();
 
         if (npc.get().getIdDoor() == -1) return TypeMessage.NPC_ERRO_INCOMPLETE;
 

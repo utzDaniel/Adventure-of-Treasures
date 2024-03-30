@@ -20,7 +20,7 @@ public final class ResponseFactory {
     }
 
     private static IMessage createMessage(TypeMessage msg) {
-        return new Message(msg.isSucess(), msg.getText(), msg.getEffect());
+        return new Message(msg.isSuccess(), msg.getText(), msg.getEffect());
     }
 
 }
