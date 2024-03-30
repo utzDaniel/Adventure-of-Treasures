@@ -1,10 +1,10 @@
 package backend.repository.entity;
 
-import backend.repository.interfaces.IEquipableEntity;
+import backend.repository.interfaces.IEquippableEntity;
 
-public record EquipableEntity(int id,
-                              int idItem,
-                              int upCapacity) implements IEquipableEntity {
+public record EquippableEntity(int id,
+                               int idItem,
+                               int upCapacity) implements IEquippableEntity {
     @Override
     public String toString() {
         return """

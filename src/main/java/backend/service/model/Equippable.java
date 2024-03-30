@@ -1,16 +1,16 @@
 package backend.service.model;
 
-import backend.repository.interfaces.IEquipableEntity;
+import backend.repository.interfaces.IEquippableEntity;
 import backend.service.enums.TypeItem;
-import backend.service.interfaces.IEquipable;
+import backend.service.interfaces.IEquippable;
 
-public final class Equipable implements IEquipable {
+public final class Equippable implements IEquippable {
 
-    private final IEquipableEntity entity;
+    private final IEquippableEntity entity;
 
     private boolean equip;
 
-    public Equipable(IEquipableEntity entity) {
+    public Equippable(IEquippableEntity entity) {
         this.entity = entity;
         this.equip = false;
     }
@@ -32,7 +32,7 @@ public final class Equipable implements IEquipable {
 
     @Override
     public boolean isType(TypeItem type) {
-        return TypeItem.EQUIPABLE == type;
+        return TypeItem.EQUIPPABLE == type;
     }
 
     @Override
@@ -42,6 +42,6 @@ public final class Equipable implements IEquipable {
 
     @Override
     public String toString() {
-        return TypeItem.EQUIPABLE.toString();
+        return TypeItem.EQUIPPABLE.toString();
     }
 }

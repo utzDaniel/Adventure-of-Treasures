@@ -6,7 +6,7 @@ import backend.service.dto.SpecializationDTO;
 import backend.service.dto.response.InventoryResponse;
 import backend.service.enums.ActionItem;
 import backend.service.enums.TypeItem;
-import backend.service.interfaces.IEquipable;
+import backend.service.interfaces.IEquippable;
 import backend.service.model.Inventory;
 import backend.service.model.Item;
 
@@ -44,13 +44,13 @@ public final class InventoryResponseMapper implements Function<Inventory, IInven
 
         list.add(new SpecializationDTO(ActionItem.USE.getName(), item.isType(TypeItem.USABLE)));
 
-        var spc = item.getSpecialization(TypeItem.EQUIPABLE);
+        var spc = item.getSpecialization(TypeItem.EQUIPPABLE);
         var key = ActionItem.EQUIP.getName();
         if(spc.isPresent()){
-            key = ((IEquipable) spc.get()).isEquip() ? ActionItem.UNEQUIP.getName() : ActionItem.EQUIP.getName();
+            key = ((IEquippable) spc.get()).isEquip() ? ActionItem.UNEQUIP.getName() : ActionItem.EQUIP.getName();
         }
 
-        list.add(new SpecializationDTO(key, item.isType(TypeItem.EQUIPABLE)));
+        list.add(new SpecializationDTO(key, item.isType(TypeItem.EQUIPPABLE)));
         list.add(new SpecializationDTO(ActionItem.COMBINE.getName(), item.isType(TypeItem.COMBINABLE)));
         list.add(new SpecializationDTO(ActionItem.REMOVE.getName(), item.isRemove().isSucess()));
         return list;

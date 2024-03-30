@@ -4,7 +4,7 @@ import backend.controller.enums.TypeMessage;
 import backend.repository.entity.ItemEntity;
 import backend.service.command.RemoveItemInventoryCommand;
 import backend.service.enums.TypeItem;
-import backend.service.interfaces.IEquipable;
+import backend.service.interfaces.IEquippable;
 import backend.service.model.Inventory;
 import backend.service.model.Item;
 import backend.service.model.ItemFactory;
@@ -47,8 +47,8 @@ public class RemoveItemInventoryCommandTest {
     public void validErro2() {
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.itens.get(10));
-        var equible = this.itens.get(10).getSpecialization(TypeItem.EQUIPABLE);
-        equible.ifPresent(specialization -> ((IEquipable) specialization).setEquip(true));
+        var equible = this.itens.get(10).getSpecialization(TypeItem.EQUIPPABLE);
+        equible.ifPresent(specialization -> ((IEquippable) specialization).setEquip(true));
         this.cmd = new RemoveItemInventoryCommand(this.itens.get(10), inventory);
         var msg = this.cmd.execute();
         assertEquals(TypeMessage.REMOVE_ITEM_ERRO_EQUIP, msg);
@@ -63,7 +63,7 @@ public class RemoveItemInventoryCommandTest {
     }
 
     @Test
-    public void validEquipable() {
+    public void validEquippable() {
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.itens.get(10));
         this.cmd = new RemoveItemInventoryCommand(this.itens.get(10), inventory);

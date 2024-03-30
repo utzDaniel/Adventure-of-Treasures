@@ -6,7 +6,7 @@ import backend.controller.interfaces.IInventoryService;
 import backend.controller.interfaces.IServiceResponse;
 import backend.service.command.CombinationCommand;
 import backend.service.command.DropItemCommand;
-import backend.service.command.EquipableCommand;
+import backend.service.command.EquippableCommand;
 import backend.service.command.UsableCommand;
 import backend.service.component.inventory.open.InventoryOpen;
 import backend.service.dto.response.ServiceResponse;
@@ -73,7 +73,7 @@ public final class InventoryService implements IInventoryService {
         var typeMessage = TypeMessage.ITEM_ERRO_FOUND;
 
         if (item.isPresent()) {
-            var cmd = new EquipableCommand(item.get(), inventory);
+            var cmd = new EquippableCommand(item.get(), inventory);
             typeMessage = cmd.execute();
         }
 

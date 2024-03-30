@@ -2,7 +2,7 @@ package backend.service.enums;
 
 public enum TypeItem {
     COMBINABLE,
-    EQUIPABLE,
+    EQUIPPABLE,
     MISSION,
     USABLE
 

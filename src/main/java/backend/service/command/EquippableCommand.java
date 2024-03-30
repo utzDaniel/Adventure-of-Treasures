@@ -3,50 +3,50 @@ package backend.service.command;
 import backend.controller.enums.TypeMessage;
 import backend.service.enums.TypeItem;
 import backend.service.interfaces.ICommand;
-import backend.service.interfaces.IEquipable;
+import backend.service.interfaces.IEquippable;
 import backend.service.model.Inventory;
 import backend.service.model.Item;
 
-public final class EquipableCommand implements ICommand {
+public final class EquippableCommand implements ICommand {
 
     private final Item item;
     private final Inventory inventory;
 
-    public EquipableCommand(Item item, Inventory inventory) {
+    public EquippableCommand(Item item, Inventory inventory) {
         this.item = item;
         this.inventory = inventory;
     }
 
     @Override
     public TypeMessage execute() {
-        var spec = this.item.getSpecialization(TypeItem.EQUIPABLE);
-        if (spec.isEmpty()) return TypeMessage.ITEM_ERRO_EQUIPABLE;
-        var equipable = (IEquipable) spec.get();
+        var spec = this.item.getSpecialization(TypeItem.EQUIPPABLE);
+        if (spec.isEmpty()) return TypeMessage.ITEM_ERRO_EQUIPPABLE;
+        var equippable = (IEquippable) spec.get();
 
-        if (equipable.isEquip()) {
-            if (!this.inventory.updateMaxCapacity(-equipable.getUpCapacity()))
+        if (equippable.isEquip()) {
+            if (!this.inventory.updateMaxCapacity(-equippable.getUpCapacity()))
                 return getUnequipTypeMessageErro();
-            equipable.setEquip(!equipable.isEquip());
+            equippable.setEquip(!equippable.isEquip());
             return getUnequipTypeMessage();
         } else {
-            this.inventory.updateMaxCapacity(equipable.getUpCapacity());
-            equipable.setEquip(!equipable.isEquip());
+            this.inventory.updateMaxCapacity(equippable.getUpCapacity());
+            equippable.setEquip(!equippable.isEquip());
             return getEquipTypeMessageSucess();
         }
     }
 
     @Override
     public void undo() {
-        var spec = this.item.getSpecialization(TypeItem.EQUIPABLE);
+        var spec = this.item.getSpecialization(TypeItem.EQUIPPABLE);
         if (spec.isEmpty()) return;
-        var equipable = (IEquipable) spec.get();
+        var equippable = (IEquippable) spec.get();
 
-        if (equipable.isEquip()) {
-            this.inventory.updateMaxCapacity(-equipable.getUpCapacity());
-            equipable.setEquip(!equipable.isEquip());
+        if (equippable.isEquip()) {
+            this.inventory.updateMaxCapacity(-equippable.getUpCapacity());
+            equippable.setEquip(!equippable.isEquip());
         } else {
-            this.inventory.updateMaxCapacity(equipable.getUpCapacity());
-            equipable.setEquip(!equipable.isEquip());
+            this.inventory.updateMaxCapacity(equippable.getUpCapacity());
+            equippable.setEquip(!equippable.isEquip());
         }
     }
 

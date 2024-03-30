@@ -2,7 +2,7 @@ package service;
 
 import backend.controller.enums.TypeMessage;
 import backend.repository.entity.ItemEntity;
-import backend.service.command.EquipableCommand;
+import backend.service.command.EquippableCommand;
 import backend.service.model.Inventory;
 import backend.service.model.Item;
 import backend.service.model.ItemFactory;
@@ -15,9 +15,9 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-public class EquipableCommandTest {
+public class EquippableCommandTest {
 
-    private EquipableCommand cmd;
+    private EquippableCommand cmd;
     private Map<Integer, Item> itens;
 
 
@@ -36,16 +36,16 @@ public class EquipableCommandTest {
     public void validErro() {
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.itens.get(5));
-        this.cmd = new EquipableCommand(this.itens.get(5), inventory);
+        this.cmd = new EquippableCommand(this.itens.get(5), inventory);
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.ITEM_ERRO_EQUIPABLE, msg);
+        assertEquals(TypeMessage.ITEM_ERRO_EQUIPPABLE, msg);
     }
 
     @Test
     public void validMochila1() {
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.itens.get(10));
-        this.cmd = new EquipableCommand(this.itens.get(10), inventory);
+        this.cmd = new EquippableCommand(this.itens.get(10), inventory);
         var msg = this.cmd.execute();
         assertEquals(TypeMessage.EQUIP_SCHOOLBAG, msg);
     }
@@ -54,7 +54,7 @@ public class EquipableCommandTest {
     public void validMochila2() {
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.itens.get(10));
-        this.cmd = new EquipableCommand(this.itens.get(10), inventory);
+        this.cmd = new EquippableCommand(this.itens.get(10), inventory);
         this.cmd.execute();
         var msg = this.cmd.execute();
         assertEquals(TypeMessage.UNEQUIP_SCHOOLBAG, msg);
@@ -66,7 +66,7 @@ public class EquipableCommandTest {
         var item = new ItemEntity(7, "madeiras", "madeira para construir algo", 15, 8, 64, "src/main/resources/image/item/madeiras.png");
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.itens.get(10));
-        this.cmd = new EquipableCommand(this.itens.get(10), inventory);
+        this.cmd = new EquippableCommand(this.itens.get(10), inventory);
         this.cmd.execute();
         inventory.addItem(factory.create(item));
         var msg = this.cmd.execute();
@@ -77,7 +77,7 @@ public class EquipableCommandTest {
     public void validTocha1() {
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.itens.get(16));
-        this.cmd = new EquipableCommand(this.itens.get(16), inventory);
+        this.cmd = new EquippableCommand(this.itens.get(16), inventory);
         var msg = this.cmd.execute();
         assertEquals(TypeMessage.EQUIP_TORCH, msg);
     }
@@ -86,7 +86,7 @@ public class EquipableCommandTest {
     public void validTocha2() {
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.itens.get(16));
-        this.cmd = new EquipableCommand(this.itens.get(16), inventory);
+        this.cmd = new EquippableCommand(this.itens.get(16), inventory);
         this.cmd.execute();
         var msg = this.cmd.execute();
         assertEquals(TypeMessage.UNEQUIP_TORCH, msg);
@@ -96,7 +96,7 @@ public class EquipableCommandTest {
     public void validUndo1() {
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.itens.get(10));
-        this.cmd = new EquipableCommand(this.itens.get(10), inventory);
+        this.cmd = new EquippableCommand(this.itens.get(10), inventory);
         this.cmd.execute();
         this.cmd.undo();
         assertEquals(10, inventory.getMaxCapacity());
@@ -106,7 +106,7 @@ public class EquipableCommandTest {
     public void validUndo2() {
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.itens.get(10));
-        this.cmd = new EquipableCommand(this.itens.get(10), inventory);
+        this.cmd = new EquippableCommand(this.itens.get(10), inventory);
         this.cmd.execute();
         this.cmd.execute();
         this.cmd.undo();

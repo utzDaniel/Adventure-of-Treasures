@@ -49,7 +49,7 @@ public enum TypeMessage {
     INVENTORY_ERRO_CLOSED(false, "Inventário já está está fechado!", "erro"),
     INVENTORY_ERRO_OPEN(false, "Inventário já está está aberto!", "erro"),
     ITEM_ERRO_FOUND(false, "Item não encontrado!", "erro"),
-    ITEM_ERRO_EQUIPABLE(false, "Item não é do tipo equipável!", "erro"),
+    ITEM_ERRO_EQUIPPABLE(false, "Item não é do tipo equipável!", "erro"),
     ITEM_ERRO_USABLE(false, "Item não é do tipo usável!", "erro"),
     ITEM_ERRO_COMBINABLE(false, "Nenhum dos itens é combináveis!", "erro"),
     COMBINE_ERRO_COMBINABLE(false, "Itens não são combináveis entre eles!", "erro"),

@@ -16,7 +16,7 @@ final class InventoryJButtonActionFactory {
     static JButton getInstance(String name) {
         return switch (name) {
             case "usar" -> actionUsable(Colors.BLUE);
-            case "equipar" -> actionEquipable(Colors.BLUE);
+            case "equipar" -> actionEquippable(Colors.BLUE);
             case "combinar" -> actionCombinable(Colors.BLUE);
             case "remover" -> actionRemove(Colors.BLUE);
             case "cancelar" -> actionCancel(Colors.RED);
@@ -44,7 +44,7 @@ final class InventoryJButtonActionFactory {
         return create(NAMES[0], color, rectangle);
     }
 
-    private static JButton actionEquipable(Color color) {
+    private static JButton actionEquippable(Color color) {
         var rectangle = new Rectangle(calculateXPosition(1, 1), calculateYPosition(1), calculateWidth(1), HEIGHT);
         return create(NAMES[1], color, rectangle);
     }

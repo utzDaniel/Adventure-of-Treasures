@@ -9,23 +9,23 @@ import java.util.List;
 
 public final class CommandTool implements ICommand {
 
-    private final List<ICommand> commads;
+    private final List<ICommand> commands;
     private final ArrayDeque<ICommand> stack;
 
     public CommandTool() {
-        this.commads = new ArrayList<>();
+        this.commands = new ArrayList<>();
         this.stack = new ArrayDeque<>();
     }
 
     public void addCommand(ICommand command) {
-        this.commads.add(command);
+        this.commands.add(command);
     }
 
     @Override
     public TypeMessage execute() {
         this.stack.clear();
         TypeMessage temp = TypeMessage.COMMAND_ERRO;
-        for (ICommand cmd : this.commads) {
+        for (ICommand cmd : this.commands) {
             temp = cmd.execute();
             this.stack.add(cmd);
             if (!temp.isSucess()) {

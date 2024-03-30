@@ -1,6 +1,6 @@
 package backend.repository.interfaces;
 
-public interface IEquipableEntity extends IEntity {
+public interface IEquippableEntity extends IEntity {
 
     int idItem();
 

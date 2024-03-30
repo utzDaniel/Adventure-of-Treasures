@@ -1,6 +1,6 @@
 package backend.service.interfaces;
 
-public interface IEquipable extends ISpecialization {
+public interface IEquippable extends ISpecialization {
 
     boolean isEquip();
 

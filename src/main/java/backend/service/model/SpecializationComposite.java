@@ -1,7 +1,7 @@
 package backend.service.model;
 
 import backend.service.enums.TypeItem;
-import backend.service.interfaces.IEquipable;
+import backend.service.interfaces.IEquippable;
 import backend.service.interfaces.IRemovable;
 import backend.service.interfaces.ISpecialization;
 import backend.service.interfaces.IUsable;
@@ -53,9 +53,9 @@ public final class SpecializationComposite implements ISpecialization, IBackup<S
     @Override
     public SpecializationCompositeMemento save() {
         Boolean equip = null;
-        var equipable = getSpecialization(TypeItem.EQUIPABLE);
-        if (equipable.isPresent()) {
-            equip = ((IEquipable) equipable.get()).isEquip();
+        var equippable = getSpecialization(TypeItem.EQUIPPABLE);
+        if (equippable.isPresent()) {
+            equip = ((IEquippable) equippable.get()).isEquip();
         }
 
         Boolean enabled = null;
@@ -69,8 +69,8 @@ public final class SpecializationComposite implements ISpecialization, IBackup<S
 
     @Override
     public void restore(SpecializationCompositeMemento memento) {
-        getSpecialization(TypeItem.EQUIPABLE)
-                .ifPresent(s -> ((IEquipable) s).setEquip(memento.equip()));
+        getSpecialization(TypeItem.EQUIPPABLE)
+                .ifPresent(s -> ((IEquippable) s).setEquip(memento.equip()));
 
         getSpecialization(TypeItem.USABLE)
                 .ifPresent(s -> ((IUsable) s).setEnabled(memento.enabled()));

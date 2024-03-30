@@ -36,7 +36,7 @@ public final class ItemFactory implements IFactory<Item> {
             composite.add(new Combinable(comb.get(0).combination(), comb.size()));
         }
 
-        getEquipable(id).ifPresent(e -> composite.add(new Equipable(e)));
+        getEquippable(id).ifPresent(e -> composite.add(new Equippable(e)));
 
         getUsable(id).ifPresent(e -> composite.add(new Usable(e)));
 
@@ -66,8 +66,8 @@ public final class ItemFactory implements IFactory<Item> {
         return CombinableRepository.getInstance().getByIdItem(id);
     }
 
-    private Optional<IEquipableEntity> getEquipable(int id) {
-        return EquipableRepository.getInstance().getByIdItem(id);
+    private Optional<IEquippableEntity> getEquippable(int id) {
+        return EquippableRepository.getInstance().getByIdItem(id);
     }
 
     private Optional<IUsableEntity> getUsable(int id) {
