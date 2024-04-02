@@ -23,8 +23,9 @@ public final class InteractDoorCommand implements ICommand {
 
     @Override
     public TypeMessage execute() {
-
-        var door = this.player.getCurrentMap().getDoor(this.player.getCoordinate()).orElse(null);
+        var coordinate = this.player.getCoordinate();
+        coordinate.move(this.player.getDirection().getMove());
+        var door = this.player.getCurrentMap().getDoor(coordinate).orElse(null);
 
         if (Objects.isNull(door))
             return TypeMessage.DOOR_ERRO_FOUND;
@@ -48,7 +49,7 @@ public final class InteractDoorCommand implements ICommand {
     }
 
     private void updateMove(MapGame mapGame) {
-        var idMapGame = this.player.getCurrentMap().getId();
+        var idMapGame = this.player.getCurrentMap().id();
         var door = mapGame.getDoorByMap(idMapGame);
         if (door.isEmpty()) return;
         this.player.updateMove(this.player.getDirection(), door.get().getCoordinate());

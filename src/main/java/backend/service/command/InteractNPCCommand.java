@@ -21,20 +21,23 @@ public final class InteractNPCCommand implements ICommand {
 
     @Override
     public TypeMessage execute() {
-
-        var npc = this.player.getCurrentMap().getNPC(this.player.getCoordinate());
-        if (npc.isEmpty()) {
+        var coordinate = this.player.getCoordinate();
+        coordinate.move(this.player.getDirection().getMove());
+        var npcOptional = this.player.getCurrentMap().getNPC(coordinate);
+        if (npcOptional.isEmpty()) {
             return TypeMessage.NPC_ERRO_FOUND;
         }
+        var npc = npcOptional.get();
 
-        var msg = npc.get().isAction(this.player.getInventory().getItens());
+        var msg = npc.isAction(this.player.getInventory().getItens());
 
         if (msg.isPresent() && msg.get().isSuccess()) return msg.get();
 
-        if (npc.get().getIdDoor() == -1) return TypeMessage.NPC_ERRO_INCOMPLETE;
+        if (npc.getIdDoor() == -1) return TypeMessage.NPC_ERRO_INCOMPLETE;
 
-        var door = CacheService.getDoor(npc.get().getIdDoor());
+        var door = CacheService.getDoor(npc.getIdDoor());
         if (door.isEmpty()) return TypeMessage.MAP_NOT_FOUND;
+
         var mapGame = CacheService.getMapGame(door.get().getIdMapGame());
         if (mapGame.isEmpty()) return TypeMessage.MAP_NOT_FOUND;
 
@@ -51,7 +54,7 @@ public final class InteractNPCCommand implements ICommand {
     }
 
     private void updateMove(MapGame mapGame) {
-        var idMapGame = this.player.getCurrentMap().getId();
+        var idMapGame = this.player.getCurrentMap().id();
         var door = mapGame.getDoorByMap(idMapGame);
         if (door.isEmpty()) return;
         this.player.updateMove(this.player.getDirection(), door.get().getCoordinate());

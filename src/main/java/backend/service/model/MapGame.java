@@ -5,9 +5,9 @@ import backend.repository.interfaces.IExitEntity;
 import backend.repository.interfaces.IMapGameEntity;
 import backend.service.enums.Direction;
 import backend.service.infra.CacheService;
+import backend.service.interfaces.IBackup;
 import backend.service.interfaces.ICoordinate;
 import backend.service.interfaces.IImage;
-import backend.service.interfaces.IBackup;
 import backend.service.memento.MapGameMemento;
 
 import java.util.List;
@@ -19,25 +19,19 @@ import java.util.stream.Collectors;
 public final class MapGame implements IImage, IEntity, IBackup<MapGameMemento> {
     private final IMapGameEntity entity;
     private String image;
-    private final NPC npc;
     private final Area area;
-    private final Map<ICoordinate, Door> doors;
-    private final Map<ICoordinate, Item> itens;
-    private final List<IExitEntity> exits;
+    private final InteractMapGame interact;
+    private final Map<Direction, IExitEntity> exits;
 
-    public MapGame(IMapGameEntity entity, Map<ICoordinate, Door> doors, Map<ICoordinate, Item> itens, List<IExitEntity> exits, NPC npc) {
+    public MapGame(IMapGameEntity entity, Map<Direction, IExitEntity> exits, InteractMapGame interact) {
         this.entity = entity;
         this.image = entity.image();
-        this.doors = doors;
-        this.itens = itens;
         this.exits = exits;
-        this.npc = npc;
+        this.interact = interact;
         this.area = new Area(entity.limits());
-        itens.keySet().forEach(this.area::block);
-    }
-
-    public int getId() {
-        return this.entity.id();
+        this.interact.getItens().stream()
+                .map(Item::getCoordinate)
+                .forEach(this.area::block);
     }
 
     @Override
@@ -62,51 +56,50 @@ public final class MapGame implements IImage, IEntity, IBackup<MapGameMemento> {
         this.image = image;
     }
 
-    public Area getArea() {
-        return this.area;
+    public boolean isInteract(ICoordinate coordinate) {
+        return this.interact.isInteract(coordinate);
     }
 
     public Optional<Door> getDoor(ICoordinate coordinate) {
-        return this.doors.values().stream()
-                .filter(o -> o.isDoor(coordinate))
-                .findFirst();
+        return this.interact.getDoor(coordinate);
     }
 
     public Optional<Door> getDoorByMap(int idMapGame) {
-        return this.doors.values().stream()
-                .filter(o -> o.isMap(idMapGame))
-                .findFirst();
+        return this.interact.getDoorByMap(idMapGame);
     }
 
     public Optional<Door> getDoor(int idDoor) {
-        return this.doors.values().stream()
-                .filter(v -> v.getId() == idDoor)
-                .findFirst();
+        return this.interact.getDoor(idDoor);
     }
 
     public Item getItem(ICoordinate coordinate) {
-        return this.itens.get(coordinate);
+        return this.interact.getItem(coordinate);
     }
 
     public void removeItem(Item item) {
-        this.itens.remove(item.getCoordinate());
+        this.interact.removeItem(item);
         this.area.unlock(item.getCoordinate());
     }
 
     public void addItem(Item item) {
-        this.itens.put(item.getCoordinate(), item);
+        this.interact.addItem(item);
         this.area.block(item.getCoordinate());
     }
 
     public List<Item> getItens() {
-        return this.itens.values().stream().toList();
+        return this.interact.getItens();
+    }
+
+    public Optional<NPC> getNPC(ICoordinate coordinate) {
+        return this.interact.getNPC(coordinate);
     }
 
     public Optional<Integer> getExit(Direction direction) {
-        return this.exits.stream()
-                .filter(exit -> exit.direction().equalsIgnoreCase(direction.name()))
-                .map(IExitEntity::idMapExt)
-                .findFirst();
+        return Objects.isNull(this.exits.get(direction)) ? Optional.empty() : Optional.of(this.exits.get(direction).idMapExt());
+    }
+
+    public Area getArea() {
+        return this.area;
     }
 
     public boolean isNextScenery(ICoordinate coordinate) {
@@ -125,10 +118,6 @@ public final class MapGame implements IImage, IEntity, IBackup<MapGameMemento> {
         return this.entity.limits().length * this.entity.limits()[0].length;
     }
 
-    public Optional<NPC> getNPC(ICoordinate coordinate) {
-        return Objects.nonNull(this.npc) && this.npc.getCoordinate().equals(coordinate) ? Optional.of(this.npc) : Optional.empty();
-    }
-
     @Override
     public String toString() {
         return """
@@ -136,27 +125,26 @@ public final class MapGame implements IImage, IEntity, IBackup<MapGameMemento> {
                     "id": %d,
                     "name": "%s",
                     "image": "%s",
-                    "area": %s,
-                    "doors": %s,
-                    "itens": %s,
                     "song": "%s",
-                    "exits": "%s"
+                    "exits": "%s",
+                    "area": %s,
+                    %s
                 }
-                """.formatted(this.entity.id(), this.entity.name(), this.image, this.area, this.doors.values(),
-                this.itens.values(), this.entity.song(), this.exits);
+                """.formatted(this.entity.id(), this.entity.name(), this.image, this.entity.song(), this.exits,
+                this.area, this.interact.toString());
     }
 
     @Override
     public MapGameMemento save() {
         return new MapGameMemento(this.entity.id(), this.image,
-                this.itens.values().stream().map(Item::getId).collect(Collectors.toSet()));
+                this.interact.getItens().stream().map(Item::getId).collect(Collectors.toSet()));
     }
 
     @Override
     public void restore(MapGameMemento memento) {
         this.image = memento.image();
-        this.itens.keySet().forEach(this.area::unlock);
-        this.itens.clear();
+        this.area.clear();
+        this.interact.clear();
         memento.idItens()
                 .stream()
                 .map(id -> CacheService.getItem(id).orElse(null))

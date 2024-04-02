@@ -24,7 +24,7 @@ public final class AddItemInventoryCommand implements ICommand {
 
     @Override
     public void undo() {
-        new RemoveItemInventoryCommand(this.item, this.inventory).execute();
+        this.inventory.removeItem(this.item);
     }
 
 }

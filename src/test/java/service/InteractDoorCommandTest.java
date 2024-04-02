@@ -37,7 +37,7 @@ public class InteractDoorCommandTest {
 
     @Test
     public void validErro2() {
-        var move = new Move("", ICoordinate.getInstance(15, 37), this.mapGame.get(6));
+        var move = new Move("", ICoordinate.getInstance(13, 38), this.mapGame.get(6));
         var inventory = new Inventory(0, 10);
         var player = new Player(move, inventory);
         this.cmd = new InteractDoorCommand(player);
@@ -47,19 +47,19 @@ public class InteractDoorCommandTest {
 
     @Test
     public void valid() {
-        var move = new Move("", ICoordinate.getInstance(31, 72), this.mapGame.get(6));
+        var move = new Move("", ICoordinate.getInstance(29, 72), this.mapGame.get(6));
         var inventory = new Inventory(0, 10);
         var player = new Player(move, inventory);
         this.cmd = new InteractDoorCommand(player);
         var msg = this.cmd.execute();
         assertEquals(TypeMessage.DOOR_OPEN, msg);
-        assertEquals(ICoordinate.getInstance(51, 37), player.getCoordinate());
-        assertEquals(11, player.getCurrentMap().getId());
+        assertEquals(ICoordinate.getInstance(52, 37), player.getCoordinate());
+        assertEquals(11, player.getCurrentMap().id());
     }
 
     @Test
     public void validUndo() {
-        var move = new Move("", ICoordinate.getInstance(31, 72), this.mapGame.get(6));
+        var move = new Move("", ICoordinate.getInstance(29, 72), this.mapGame.get(6));
         var inventory = new Inventory(0, 10);
         var player = new Player(move, inventory);
         var oldCoordinate = ICoordinate.getInstance(player.getCoordinate());
@@ -67,7 +67,7 @@ public class InteractDoorCommandTest {
         this.cmd.execute();
         this.cmd.undo();
         assertEquals(oldCoordinate, player.getCoordinate());
-        assertEquals(this.mapGame.get(6).getId(), player.getCurrentMap().getId());
+        assertEquals(this.mapGame.get(6).id(), player.getCurrentMap().id());
     }
 
 

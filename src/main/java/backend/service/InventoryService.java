@@ -46,7 +46,7 @@ public final class InventoryService implements IInventoryService {
     @Override
     public IServiceResponse use(Integer idItem) {
         var inventory = Game.player.getInventory();
-        var idMap = Game.player.getCurrentMap().getId();
+        var idMap = Game.player.getCurrentMap().id();
         var coordinate = Game.player.getCoordinate();
 
         var item = getItem(idItem);

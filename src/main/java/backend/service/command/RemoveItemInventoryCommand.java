@@ -29,7 +29,7 @@ public final class RemoveItemInventoryCommand implements ICommand {
 
     @Override
     public void undo() {
-        new AddItemInventoryCommand(this.item, this.inventory).execute();
+        this.inventory.addItem(this.item);
     }
 
 }

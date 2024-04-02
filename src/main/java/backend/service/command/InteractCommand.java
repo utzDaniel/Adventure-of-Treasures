@@ -16,6 +16,12 @@ public final class InteractCommand implements ICommand {
 
     @Override
     public TypeMessage execute() {
+        var coordinate = this.player.getCoordinate();
+        coordinate.move(this.player.getDirection().getMove());
+        if(!player.getCurrentMap().isInteract(coordinate)){
+            return TypeMessage.INTERACT_ERRO;
+        }
+
         this.command = new InteractNPCCommand(this.player);
         var msg = this.command.execute();
         if (msg.name().contains(NOT_FOUND)) {
@@ -26,7 +32,7 @@ public final class InteractCommand implements ICommand {
                 msg = this.command.execute();
             }
         }
-        return msg.name().contains(NOT_FOUND) ? TypeMessage.INTERACT_ERRO : msg;
+        return msg;
     }
 
 

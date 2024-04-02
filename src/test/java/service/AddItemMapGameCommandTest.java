@@ -37,8 +37,8 @@ public class AddItemMapGameCommandTest {
                 limits[i][i1] = Area.CODE_BLOCK;
             }
         }
-        var map = new MapGame(new MapGameEntity(0, null, null, null, limits), new HashMap<>(),
-                new HashMap<>(), new ArrayList<>(), null);
+        var interac = new InteractMapGame(new HashMap<>(), new HashMap<>(), new HashMap<>());
+        var map = new MapGame(new MapGameEntity(0, null, null, null, limits), new HashMap<>(), interac);
         this.cmd = new AddItemMapGameCommand(this.item, map);
         var msg = this.cmd.execute();
         assertEquals(TypeMessage.MAP_ADD_ERRO_FULL, msg);

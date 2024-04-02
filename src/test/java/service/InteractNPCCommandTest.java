@@ -44,7 +44,7 @@ public class InteractNPCCommandTest {
 
     @Test
     public void validErro2() {
-        var move = new Move("", ICoordinate.getInstance(28, 71), this.mapGame.get(12));
+        var move = new Move("", ICoordinate.getInstance(27, 70), this.mapGame.get(12));
         var inventory = new Inventory(0, 10);
         var player = new Player(move, inventory);
         this.cmd = new InteractNPCCommand(player);
@@ -54,7 +54,7 @@ public class InteractNPCCommandTest {
 
     @Test
     public void valid1() {
-        var move = new Move("", ICoordinate.getInstance(28, 71), this.mapGame.get(12));
+        var move = new Move("", ICoordinate.getInstance(27, 70), this.mapGame.get(12));
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.itens.get(15));
         var player = new Player(move, inventory);
@@ -65,19 +65,19 @@ public class InteractNPCCommandTest {
 
     @Test
     public void valid2() {
-        var move = new Move("", ICoordinate.getInstance(52, 30), this.mapGame.get(1));
+        var move = new Move("", ICoordinate.getInstance(51, 31), this.mapGame.get(1));
         var inventory = new Inventory(0, 10);
         var player = new Player(move, inventory);
         this.cmd = new InteractNPCCommand(player);
         var msg = this.cmd.execute();
         assertEquals(TypeMessage.NPC_INTERACT, msg);
-        assertEquals(ICoordinate.getInstance(32, 7), player.getCoordinate());
-        assertEquals(12, player.getCurrentMap().getId());
+        assertEquals(ICoordinate.getInstance(33, 7), player.getCoordinate());
+        assertEquals(12, player.getCurrentMap().id());
     }
 
     @Test
     public void validUndo() {
-        var move = new Move("", ICoordinate.getInstance(52, 30), this.mapGame.get(1));
+        var move = new Move("", ICoordinate.getInstance(51, 31), this.mapGame.get(1));
         var inventory = new Inventory(0, 10);
         var player = new Player(move, inventory);
         var oldCoordinate = ICoordinate.getInstance(player.getCoordinate());
@@ -85,7 +85,7 @@ public class InteractNPCCommandTest {
         this.cmd.execute();
         this.cmd.undo();
         assertEquals(oldCoordinate, player.getCoordinate());
-        assertEquals(this.mapGame.get(1).getId(), player.getCurrentMap().getId());
+        assertEquals(this.mapGame.get(1).id(), player.getCurrentMap().id());
     }
 
 }

@@ -4,11 +4,11 @@ import backend.repository.interfaces.IEntity;
 import backend.repository.interfaces.IExitEntity;
 import backend.repository.interfaces.IMapGameEntity;
 import backend.repository.singleton.*;
+import backend.service.enums.Direction;
 import backend.service.infra.CacheService;
 import backend.service.interfaces.ICoordinate;
 import backend.service.interfaces.IFactory;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -26,10 +26,8 @@ public final class MapGameFactory implements IFactory<MapGame> {
         if (entity instanceof IMapGameEntity mapGameEntity) {
             return new MapGame(
                     mapGameEntity,
-                    getDoors(mapGameEntity),
-                    getItens(mapGameEntity),
                     getExits(mapGameEntity),
-                    getNPC(mapGameEntity));
+                    getInteractMapGame(mapGameEntity));
         }
         return null;
     }
@@ -38,19 +36,24 @@ public final class MapGameFactory implements IFactory<MapGame> {
         return MapGameRepository.getInstance().getById(id);
     }
 
+    private static Map<Direction, IExitEntity> getExits(IMapGameEntity mapGameEntity) {
+        return ExitRepository.getInstance()
+                .getByIdMapOri(mapGameEntity.id())
+                .stream()
+                .map(exit -> Map.entry(Direction.valueOf(exit.direction().toUpperCase()), exit))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    private static InteractMapGame getInteractMapGame(IMapGameEntity mapGameEntity) {
+        return new InteractMapGame(getDoors(mapGameEntity), getItens(mapGameEntity), getNPCs(mapGameEntity));
+    }
+
     private static Map<ICoordinate, Item> getItens(IMapGameEntity mapGameEntity) {
         return ItemMapRepository.getInstance().getByIdMap(mapGameEntity.id())
                 .stream()
                 .map(v -> CacheService.itemICache.get(v.idItem()).orElse(null))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toMap(Item::getCoordinate, item1 -> item1));
-    }
-
-    private static List<IExitEntity> getExits(IMapGameEntity mapGameEntity) {
-        return ExitRepository.getInstance()
-                .getByIdMapOri(mapGameEntity.id())
-                .stream()
-                .toList();
     }
 
     private static Map<ICoordinate, Door> getDoors(IMapGameEntity mapGameEntity) {
@@ -62,12 +65,12 @@ public final class MapGameFactory implements IFactory<MapGame> {
                 .collect(Collectors.toMap(Door::getCoordinate, door1 -> door1));
     }
 
-    private static NPC getNPC(IMapGameEntity mapGameEntity) {
+    private static Map<ICoordinate, NPC> getNPCs(IMapGameEntity mapGameEntity) {
         return NPCRepository.getInstance()
                 .getByIdMap(mapGameEntity.id())
                 .stream()
                 .map(NPC::new)
-                .findFirst().orElse(null);
+                .collect(Collectors.toMap(NPC::getCoordinate, npc1 -> npc1));
     }
 
 }

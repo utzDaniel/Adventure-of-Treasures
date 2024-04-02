@@ -46,7 +46,7 @@ public class InteractCommandTest {
 
     @Test
     public void valid1() {
-        var move = new Move("", ICoordinate.getInstance(28, 71), this.mapGame.get(12));
+        var move = new Move("", ICoordinate.getInstance(27, 70), this.mapGame.get(12));
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.itens.get(15));
         var player = new Player(move, inventory);
@@ -57,7 +57,7 @@ public class InteractCommandTest {
 
     @Test
     public void valid2() {
-        var move = new Move("", ICoordinate.getInstance(31, 72), this.mapGame.get(6));
+        var move = new Move("", ICoordinate.getInstance(29, 72), this.mapGame.get(6));
         var inventory = new Inventory(0, 10);
         var player = new Player(move, inventory);
         var cmd = new InteractCommand(player);

@@ -57,7 +57,7 @@ public final class Move implements IMove, IBackup<MoveMemento> {
 
     @Override
     public MoveMemento save() {
-        return new MoveMemento(this.movementImage.name(), this.currentMapGame.getId(),
+        return new MoveMemento(this.movementImage.name(), this.currentMapGame.id(),
                 this.direction.name(), this.coordinate.x(), this.coordinate.y(), this.path);
     }
 

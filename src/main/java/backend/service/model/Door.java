@@ -2,9 +2,9 @@ package backend.service.model;
 
 import backend.repository.interfaces.IDoorEntity;
 import backend.repository.interfaces.IEntity;
+import backend.service.interfaces.IBackup;
 import backend.service.interfaces.ICoordinate;
 import backend.service.memento.DoorMemento;
-import backend.service.interfaces.IBackup;
 
 public final class Door implements IEntity, IBackup<DoorMemento> {
     private final IDoorEntity entity;

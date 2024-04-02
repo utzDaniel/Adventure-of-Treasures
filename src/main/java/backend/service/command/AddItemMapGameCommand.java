@@ -38,7 +38,7 @@ public final class AddItemMapGameCommand implements ICommand {
 
     @Override
     public void undo() {
-        new RemoveItemMapGameCommand(this.item, this.mapGame).execute();
+        this.mapGame.removeItem(this.item);
         this.item.setCoordinate(this.oldCoordinate);
     }
 

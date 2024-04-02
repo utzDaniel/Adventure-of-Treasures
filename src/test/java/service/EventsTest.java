@@ -45,7 +45,7 @@ public class EventsTest {
                 .forEach(v -> this.itens.put(v.id(), new ItemFactory().create(v)));
         DoorRepository.getInstance().getAll()
                 .forEach(v -> this.doors.put(v.id(), new Door(v)));
-        this.mapGame.values().forEach(v -> CacheService.getMapGame(v.getId()));
+        this.mapGame.values().forEach(v -> CacheService.getMapGame(v.id()));
         this.doors.values().forEach(v -> CacheService.getDoor(v.getId()));
         this.itens.values().forEach(v -> CacheService.getItem(v.getId()));
     }

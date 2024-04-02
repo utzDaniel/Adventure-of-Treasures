@@ -52,6 +52,10 @@ public final class Area {
         this.blocks.add(coordinate);
     }
 
+    public void clear() {
+        this.blocks.clear();
+    }
+
     @Override
     public String toString() {
         return """
