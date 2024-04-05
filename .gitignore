@@ -15,8 +15,8 @@ out/
 # Logs, save e arquivos temporários
 *.log
 *.swp
-src/main/resources/save/
-src/test/resources/save/
+src/main/resources/save/*
+src/test/resources/save/*
 
 # Dependendo do ambiente de desenvolvimento, você também pode adicionar diretórios específicos, como:
 
