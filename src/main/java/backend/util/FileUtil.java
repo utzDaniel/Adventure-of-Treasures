@@ -19,11 +19,11 @@ public final class FileUtil<T> {
         this.fileName = fileName;
     }
 
-    public void writeFile(List<String> linhas) throws IOException {
-        Path arquivo = Paths.get(this.fileName);
-        try (BufferedWriter writer = Files.newBufferedWriter(arquivo, StandardCharsets.UTF_8)) {
-            for (String linha : linhas) {
-                writer.write(linha);
+    public void writeFile(List<String> lines) throws IOException {
+        Path file = Paths.get(this.fileName);
+        try (BufferedWriter writer = Files.newBufferedWriter(file, StandardCharsets.UTF_8)) {
+            for (String line : lines) {
+                writer.write(line);
                 writer.newLine();
             }
 
@@ -33,12 +33,12 @@ public final class FileUtil<T> {
     }
 
     public Map<Integer, T> readFile(Function<String, T> mapper) throws IOException {
-        Path arquivo = Paths.get(this.fileName);
+        Path file = Paths.get(this.fileName);
         var map = new HashMap<Integer, T>();
         try {
-            var linhas = Files.readAllLines(arquivo, StandardCharsets.UTF_8);
-            for (int i = 0; i < linhas.size(); i++) {
-                map.put(i, mapper.apply(linhas.get(i)));
+            var lines = Files.readAllLines(file, StandardCharsets.UTF_8);
+            for (int i = 0; i < lines.size(); i++) {
+                map.put(i, mapper.apply(lines.get(i)));
             }
 
         } catch (IOException e) {

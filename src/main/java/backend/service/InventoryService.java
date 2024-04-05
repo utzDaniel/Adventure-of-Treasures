@@ -20,24 +20,24 @@ import java.util.Optional;
 public final class InventoryService implements IInventoryService {
 
     @Override
-    public IServiceResponse combination(List<Integer> idItens) {
+    public IServiceResponse combination(List<Integer> idItems) {
         var inventory = Game.player.getInventory();
 
-        var itens = new ArrayList<Item>();
-        idItens.forEach(id -> itens.add(getItem(id).orElse(null)));
+        var items = new ArrayList<Item>();
+        idItems.forEach(id -> items.add(getItem(id).orElse(null)));
 
         var typeMessage = TypeMessage.ITEM_ERROR_FOUND;
 
-        if (!itens.isEmpty()) {
-            var cmd = new CombinationCommand(itens, inventory);
+        if (!items.isEmpty()) {
+            var cmd = new CombinationCommand(items, inventory);
             typeMessage = cmd.execute();
         }
 
         if (!typeMessage.isSuccess())
             new ServiceResponse(typeMessage, null);
 
-        if (!itens.isEmpty() && typeMessage.isSuccess())
-            itens.get(0).warn();
+        if (!items.isEmpty() && typeMessage.isSuccess())
+            items.get(0).warn();
 
         var obj = new InventoryResponseMapper().apply(inventory);
         return new ServiceResponse(typeMessage, obj);
@@ -117,7 +117,7 @@ public final class InventoryService implements IInventoryService {
     }
 
     private Optional<Item> getItem(Integer idItem) {
-        return Game.player.getInventory().getItens().stream()
+        return Game.player.getInventory().getItems().stream()
                 .filter(item1 -> item1.getId() == idItem)
                 .findFirst();
     }

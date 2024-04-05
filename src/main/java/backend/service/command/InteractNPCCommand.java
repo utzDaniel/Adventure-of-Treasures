@@ -29,7 +29,7 @@ public final class InteractNPCCommand implements ICommand {
         }
         var npc = npcOptional.get();
 
-        var msg = npc.isAction(this.player.getInventory().getItens());
+        var msg = npc.isAction(this.player.getInventory().getItems());
 
         if (msg.isPresent() && msg.get().isSuccess()) return msg.get();
 

@@ -6,10 +6,10 @@ import java.util.Locale;
 
 public enum Direction {
 
-    OESTE(Movement.OESTE, "esquerda"),
-    NORTE(Movement.NORTE, "cima"),
-    LESTE(Movement.LESTE, "direita"),
-    SUL(Movement.SUL, "baixo");
+    WEST(Movement.WEST, "esquerda"),
+    NORTH(Movement.NORTH, "cima"),
+    EAST(Movement.EAST, "direita"),
+    SOUTH(Movement.SOUTH, "baixo");
 
     private final Movement movement;
     private final String fileName;

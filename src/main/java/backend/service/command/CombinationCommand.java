@@ -12,27 +12,27 @@ import java.util.List;
 
 public final class CombinationCommand implements ICommand {
 
-    private final List<Item> itens;
+    private final List<Item> items;
     private final CommandTool commands;
     private final Inventory inventory;
 
-    public CombinationCommand(List<Item> itens, Inventory inventory) {
+    public CombinationCommand(List<Item> items, Inventory inventory) {
         this.commands = new CommandTool();
-        this.itens = itens;
+        this.items = items;
         this.inventory = inventory;
     }
 
     @Override
     public TypeMessage execute() {
         List<ICombinable> combinable = new ArrayList<>();
-        this.itens.forEach(v -> {
+        this.items.forEach(v -> {
             var spec = v.getSpecialization(TypeItem.COMBINABLE);
             spec.ifPresent(s -> combinable.add(((ICombinable) s)));
         });
 
         if (combinable.isEmpty()) return TypeMessage.ITEM_ERROR_COMBINABLE;
 
-        if (this.itens.size() != combinable.size()) return TypeMessage.COMBINE_ERROR_ALL;
+        if (this.items.size() != combinable.size()) return TypeMessage.COMBINE_ERROR_ALL;
 
         if (combinable.get(0).sizeCombination() > combinable.size())
             return TypeMessage.COMBINE_ERROR_INCOMPLETE;
@@ -43,7 +43,7 @@ public final class CombinationCommand implements ICommand {
         var isCombine = combinable.stream().allMatch(v -> v.combination() == combinable.get(0).combination());
         if (!isCombine) return TypeMessage.COMBINE_ERROR_COMBINABLE;
 
-        this.itens.forEach(v -> this.commands.addCommand(new RemoveItemInventoryCommand(v, inventory)));
+        this.items.forEach(v -> this.commands.addCommand(new RemoveItemInventoryCommand(v, inventory)));
 
         var type = this.commands.execute();
         if (!type.isSuccess()) return type;

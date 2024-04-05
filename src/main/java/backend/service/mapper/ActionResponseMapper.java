@@ -20,8 +20,8 @@ public final class ActionResponseMapper implements Function<Player, IActionRespo
         components.add(createComponentInfoPlayer(player));
         components.add(createComponentInfoMap(player));
 
-        var itens = player.getCurrentMap().getItens();
-        components.addAll(createListComponentInfoItem(itens));
+        var items = player.getCurrentMap().getItems();
+        components.addAll(createListComponentInfoItem(items));
 
         var songMap = player.getCurrentMap().getSong();
 
@@ -33,7 +33,7 @@ public final class ActionResponseMapper implements Function<Player, IActionRespo
         var y = 0;
         var point = createPoint(x, y);
         var image = player.getCurrentMap().getImage();
-        return new ComponentInfoDTO("MAPA", image, point);
+        return new ComponentInfoDTO("MAP", image, point);
     }
 
     private static IComponentInfo createComponentInfoPlayer(Player player) {
@@ -44,8 +44,8 @@ public final class ActionResponseMapper implements Function<Player, IActionRespo
         return new ComponentInfoDTO("PLAYER", image, point);
     }
 
-    private static java.util.List<IComponentInfo> createListComponentInfoItem(java.util.List<Item> itens) {
-        return itens.stream()
+    private static java.util.List<IComponentInfo> createListComponentInfoItem(java.util.List<Item> items) {
+        return items.stream()
                 .map(ActionResponseMapper::createComponentInfoItem)
                 .toList();
     }

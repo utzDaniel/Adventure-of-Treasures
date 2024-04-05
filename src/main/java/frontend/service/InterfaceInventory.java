@@ -215,7 +215,7 @@ public final class InterfaceInventory {
             this.interfaceGame.getFrame().getContentPane().remove(this.panelInventory.getPanel());
 
             action.components().forEach(info -> {
-                if (info.name().equals(ComponentsProperties.MAPA.name())) {
+                if (info.name().equals(ComponentsProperties.MAP.name())) {
                     this.interfaceGame.getMapGameJLabel().setIcon(new ImageIcon(info.image()));
                 }
             });

@@ -25,9 +25,9 @@ public final class EquippableCommand implements ICommand {
 
         if (equippable.isEquip()) {
             if (!this.inventory.updateMaxCapacity(-equippable.getUpCapacity()))
-                return getUnequipTypeMessageErro();
+                return getUnequippedMessageError();
             equippable.setEquip(!equippable.isEquip());
-            return getUnequipTypeMessage();
+            return getUnequippeTypeMessage();
         } else {
             this.inventory.updateMaxCapacity(equippable.getUpCapacity());
             equippable.setEquip(!equippable.isEquip());
@@ -58,16 +58,16 @@ public final class EquippableCommand implements ICommand {
         };
     }
 
-    private TypeMessage getUnequipTypeMessage() {
+    private TypeMessage getUnequippeTypeMessage() {
         return switch (this.item.getId()) {
-            case 10 -> TypeMessage.UNEQUIP_SCHOOLBAG;
-            case 16 -> TypeMessage.UNEQUIP_TORCH;
-            default -> TypeMessage.UNEQUIP;
+            case 10 -> TypeMessage.UNEQUIPPED_SCHOOLBAG;
+            case 16 -> TypeMessage.UNEQUIPPED_TORCH;
+            default -> TypeMessage.UNEQUIPPED;
         };
     }
 
-    private TypeMessage getUnequipTypeMessageErro() {
-        return this.item.getId() == 10 ? TypeMessage.UNEQUIP_ERROR_SCHOOLBAG : TypeMessage.UNEQUIP_ERROR;
+    private TypeMessage getUnequippedMessageError() {
+        return this.item.getId() == 10 ? TypeMessage.UNEQUIPPED_ERROR_SCHOOLBAG : TypeMessage.UNEQUIPPED_ERROR;
     }
 
 }

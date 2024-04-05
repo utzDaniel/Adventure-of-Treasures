@@ -9,17 +9,17 @@ import java.util.Optional;
 public final class InteractMapGame {
 
     private final Map<ICoordinate, Door> doors;
-    private final Map<ICoordinate, Item> itens;
+    private final Map<ICoordinate, Item> items;
     private final Map<ICoordinate, NPC> npcs;
 
-    public InteractMapGame(Map<ICoordinate, Door> doors, Map<ICoordinate, Item> itens, Map<ICoordinate, NPC> npcs) {
+    public InteractMapGame(Map<ICoordinate, Door> doors, Map<ICoordinate, Item> items, Map<ICoordinate, NPC> npcs) {
         this.doors = doors;
-        this.itens = itens;
+        this.items = items;
         this.npcs = npcs;
     }
 
     public boolean isInteract(ICoordinate coordinate) {
-        return this.doors.containsKey(coordinate) || this.itens.containsKey(coordinate) || this.npcs.containsKey(coordinate);
+        return this.doors.containsKey(coordinate) || this.items.containsKey(coordinate) || this.npcs.containsKey(coordinate);
     }
 
     public Optional<Door> getDoor(ICoordinate coordinate) {
@@ -41,19 +41,19 @@ public final class InteractMapGame {
     }
 
     public Item getItem(ICoordinate coordinate) {
-        return this.itens.get(coordinate);
+        return this.items.get(coordinate);
     }
 
     public void removeItem(Item item) {
-        this.itens.remove(item.getCoordinate());
+        this.items.remove(item.getCoordinate());
     }
 
     public void addItem(Item item) {
-        this.itens.put(item.getCoordinate(), item);
+        this.items.put(item.getCoordinate(), item);
     }
 
-    public List<Item> getItens() {
-        return this.itens.values().stream().toList();
+    public List<Item> getItems() {
+        return this.items.values().stream().toList();
     }
 
     public Optional<NPC> getNPC(ICoordinate coordinate) {
@@ -61,7 +61,7 @@ public final class InteractMapGame {
     }
 
     public void clear() {
-        this.itens.clear();
+        this.items.clear();
     }
 
     @Override
@@ -69,9 +69,9 @@ public final class InteractMapGame {
         return """
                 {
                     "doors": %s,
-                    "itens": %s,
+                    "items": %s,
                     "npcs": "%s"
                 }
-                """.formatted(this.doors.values(), this.itens.values(), this.npcs.values());
+                """.formatted(this.doors.values(), this.items.values(), this.npcs.values());
     }
 }

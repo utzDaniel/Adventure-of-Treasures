@@ -5,7 +5,7 @@ import java.util.Set;
 public record MapGameMemento(
         int id,
         String image,
-        Set<Integer> idItens) implements IMemento, Comparable<MapGameMemento> {
+        Set<Integer> idItems) implements IMemento, Comparable<MapGameMemento> {
 
     @Override
     public String extrinsic() {
@@ -22,7 +22,7 @@ public record MapGameMemento(
     private String ids() {
         var str = new StringBuilder();
         str.append(Separator.LIST_START);
-        this.idItens.stream().sorted().forEach(v -> str.append(v).append(Separator.LIST_ID));
+        this.idItems.stream().sorted().forEach(v -> str.append(v).append(Separator.LIST_ID));
         str.append(Separator.LIST_END);
         return str.toString();
     }

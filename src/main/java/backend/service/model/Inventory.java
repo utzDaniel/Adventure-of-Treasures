@@ -14,13 +14,13 @@ public final class Inventory implements IBackup<InventoryMemento> {
     private int capacity;
     private int maxCapacity;
     private boolean isInventory;
-    private final Map<Integer, Item> itens;
+    private final Map<Integer, Item> items;
 
     public Inventory(int capacity, int maxCapacity) {
         this.capacity = capacity;
         this.maxCapacity = maxCapacity;
         this.isInventory = false;
-        this.itens = new HashMap<>();
+        this.items = new HashMap<>();
     }
 
     public int getCapacity() {
@@ -49,23 +49,23 @@ public final class Inventory implements IBackup<InventoryMemento> {
     }
 
     public Item getItem(int id) {
-        return this.itens.get(id);
+        return this.items.get(id);
     }
 
     public void addItem(Item item) {
         if (this.hasSpace(item.getWeight())) {
-            this.itens.put(item.getId(), item);
+            this.items.put(item.getId(), item);
             this.updateCapacity(item.getWeight());
         }
     }
 
     public void removeItem(Item item) {
-        if (Objects.nonNull(this.itens.remove(item.getId())))
+        if (Objects.nonNull(this.items.remove(item.getId())))
             this.updateCapacity(-item.getWeight());
     }
 
-    public List<Item> getItens() {
-        return this.itens.values().stream().toList();
+    public List<Item> getItems() {
+        return this.items.values().stream().toList();
     }
 
     public boolean openInventory() {
@@ -78,7 +78,7 @@ public final class Inventory implements IBackup<InventoryMemento> {
 
     @Override
     public InventoryMemento save() {
-        return new InventoryMemento(this.capacity, this.maxCapacity, this.isInventory, this.itens.keySet());
+        return new InventoryMemento(this.capacity, this.maxCapacity, this.isInventory, this.items.keySet());
     }
 
     @Override
@@ -86,12 +86,12 @@ public final class Inventory implements IBackup<InventoryMemento> {
         this.capacity = memento.capacity();
         this.maxCapacity = memento.maxCapacity();
         this.isInventory = memento.isInventory();
-        this.itens.clear();
-        memento.idItens()
+        this.items.clear();
+        memento.idItems()
                 .stream()
                 .map(id -> CacheService.getItem(id).orElse(null))
                 .filter(Objects::nonNull)
-                .forEach(v -> this.itens.put(v.getId(), v));
+                .forEach(v -> this.items.put(v.getId(), v));
 
     }
 

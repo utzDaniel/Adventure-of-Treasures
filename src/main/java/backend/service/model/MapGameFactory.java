@@ -45,10 +45,10 @@ public final class MapGameFactory implements IFactory<MapGame> {
     }
 
     private static InteractMapGame getInteractMapGame(IMapGameEntity mapGameEntity) {
-        return new InteractMapGame(getDoors(mapGameEntity), getItens(mapGameEntity), getNPCs(mapGameEntity));
+        return new InteractMapGame(getDoors(mapGameEntity), getItems(mapGameEntity), getNPCs(mapGameEntity));
     }
 
-    private static Map<ICoordinate, Item> getItens(IMapGameEntity mapGameEntity) {
+    private static Map<ICoordinate, Item> getItems(IMapGameEntity mapGameEntity) {
         return ItemMapRepository.getInstance().getByIdMap(mapGameEntity.id())
                 .stream()
                 .map(v -> CacheService.itemICache.get(v.idItem()).orElse(null))

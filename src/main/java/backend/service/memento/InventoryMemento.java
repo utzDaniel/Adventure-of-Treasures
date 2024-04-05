@@ -6,7 +6,7 @@ public record InventoryMemento(
         int capacity,
         int maxCapacity,
         boolean isInventory,
-        Set<Integer> idItens) implements IMemento {
+        Set<Integer> idItems) implements IMemento {
 
     @Override
     public String extrinsic() {
@@ -25,7 +25,7 @@ public record InventoryMemento(
     private String ids() {
         var str = new StringBuilder();
         str.append(Separator.LIST_START);
-        this.idItens.stream().sorted().forEach(v -> str.append(v).append(Separator.LIST_ID));
+        this.idItems.stream().sorted().forEach(v -> str.append(v).append(Separator.LIST_ID));
         str.append(Separator.LIST_END);
         return str.toString();
     }

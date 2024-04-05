@@ -125,7 +125,7 @@ public class Keyboard {
         action.components().forEach(info -> {
             if (info.name().equals(ComponentsProperties.PLAYER.name())) {
                 this.interfaceGame.getPlayerJLabel().setLocation(info.point());
-            } else if (info.name().equals(ComponentsProperties.MAPA.name())) {
+            } else if (info.name().equals(ComponentsProperties.MAP.name())) {
                 this.interfaceGame.getMapGameJLabel().setIcon(new ImageIcon(info.image()));
             }
         });

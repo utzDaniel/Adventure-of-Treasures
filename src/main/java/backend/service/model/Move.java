@@ -18,7 +18,7 @@ public final class Move implements IMove, IBackup<MoveMemento> {
     public Move(String path, ICoordinate coordinate, MapGame mapGame) {
         this.path = path;
         this.movementImage = MovementImage.RIGHT_FOOT_TOGETHER;
-        this.direction = Direction.SUL;
+        this.direction = Direction.SOUTH;
         this.coordinate = coordinate;
         this.currentMapGame = mapGame;
     }

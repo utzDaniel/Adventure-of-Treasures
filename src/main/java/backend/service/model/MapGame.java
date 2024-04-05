@@ -29,7 +29,7 @@ public final class MapGame implements IImage, IEntity, IBackup<MapGameMemento> {
         this.exits = exits;
         this.interact = interact;
         this.area = new Area(entity.limits());
-        this.interact.getItens().stream()
+        this.interact.getItems().stream()
                 .map(Item::getCoordinate)
                 .forEach(this.area::block);
     }
@@ -86,8 +86,8 @@ public final class MapGame implements IImage, IEntity, IBackup<MapGameMemento> {
         this.area.block(item.getCoordinate());
     }
 
-    public List<Item> getItens() {
-        return this.interact.getItens();
+    public List<Item> getItems() {
+        return this.interact.getItems();
     }
 
     public Optional<NPC> getNPC(ICoordinate coordinate) {
@@ -137,7 +137,7 @@ public final class MapGame implements IImage, IEntity, IBackup<MapGameMemento> {
     @Override
     public MapGameMemento save() {
         return new MapGameMemento(this.entity.id(), this.image,
-                this.interact.getItens().stream().map(Item::getId).collect(Collectors.toSet()));
+                this.interact.getItems().stream().map(Item::getId).collect(Collectors.toSet()));
     }
 
     @Override
@@ -145,7 +145,7 @@ public final class MapGame implements IImage, IEntity, IBackup<MapGameMemento> {
         this.image = memento.image();
         this.area.clear();
         this.interact.clear();
-        memento.idItens()
+        memento.idItems()
                 .stream()
                 .map(id -> CacheService.getItem(id).orElse(null))
                 .filter(Objects::nonNull)

@@ -49,7 +49,7 @@ public final class InterfaceGame {
             if (info.name().equals(ComponentsProperties.PLAYER.name())) {
                 getPlayerJLabel().setIcon(new ImageIcon(info.image()));
                 getPlayerJLabel().setLocation(info.point());
-            }else if (info.name().equals(ComponentsProperties.MAPA.name())) {
+            }else if (info.name().equals(ComponentsProperties.MAP.name())) {
                 getMapGameJLabel().setIcon(new ImageIcon(info.image()));
             }
         });

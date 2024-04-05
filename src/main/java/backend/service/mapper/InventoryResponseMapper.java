@@ -20,12 +20,12 @@ public final class InventoryResponseMapper implements Function<Inventory, IInven
     @Override
     public IInventoryResponse apply(Inventory inventory) {
 
-        var map = inventory.getItens().stream().collect(Collectors.toMap(Item::getId, this::createListSpecialization));
+        var map = inventory.getItems().stream().collect(Collectors.toMap(Item::getId, this::createListSpecialization));
 
 
-        var itensDTO = inventory.getItens().stream().map(item -> new ItemDTOMapper().apply(item)).toList();
+        var itemsDTO = inventory.getItems().stream().map(item -> new ItemDTOMapper().apply(item)).toList();
 
-        return new InventoryResponse(map, createListInformation(inventory), itensDTO);
+        return new InventoryResponse(map, createListInformation(inventory), itemsDTO);
     }
 
     private List<String> createListInformation(Inventory inventory) {

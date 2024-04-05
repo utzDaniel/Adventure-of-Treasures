@@ -23,14 +23,14 @@ public final class NPC {
         return this.entity.idDoor();
     }
 
-    public Optional<TypeMessage> isAction(List<Item> itens) {
+    public Optional<TypeMessage> isAction(List<Item> items) {
         Optional<TypeMessage> msg = this.entity.idItem() == 15 ? Optional.of(TypeMessage.GAME_FINISH) : Optional.empty();
-        return isRequired(itens) ? msg : Optional.empty();
+        return isRequired(items) ? msg : Optional.empty();
     }
-    private boolean isRequired(List<Item> itens) {
+    private boolean isRequired(List<Item> items) {
         var required = this.entity.idItem() == -1;
         if (!required) {
-            required = itens.stream().anyMatch(v -> v.getId() == this.entity.idItem());
+            required = items.stream().anyMatch(v -> v.getId() == this.entity.idItem());
         }
         return required;
     }

@@ -13,17 +13,17 @@ public final class BackupMementoFactory {
 
     public BackupMemento create() {
 
-        var idItens = new HashSet<Integer>();
+        var idItems = new HashSet<Integer>();
 
-        Game.player.getInventory().getItens().stream()
+        Game.player.getInventory().getItems().stream()
                 .map(Item::getId)
-                .forEach(idItens::add);
+                .forEach(idItems::add);
 
         CacheService.getAllMapGame().stream()
-                .flatMap(map -> map.getItens().stream().map(Item::getId))
-                .forEach(idItens::add);
+                .flatMap(map -> map.getItems().stream().map(Item::getId))
+                .forEach(idItems::add);
 
-        var listItem = idItens.stream()
+        var listItem = idItems.stream()
                 .map(v -> CacheService.getItem(v).orElse(null))
                 .filter(Objects::nonNull)
                 .map(Item::save)

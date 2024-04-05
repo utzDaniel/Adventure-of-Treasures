@@ -23,7 +23,7 @@ public final class CalculateCoordinate {
     }
 
     private static void updateDistance() {
-        if (direction == Direction.LESTE && limits.get(Direction.LESTE) == coordinate.y()) {
+        if (direction == Direction.EAST && limits.get(Direction.EAST) == coordinate.y()) {
             distance++;
             startingPoint();
         }
@@ -36,22 +36,22 @@ public final class CalculateCoordinate {
     }
 
     private static void startingPoint() {
-        direction = Direction.NORTE;
+        direction = Direction.NORTH;
         limits.clear();
-        limits.put(Direction.NORTE, coordinate.x() - distance * Movement.STEP);
-        limits.put(Direction.OESTE, coordinate.y() - distance * Movement.STEP);
-        limits.put(Direction.SUL, coordinate.x() + distance * Movement.STEP);
-        limits.put(Direction.LESTE, coordinate.y() + distance * Movement.STEP);
+        limits.put(Direction.NORTH, coordinate.x() - distance * Movement.STEP);
+        limits.put(Direction.WEST, coordinate.y() - distance * Movement.STEP);
+        limits.put(Direction.SOUTH, coordinate.x() + distance * Movement.STEP);
+        limits.put(Direction.EAST, coordinate.y() + distance * Movement.STEP);
         coordinate.move(ICoordinate.getInstance(Movement.STEP, Movement.STEP));
     }
 
     private static void updateDirection() {
         var limit = limits.get(direction);
         direction = switch (direction) {
-            case NORTE -> limit == coordinate.x() ? Direction.OESTE : direction;
-            case OESTE -> limit == coordinate.y() ? Direction.SUL : direction;
-            case SUL -> limit == coordinate.x() ? Direction.LESTE : direction;
-            case LESTE -> limit == coordinate.y() ? Direction.NORTE : direction;
+            case NORTH -> limit == coordinate.x() ? Direction.WEST : direction;
+            case WEST -> limit == coordinate.y() ? Direction.SOUTH : direction;
+            case SOUTH -> limit == coordinate.x() ? Direction.EAST : direction;
+            case EAST -> limit == coordinate.y() ? Direction.NORTH : direction;
         };
     }
 
