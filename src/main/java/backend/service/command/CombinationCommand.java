@@ -1,54 +1,46 @@
 package backend.service.command;
 
 import backend.controller.enums.TypeMessage;
-import backend.service.enums.TypeItem;
-import backend.service.interfaces.ICombinable;
+import backend.service.handler.*;
 import backend.service.interfaces.ICommand;
+import backend.service.interfaces.IHandler;
 import backend.service.model.Inventory;
 import backend.service.model.Item;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class CombinationCommand implements ICommand {
 
     private final List<Item> items;
     private final CommandTool commands;
     private final Inventory inventory;
+    private final IHandler<List<Item>> combinableHandler;
 
     public CombinationCommand(List<Item> items, Inventory inventory) {
         this.commands = new CommandTool();
         this.items = items;
         this.inventory = inventory;
+        this.combinableHandler = new CombinableEmptyHandler();
+        this.combinableHandler
+                .setNextHandler(new CombinableSizeHandler())
+                .setNextHandler(new CombinableIncompleteHandler())
+                .setNextHandler(new CombinableInvalidHandler())
+                .setNextHandler(new CombinableErrorHandler());
     }
 
     @Override
     public TypeMessage execute() {
-        List<ICombinable> combinable = new ArrayList<>();
-        this.items.forEach(v -> {
-            var spec = v.getSpecialization(TypeItem.COMBINABLE);
-            spec.ifPresent(s -> combinable.add(((ICombinable) s)));
-        });
-
-        if (combinable.isEmpty()) return TypeMessage.ITEM_ERROR_COMBINABLE;
-
-        if (this.items.size() != combinable.size()) return TypeMessage.COMBINE_ERROR_ALL;
-
-        if (combinable.get(0).sizeCombination() > combinable.size())
-            return TypeMessage.COMBINE_ERROR_INCOMPLETE;
-
-        if (combinable.get(0).sizeCombination() < combinable.size())
-            return TypeMessage.COMBINE_ERROR_INVALID;
-
-        var isCombine = combinable.stream().allMatch(v -> v.combination() == combinable.get(0).combination());
-        if (!isCombine) return TypeMessage.COMBINE_ERROR_COMBINABLE;
+        var msg = this.combinableHandler.handle(this.items);
+        if (msg.isPresent()) return msg.get();
 
         this.items.forEach(v -> this.commands.addCommand(new RemoveItemInventoryCommand(v, inventory)));
 
         var type = this.commands.execute();
         if (!type.isSuccess()) return type;
 
-        return getEquipTypeMessage(combinable.get(0).combination());
+        var combination = getCombination();
+        return getCombinationTypeMessage(combination);
     }
 
     @Override
@@ -56,13 +48,21 @@ public final class CombinationCommand implements ICommand {
         this.commands.undo();
     }
 
-    private TypeMessage getEquipTypeMessage(int combination) {
+    private TypeMessage getCombinationTypeMessage(String combination) {
         return switch (combination) {
-            case 1 -> TypeMessage.COMBINE_LADDER;
-            case 2 -> TypeMessage.COMBINE_MAP;
-            case 3 -> TypeMessage.COMBINE_TORCH;
+            case "5;12" -> TypeMessage.COMBINE_MAP;
+            case "7;9;14" -> TypeMessage.COMBINE_LADDER;
+            case "3;4;6;13" -> TypeMessage.COMBINE_TORCH;
             default -> TypeMessage.COMBINE;
         };
+    }
+
+    public String getCombination() {
+        return this.items.stream()
+                .map(Item::id)
+                .sorted()
+                .map(String::valueOf)
+                .collect(Collectors.joining(";"));
     }
 
 }
