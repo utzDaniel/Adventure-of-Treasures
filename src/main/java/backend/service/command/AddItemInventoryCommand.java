@@ -17,7 +17,7 @@ public final class AddItemInventoryCommand implements ICommand {
 
     @Override
     public TypeMessage execute() {
-        if (!this.inventory.hasSpace(this.item.getWeight())) return TypeMessage.INVENTORY_ERRO_FULL;
+        if (!this.inventory.hasSpace(this.item.getWeight())) return TypeMessage.INVENTORY_ERROR_FULL;
         this.inventory.addItem(this.item);
         return TypeMessage.ADD_ITEM_INVENTORY;
     }

@@ -69,10 +69,10 @@ public final class Item implements IObservable, IImage, IEntity, IBackup<ItemMem
 
     public TypeMessage isRemove() {
         if (this.getSpecialization(TypeItem.MISSION).isPresent())
-            return TypeMessage.REMOVE_ITEM_ERRO;
+            return TypeMessage.REMOVE_ITEM_ERROR;
         var spec = this.getSpecialization(TypeItem.EQUIPPABLE);
         if (spec.isPresent() && ((IEquippable) spec.get()).isEquip())
-            return TypeMessage.REMOVE_ITEM_ERRO_EQUIP;
+            return TypeMessage.REMOVE_ITEM_ERROR_EQUIP;
         return TypeMessage.REMOVE_ITEM;
     }
 

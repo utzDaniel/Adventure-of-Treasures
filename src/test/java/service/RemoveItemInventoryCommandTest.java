@@ -40,7 +40,7 @@ public class RemoveItemInventoryCommandTest {
         inventory.addItem(this.itens.get(15));
         this.cmd = new RemoveItemInventoryCommand(this.itens.get(15), inventory);
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.REMOVE_ITEM_ERRO, msg);
+        assertEquals(TypeMessage.REMOVE_ITEM_ERROR, msg);
     }
 
     @Test
@@ -51,7 +51,7 @@ public class RemoveItemInventoryCommandTest {
         equible.ifPresent(specialization -> ((IEquippable) specialization).setEquip(true));
         this.cmd = new RemoveItemInventoryCommand(this.itens.get(10), inventory);
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.REMOVE_ITEM_ERRO_EQUIP, msg);
+        assertEquals(TypeMessage.REMOVE_ITEM_ERROR_EQUIP, msg);
     }
 
     @Test
@@ -59,7 +59,7 @@ public class RemoveItemInventoryCommandTest {
         var inventory = new Inventory(0, 10);
         this.cmd = new RemoveItemInventoryCommand(this.itens.get(10), inventory);
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.INVENTORY_ITEM_ERRO, msg);
+        assertEquals(TypeMessage.INVENTORY_ITEM_ERROR, msg);
     }
 
     @Test

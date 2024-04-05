@@ -24,7 +24,7 @@ public final class CommandTool implements ICommand {
     @Override
     public TypeMessage execute() {
         this.stack.clear();
-        TypeMessage temp = TypeMessage.COMMAND_ERRO;
+        TypeMessage temp = TypeMessage.COMMAND_ERROR;
         for (ICommand cmd : this.commands) {
             temp = cmd.execute();
             this.stack.add(cmd);

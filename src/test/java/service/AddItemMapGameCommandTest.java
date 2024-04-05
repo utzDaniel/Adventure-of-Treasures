@@ -10,7 +10,6 @@ import backend.service.model.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
@@ -41,7 +40,7 @@ public class AddItemMapGameCommandTest {
         var map = new MapGame(new MapGameEntity(0, null, null, null, limits), new HashMap<>(), interac);
         this.cmd = new AddItemMapGameCommand(this.item, map);
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.MAP_ADD_ERRO_FULL, msg);
+        assertEquals(TypeMessage.MAP_ADD_ERROR_FULL, msg);
     }
 
     @Test

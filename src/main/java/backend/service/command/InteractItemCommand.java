@@ -27,7 +27,7 @@ public final class InteractItemCommand implements ICommand {
 
         var inventory = this.player.getInventory();
 
-        if (Objects.isNull(item)) return TypeMessage.ITEM_ERRO_FOUND;
+        if (Objects.isNull(item)) return TypeMessage.ITEM_ERROR_FOUND;
 
         this.commands.addCommand(new AddItemInventoryCommand(item, inventory));
         this.commands.addCommand(new RemoveItemMapGameCommand(item, mapGame));

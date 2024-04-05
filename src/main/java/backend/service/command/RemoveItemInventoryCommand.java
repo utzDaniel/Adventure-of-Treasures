@@ -22,7 +22,7 @@ public final class RemoveItemInventoryCommand implements ICommand {
         var isRemove = this.item.isRemove();
         if (!isRemove.isSuccess()) return isRemove;
         if (Objects.isNull(this.inventory.getItem(this.item.getId())))
-            return TypeMessage.INVENTORY_ITEM_ERRO;
+            return TypeMessage.INVENTORY_ITEM_ERROR;
         this.inventory.removeItem(this.item);
         return TypeMessage.REMOVE_ITEM_INVENTORY;
     }

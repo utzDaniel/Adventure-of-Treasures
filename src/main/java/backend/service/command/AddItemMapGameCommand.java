@@ -28,7 +28,7 @@ public final class AddItemMapGameCommand implements ICommand {
             CalculateCoordinate.next(coordinate);
             areaTraveled++;
             if (areaTraveled >= this.mapGame.areaSize())
-                return TypeMessage.MAP_ADD_ERRO_FULL;
+                return TypeMessage.MAP_ADD_ERROR_FULL;
         } while (this.mapGame.invalidCoordinate(coordinate));
 
         this.item.setCoordinate(coordinate);

@@ -38,7 +38,7 @@ public class AddItemInventoryCommandTest {
         inventory.addItem(this.itens.get(3));
         this.cmd = new AddItemInventoryCommand(this.itens.get(3), inventory);
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.INVENTORY_ERRO_FULL, msg);
+        assertEquals(TypeMessage.INVENTORY_ERROR_FULL, msg);
     }
 
 

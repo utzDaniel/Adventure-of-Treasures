@@ -41,7 +41,7 @@ public class InteractCommandTest {
         var player = new Player(move, inventario);
         var cmd = new InteractCommand(player);
         var msg = cmd.execute();
-        assertEquals(TypeMessage.INTERACT_ERRO, msg);
+        assertEquals(TypeMessage.INTERACT_ERROR, msg);
     }
 
     @Test

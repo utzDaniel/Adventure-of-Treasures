@@ -38,7 +38,7 @@ public class EquippableCommandTest {
         inventory.addItem(this.itens.get(5));
         this.cmd = new EquippableCommand(this.itens.get(5), inventory);
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.ITEM_ERRO_EQUIPPABLE, msg);
+        assertEquals(TypeMessage.ITEM_ERROR_EQUIPPABLE, msg);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class EquippableCommandTest {
         this.cmd.execute();
         inventory.addItem(factory.create(item));
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.UNEQUIP_ERRO_SCHOOLBAG, msg);
+        assertEquals(TypeMessage.UNEQUIP_ERROR_SCHOOLBAG, msg);
     }
 
     @Test

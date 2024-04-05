@@ -23,7 +23,7 @@ public final class SaveCommand implements ICommand {
 
     @Override
     public TypeMessage execute() {
-        if (!backup()) return TypeMessage.BACKUP_ERRO;
+        if (!backup()) return TypeMessage.BACKUP_ERROR;
         var list = new ArrayList<>(this.backup);
         list.add(this.memento.extrinsic());
         return save(list);
@@ -39,7 +39,7 @@ public final class SaveCommand implements ICommand {
             this.fileUtil.writeFile(list);
             return TypeMessage.SAVE;
         } catch (IOException e) {
-            return TypeMessage.SAVE_ERRO;
+            return TypeMessage.SAVE_ERROR;
         }
     }
 

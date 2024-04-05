@@ -56,7 +56,7 @@ public class CombinationCommandTest {
         list.add(this.itens.get(10));
         this.cmd = new CombinationCommand(list, createInventory(list));
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.ITEM_ERRO_COMBINABLE, msg);
+        assertEquals(TypeMessage.ITEM_ERROR_COMBINABLE, msg);
     }
 
     @Test
@@ -69,7 +69,7 @@ public class CombinationCommandTest {
         list.add(item);
         this.cmd = new CombinationCommand(list, createInventory(list));
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.COMBINE_ERRO_ALL, msg);
+        assertEquals(TypeMessage.COMBINE_ERROR_ALL, msg);
     }
 
     @Test
@@ -78,7 +78,7 @@ public class CombinationCommandTest {
         list.add(this.itens.get(5));
         this.cmd = new CombinationCommand(list, createInventory(list));
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.COMBINE_ERRO_INCOMPLETE, msg);
+        assertEquals(TypeMessage.COMBINE_ERROR_INCOMPLETE, msg);
     }
 
     @Test
@@ -89,7 +89,7 @@ public class CombinationCommandTest {
         list.add(this.itens.get(7));
         this.cmd = new CombinationCommand(list, createInventory(list));
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.COMBINE_ERRO_INVALID, msg);
+        assertEquals(TypeMessage.COMBINE_ERROR_INVALID, msg);
     }
 
     @Test
@@ -99,7 +99,7 @@ public class CombinationCommandTest {
         list.add(this.itens.get(7));
         this.cmd = new CombinationCommand(list, createInventory(list));
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.COMBINE_ERRO_COMBINABLE, msg);
+        assertEquals(TypeMessage.COMBINE_ERROR_COMBINABLE, msg);
     }
 
     @Test

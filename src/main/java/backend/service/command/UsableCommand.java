@@ -27,12 +27,12 @@ public final class UsableCommand implements ICommand {
     @Override
     public TypeMessage execute() {
         var spec = this.item.getSpecialization(TypeItem.USABLE);
-        if (spec.isEmpty()) return TypeMessage.ITEM_ERRO_USABLE;
+        if (spec.isEmpty()) return TypeMessage.ITEM_ERROR_USABLE;
         var usable = (IUsable) spec.get();
 
-        if (usable.getIdMap() != this.idMap) return TypeMessage.USABLE_ERRO_MAP;
-        if (!usable.getCoordinate().equals(this.coordinate)) return TypeMessage.USABLE_ERRO_COORDINATE;
-        if (!usable.isEnabled()) return TypeMessage.USABLE_ERRO_ENABLE;
+        if (usable.getIdMap() != this.idMap) return TypeMessage.USABLE_ERROR_MAP;
+        if (!usable.getCoordinate().equals(this.coordinate)) return TypeMessage.USABLE_ERROR_COORDINATE;
+        if (!usable.isEnabled()) return TypeMessage.USABLE_ERROR_ENABLE;
 
         var type = this.commands.execute();
         if (!type.isSuccess()) return type;

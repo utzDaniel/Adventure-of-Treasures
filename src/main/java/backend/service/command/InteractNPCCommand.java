@@ -25,7 +25,7 @@ public final class InteractNPCCommand implements ICommand {
         coordinate.move(this.player.getDirection().getMove());
         var npcOptional = this.player.getCurrentMap().getNPC(coordinate);
         if (npcOptional.isEmpty()) {
-            return TypeMessage.NPC_ERRO_FOUND;
+            return TypeMessage.NPC_ERROR_FOUND;
         }
         var npc = npcOptional.get();
 
@@ -33,7 +33,7 @@ public final class InteractNPCCommand implements ICommand {
 
         if (msg.isPresent() && msg.get().isSuccess()) return msg.get();
 
-        if (npc.getIdDoor() == -1) return TypeMessage.NPC_ERRO_INCOMPLETE;
+        if (npc.getIdDoor() == -1) return TypeMessage.NPC_ERROR_INCOMPLETE;
 
         var door = CacheService.getDoor(npc.getIdDoor());
         if (door.isEmpty()) return TypeMessage.MAP_NOT_FOUND;

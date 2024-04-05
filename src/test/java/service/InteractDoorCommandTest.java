@@ -32,7 +32,7 @@ public class InteractDoorCommandTest {
         var player = new Player(move, inventory);
         this.cmd = new InteractDoorCommand(player);
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.DOOR_ERRO_FOUND, msg);
+        assertEquals(TypeMessage.DOOR_ERROR_FOUND, msg);
     }
 
     @Test
@@ -42,7 +42,7 @@ public class InteractDoorCommandTest {
         var player = new Player(move, inventory);
         this.cmd = new InteractDoorCommand(player);
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.DOOR_ERRO_CLOSED, msg);
+        assertEquals(TypeMessage.DOOR_ERROR_CLOSED, msg);
     }
 
     @Test

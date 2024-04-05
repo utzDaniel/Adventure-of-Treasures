@@ -34,7 +34,7 @@ public class InteractItemCommandTest {
         var player = new Player(move, inventario);
         this.cmd = new InteractItemCommand(player);
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.ITEM_ERRO_FOUND, msg);
+        assertEquals(TypeMessage.ITEM_ERROR_FOUND, msg);
     }
 
     @Test

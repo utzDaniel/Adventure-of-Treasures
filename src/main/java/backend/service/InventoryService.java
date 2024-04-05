@@ -26,7 +26,7 @@ public final class InventoryService implements IInventoryService {
         var itens = new ArrayList<Item>();
         idItens.forEach(id -> itens.add(getItem(id).orElse(null)));
 
-        var typeMessage = TypeMessage.ITEM_ERRO_FOUND;
+        var typeMessage = TypeMessage.ITEM_ERROR_FOUND;
 
         if (!itens.isEmpty()) {
             var cmd = new CombinationCommand(itens, inventory);
@@ -50,7 +50,7 @@ public final class InventoryService implements IInventoryService {
         var coordinate = Game.player.getCoordinate();
 
         var item = getItem(idItem);
-        var typeMessage = TypeMessage.ITEM_ERRO_FOUND;
+        var typeMessage = TypeMessage.ITEM_ERROR_FOUND;
 
         if (item.isPresent()) {
             var cmd = new UsableCommand(item.get(), idMap, coordinate, inventory);
@@ -70,7 +70,7 @@ public final class InventoryService implements IInventoryService {
         var inventory = Game.player.getInventory();
 
         var item = getItem(idItem);
-        var typeMessage = TypeMessage.ITEM_ERRO_FOUND;
+        var typeMessage = TypeMessage.ITEM_ERROR_FOUND;
 
         if (item.isPresent()) {
             var cmd = new EquippableCommand(item.get(), inventory);
@@ -90,7 +90,7 @@ public final class InventoryService implements IInventoryService {
         var inventory = Game.player.getInventory();
 
         var item = getItem(idItem);
-        var typeMessage = TypeMessage.ITEM_ERRO_FOUND;
+        var typeMessage = TypeMessage.ITEM_ERROR_FOUND;
 
         if (item.isPresent()) {
             var cmd = new DropItemCommand(item.get(), Game.player);

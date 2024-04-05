@@ -36,7 +36,7 @@ public final class LoadCommand implements ICommand {
     @Override
     public TypeMessage execute() {
         var mementos = read();
-        if (mementos.isEmpty()) return TypeMessage.LOAD_ERRO;
+        if (mementos.isEmpty()) return TypeMessage.LOAD_ERROR;
         if (this.last) this.index = mementos.keySet().size() - 1;
         restore(mementos.get(this.index));
         return TypeMessage.LOAD;

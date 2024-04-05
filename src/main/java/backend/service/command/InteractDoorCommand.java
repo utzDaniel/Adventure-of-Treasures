@@ -28,10 +28,10 @@ public final class InteractDoorCommand implements ICommand {
         var door = this.player.getCurrentMap().getDoor(coordinate).orElse(null);
 
         if (Objects.isNull(door))
-            return TypeMessage.DOOR_ERRO_FOUND;
+            return TypeMessage.DOOR_ERROR_FOUND;
 
         if (!door.isOpen())
-            return TypeMessage.DOOR_ERRO_CLOSED;
+            return TypeMessage.DOOR_ERROR_CLOSED;
 
         var mapGame = CacheService.getMapGame(door.getIdMapGame());
         if (mapGame.isEmpty()) return TypeMessage.MAP_NOT_FOUND;

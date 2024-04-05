@@ -39,7 +39,7 @@ public class InteractNPCCommandTest {
         var player = new Player(move, inventory);
         this.cmd = new InteractNPCCommand(player);
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.NPC_ERRO_FOUND, msg);
+        assertEquals(TypeMessage.NPC_ERROR_FOUND, msg);
     }
 
     @Test
@@ -49,7 +49,7 @@ public class InteractNPCCommandTest {
         var player = new Player(move, inventory);
         this.cmd = new InteractNPCCommand(player);
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.NPC_ERRO_INCOMPLETE, msg);
+        assertEquals(TypeMessage.NPC_ERROR_INCOMPLETE, msg);
     }
 
     @Test

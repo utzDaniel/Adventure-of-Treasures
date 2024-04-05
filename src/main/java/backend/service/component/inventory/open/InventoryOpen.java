@@ -15,7 +15,7 @@ public final class InventoryOpen {
         boolean isOpen = this.inventory.openInventory();
 
         if (isOpen)
-            return TypeMessage.INVENTORY_ERRO_OPEN;
+            return TypeMessage.INVENTORY_ERROR_OPEN;
 
         this.inventory.setOpenInventory();
 

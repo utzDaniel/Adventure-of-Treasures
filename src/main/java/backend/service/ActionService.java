@@ -47,7 +47,7 @@ public final class ActionService implements IActionService {
     public IServiceResponse move(String direction) {
         var direction1 = Direction.getInstance(direction);
 
-        if (Objects.isNull(direction1)) return new ServiceResponse(TypeMessage.DIRECTION_ERRO_INVALID, null);
+        if (Objects.isNull(direction1)) return new ServiceResponse(TypeMessage.DIRECTION_ERROR_INVALID, null);
 
         var cmd = new MoveCommand(Game.player, direction1);
         var typeMessage = cmd.execute();

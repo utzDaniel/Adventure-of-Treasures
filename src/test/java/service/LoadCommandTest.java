@@ -32,7 +32,7 @@ public class LoadCommandTest {
     public void validErro() {
         var load = new LoadCommand("sdasda");
         var msg = load.execute();
-        Assert.assertEquals(TypeMessage.LOAD_ERRO, msg);
+        Assert.assertEquals(TypeMessage.LOAD_ERROR, msg);
     }
 
     @Test

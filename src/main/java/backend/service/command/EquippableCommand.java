@@ -20,7 +20,7 @@ public final class EquippableCommand implements ICommand {
     @Override
     public TypeMessage execute() {
         var spec = this.item.getSpecialization(TypeItem.EQUIPPABLE);
-        if (spec.isEmpty()) return TypeMessage.ITEM_ERRO_EQUIPPABLE;
+        if (spec.isEmpty()) return TypeMessage.ITEM_ERROR_EQUIPPABLE;
         var equippable = (IEquippable) spec.get();
 
         if (equippable.isEquip()) {
@@ -67,7 +67,7 @@ public final class EquippableCommand implements ICommand {
     }
 
     private TypeMessage getUnequipTypeMessageErro() {
-        return this.item.getId() == 10 ? TypeMessage.UNEQUIP_ERRO_SCHOOLBAG : TypeMessage.UNEQUIP_ERRO;
+        return this.item.getId() == 10 ? TypeMessage.UNEQUIP_ERROR_SCHOOLBAG : TypeMessage.UNEQUIP_ERROR;
     }
 
 }

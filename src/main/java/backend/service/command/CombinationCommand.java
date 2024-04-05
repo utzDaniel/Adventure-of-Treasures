@@ -30,18 +30,18 @@ public final class CombinationCommand implements ICommand {
             spec.ifPresent(s -> combinable.add(((ICombinable) s)));
         });
 
-        if (combinable.isEmpty()) return TypeMessage.ITEM_ERRO_COMBINABLE;
+        if (combinable.isEmpty()) return TypeMessage.ITEM_ERROR_COMBINABLE;
 
-        if (this.itens.size() != combinable.size()) return TypeMessage.COMBINE_ERRO_ALL;
+        if (this.itens.size() != combinable.size()) return TypeMessage.COMBINE_ERROR_ALL;
 
         if (combinable.get(0).sizeCombination() > combinable.size())
-            return TypeMessage.COMBINE_ERRO_INCOMPLETE;
+            return TypeMessage.COMBINE_ERROR_INCOMPLETE;
 
         if (combinable.get(0).sizeCombination() < combinable.size())
-            return TypeMessage.COMBINE_ERRO_INVALID;
+            return TypeMessage.COMBINE_ERROR_INVALID;
 
         var isCombine = combinable.stream().allMatch(v -> v.combination() == combinable.get(0).combination());
-        if (!isCombine) return TypeMessage.COMBINE_ERRO_COMBINABLE;
+        if (!isCombine) return TypeMessage.COMBINE_ERROR_COMBINABLE;
 
         this.itens.forEach(v -> this.commands.addCommand(new RemoveItemInventoryCommand(v, inventory)));
 

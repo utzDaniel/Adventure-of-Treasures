@@ -41,7 +41,7 @@ public class UsableCommandTest {
         var coordinate = ICoordinate.getInstance(0, 0);
         this.cmd = new UsableCommand(this.itens.get(5), idMap, coordinate, new Inventory(0, 10));
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.ITEM_ERRO_USABLE, msg);
+        assertEquals(TypeMessage.ITEM_ERROR_USABLE, msg);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class UsableCommandTest {
         inventory.addItem(this.itens.get(1));
         this.cmd = new UsableCommand(this.itens.get(1), idMap, coordinate, inventory);
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.USABLE_ERRO_MAP, msg);
+        assertEquals(TypeMessage.USABLE_ERROR_MAP, msg);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class UsableCommandTest {
         inventory.addItem(this.itens.get(1));
         this.cmd = new UsableCommand(this.itens.get(1), idMap, coordinate, inventory);
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.USABLE_ERRO_COORDINATE, msg);
+        assertEquals(TypeMessage.USABLE_ERROR_COORDINATE, msg);
     }
 
     @Test
@@ -76,7 +76,7 @@ public class UsableCommandTest {
         inventory.addItem(this.itens.get(11));
         this.cmd = new UsableCommand(this.itens.get(11), idMap, coordinate, inventory);
         var msg = this.cmd.execute();
-        assertEquals(TypeMessage.USABLE_ERRO_ENABLE, msg);
+        assertEquals(TypeMessage.USABLE_ERROR_ENABLE, msg);
     }
 
     @Test

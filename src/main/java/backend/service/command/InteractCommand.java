@@ -6,7 +6,7 @@ import backend.service.model.Player;
 
 public final class InteractCommand implements ICommand {
 
-    private static final String NOT_FOUND = "ERRO_FOUND";
+    private static final String NOT_FOUND = "ERROR_FOUND";
     private final Player player;
     private ICommand command;
 
@@ -19,7 +19,7 @@ public final class InteractCommand implements ICommand {
         var coordinate = this.player.getCoordinate();
         coordinate.move(this.player.getDirection().getMove());
         if(!player.getCurrentMap().isInteract(coordinate)){
-            return TypeMessage.INTERACT_ERRO;
+            return TypeMessage.INTERACT_ERROR;
         }
 
         this.command = new InteractNPCCommand(this.player);
