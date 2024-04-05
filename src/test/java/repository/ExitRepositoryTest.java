@@ -20,14 +20,14 @@ public class ExitRepositoryTest {
     @Before
     public void create() {
         this.exits = new ArrayList<>();
-        this.exits.add(new ExitEntity(1, 1, "norte", 5));
-        this.exits.add(new ExitEntity(2, 1, "oeste", 2));
-        this.exits.add(new ExitEntity(3, 1, "leste", 4));
-        this.exits.add(new ExitEntity(4, 2, "leste", 1));
-        this.exits.add(new ExitEntity(5, 4, "oeste", 1));
-        this.exits.add(new ExitEntity(6, 5, "norte", 6));
-        this.exits.add(new ExitEntity(7, 5, "sul", 1));
-        this.exits.add(new ExitEntity(8, 6, "sul", 5));
+        this.exits.add(new ExitEntity(1, 1, "NORTH", 5));
+        this.exits.add(new ExitEntity(2, 1, "WEST", 2));
+        this.exits.add(new ExitEntity(3, 1, "EAST", 4));
+        this.exits.add(new ExitEntity(4, 2, "EAST", 1));
+        this.exits.add(new ExitEntity(5, 4, "WEST", 1));
+        this.exits.add(new ExitEntity(6, 5, "NORTH", 6));
+        this.exits.add(new ExitEntity(7, 5, "SOUTH", 1));
+        this.exits.add(new ExitEntity(8, 6, "SOUTH", 5));
 
         this.exitsFile = ExitRepository.getInstance().getAll();
     }

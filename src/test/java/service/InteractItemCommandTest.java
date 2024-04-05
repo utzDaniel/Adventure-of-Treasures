@@ -30,8 +30,8 @@ public class InteractItemCommandTest {
     public void validErro() {
         this.map.addItem(this.item);
         var move = new Move("", ICoordinate.getInstance(45, 30), this.map);
-        var inventario = new Inventory(0, 0);
-        var player = new Player(move, inventario);
+        var inventory = new Inventory(0, 0);
+        var player = new Player(move, inventory);
         this.cmd = new InteractItemCommand(player);
         var msg = this.cmd.execute();
         assertEquals(TypeMessage.ITEM_ERROR_FOUND, msg);

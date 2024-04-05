@@ -3,8 +3,9 @@ package frontend.enums;
 import java.util.Arrays;
 
 public enum Direction {
-    NORTE("norte", 38), SUL("sul", 40),
-    OESTE("oeste", 37), LESTE("leste", 39);
+
+    NORTH("NORTH", 38), SOUTH("SOUTH", 40),
+    WEST("WEST", 37), EAST("EAST", 39);
 
     private final String label;
 

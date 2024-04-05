@@ -20,7 +20,7 @@ public class SaveCommandTest {
         var filename = "src/test/resources/save/teste_save_01.txt";
         var doorMemento = new ArrayList<DoorMemento>();
         doorMemento.add(new DoorMemento(1, false));
-        var move = new MoveMemento("RIGHT_FOOT_TOGETHER", 1, "SUL", 47, 30, "src/main/resources/image/player");
+        var move = new MoveMemento("RIGHT_FOOT_TOGETHER", 1, "SOUTH", 47, 30, "src/main/resources/image/player");
         var inventory = new InventoryMemento(0, 10, false, new HashSet<>());
         var playerMemento = new PlayerMemento(move, inventory);
         var mapGameMemento = new ArrayList<MapGameMemento>();
@@ -42,7 +42,7 @@ public class SaveCommandTest {
         doorMemento.add(new DoorMemento(1, false));
         doorMemento.add(new DoorMemento(14, true));
         doorMemento.add(new DoorMemento(15, false));
-        var move = new MoveMemento("RIGHT_FOOT_FORWARD", 12, "OESTE", 24, 47, "src/main/resources/image/player");
+        var move = new MoveMemento("RIGHT_FOOT_FORWARD", 12, "WEST", 24, 47, "src/main/resources/image/player");
         var inventory = new InventoryMemento(0, 15, false, Set.of(10));
         var playerMemento = new PlayerMemento(move, inventory);
         var mapGameMemento = new ArrayList<MapGameMemento>();
@@ -73,7 +73,7 @@ public class SaveCommandTest {
         doorMemento.add(new DoorMemento(6, false));
         doorMemento.add(new DoorMemento(7, true));
         doorMemento.add(new DoorMemento(13, true));
-        var move = new MoveMemento("LEFT_FOOT_TOGETHER", 4, "LESTE", 15, 5, "src/main/resources/image/player");
+        var move = new MoveMemento("LEFT_FOOT_TOGETHER", 4, "EAST", 15, 5, "src/main/resources/image/player");
         var inventory = new InventoryMemento(3, 10, false, Set.of(8, 11));
         var playerMemento = new PlayerMemento(move, inventory);
         var mapGameMemento = new ArrayList<MapGameMemento>();
@@ -112,7 +112,7 @@ public class SaveCommandTest {
         doorMemento.add(new DoorMemento(9, false));
         doorMemento.add(new DoorMemento(10, false));
         doorMemento.add(new DoorMemento(13, true));
-        var move = new MoveMemento("LEFT_FOOT_FORWARD", 8, "NORTE", 53, 38, "src/main/resources/image/player");
+        var move = new MoveMemento("LEFT_FOOT_FORWARD", 8, "NORTH", 53, 38, "src/main/resources/image/player");
         var inventory = new InventoryMemento(0, 10, false, Set.of(8));
         var playerMemento = new PlayerMemento(move, inventory);
         var mapGameMemento = new ArrayList<MapGameMemento>();
