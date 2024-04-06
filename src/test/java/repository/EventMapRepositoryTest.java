@@ -20,10 +20,10 @@ public class EventMapRepositoryTest {
     @Before
     public void create() {
         this.event = new ArrayList<>();
-        this.event.add(new EventMapEntity(1, 2, 8, "src/main/resources/image/map/temploF.png"));
-        this.event.add(new EventMapEntity(2, 5, 4, "src/main/resources/image/map/praiaM.png"));
-        this.event.add(new EventMapEntity(3, 11, 4, "src/main/resources/image/map/praia.png"));
-        this.event.add(new EventMapEntity(4, 12, 4, "src/main/resources/image/map/praiaM.png"));
+        this.event.add(new EventMapEntity(1, 2, 8, 2));
+        this.event.add(new EventMapEntity(2, 5, 4, 1));
+        this.event.add(new EventMapEntity(3, 11, 4, -1));
+        this.event.add(new EventMapEntity(4, 12, 4, 1));
 
         this.eventFile = EventMapRepository.getInstance().getAll();
     }

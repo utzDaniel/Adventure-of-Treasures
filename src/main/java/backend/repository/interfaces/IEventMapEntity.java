@@ -6,6 +6,6 @@ public interface IEventMapEntity extends IEntity {
 
     int idMap();
 
-    String image();
+    int idDecoration();
 
 }

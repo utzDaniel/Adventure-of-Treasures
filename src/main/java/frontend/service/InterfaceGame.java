@@ -56,15 +56,23 @@ public final class InterfaceGame {
         var lisItem = action.components().stream()
                 .filter(v -> v.name().equals(ComponentsProperties.ITEM.name()))
                 .toList();
+        var decoration = action.components().stream()
+                .filter(v -> v.name().equals(ComponentsProperties.DECORATION.name()))
+                .toList();
 
         if (Objects.nonNull(action.song())) {
             this.song.play(action.song());
         }
         clearJLabelItens();
+        clearJLabelDecoration();
         getMapGameJLabel().repaint();
-        if(lisItem.isEmpty()) return;
-        var index = 1;
-        setItensJLabel(lisItem, index);
+        if(!lisItem.isEmpty()) {
+            var index = 1;
+            setItensJLabel(lisItem, index);
+        }
+
+        if(decoration.isEmpty()) return;
+        setDecorationJLabel(decoration, 1);
 
     }
 
@@ -97,8 +105,20 @@ public final class InterfaceGame {
         frame.getContentPane().repaint();
     }
 
+    public void clearJLabelDecoration() {
+        Arrays.stream(frame.getContentPane().getComponents())
+                .filter(component -> component instanceof JLabel && component.getName().equals(ComponentsProperties.DECORATION.name()))
+                .forEach(component -> frame.getContentPane().remove(component));
+        frame.getContentPane().repaint();
+    }
+
     public void setItensJLabel(List<IComponentInfo> itens, int index) {
         var jLabelList = ComponentFactory.getJLabel(itens);
+        jLabelList.forEach(jLabel -> frame.getContentPane().add(jLabel, index));
+    }
+
+    public void setDecorationJLabel(List<IComponentInfo> decoration, int index) {
+        var jLabelList = ComponentFactory.getJLabel(decoration);
         jLabelList.forEach(jLabel -> frame.getContentPane().add(jLabel, index));
     }
 

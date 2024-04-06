@@ -21,9 +21,16 @@ final class GameJLabelFactory {
     private static JLabel create(IComponentInfo info) {
         var jLabel = new JLabel();
         jLabel.setName(info.name());
-        jLabel.setIcon(new ImageIcon(info.image()));
-        var properties = Enum.valueOf(ComponentsProperties.class, info.name());
-        var rectangle = new Rectangle(info.point(), properties.getDimension());
+        var icon = new ImageIcon(info.image());
+        jLabel.setIcon(icon);
+        //TODO resolver isso depois
+        Dimension dimension;
+        if (info.name().equals("DECORATION")) {
+            dimension = new Dimension(icon.getIconWidth(), icon.getIconHeight());
+        } else {
+            dimension = Enum.valueOf(ComponentsProperties.class, info.name()).getDimension();
+        }
+        var rectangle = new Rectangle(info.point(), dimension);
         jLabel.setBounds(rectangle);
         return jLabel;
     }

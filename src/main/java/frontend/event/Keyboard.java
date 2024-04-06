@@ -129,6 +129,7 @@ public class Keyboard {
                 this.interfaceGame.getMapGameJLabel().setIcon(new ImageIcon(info.image()));
             }
         });
+
         this.interfaceGame.clearJLabelItens();
         var lisItem = action.components().stream()
                 .filter(v -> v.name().equals(ComponentsProperties.ITEM.name()))
@@ -137,6 +138,16 @@ public class Keyboard {
             var index = 1;
             this.interfaceGame.setItensJLabel(lisItem, index);
         }
+
+        this.interfaceGame.clearJLabelDecoration();
+        var decorations = action.components().stream()
+                .filter(v -> v.name().equals(ComponentsProperties.DECORATION.name()))
+                .toList();
+        if (!decorations.isEmpty()) {
+            var index = 1;
+            this.interfaceGame.setDecorationJLabel(decorations, index);
+        }
+
         this.interfaceGame.getMapGameJLabel().repaint();
 
     }

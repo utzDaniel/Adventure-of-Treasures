@@ -9,7 +9,7 @@ import java.util.Map;
 
 public record InventoryResponse(Map<Integer, List<ISpecialization>> specialization,
                                 List<String> information,
-                                List<IItemDTO> itens) implements IInventoryResponse {
+                                List<IItemDTO> items) implements IInventoryResponse {
 
 
 }

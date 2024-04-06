@@ -27,7 +27,7 @@ public class MapGameRepositoryTest {
         this.mapGame.add(new MapGameEntity(5, "floresta", this.srcImage("floresta"), null, this.limitsForest()));
         this.mapGame.add(new MapGameEntity(6, "vila", this.srcImage("vila"), this.srcAudio("vila"), this.limitsVillage()));
         this.mapGame.add(new MapGameEntity(7, "alojamento", this.srcImage("alojamento"), null, this.limitsAccommodation()));
-        this.mapGame.add(new MapGameEntity(8, "templo", this.srcImage("temploA"), this.srcAudio("templo"), this.limitsTemple()));
+        this.mapGame.add(new MapGameEntity(8, "templo", this.srcImage("templo"), this.srcAudio("templo"), this.limitsTemple()));
         this.mapGame.add(new MapGameEntity(9, "topo do templo", this.srcImage("topo-do-templo"), null, this.limitsTopTemple()));
         this.mapGame.add(new MapGameEntity(10, "porão do templo", this.srcImage("porao"), null, this.limitsBasement()));
         this.mapGame.add(new MapGameEntity(11, "enfermaria", this.srcImage("enfermaria"), null, this.limitsNursery()));

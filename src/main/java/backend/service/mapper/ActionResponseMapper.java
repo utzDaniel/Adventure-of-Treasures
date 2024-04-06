@@ -2,6 +2,8 @@ package backend.service.mapper;
 
 import backend.controller.interfaces.IActionResponse;
 import backend.controller.interfaces.IComponentInfo;
+import backend.repository.interfaces.IDecorationEntity;
+import backend.repository.singleton.DecorationRepository;
 import backend.service.dto.ComponentInfoDTO;
 import backend.service.dto.response.ActionResponse;
 import backend.service.model.Item;
@@ -19,6 +21,18 @@ public final class ActionResponseMapper implements Function<Player, IActionRespo
         var components = new ArrayList<IComponentInfo>();
         components.add(createComponentInfoPlayer(player));
         components.add(createComponentInfoMap(player));
+        var decoration = player.getCurrentMap().getDecoration();
+        decoration.ifPresent(e ->
+                components.add(createComponentInfoDecoration(e))
+        );
+
+        if(player.getCurrentMap().id() == 8){
+            var dec = DecorationRepository.getInstance().getById(2);
+            dec.ifPresent(e ->
+                    components.add(createComponentInfoDecoration(e))
+            );
+        }
+
 
         var items = player.getCurrentMap().getItems();
         components.addAll(createListComponentInfoItem(items));
@@ -56,6 +70,14 @@ public final class ActionResponseMapper implements Function<Player, IActionRespo
         var point = createPoint(x, y);
         var image = item.getImage();
         return new ComponentInfoDTO("ITEM", image, point);
+    }
+
+    private static IComponentInfo createComponentInfoDecoration(IDecorationEntity entity) {
+        var x = entity.pointX();
+        var y = entity.pointY();
+        var point = new Point(x, y);
+        var image = entity.image();
+        return new ComponentInfoDTO("DECORATION", image, point);
     }
 
     private static Point createPoint(int x, int y) {

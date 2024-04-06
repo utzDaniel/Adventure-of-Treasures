@@ -4,17 +4,17 @@ import java.util.Set;
 
 public record MapGameMemento(
         int id,
-        String image,
+        int idDecoration,
         Set<Integer> idItems) implements IMemento, Comparable<MapGameMemento> {
 
     @Override
     public String extrinsic() {
         return """
                 %d%s
-                %s%s
+                %d%s
                 %s%s
                 """.formatted(this.id, Separator.FIELD,
-                this.image, Separator.FIELD,
+                this.idDecoration, Separator.FIELD,
                 this.ids(), Separator.MAP_GAME
         ).replace("\n", "");
     }

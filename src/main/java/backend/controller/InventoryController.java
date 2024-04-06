@@ -17,11 +17,11 @@ public final class InventoryController implements IInventoryController {
 
 
     @Override
-    public IResponse combination(String idItens) {
-        var listIdItens = Arrays.stream(idItens.split(","))
+    public IResponse combination(String idItems) {
+        var listIdItems = Arrays.stream(idItems.split(","))
                 .map(Integer::parseInt)
                 .toList();
-        var rsp = this.inventoryService.combination(listIdItens);
+        var rsp = this.inventoryService.combination(listIdItems);
         return ResponseFactory.create(rsp);
     }
 

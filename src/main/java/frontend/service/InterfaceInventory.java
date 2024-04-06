@@ -54,7 +54,7 @@ public final class InterfaceInventory {
     }
 
     private void setItens(IInventoryResponse inventory) {
-        inventory.itens().forEach(item -> {
+        inventory.items().forEach(item -> {
             this.buttonItem.create(item);
             this.buttonItem.getLast().addActionListener(e -> actionButtonItem(item));
             this.labelSideEast.add(this.buttonItem.getLast());
@@ -228,6 +228,17 @@ public final class InterfaceInventory {
                 this.interfaceGame.setItensJLabel(lisItem, index);
                 this.interfaceGame.getMapGameJLabel().repaint();
             }
+
+            var decorations = action.components().stream()
+                    .filter(v -> v.name().equals(ComponentsProperties.DECORATION.name()))
+                    .toList();
+
+            if (!decorations.isEmpty()) {
+                this.interfaceGame.clearJLabelDecoration();
+                this.interfaceGame.setDecorationJLabel(decorations, index);
+                this.interfaceGame.getMapGameJLabel().repaint();
+            }
+
             this.interfaceGame.getFrame().repaint();
             this.interfaceGame.getFrame().requestFocus();
         }
@@ -239,7 +250,7 @@ public final class InterfaceInventory {
         setActionCancel();
         removeAllItensComponents();
         this.buttonItem = new ButtonItem();
-        setItens(inventory.itens());
+        setItens(inventory.items());
     }
 
     private void removeAllItensComponents() {

@@ -4,6 +4,7 @@ import java.awt.*;
 
 public enum ComponentsProperties {
     ITEM(new Dimension(100, 100)),
+    DECORATION(new Dimension(0, 0)),
     PLAYER(new Dimension(32, 47)),
     MAP(new Dimension(800, 600));
 

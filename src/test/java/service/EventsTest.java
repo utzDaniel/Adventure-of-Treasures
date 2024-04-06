@@ -1,6 +1,7 @@
 package service;
 
 import backend.Game;
+import backend.repository.entity.DecorationEntity;
 import backend.repository.singleton.DoorRepository;
 import backend.repository.singleton.ItemRepository;
 import backend.repository.singleton.MapGameRepository;
@@ -68,8 +69,8 @@ public class EventsTest {
         assertEquals(Optional.of(door).toString(), CacheService.getDoor(9).toString());
         var map = this.mapGame.get(8);
         map.getDoor(9).ifPresent(v -> v.setOpen(true));
-        map.setImage("src/main/resources/image/map/temploF.png");
-        assertEquals(map.getImage(), Objects.requireNonNull(CacheService.getMapGame(8).orElse(null)).getImage());
+        map.setDecoration(new DecorationEntity(2,  259, 160, "src/main/resources/image/decoration/templo_escada.png"));
+        assertEquals(map.getDecoration(), Objects.requireNonNull(CacheService.getMapGame(8).orElse(null)).getDecoration());
         door.setOpen(false);
         map.getDoor(9).ifPresent(v -> v.setOpen(false));
     }
@@ -94,9 +95,8 @@ public class EventsTest {
             assertEquals(item.toString(), Game.player.getInventory().getItem(8).toString());
             Game.player.getInventory().removeItem(item);
             var map = this.mapGame.get(4);
-            map.setImage("src/main/resources/image/map/praiaM.png");
-            assertEquals(map.getImage(), Objects.requireNonNull(CacheService.getMapGame(4).orElse(null)).getImage());
-            map.setImage("src/main/resources/image/map/praia.png");
+            map.setDecoration(new DecorationEntity(1,  558, 317, "src/main/resources/image/decoration/praia_x.png"));
+            assertEquals(map.getDecoration(), Objects.requireNonNull(CacheService.getMapGame(4).orElse(null)).getDecoration());
             var itens = new ArrayList<IUsable>();
             this.itens.get(11)
                     .getSpecialization(TypeItem.USABLE)
@@ -126,9 +126,9 @@ public class EventsTest {
     public void validItem11() {
         this.itens.get(11).warn();
         var map = this.mapGame.get(4);
-        map.setImage("src/main/resources/image/map/praia.png");
-        assertEquals(map.getImage(), Objects.requireNonNull(CacheService.getMapGame(4).orElse(null)).getImage());
-        map.setImage("src/main/resources/image/map/praiaM.png");
+        map.setDecoration(null);
+        assertEquals(map.getDecoration(), Objects.requireNonNull(CacheService.getMapGame(4).orElse(null)).getDecoration());
+        map.setDecoration(new DecorationEntity(1,  558, 317, "src/main/resources/image/decoration/praia_x.png"));
     }
 
     @Test

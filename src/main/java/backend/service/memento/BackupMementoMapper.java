@@ -86,7 +86,7 @@ public final class BackupMementoMapper implements Function<String, BackupMemento
                 idItems.add(Integer.parseInt(id));
             }
         }
-        return new MapGameMemento(Integer.parseInt(data[0]), data[1], idItems);
+        return new MapGameMemento(Integer.parseInt(data[0]), Integer.parseInt(data[1]), idItems);
     }
 
 }

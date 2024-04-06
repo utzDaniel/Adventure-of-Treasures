@@ -1,8 +1,10 @@
 package backend.service.model;
 
+import backend.repository.interfaces.IDecorationEntity;
 import backend.repository.interfaces.IEntity;
 import backend.repository.interfaces.IExitEntity;
 import backend.repository.interfaces.IMapGameEntity;
+import backend.repository.singleton.DecorationRepository;
 import backend.service.enums.Direction;
 import backend.service.infra.CacheService;
 import backend.service.interfaces.IBackup;
@@ -18,14 +20,13 @@ import java.util.stream.Collectors;
 
 public final class MapGame implements IImage, IEntity, IBackup<MapGameMemento> {
     private final IMapGameEntity entity;
-    private String image;
     private final Area area;
     private final InteractMapGame interact;
     private final Map<Direction, IExitEntity> exits;
+    private IDecorationEntity decoration;
 
     public MapGame(IMapGameEntity entity, Map<Direction, IExitEntity> exits, InteractMapGame interact) {
         this.entity = entity;
-        this.image = entity.image();
         this.exits = exits;
         this.interact = interact;
         this.area = new Area(entity.limits());
@@ -49,11 +50,7 @@ public final class MapGame implements IImage, IEntity, IBackup<MapGameMemento> {
 
     @Override
     public String getImage() {
-        return this.image;
-    }
-
-    public void setImage(String image) {//Apenas a class EventMap usar o publico
-        this.image = image;
+        return this.entity.image();
     }
 
     public boolean isInteract(ICoordinate coordinate) {
@@ -62,10 +59,6 @@ public final class MapGame implements IImage, IEntity, IBackup<MapGameMemento> {
 
     public Optional<Door> getDoor(ICoordinate coordinate) {
         return this.interact.getDoor(coordinate);
-    }
-
-    public Optional<Door> getDoorByMap(int idMapGame) {
-        return this.interact.getDoorByMap(idMapGame);
     }
 
     public Optional<Door> getDoor(int idDoor) {
@@ -118,6 +111,14 @@ public final class MapGame implements IImage, IEntity, IBackup<MapGameMemento> {
         return this.entity.limits().length * this.entity.limits()[0].length;
     }
 
+    public void setDecoration(IDecorationEntity decoration) {
+        this.decoration = decoration;
+    }
+
+    public Optional<IDecorationEntity> getDecoration() {
+        return Optional.ofNullable(this.decoration);
+    }
+
     @Override
     public String toString() {
         return """
@@ -130,19 +131,20 @@ public final class MapGame implements IImage, IEntity, IBackup<MapGameMemento> {
                     "area": %s,
                     %s
                 }
-                """.formatted(this.entity.id(), this.entity.name(), this.image, this.entity.song(), this.exits,
+                """.formatted(this.entity.id(), this.entity.name(), this.entity.image(), this.entity.song(), this.exits,
                 this.area, this.interact.toString());
     }
 
     @Override
     public MapGameMemento save() {
-        return new MapGameMemento(this.entity.id(), this.image,
+        var idDecoration = Objects.isNull(this.decoration) ? -1 : this.decoration.id();
+        return new MapGameMemento(this.entity.id(), idDecoration,
                 this.interact.getItems().stream().map(Item::getId).collect(Collectors.toSet()));
     }
 
     @Override
     public void restore(MapGameMemento memento) {
-        this.image = memento.image();
+        this.decoration = DecorationRepository.getInstance().getById(memento.idDecoration()).orElse(null);
         this.area.clear();
         this.interact.clear();
         memento.idItems()

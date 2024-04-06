@@ -13,7 +13,7 @@ public final class EventMapEntityMapper implements IMapperEntity<IEventMapEntity
                 Convert.parseInt(data[0]),
                 Convert.parseInt(data[1]),
                 Convert.parseInt(data[2]),
-                Convert.parseString(data[3]));
+                Convert.parseInt(data[3]));
     }
 
 }

@@ -9,6 +9,6 @@ public interface IInventoryResponse {
 
     List<String> information();
 
-    List<IItemDTO> itens();
+    List<IItemDTO> items();
 
 }

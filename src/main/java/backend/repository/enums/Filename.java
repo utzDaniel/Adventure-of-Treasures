@@ -14,6 +14,7 @@ public enum Filename {
     EVENT_INVENTORY("event_inventory"),
     EVENT_ITEM("event_item"),
     EVENT_DOOR("event_door"),
+    DECORATION("decoration"),
     NPC("npc");
 
     private final String path;
