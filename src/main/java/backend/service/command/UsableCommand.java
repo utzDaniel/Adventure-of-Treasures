@@ -1,38 +1,37 @@
 package backend.service.command;
 
 import backend.controller.enums.TypeMessage;
-import backend.service.enums.TypeItem;
+import backend.service.handler.UsableCoordinateHandler;
+import backend.service.handler.UsableEnableHandler;
+import backend.service.handler.UsableMapHandler;
+import backend.service.handler.UsableSpecializationHandler;
 import backend.service.interfaces.ICommand;
 import backend.service.interfaces.ICoordinate;
-import backend.service.interfaces.IUsable;
+import backend.service.interfaces.IHandler;
 import backend.service.model.Inventory;
 import backend.service.model.Item;
 
 public final class UsableCommand implements ICommand {
 
     private final Item item;
-    private final int idMap;
-    private final ICoordinate coordinate;
+    private final IHandler<Item> usableHandler;
     private final CommandTool commands;
-
 
     public UsableCommand(Item item, int idMap, ICoordinate coordinate, Inventory inventory) {
         this.item = item;
-        this.idMap = idMap;
-        this.coordinate = coordinate;
+        this.usableHandler = new UsableSpecializationHandler();
+        this.usableHandler
+                .setNextHandler(new UsableMapHandler(idMap))
+                .setNextHandler(new UsableCoordinateHandler(coordinate))
+                .setNextHandler(new UsableEnableHandler());
         this.commands = new CommandTool();
         this.commands.addCommand(new RemoveItemInventoryCommand(item, inventory));
     }
 
     @Override
     public TypeMessage execute() {
-        var spec = this.item.getSpecialization(TypeItem.USABLE);
-        if (spec.isEmpty()) return TypeMessage.ITEM_ERROR_USABLE;
-        var usable = (IUsable) spec.get();
-
-        if (usable.getIdMap() != this.idMap) return TypeMessage.USABLE_ERROR_MAP;
-        if (!usable.getCoordinate().equals(this.coordinate)) return TypeMessage.USABLE_ERROR_COORDINATE;
-        if (!usable.isEnabled()) return TypeMessage.USABLE_ERROR_ENABLE;
+        var msg = this.usableHandler.handle(this.item);
+        if (msg.isPresent()) return msg.get();
 
         var type = this.commands.execute();
         if (!type.isSuccess()) return type;

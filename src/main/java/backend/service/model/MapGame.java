@@ -52,7 +52,7 @@ public final class MapGame implements IImage, IEntity, IBackup<MapGameMemento> {
         return this.image;
     }
 
-    public void setImage(String image) {//Apenas a class ActivateMapGame usar o publico
+    public void setImage(String image) {//Apenas a class EventMap usar o publico
         this.image = image;
     }
 

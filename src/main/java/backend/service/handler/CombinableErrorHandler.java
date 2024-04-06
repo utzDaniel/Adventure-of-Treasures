@@ -8,7 +8,7 @@ import backend.service.model.Item;
 import java.util.List;
 import java.util.Optional;
 
-public class CombinableErrorHandler extends Handler<List<Item>> {
+public final class CombinableErrorHandler extends Handler<List<Item>> {
 
     @Override
     protected Optional<TypeMessage> hook(List<Item> items) {
