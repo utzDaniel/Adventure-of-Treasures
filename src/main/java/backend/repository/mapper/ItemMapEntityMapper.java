@@ -7,12 +7,12 @@ import backend.repository.interfaces.IMapperEntity;
 public final class ItemMapEntityMapper implements IMapperEntity<IItemMapEntity> {
 
     @Override
-    public IItemMapEntity apply(String linha) {
-        var dados = split(linha);
+    public IItemMapEntity apply(String line) {
+        var data = split(line);
         return new ItemMapEntity(
-                Convert.parseInt(dados[0]),
-                Convert.parseInt(dados[1]),
-                Convert.parseInt(dados[2]));
+                Convert.parseInt(data[0]),
+                Convert.parseInt(data[1]),
+                Convert.parseInt(data[2]));
     }
 
 }

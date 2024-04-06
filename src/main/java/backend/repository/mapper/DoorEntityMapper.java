@@ -7,15 +7,17 @@ import backend.repository.interfaces.IMapperEntity;
 public final class DoorEntityMapper implements IMapperEntity<IDoorEntity> {
 
     @Override
-    public IDoorEntity apply(String linha) {
-        var dados = split(linha);
+    public IDoorEntity apply(String line) {
+        var data = split(line);
         return new DoorEntity(
-                Convert.parseInt(dados[0]),
-                Convert.parseInt(dados[1]),
-                Convert.parseInt(dados[2]),
-                Convert.parseInt(dados[3]),
-                Convert.parseInt(dados[4]),
-                Convert.parseBoolean(dados[5])
+                Convert.parseInt(data[0]),
+                Convert.parseInt(data[1]),
+                Convert.parseInt(data[2]),
+                Convert.parseInt(data[3]),
+                Convert.parseInt(data[4]),
+                Convert.parseInt(data[5]),
+                Convert.parseInt(data[6]),
+                Convert.parseBoolean(data[7])
         );
     }
 

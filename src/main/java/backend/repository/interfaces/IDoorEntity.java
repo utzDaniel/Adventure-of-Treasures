@@ -2,13 +2,17 @@ package backend.repository.interfaces;
 
 public interface IDoorEntity extends IEntity {
 
-    int idMapOri();
+    int idMapInside();
 
-    int idMapDor();
+    int insideX();
 
-    int positionX();
+    int insideY();
 
-    int positionY();
+    int idMapOutside();
+
+    int outsideX();
+
+    int outsideY();
 
     boolean open();
 

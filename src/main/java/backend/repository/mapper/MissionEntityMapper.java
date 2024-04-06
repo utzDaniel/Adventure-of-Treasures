@@ -7,11 +7,11 @@ import backend.repository.interfaces.IMissionEntity;
 public final class MissionEntityMapper implements IMapperEntity<IMissionEntity> {
 
     @Override
-    public IMissionEntity apply(String linha) {
-        var dados = split(linha);
+    public IMissionEntity apply(String line) {
+        var data = split(line);
         return new MissionEntity(
-                Convert.parseInt(dados[0]),
-                Convert.parseInt(dados[1]));
+                Convert.parseInt(data[0]),
+                Convert.parseInt(data[1]));
     }
 
 }

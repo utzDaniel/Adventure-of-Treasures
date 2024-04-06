@@ -33,12 +33,11 @@ public final class InteractDoorCommand implements ICommand {
         if (!door.isOpen())
             return TypeMessage.DOOR_ERROR_CLOSED;
 
-        var mapGame = CacheService.getMapGame(door.getIdMapGame());
+        var mapGame = CacheService.getMapGame(door.getIdMapOutside());
         if (mapGame.isEmpty()) return TypeMessage.MAP_NOT_FOUND;
 
-        updateMove(mapGame.get());
+        this.player.updateMove(this.player.getDirection(), door.getCoordinateOutside());
         this.player.setCurrentMap(mapGame.get());
-
         return TypeMessage.DOOR_OPEN;
     }
 
@@ -46,13 +45,6 @@ public final class InteractDoorCommand implements ICommand {
     public void undo() {
         this.player.setCurrentMap(this.oldMapGame);
         this.player.updateMove(this.player.getDirection(), this.oldCoordinate);
-    }
-
-    private void updateMove(MapGame mapGame) {
-        var idMapGame = this.player.getCurrentMap().id();
-        var door = mapGame.getDoorByMap(idMapGame);
-        if (door.isEmpty()) return;
-        this.player.updateMove(this.player.getDirection(), door.get().getCoordinate());
     }
 
 }

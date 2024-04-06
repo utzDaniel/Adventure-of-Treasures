@@ -71,7 +71,7 @@ public class InteractNPCCommandTest {
         this.cmd = new InteractNPCCommand(player);
         var msg = this.cmd.execute();
         assertEquals(TypeMessage.NPC_INTERACT, msg);
-        assertEquals(ICoordinate.getInstance(33, 7), player.getCoordinate());
+        assertEquals(ICoordinate.getInstance(32, 7), player.getCoordinate());
         assertEquals(12, player.getCurrentMap().id());
     }
 

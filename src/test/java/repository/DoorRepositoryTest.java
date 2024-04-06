@@ -20,21 +20,21 @@ public class DoorRepositoryTest {
     @Before
     public void create() {
         this.doors = new ArrayList<>();
-        this.doors.add(new DoorEntity(1, 1, 12, 52, 30, false));
-        this.doors.add(new DoorEntity(2, 2, 3, 24, 26, true));
-        this.doors.add(new DoorEntity(3, 3, 2, 26, 73, true));
-        this.doors.add(new DoorEntity(4, 6, 7, 37, 14, true));
-        this.doors.add(new DoorEntity(5, 6, 11, 30, 72, true));
-        this.doors.add(new DoorEntity(6, 6, 8, 14, 38, false));
-        this.doors.add(new DoorEntity(7, 7, 6, 52, 50, true));
-        this.doors.add(new DoorEntity(8, 8, 6, 54, 38, true));
-        this.doors.add(new DoorEntity(9, 8, 9, 19, 25, false));
-        this.doors.add(new DoorEntity(10, 8, 10, 24, 10, false));
-        this.doors.add(new DoorEntity(11, 9, 8, 18, 26, true));
-        this.doors.add(new DoorEntity(12, 10, 8, 15, 9, true));
-        this.doors.add(new DoorEntity(13, 11, 6, 52, 37, true));
-        this.doors.add(new DoorEntity(14, 12, 1, 33, 7, true));
-        this.doors.add(new DoorEntity(15, 12, 1, 28, 71, false));
+        this.doors.add(new DoorEntity(1, 1, 52, 30, 12, 32, 7, false));
+        this.doors.add(new DoorEntity(2, 2, 24, 26, 3, 26, 72, true));
+        this.doors.add(new DoorEntity(3, 3, 26, 73, 2, 24, 27, true));
+        this.doors.add(new DoorEntity(4, 6, 37, 14, 7, 51, 50, true));
+        this.doors.add(new DoorEntity(5, 6, 30, 72, 11, 51, 37, true));
+        this.doors.add(new DoorEntity(6, 6, 14, 38, 8, 53, 38, false));
+        this.doors.add(new DoorEntity(7, 7, 52, 50, 6, 38, 14, true));
+        this.doors.add(new DoorEntity(8, 8, 54, 38, 6, 15, 37, true));
+        this.doors.add(new DoorEntity(9, 8, 19, 25, 9, 18, 25, false));
+        this.doors.add(new DoorEntity(10, 8, 24, 10, 10, 15, 10, false));
+        this.doors.add(new DoorEntity(11, 9, 18, 26, 8, 19, 26, true));
+        this.doors.add(new DoorEntity(12, 10, 15, 9, 8, 24, 9, true));
+        this.doors.add(new DoorEntity(13, 11, 52, 37, 6, 31, 72, true));
+        this.doors.add(new DoorEntity(14, 12, 33, 7, 1, 52, 30, true));
+        this.doors.add(new DoorEntity(15, 12, 28, 71, 1, 52, 30, false));
 
         this.doorsFile = DoorRepository.getInstance().getAll();
     }
@@ -47,9 +47,9 @@ public class DoorRepositoryTest {
     }
 
     @Test
-    public void validByIdMapOri() {
-        var list1 = DoorRepository.getInstance().getByIdMapOri(this.doors.get(0).idMapOri());
-        var list2 = this.doors.stream().filter(v -> v.idMapOri() == this.doors.get(0).idMapOri()).toList();
+    public void validByIdMapInside() {
+        var list1 = DoorRepository.getInstance().getByIdMapInside(this.doors.get(0).idMapInside());
+        var list2 = this.doors.stream().filter(v -> v.idMapInside() == this.doors.get(0).idMapInside()).toList();
         for (IDoorEntity entity : list2) {
             var item = list1.stream().filter(v -> v.id() == entity.id()).findFirst();
             assertEquals(Optional.of(entity).toString(), item.toString());

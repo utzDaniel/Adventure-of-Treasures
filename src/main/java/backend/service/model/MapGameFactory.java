@@ -58,7 +58,7 @@ public final class MapGameFactory implements IFactory<MapGame> {
 
     private static Map<ICoordinate, Door> getDoors(IMapGameEntity mapGameEntity) {
         return DoorRepository.getInstance()
-                .getByIdMapOri(mapGameEntity.id())
+                .getByIdMapInside(mapGameEntity.id())
                 .stream()
                 .map(v -> CacheService.getDoor(v.id()).orElse(null))
                 .filter(Objects::nonNull)

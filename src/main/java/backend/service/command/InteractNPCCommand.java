@@ -38,10 +38,10 @@ public final class InteractNPCCommand implements ICommand {
         var door = CacheService.getDoor(npc.getIdDoor());
         if (door.isEmpty()) return TypeMessage.MAP_NOT_FOUND;
 
-        var mapGame = CacheService.getMapGame(door.get().getIdMapGame());
+        var mapGame = CacheService.getMapGame(door.get().getIdMapOutside());
         if (mapGame.isEmpty()) return TypeMessage.MAP_NOT_FOUND;
 
-        updateMove(mapGame.get());
+        this.player.updateMove(this.player.getDirection(), door.get().getCoordinateOutside());
         this.player.setCurrentMap(mapGame.get());
 
         return TypeMessage.NPC_INTERACT;
@@ -53,10 +53,4 @@ public final class InteractNPCCommand implements ICommand {
         this.player.updateMove(this.player.getDirection(), this.oldCoordinate);
     }
 
-    private void updateMove(MapGame mapGame) {
-        var idMapGame = this.player.getCurrentMap().id();
-        var door = mapGame.getDoorByMap(idMapGame);
-        if (door.isEmpty()) return;
-        this.player.updateMove(this.player.getDirection(), door.get().getCoordinate());
-    }
 }

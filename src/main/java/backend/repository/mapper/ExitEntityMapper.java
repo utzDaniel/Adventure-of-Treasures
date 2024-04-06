@@ -7,13 +7,13 @@ import backend.repository.interfaces.IMapperEntity;
 public final class ExitEntityMapper implements IMapperEntity<IExitEntity> {
 
     @Override
-    public IExitEntity apply(String linha) {
-        var dados = split(linha);
+    public IExitEntity apply(String line) {
+        var data = split(line);
         return new ExitEntity(
-                Convert.parseInt(dados[0]),
-                Convert.parseInt(dados[1]),
-                Convert.parseString(dados[2]),
-                Convert.parseInt(dados[3])
+                Convert.parseInt(data[0]),
+                Convert.parseInt(data[1]),
+                Convert.parseString(data[2]),
+                Convert.parseInt(data[3])
         );
     }
 

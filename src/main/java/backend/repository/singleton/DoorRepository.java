@@ -31,10 +31,10 @@ public final class DoorRepository {
         return this.map.values().stream().toList();
     }
 
-    public List<IDoorEntity> getByIdMapOri(int idMapOri) {
+    public List<IDoorEntity> getByIdMapInside(int idMapInside) {
         return this.map.values()
                 .stream()
-                .filter(v -> v.idMapOri() == idMapOri)
+                .filter(v -> v.idMapInside() == idMapInside)
                 .toList();
     }
 

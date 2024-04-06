@@ -20,16 +20,16 @@ public final class Door implements IEntity, IBackup<DoorMemento> {
         return this.entity.id();
     }
 
-    public int getId() {
-        return this.entity.id();
-    }
-
-    public int getIdMapGame() {
-        return this.entity.idMapDor();
-    }
-
     public ICoordinate getCoordinate() {
-        return ICoordinate.getInstance(this.entity.positionX(), this.entity.positionY());
+        return ICoordinate.getInstance(this.entity.insideX(), this.entity.insideY());
+    }
+
+    public int getIdMapOutside() {
+        return this.entity.idMapOutside();
+    }
+
+    public ICoordinate getCoordinateOutside() {
+        return ICoordinate.getInstance(this.entity.outsideX(), this.entity.outsideY());
     }
 
     public void setOpen(boolean open) {
@@ -41,11 +41,11 @@ public final class Door implements IEntity, IBackup<DoorMemento> {
     }
 
     public boolean isDoor(ICoordinate coordinate) {
-        return ICoordinate.getInstance(this.entity.positionX(), this.entity.positionY()).equals(coordinate);
+        return ICoordinate.getInstance(this.entity.insideX(), this.entity.insideY()).equals(coordinate);
     }
 
     public boolean isMap(int idMapGame) {
-        return this.entity.idMapDor() == idMapGame;
+        return this.entity.idMapOutside() == idMapGame;
     }
 
     @Override
@@ -53,12 +53,14 @@ public final class Door implements IEntity, IBackup<DoorMemento> {
         return """
                 {
                     "id": "%d",
-                    "idMapGame": "%d",
                     "coordinate": %s,
+                    "idMapOutside": "%d",
+                    "coordinateOutside": %s,
                     "open": %b
                 }
-                """.formatted(this.entity.id(), this.entity.idMapDor(),
-                ICoordinate.getInstance(this.entity.positionX(), this.entity.positionY()).toString(), this.open);
+                """.formatted(this.entity.id(), ICoordinate.getInstance(this.entity.insideX(), this.entity.insideY()).toString(),
+                this.entity.idMapOutside(), ICoordinate.getInstance(this.entity.outsideX(), this.entity.outsideY()).toString(),
+                this.open);
     }
 
     @Override

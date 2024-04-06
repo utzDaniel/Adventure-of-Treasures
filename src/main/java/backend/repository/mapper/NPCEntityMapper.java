@@ -7,15 +7,15 @@ import backend.repository.interfaces.INPCEntity;
 public final class NPCEntityMapper implements IMapperEntity<INPCEntity> {
 
     @Override
-    public INPCEntity apply(String linha) {
-        var dados = split(linha);
+    public INPCEntity apply(String line) {
+        var data = split(line);
         return new NPCEntity(
-                Convert.parseInt(dados[0]),
-                Convert.parseInt(dados[1]),
-                Convert.parseInt(dados[2]),
-                Convert.parseInt(dados[3]),
-                Convert.parseInt(dados[4]),
-                Convert.parseInt(dados[5]));
+                Convert.parseInt(data[0]),
+                Convert.parseInt(data[1]),
+                Convert.parseInt(data[2]),
+                Convert.parseInt(data[3]),
+                Convert.parseInt(data[4]),
+                Convert.parseInt(data[5]));
     }
 
 }

@@ -36,7 +36,7 @@ public final class InteractMapGame {
 
     public Optional<Door> getDoor(int idDoor) {
         return this.doors.values().stream()
-                .filter(v -> v.getId() == idDoor)
+                .filter(v -> v.id() == idDoor)
                 .findFirst();
     }
 

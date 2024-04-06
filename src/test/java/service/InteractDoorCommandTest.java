@@ -53,7 +53,7 @@ public class InteractDoorCommandTest {
         this.cmd = new InteractDoorCommand(player);
         var msg = this.cmd.execute();
         assertEquals(TypeMessage.DOOR_OPEN, msg);
-        assertEquals(ICoordinate.getInstance(52, 37), player.getCoordinate());
+        assertEquals(ICoordinate.getInstance(51, 37), player.getCoordinate());
         assertEquals(11, player.getCurrentMap().id());
     }
 

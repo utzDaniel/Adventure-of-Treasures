@@ -7,13 +7,13 @@ import backend.repository.interfaces.IMapperEntity;
 public final class EventMapEntityMapper implements IMapperEntity<IEventMapEntity> {
 
     @Override
-    public IEventMapEntity apply(String linha) {
-        var dados = split(linha);
+    public IEventMapEntity apply(String line) {
+        var data = split(line);
         return new EventMapEntity(
-                Convert.parseInt(dados[0]),
-                Convert.parseInt(dados[1]),
-                Convert.parseInt(dados[2]),
-                Convert.parseString(dados[3]));
+                Convert.parseInt(data[0]),
+                Convert.parseInt(data[1]),
+                Convert.parseInt(data[2]),
+                Convert.parseString(data[3]));
     }
 
 }
