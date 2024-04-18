@@ -10,6 +10,10 @@ import backend.service.command.EquippableCommand;
 import backend.service.command.UsableCommand;
 import backend.service.component.inventory.open.InventoryOpen;
 import backend.service.dto.response.ServiceResponse;
+import backend.service.handler.UsableCoordinateHandler;
+import backend.service.handler.UsableEnableHandler;
+import backend.service.handler.UsableMapHandler;
+import backend.service.handler.UsableSpecializationHandler;
 import backend.service.mapper.InventoryResponseMapper;
 import backend.service.model.Item;
 
@@ -53,7 +57,12 @@ public final class InventoryService implements IInventoryService {
         var typeMessage = TypeMessage.ITEM_ERROR_FOUND;
 
         if (item.isPresent()) {
-            var cmd = new UsableCommand(item.get(), idMap, coordinate, inventory);
+            var usableHandler = new UsableSpecializationHandler();
+            usableHandler
+                    .setNextHandler(new UsableMapHandler(idMap))
+                    .setNextHandler(new UsableCoordinateHandler(coordinate))
+                    .setNextHandler(new UsableEnableHandler());
+            var cmd = new UsableCommand(item.get(), inventory, usableHandler);
             typeMessage = cmd.execute();
         }
 
