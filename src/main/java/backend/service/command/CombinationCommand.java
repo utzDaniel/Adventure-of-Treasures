@@ -1,10 +1,8 @@
 package backend.service.command;
 
 import backend.controller.enums.TypeMessage;
-import backend.service.handler.*;
 import backend.service.interfaces.ICommand;
 import backend.service.interfaces.IHandler;
-import backend.service.model.Inventory;
 import backend.service.model.Item;
 
 import java.util.List;
@@ -13,39 +11,27 @@ import java.util.stream.Collectors;
 public final class CombinationCommand implements ICommand {
 
     private final List<Item> items;
-    private final CommandTool commands;
-    private final Inventory inventory;
-    private final IHandler<List<Item>> combinableHandler;
+    private final MacroCommand commands;
+    private final IHandler<List<Item>> handler;
 
-    public CombinationCommand(List<Item> items, Inventory inventory) {
-        this.commands = new CommandTool();
+    public CombinationCommand(List<Item> items, IHandler<List<Item>> handler, MacroCommand commands) {
         this.items = items;
-        this.inventory = inventory;
-        this.combinableHandler = new CombinableEmptyHandler();
-        this.combinableHandler
-                .setNextHandler(new CombinableSizeHandler())
-                .setNextHandler(new CombinableIncompleteHandler())
-                .setNextHandler(new CombinableInvalidHandler())
-                .setNextHandler(new CombinableErrorHandler());
+        this.handler = handler;
+        this.commands = commands;
     }
 
     @Override
     public TypeMessage execute() {
-        var msg = this.combinableHandler.handle(this.items);
+        var msg = this.handler.handle(this.items);
         if (msg.isPresent()) return msg.get();
-
-        this.items.forEach(v -> this.commands.addCommand(new RemoveItemInventoryCommand(v, inventory)));
 
         var type = this.commands.execute();
         if (!type.isSuccess()) return type;
 
+        this.items.get(0).warn();
+
         var combination = getCombination();
         return getCombinationTypeMessage(combination);
-    }
-
-    @Override
-    public void undo() {
-        this.commands.undo();
     }
 
     private TypeMessage getCombinationTypeMessage(String combination) {

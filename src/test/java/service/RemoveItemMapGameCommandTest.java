@@ -3,7 +3,7 @@ package service;
 import backend.controller.enums.TypeMessage;
 import backend.repository.entity.ItemEntity;
 import backend.repository.singleton.MapGameRepository;
-import backend.service.command.RemoveItemMapGameCommand;
+import backend.service.command.CommandFactory;
 import backend.service.model.Item;
 import backend.service.model.ItemFactory;
 import backend.service.model.MapGame;
@@ -15,7 +15,6 @@ import static org.junit.Assert.assertEquals;
 
 public class RemoveItemMapGameCommandTest {
 
-    private RemoveItemMapGameCommand cmd;
     private Item item;
     private MapGame map;
 
@@ -28,18 +27,9 @@ public class RemoveItemMapGameCommandTest {
     @Test
     public void validRemove() {
         this.map.addItem(this.item);
-        this.cmd = new RemoveItemMapGameCommand(this.item, this.map);
-        var msg = this.cmd.execute();
+        var cmd = CommandFactory.createRemoveItemMapGameCommand(this.map, this.item);
+        var msg = cmd.execute();
         assertEquals(TypeMessage.REMOVE_ITEM_MAP, msg);
-    }
-
-    @Test
-    public void validRemoveUndo() {
-        this.map.addItem(this.item);
-        this.cmd = new RemoveItemMapGameCommand(this.item, this.map);
-        this.cmd.execute();
-        this.cmd.undo();
-        assertEquals(this.item, this.map.getItem(this.item.getCoordinate()));
     }
 
 }

@@ -16,8 +16,8 @@ import java.util.Set;
 public class SaveCommandTest {
 
     @Test
-    public void validTeste01() {
-        var filename = "src/test/resources/save/teste_save_01.txt";
+    public void valid01() {
+        var filename = "src/test/resources/save/test_save_01.txt";
         var doorMemento = new ArrayList<DoorMemento>();
         doorMemento.add(new DoorMemento(1, false));
         var move = new MoveMemento("RIGHT_FOOT_TOGETHER", 1, "SOUTH", 47, 30, "src/main/resources/image/player");
@@ -34,8 +34,8 @@ public class SaveCommandTest {
     }
 
     @Test
-    public void validTeste02() {
-        var filename = "src/test/resources/save/teste_save_02.txt";
+    public void valid02() {
+        var filename = "src/test/resources/save/test_save_02.txt";
         var itemMemento = new ArrayList<ItemMemento>();
         itemMemento.add(new ItemMemento(10, 22, 65, new SpecializationCompositeMemento(true, false)));
         var doorMemento = new ArrayList<DoorMemento>();
@@ -57,8 +57,8 @@ public class SaveCommandTest {
     }
 
     @Test
-    public void validTeste03() {
-        var filename = "src/test/resources/save/teste_save_03.txt";
+    public void valid03() {
+        var filename = "src/test/resources/save/test_save_03.txt";
         var itemMemento = new ArrayList<ItemMemento>();
         itemMemento.add(new ItemMemento(4, 31, 28, new SpecializationCompositeMemento(false, false)));
         itemMemento.add(new ItemMemento(7, 8, 64, new SpecializationCompositeMemento(false, false)));
@@ -93,8 +93,8 @@ public class SaveCommandTest {
     }
 
     @Test
-    public void validTeste04() {
-        var filename = "src/test/resources/save/teste_save_04.txt";
+    public void valid04() {
+        var filename = "src/test/resources/save/test_save_04.txt";
         var itemMemento = new ArrayList<ItemMemento>();
         itemMemento.add(new ItemMemento(4, 31, 28, new SpecializationCompositeMemento(false, false)));
         itemMemento.add(new ItemMemento(6, 20, 41, new SpecializationCompositeMemento(false, false)));
@@ -130,18 +130,6 @@ public class SaveCommandTest {
         Assert.assertEquals(TypeMessage.SAVE, msg);
         var list = read(filename);
         Assert.assertEquals(memento.extrinsic(), list.get(list.size() - 1));
-    }
-
-    @Test
-    public void validTesteUndo() {
-        var filename = "src/test/resources/save/teste_save_undo.txt";
-        var backup = new BackupMementoFactory().create();
-        var save = new SaveCommand(filename, backup);
-        var msg = save.execute();
-        Assert.assertEquals(TypeMessage.SAVE, msg);
-        save.undo();
-        var list = read(filename);
-        Assert.assertTrue(list.isEmpty());
     }
 
     private List<String> read(String filename) {

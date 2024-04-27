@@ -1,11 +1,9 @@
 package backend.service.model;
 
-import backend.controller.enums.TypeMessage;
 import backend.repository.interfaces.IEntity;
 import backend.repository.interfaces.IItemEntity;
 import backend.service.enums.TypeItem;
 import backend.service.interfaces.*;
-import backend.service.interfaces.IBackup;
 import backend.service.memento.ItemMemento;
 
 import java.util.List;
@@ -65,15 +63,6 @@ public final class Item implements IObservable, IImage, IEntity, IBackup<ItemMem
 
     public Optional<ISpecialization> getSpecialization(TypeItem type) {
         return this.specialization.getSpecialization(type);
-    }
-
-    public TypeMessage isRemove() {
-        if (this.getSpecialization(TypeItem.MISSION).isPresent())
-            return TypeMessage.REMOVE_ITEM_ERROR;
-        var spec = this.getSpecialization(TypeItem.EQUIPPABLE);
-        if (spec.isPresent() && ((IEquippable) spec.get()).isEquip())
-            return TypeMessage.REMOVE_ITEM_ERROR_EQUIP;
-        return TypeMessage.REMOVE_ITEM;
     }
 
     @Override

@@ -2,45 +2,41 @@ package backend.service.command;
 
 import backend.controller.enums.TypeMessage;
 import backend.service.interfaces.ICommand;
+import backend.service.interfaces.IHandler;
+import backend.service.model.Item;
 import backend.service.model.Player;
-
-import java.util.Objects;
 
 public final class InteractItemCommand implements ICommand {
 
     private final Player player;
-    private final CommandTool commands;
+    private final IHandler<Item> handler;
+    private final MacroCommand commands;
 
-    public InteractItemCommand(Player player) {
+    public InteractItemCommand(Player player, IHandler<Item> handler) {
         this.player = player;
-        this.commands = new CommandTool();
+        this.handler = handler;
+        this.commands = new MacroCommand();
     }
 
     @Override
     public TypeMessage execute() {
-
         var coordinate = this.player.getCoordinate();
         coordinate.move(this.player.getDirection().getMove());
 
         var mapGame = this.player.getCurrentMap();
         var item = mapGame.getItem(coordinate);
 
+        var msg = this.handler.handle(item);
+        if (msg.isPresent()) return msg.get();
+
         var inventory = this.player.getInventory();
-
-        if (Objects.isNull(item)) return TypeMessage.ITEM_ERROR_FOUND;
-
-        this.commands.addCommand(new AddItemInventoryCommand(item, inventory));
-        this.commands.addCommand(new RemoveItemMapGameCommand(item, mapGame));
+        this.commands.add(CommandFactory.createAddItemInventoryCommand(inventory, item));
+        this.commands.add(CommandFactory.createRemoveItemMapGameCommand(mapGame, item));
 
         var type = this.commands.execute();
         if (!type.isSuccess()) return type;
 
         return TypeMessage.TAKE_ITEM;
-    }
-
-    @Override
-    public void undo() {
-        this.commands.undo();
     }
 
 }

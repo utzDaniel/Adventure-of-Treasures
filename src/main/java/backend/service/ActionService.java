@@ -4,21 +4,17 @@ import backend.Game;
 import backend.controller.enums.TypeMessage;
 import backend.controller.interfaces.IActionService;
 import backend.controller.interfaces.IServiceResponse;
-import backend.service.command.InteractCommand;
-import backend.service.command.LoadCommand;
-import backend.service.command.MoveCommand;
-import backend.service.command.SaveCommand;
+import backend.service.command.CommandFactory;
 import backend.service.component.inventory.quit.InventoryQuit;
 import backend.service.dto.response.ServiceResponse;
 import backend.service.enums.Direction;
+import backend.service.enums.TypeCommand;
 import backend.service.mapper.ActionResponseMapper;
-import backend.service.memento.BackupMementoFactory;
 
 import java.util.Objects;
 
 public final class ActionService implements IActionService {
 
-    private static final String SAVE_FILENAME = "src/main/resources/save/player.txt";
 
     @Override
     public IServiceResponse refresh() {
@@ -34,7 +30,7 @@ public final class ActionService implements IActionService {
 
     @Override
     public IServiceResponse interact() {
-        var typeMessage = new InteractCommand(Game.player).execute();
+        var typeMessage = CommandFactory.create(TypeCommand.INTERACT).execute();
 
         if (!typeMessage.isSuccess())
             new ServiceResponse(typeMessage, null);
@@ -49,7 +45,7 @@ public final class ActionService implements IActionService {
 
         if (Objects.isNull(direction1)) return new ServiceResponse(TypeMessage.DIRECTION_ERROR_INVALID, null);
 
-        var cmd = new MoveCommand(Game.player, direction1);
+        var cmd = CommandFactory.createMoveCommand(Game.player, direction1);
         var typeMessage = cmd.execute();
 
         if (!typeMessage.isSuccess())
@@ -61,7 +57,7 @@ public final class ActionService implements IActionService {
 
     @Override
     public IServiceResponse load() {
-        var typeMessage = new LoadCommand(SAVE_FILENAME).execute();
+        var typeMessage = CommandFactory.create(TypeCommand.LOAD).execute();
         if (!typeMessage.isSuccess())
             new ServiceResponse(typeMessage, null);
 
@@ -71,8 +67,7 @@ public final class ActionService implements IActionService {
 
     @Override
     public IServiceResponse save() {
-        var memento = new BackupMementoFactory().create();
-        var typeMessage = new SaveCommand(SAVE_FILENAME, memento).execute();
+        var typeMessage = CommandFactory.create(TypeCommand.SAVE).execute();
         return new ServiceResponse(typeMessage, null);
     }
 }

@@ -3,54 +3,42 @@ package backend.service.command;
 import backend.controller.enums.TypeMessage;
 import backend.service.infra.CacheService;
 import backend.service.interfaces.ICommand;
-import backend.service.interfaces.ICoordinate;
-import backend.service.model.MapGame;
+import backend.service.interfaces.IHandler;
+import backend.service.model.NPC;
 import backend.service.model.Player;
 
 public final class InteractNPCCommand implements ICommand {
 
     private final Player player;
-    private final MapGame oldMapGame;
-    private final ICoordinate oldCoordinate;
+    private final IHandler<NPC> handler;
 
-    public InteractNPCCommand(Player player) {
+    public InteractNPCCommand(Player player, IHandler<NPC> handler) {
         this.player = player;
-        this.oldMapGame = player.getCurrentMap();
-        this.oldCoordinate = ICoordinate.getInstance(player.getCoordinate());
+        this.handler = handler;
     }
 
     @Override
     public TypeMessage execute() {
         var coordinate = this.player.getCoordinate();
         coordinate.move(this.player.getDirection().getMove());
-        var npcOptional = this.player.getCurrentMap().getNPC(coordinate);
-        if (npcOptional.isEmpty()) {
-            return TypeMessage.NPC_ERROR_FOUND;
-        }
-        var npc = npcOptional.get();
+        var npc = this.player.getCurrentMap().getNPC(coordinate).orElse(null);
 
-        var msg = npc.isAction(this.player.getInventory().getItems());
+        var msg = this.handler.handle(npc);
+        if (msg.isPresent()) return msg.get();
 
-        if (msg.isPresent() && msg.get().isSuccess()) return msg.get();
+        assert npc != null;
+        var typeMessage = npc.isAction(this.player.getInventory().getItems());
+        if (typeMessage.isPresent() && typeMessage.get().isSuccess()) return typeMessage.get();
 
-        if (npc.getIdDoor() == -1) return TypeMessage.NPC_ERROR_INCOMPLETE;
+        var door = CacheService.getDoor(npc.getIdDoor()).orElse(null);
 
-        var door = CacheService.getDoor(npc.getIdDoor());
-        if (door.isEmpty()) return TypeMessage.MAP_NOT_FOUND;
+        assert door != null;
+        var mapGame = CacheService.getMapGame(door.getIdMapOutside()).orElse(null);
 
-        var mapGame = CacheService.getMapGame(door.get().getIdMapOutside());
-        if (mapGame.isEmpty()) return TypeMessage.MAP_NOT_FOUND;
-
-        this.player.updateMove(this.player.getDirection(), door.get().getCoordinateOutside());
-        this.player.setCurrentMap(mapGame.get());
+        this.player.updateMove(this.player.getDirection(), door.getCoordinateOutside());
+        this.player.setCurrentMap(mapGame);
 
         return TypeMessage.NPC_INTERACT;
-    }
-
-    @Override
-    public void undo() {
-        this.player.setCurrentMap(this.oldMapGame);
-        this.player.updateMove(this.player.getDirection(), this.oldCoordinate);
     }
 
 }

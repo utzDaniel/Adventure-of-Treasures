@@ -21,9 +21,4 @@ public final class RemoveItemMapGameCommand implements ICommand {
         return TypeMessage.REMOVE_ITEM_MAP;
     }
 
-    @Override
-    public void undo() {
-        this.mapGame.addItem(item);
-    }
-
 }

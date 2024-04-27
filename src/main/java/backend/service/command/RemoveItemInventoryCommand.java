@@ -2,34 +2,29 @@ package backend.service.command;
 
 import backend.controller.enums.TypeMessage;
 import backend.service.interfaces.ICommand;
+import backend.service.interfaces.IHandler;
 import backend.service.model.Inventory;
 import backend.service.model.Item;
-
-import java.util.Objects;
 
 public final class RemoveItemInventoryCommand implements ICommand {
 
     private final Item item;
     private final Inventory inventory;
+    private final IHandler<Item> handler;
 
-    public RemoveItemInventoryCommand(Item item, Inventory inventory) {
+    public RemoveItemInventoryCommand(Item item, Inventory inventory, IHandler<Item> handler) {
         this.item = item;
         this.inventory = inventory;
+        this.handler = handler;
     }
 
     @Override
     public TypeMessage execute() {
-        var isRemove = this.item.isRemove();
-        if (!isRemove.isSuccess()) return isRemove;
-        if (Objects.isNull(this.inventory.getItem(this.item.getId())))
-            return TypeMessage.INVENTORY_ITEM_ERROR;
+        var msg = this.handler.handle(this.item);
+        if (msg.isPresent()) return msg.get();
+
         this.inventory.removeItem(this.item);
         return TypeMessage.REMOVE_ITEM_INVENTORY;
-    }
-
-    @Override
-    public void undo() {
-        this.inventory.addItem(this.item);
     }
 
 }

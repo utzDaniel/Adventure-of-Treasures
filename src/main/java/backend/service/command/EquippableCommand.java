@@ -2,6 +2,7 @@ package backend.service.command;
 
 import backend.controller.enums.TypeMessage;
 import backend.service.enums.TypeItem;
+import backend.service.handler.Handler;
 import backend.service.interfaces.ICommand;
 import backend.service.interfaces.IEquippable;
 import backend.service.model.Inventory;
@@ -11,63 +12,35 @@ public final class EquippableCommand implements ICommand {
 
     private final Item item;
     private final Inventory inventory;
+    private final Handler<Item> handler;
 
-    public EquippableCommand(Item item, Inventory inventory) {
+    public EquippableCommand(Item item, Inventory inventory, Handler<Item> handler) {
         this.item = item;
         this.inventory = inventory;
+        this.handler = handler;
     }
 
     @Override
     public TypeMessage execute() {
-        var spec = this.item.getSpecialization(TypeItem.EQUIPPABLE);
-        if (spec.isEmpty()) return TypeMessage.ITEM_ERROR_EQUIPPABLE;
-        var equippable = (IEquippable) spec.get();
+        var msg = this.handler.handle(this.item);
+        if (msg.isPresent()) return msg.get();
 
+        var equippable = (IEquippable) this.item.getSpecialization(TypeItem.EQUIPPABLE).orElse(null);
+
+        assert equippable != null;
+
+        var typeMessage = getCommand(equippable).execute();
+        if (typeMessage.isSuccess()) this.item.warn();
+
+        return typeMessage;
+    }
+
+    private ICommand getCommand(IEquippable equippable) {
         if (equippable.isEquip()) {
-            if (!this.inventory.updateMaxCapacity(-equippable.getUpCapacity()))
-                return getUnequippedMessageError();
-            equippable.setEquip(!equippable.isEquip());
-            return getUnequippeTypeMessage();
+            return CommandFactory.createUnequipCommand(this.inventory, equippable);
         } else {
-            this.inventory.updateMaxCapacity(equippable.getUpCapacity());
-            equippable.setEquip(!equippable.isEquip());
-            return getEquipTypeMessageSuccess();
+            return CommandFactory.createEquipCommand(this.inventory, equippable);
         }
-    }
-
-    @Override
-    public void undo() {
-        var spec = this.item.getSpecialization(TypeItem.EQUIPPABLE);
-        if (spec.isEmpty()) return;
-        var equippable = (IEquippable) spec.get();
-
-        if (equippable.isEquip()) {
-            this.inventory.updateMaxCapacity(-equippable.getUpCapacity());
-            equippable.setEquip(!equippable.isEquip());
-        } else {
-            this.inventory.updateMaxCapacity(equippable.getUpCapacity());
-            equippable.setEquip(!equippable.isEquip());
-        }
-    }
-
-    private TypeMessage getEquipTypeMessageSuccess() {
-        return switch (this.item.getId()) {
-            case 10 -> TypeMessage.EQUIP_SCHOOLBAG;
-            case 16 -> TypeMessage.EQUIP_TORCH;
-            default -> TypeMessage.EQUIP;
-        };
-    }
-
-    private TypeMessage getUnequippeTypeMessage() {
-        return switch (this.item.getId()) {
-            case 10 -> TypeMessage.UNEQUIPPED_SCHOOLBAG;
-            case 16 -> TypeMessage.UNEQUIPPED_TORCH;
-            default -> TypeMessage.UNEQUIPPED;
-        };
-    }
-
-    private TypeMessage getUnequippedMessageError() {
-        return this.item.getId() == 10 ? TypeMessage.UNEQUIPPED_ERROR_SCHOOLBAG : TypeMessage.UNEQUIPPED_ERROR;
     }
 
 }

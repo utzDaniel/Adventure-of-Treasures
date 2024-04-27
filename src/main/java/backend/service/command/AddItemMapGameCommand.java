@@ -1,45 +1,41 @@
 package backend.service.command;
 
 import backend.controller.enums.TypeMessage;
+import backend.service.CalculateCoordinate;
 import backend.service.interfaces.ICommand;
 import backend.service.interfaces.ICoordinate;
+import backend.service.interfaces.IHandler;
 import backend.service.model.Item;
 import backend.service.model.MapGame;
-import backend.service.CalculateCoordinate;
 
 public final class AddItemMapGameCommand implements ICommand {
 
     private final Item item;
-    private final ICoordinate oldCoordinate;
     private final MapGame mapGame;
+    private final IHandler<Integer> handler;
 
-    public AddItemMapGameCommand(Item item, MapGame mapGame) {
+    public AddItemMapGameCommand(Item item, MapGame mapGame, IHandler<Integer> handler) {
         this.item = item;
-        this.oldCoordinate = item.getCoordinate();
         this.mapGame = mapGame;
+        this.handler = handler;
     }
 
     @Override
     public TypeMessage execute() {
-        var coordinate = ICoordinate.getInstance(this.oldCoordinate);
+        var coordinate = ICoordinate.getInstance(this.item.getCoordinate());
         var areaTraveled = 0;
-
         do {
             CalculateCoordinate.next(coordinate);
             areaTraveled++;
-            if (areaTraveled >= this.mapGame.areaSize())
-                return TypeMessage.MAP_ADD_ERROR_FULL;
+
+            var msg = this.handler.handle(areaTraveled);
+            if (msg.isPresent()) return msg.get();
+
         } while (this.mapGame.invalidCoordinate(coordinate));
 
         this.item.setCoordinate(coordinate);
-        this.mapGame.addItem(item);
+        this.mapGame.addItem(this.item);
         return TypeMessage.ADD_ITEM_MAP;
-    }
-
-    @Override
-    public void undo() {
-        this.mapGame.removeItem(this.item);
-        this.item.setCoordinate(this.oldCoordinate);
     }
 
 }

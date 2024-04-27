@@ -3,48 +3,35 @@ package backend.service.command;
 import backend.controller.enums.TypeMessage;
 import backend.service.infra.CacheService;
 import backend.service.interfaces.ICommand;
-import backend.service.interfaces.ICoordinate;
-import backend.service.model.MapGame;
-import backend.service.model.Player;
-
-import java.util.Objects;
+import backend.service.interfaces.IHandler;
+import backend.service.interfaces.IMove;
+import backend.service.model.Door;
 
 public final class InteractDoorCommand implements ICommand {
 
-    private final Player player;
-    private final MapGame oldMapGame;
-    private final ICoordinate oldCoordinate;
+    private final IMove move;
+    private final IHandler<Door> handler;
 
-    public InteractDoorCommand(Player player) {
-        this.player = player;
-        this.oldMapGame = player.getCurrentMap();
-        this.oldCoordinate = ICoordinate.getInstance(player.getCoordinate());
+    public InteractDoorCommand(IMove move, IHandler<Door> handler) {
+        this.move = move;
+        this.handler = handler;
     }
 
     @Override
     public TypeMessage execute() {
-        var coordinate = this.player.getCoordinate();
-        coordinate.move(this.player.getDirection().getMove());
-        var door = this.player.getCurrentMap().getDoor(coordinate).orElse(null);
+        var coordinate = this.move.getCoordinate();
+        coordinate.move(this.move.getDirection().getMove());
+        var door = this.move.getCurrentMap().getDoor(coordinate).orElse(null);
 
-        if (Objects.isNull(door))
-            return TypeMessage.DOOR_ERROR_FOUND;
+        var msg = this.handler.handle(door);
+        if (msg.isPresent()) return msg.get();
 
-        if (!door.isOpen())
-            return TypeMessage.DOOR_ERROR_CLOSED;
+        assert door != null;
+        var mapGame = CacheService.getMapGame(door.getIdMapOutside()).orElse(null);
 
-        var mapGame = CacheService.getMapGame(door.getIdMapOutside());
-        if (mapGame.isEmpty()) return TypeMessage.MAP_NOT_FOUND;
-
-        this.player.updateMove(this.player.getDirection(), door.getCoordinateOutside());
-        this.player.setCurrentMap(mapGame.get());
+        this.move.updateMove(this.move.getDirection(), door.getCoordinateOutside());
+        this.move.setCurrentMap(mapGame);
         return TypeMessage.DOOR_OPEN;
-    }
-
-    @Override
-    public void undo() {
-        this.player.setCurrentMap(this.oldMapGame);
-        this.player.updateMove(this.player.getDirection(), this.oldCoordinate);
     }
 
 }

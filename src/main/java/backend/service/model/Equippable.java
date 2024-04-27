@@ -16,6 +16,11 @@ public final class Equippable implements IEquippable {
     }
 
     @Override
+    public int id() {
+        return this.entity.idItem();
+    }
+
+    @Override
     public boolean isEquip() {
         return this.equip;
     }

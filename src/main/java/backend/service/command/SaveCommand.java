@@ -13,7 +13,6 @@ import java.util.List;
 public final class SaveCommand implements ICommand {
 
     private final FileUtil<BackupMemento> fileUtil;
-    private List<String> backup;
     private final BackupMemento memento;
 
     public SaveCommand(String filename, BackupMemento memento) {
@@ -23,19 +22,9 @@ public final class SaveCommand implements ICommand {
 
     @Override
     public TypeMessage execute() {
-        if (!backup()) return TypeMessage.BACKUP_ERROR;
-        var list = new ArrayList<>(this.backup);
-        list.add(this.memento.extrinsic());
-        return save(list);
-    }
-
-    @Override
-    public void undo() {
-        save(this.backup);
-    }
-
-    private TypeMessage save(List<String> list) {
         try {
+            var list = new ArrayList<>(backup());
+            list.add(this.memento.extrinsic());
             this.fileUtil.writeFile(list);
             return TypeMessage.SAVE;
         } catch (IOException e) {
@@ -43,16 +32,11 @@ public final class SaveCommand implements ICommand {
         }
     }
 
-    private boolean backup() {
-        try {
-            var mementos = this.fileUtil.readFile(new BackupMementoMapper(), 0);
-            this.backup = mementos.stream()
-                    .map(BackupMemento::extrinsic)
-                    .toList();
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
+    private List<String> backup() throws IOException {
+        return this.fileUtil.readFile(new BackupMementoMapper(), 0)
+                .stream()
+                .map(BackupMemento::extrinsic)
+                .toList();
     }
 
 }

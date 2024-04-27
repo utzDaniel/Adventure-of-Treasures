@@ -1,5 +1,6 @@
 package backend.service.mapper;
 
+import backend.controller.enums.TypeMessage;
 import backend.controller.interfaces.IInventoryResponse;
 import backend.controller.interfaces.ISpecialization;
 import backend.service.dto.SpecializationDTO;
@@ -52,7 +53,19 @@ public final class InventoryResponseMapper implements Function<Inventory, IInven
 
         list.add(new SpecializationDTO(key, item.isType(TypeItem.EQUIPPABLE)));
         list.add(new SpecializationDTO(ActionItem.COMBINE.getName(), item.isType(TypeItem.COMBINABLE)));
-        list.add(new SpecializationDTO(ActionItem.REMOVE.getName(), item.isRemove().isSuccess()));
+        list.add(new SpecializationDTO(ActionItem.REMOVE.getName(), isRemove(item).isSuccess()));
         return list;
+    }
+
+    public TypeMessage isRemove(Item item) {
+
+        if (item.getSpecialization(TypeItem.MISSION).isPresent())
+            return TypeMessage.REMOVE_ITEM_ERROR;
+
+        var spec = item.getSpecialization(TypeItem.EQUIPPABLE);
+        if (spec.isPresent() && ((IEquippable) spec.get()).isEquip())
+            return TypeMessage.REMOVE_ITEM_ERROR_EQUIP;
+
+        return TypeMessage.REMOVE_ITEM;
     }
 }

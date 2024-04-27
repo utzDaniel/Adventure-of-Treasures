@@ -6,5 +6,4 @@ public interface ICommand {
 
     TypeMessage execute();
 
-    void undo();
 }

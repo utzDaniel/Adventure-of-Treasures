@@ -7,17 +7,17 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class CommandTool implements ICommand {
+public final class MacroCommand implements ICommand {
 
     private final List<ICommand> commands;
     private final ArrayDeque<ICommand> stack;
 
-    public CommandTool() {
+    public MacroCommand() {
         this.commands = new ArrayList<>();
         this.stack = new ArrayDeque<>();
     }
 
-    public void addCommand(ICommand command) {
+    public void add(ICommand command) {
         this.commands.add(command);
     }
 
@@ -29,16 +29,10 @@ public final class CommandTool implements ICommand {
             temp = cmd.execute();
             this.stack.add(cmd);
             if (!temp.isSuccess()) {
-                undo();
                 break;
             }
         }
         return temp;
-    }
-
-    @Override
-    public void undo() {
-        while (!this.stack.isEmpty()) this.stack.pollLast().undo();
     }
 
 }

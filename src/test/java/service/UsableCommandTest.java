@@ -2,17 +2,11 @@ package service;
 
 import backend.controller.enums.TypeMessage;
 import backend.repository.entity.ItemEntity;
-import backend.service.command.UsableCommand;
+import backend.service.command.CommandFactory;
 import backend.service.enums.TypeItem;
-import backend.service.handler.UsableCoordinateHandler;
-import backend.service.handler.UsableEnableHandler;
-import backend.service.handler.UsableMapHandler;
-import backend.service.handler.UsableSpecializationHandler;
 import backend.service.interfaces.ICoordinate;
 import backend.service.interfaces.IUsable;
-import backend.service.model.Inventory;
-import backend.service.model.Item;
-import backend.service.model.ItemFactory;
+import backend.service.model.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,9 +18,7 @@ import static org.junit.Assert.assertEquals;
 
 public class UsableCommandTest {
 
-    private UsableCommand cmd;
     private Map<Integer, Item> items;
-
 
     @Before
     public void create() {
@@ -41,47 +33,42 @@ public class UsableCommandTest {
 
     @Test
     public void validError1() {
-        var idMap = 0;
-        var coordinate = ICoordinate.getInstance(0, 0);
-        var usableHandler = new UsableSpecializationHandler();
-        usableHandler
-                .setNextHandler(new UsableMapHandler(idMap))
-                .setNextHandler(new UsableCoordinateHandler(coordinate))
-                .setNextHandler(new UsableEnableHandler());
-        this.cmd = new UsableCommand(this.items.get(5), new Inventory(0, 10), usableHandler);
-        var msg = this.cmd.execute();
+        var mapGame = new MapGameFactory().create(1).orElse(null);
+        var move = new Move("", ICoordinate.getInstance(0, 0), mapGame);
+        var inventory = new Inventory(0, 10);
+        var player = new Player(move, inventory);
+        var list = new ArrayList<Item>();
+        list.add(this.items.get(5));
+        var cmd = CommandFactory.createUsableCommand(player, list);
+        var msg = cmd.execute();
         assertEquals(TypeMessage.ITEM_ERROR_USABLE, msg);
     }
 
     @Test
     public void validError2() {
-        var idMap = 1;
-        var coordinate = ICoordinate.getInstance(15, 37);
+        var mapGame = new MapGameFactory().create(1).orElse(null);
+        var move = new Move("", ICoordinate.getInstance(15, 37), mapGame);
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.items.get(1));
-        var usableHandler = new UsableSpecializationHandler();
-        usableHandler
-                .setNextHandler(new UsableMapHandler(idMap))
-                .setNextHandler(new UsableCoordinateHandler(coordinate))
-                .setNextHandler(new UsableEnableHandler());
-        this.cmd = new UsableCommand(this.items.get(1), inventory, usableHandler);
-        var msg = this.cmd.execute();
+        var player = new Player(move, inventory);
+        var list = new ArrayList<Item>();
+        list.add(this.items.get(1));
+        var cmd = CommandFactory.createUsableCommand(player, list);
+        var msg = cmd.execute();
         assertEquals(TypeMessage.USABLE_ERROR_MAP, msg);
     }
 
     @Test
     public void validError3() {
-        var idMap = 6;
-        var coordinate = ICoordinate.getInstance(10, 37);
+        var mapGame = new MapGameFactory().create(6).orElse(null);
+        var move = new Move("", ICoordinate.getInstance(10, 37), mapGame);
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.items.get(1));
-        var usableHandler = new UsableSpecializationHandler();
-        usableHandler
-                .setNextHandler(new UsableMapHandler(idMap))
-                .setNextHandler(new UsableCoordinateHandler(coordinate))
-                .setNextHandler(new UsableEnableHandler());
-        this.cmd = new UsableCommand(this.items.get(1), inventory, usableHandler);
-        var msg = this.cmd.execute();
+        var player = new Player(move, inventory);
+        var list = new ArrayList<Item>();
+        list.add(this.items.get(1));
+        var cmd = CommandFactory.createUsableCommand(player, list);
+        var msg = cmd.execute();
         assertEquals(TypeMessage.USABLE_ERROR_COORDINATE, msg);
     }
 
@@ -89,49 +76,43 @@ public class UsableCommandTest {
     public void validError4() {
         var usable = this.items.get(11).getSpecialization(TypeItem.USABLE);
         usable.ifPresent(specialization -> ((IUsable) specialization).setEnabled(false));
-        var idMap = 4;
-        var coordinate = ICoordinate.getInstance(29, 56);
+        var mapGame = new MapGameFactory().create(4).orElse(null);
+        var move = new Move("", ICoordinate.getInstance(29, 56), mapGame);
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.items.get(11));
-        var usableHandler = new UsableSpecializationHandler();
-        usableHandler
-                .setNextHandler(new UsableMapHandler(idMap))
-                .setNextHandler(new UsableCoordinateHandler(coordinate))
-                .setNextHandler(new UsableEnableHandler());
-        this.cmd = new UsableCommand(this.items.get(11), inventory, usableHandler);
-        var msg = this.cmd.execute();
+        var player = new Player(move, inventory);
+        var list = new ArrayList<Item>();
+        list.add(this.items.get(11));
+        var cmd = CommandFactory.createUsableCommand(player, list);
+        var msg = cmd.execute();
         assertEquals(TypeMessage.USABLE_ERROR_ENABLE, msg);
     }
 
     @Test
     public void validChave() {
-        var idMap = 6;
-        var coordinate = ICoordinate.getInstance(15, 37);
+        var mapGame = new MapGameFactory().create(6).orElse(null);
+        var move = new Move("", ICoordinate.getInstance(15, 37), mapGame);
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.items.get(1));
-        var usableHandler = new UsableSpecializationHandler();
-        usableHandler
-                .setNextHandler(new UsableMapHandler(idMap))
-                .setNextHandler(new UsableCoordinateHandler(coordinate))
-                .setNextHandler(new UsableEnableHandler());
-        this.cmd = new UsableCommand(this.items.get(1), inventory, usableHandler);
-        var msg = this.cmd.execute();
+        var player = new Player(move, inventory);
+        var list = new ArrayList<Item>();
+        list.add(this.items.get(1));
+        var cmd = CommandFactory.createUsableCommand(player, list);
+        var msg = cmd.execute();
         assertEquals(TypeMessage.USABLE_KEY, msg);
     }
 
     @Test
     public void validEscada() {
-        var idMap = 8;
-        var coordinate = ICoordinate.getInstance(19, 26);
+        var mapGame = new MapGameFactory().create(8).orElse(null);
+        var move = new Move("", ICoordinate.getInstance(19, 26), mapGame);
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.items.get(2));
-        var usableHandler = new UsableSpecializationHandler();
-        usableHandler
-                .setNextHandler(new UsableMapHandler(idMap))
-                .setNextHandler(new UsableCoordinateHandler(coordinate))
-                .setNextHandler(new UsableEnableHandler());
-        this.cmd = new UsableCommand(this.items.get(2), inventory, usableHandler);
-        var msg = this.cmd.execute();
+        var player = new Player(move, inventory);
+        var list = new ArrayList<Item>();
+        list.add(this.items.get(2));
+        var cmd = CommandFactory.createUsableCommand(player, list);
+        var msg = cmd.execute();
         assertEquals(TypeMessage.USABLE_LADDER, msg);
     }
 
@@ -139,34 +120,16 @@ public class UsableCommandTest {
     public void validPa() {
         var usable = this.items.get(11).getSpecialization(TypeItem.USABLE);
         usable.ifPresent(specialization -> ((IUsable) specialization).setEnabled(true));
-        var idMap = 4;
-        var coordinate = ICoordinate.getInstance(29, 56);
+        var mapGame = new MapGameFactory().create(4).orElse(null);
+        var move = new Move("", ICoordinate.getInstance(29, 56), mapGame);
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.items.get(11));
-        var usableHandler = new UsableSpecializationHandler();
-        usableHandler
-                .setNextHandler(new UsableMapHandler(idMap))
-                .setNextHandler(new UsableCoordinateHandler(coordinate))
-                .setNextHandler(new UsableEnableHandler());
-        this.cmd = new UsableCommand(this.items.get(11), inventory, usableHandler);
-        var msg = this.cmd.execute();
+        var player = new Player(move, inventory);
+        var list = new ArrayList<Item>();
+        list.add(this.items.get(11));
+        var cmd = CommandFactory.createUsableCommand(player, list);
+        var msg = cmd.execute();
         assertEquals(TypeMessage.USABLE_SHOVEL, msg);
     }
-
-    @Test
-    public void validUndo() {
-        var idMap = 6;
-        var coordinate = ICoordinate.getInstance(15, 37);
-        var inventory = new Inventory(0, 10);
-        inventory.addItem(this.items.get(1));
-        var usableHandler = new UsableSpecializationHandler();
-        usableHandler
-                .setNextHandler(new UsableMapHandler(idMap))
-                .setNextHandler(new UsableCoordinateHandler(coordinate))
-                .setNextHandler(new UsableEnableHandler());
-        this.cmd = new UsableCommand(this.items.get(1), inventory, usableHandler);
-        this.cmd.execute();
-        this.cmd.undo();
-        assertEquals(this.items.get(1), inventory.getItem(1));
-    }
+    
 }
