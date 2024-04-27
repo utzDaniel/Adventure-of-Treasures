@@ -1,5 +1,6 @@
 package backend.service.model;
 
+import backend.controller.interfaces.IInteract;
 import backend.repository.interfaces.IDecorationEntity;
 import backend.repository.interfaces.IEntity;
 import backend.repository.interfaces.IExitEntity;
@@ -53,12 +54,16 @@ public final class MapGame implements IImage, IEntity, IBackup<MapGameMemento> {
         return this.entity.image();
     }
 
-    public boolean isInteract(ICoordinate coordinate) {
-        return this.interact.isInteract(coordinate);
+    public boolean isInteract(ICoordinate coordinate, Direction direction) {
+        var newCoordinate = ICoordinate.getInstance(coordinate);
+        newCoordinate.move(direction.getMove());
+        return this.interact.isInteract(newCoordinate);
     }
 
-    public Optional<Door> getDoor(ICoordinate coordinate) {
-        return this.interact.getDoor(coordinate);
+    public Optional<IInteract> getInteract(ICoordinate coordinate, Direction direction) {
+        var newCoordinate = ICoordinate.getInstance(coordinate);
+        newCoordinate.move(direction.getMove());
+        return this.interact.get(newCoordinate);
     }
 
     public Optional<Door> getDoor(int idDoor) {
@@ -83,9 +88,6 @@ public final class MapGame implements IImage, IEntity, IBackup<MapGameMemento> {
         return this.interact.getItems();
     }
 
-    public Optional<NPC> getNPC(ICoordinate coordinate) {
-        return this.interact.getNPC(coordinate);
-    }
 
     public Optional<Integer> getExit(Direction direction) {
         return Objects.isNull(this.exits.get(direction)) ? Optional.empty() : Optional.of(this.exits.get(direction).idMapExt());

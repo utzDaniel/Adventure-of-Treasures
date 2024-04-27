@@ -1,5 +1,6 @@
 package backend.service.model;
 
+import backend.controller.interfaces.IInteract;
 import backend.repository.interfaces.IEntity;
 import backend.repository.interfaces.IItemEntity;
 import backend.service.enums.TypeItem;
@@ -9,7 +10,7 @@ import backend.service.memento.ItemMemento;
 import java.util.List;
 import java.util.Optional;
 
-public final class Item implements IObservable, IImage, IEntity, IBackup<ItemMemento> {
+public final class Item implements IObservable, IImage, IEntity, IBackup<ItemMemento>, IInteract {
 
     private final IItemEntity entity;
     private final SpecializationComposite specialization;

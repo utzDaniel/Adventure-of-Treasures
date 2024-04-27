@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class MoveCommandTest {
 
@@ -35,6 +36,7 @@ public class MoveCommandTest {
         var cmd = CommandFactory.createMoveCommand(move, Direction.SOUTH);
         var msg = cmd.execute();
         assertEquals(TypeMessage.MOVE_BLOCKED, msg);
+        assertEquals(coordinate, move.getCoordinate());
     }
 
     @Test
@@ -44,6 +46,7 @@ public class MoveCommandTest {
         var cmd = CommandFactory.createMoveCommand(move, Direction.SOUTH);
         var msg = cmd.execute();
         assertEquals(TypeMessage.MOVE, msg);
+        assertNotEquals(coordinate, move.getCoordinate());
     }
 
     @Test
@@ -53,6 +56,7 @@ public class MoveCommandTest {
         var cmd = CommandFactory.createMoveCommand(move, Direction.WEST);
         var msg = cmd.execute();
         assertEquals(TypeMessage.MOVE, msg);
+        assertNotEquals(coordinate, move.getCoordinate());
     }
 
     @Test
@@ -64,6 +68,7 @@ public class MoveCommandTest {
         cmd = CommandFactory.createMoveCommand(move, Direction.EAST);
         var msg = cmd.execute();
         assertEquals(TypeMessage.MOVE, msg);
+        assertEquals(coordinate, move.getCoordinate());
     }
 
     @Test
@@ -73,6 +78,7 @@ public class MoveCommandTest {
         var cmd = CommandFactory.createMoveCommand(move, Direction.WEST);
         var msg = cmd.execute();
         assertEquals(TypeMessage.MOVE, msg);
+        assertNotEquals(coordinate, move.getCoordinate());
     }
 
     @Test
@@ -84,6 +90,7 @@ public class MoveCommandTest {
         cmd = CommandFactory.createMoveCommand(move, Direction.EAST);
         var msg = cmd.execute();
         assertEquals(TypeMessage.MOVE, msg);
+        assertEquals(coordinate, move.getCoordinate());
     }
 
     @Test
@@ -93,6 +100,7 @@ public class MoveCommandTest {
         var cmd = CommandFactory.createMoveCommand(move, Direction.WEST);
         var msg = cmd.execute();
         assertEquals(TypeMessage.MOVE_NEXT_SCENERY_NOT_EXIT, msg);
+        assertEquals(coordinate, move.getCoordinate());
     }
 
     @Test
@@ -102,6 +110,7 @@ public class MoveCommandTest {
         var cmd = CommandFactory.createMoveCommand(move, Direction.EAST);
         var msg = cmd.execute();
         assertEquals(TypeMessage.MOVE_NEXT_SCENERY_NOT_EXIT, msg);
+        assertEquals(coordinate, move.getCoordinate());
     }
 
 }

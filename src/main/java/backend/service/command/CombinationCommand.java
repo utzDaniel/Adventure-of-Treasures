@@ -2,7 +2,6 @@ package backend.service.command;
 
 import backend.controller.enums.TypeMessage;
 import backend.service.interfaces.ICommand;
-import backend.service.interfaces.IHandler;
 import backend.service.model.Item;
 
 import java.util.List;
@@ -12,19 +11,14 @@ public final class CombinationCommand implements ICommand {
 
     private final List<Item> items;
     private final MacroCommand commands;
-    private final IHandler<List<Item>> handler;
 
-    public CombinationCommand(List<Item> items, IHandler<List<Item>> handler, MacroCommand commands) {
+    public CombinationCommand(List<Item> items, MacroCommand commands) {
         this.items = items;
-        this.handler = handler;
         this.commands = commands;
     }
 
     @Override
     public TypeMessage execute() {
-        var msg = this.handler.handle(this.items);
-        if (msg.isPresent()) return msg.get();
-
         var type = this.commands.execute();
         if (!type.isSuccess()) return type;
 

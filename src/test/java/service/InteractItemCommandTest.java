@@ -24,23 +24,12 @@ public class InteractItemCommandTest {
     }
 
     @Test
-    public void validError() {
-        this.map.addItem(this.item);
-        var move = new Move("", ICoordinate.getInstance(45, 30), this.map);
-        var inventory = new Inventory(0, 0);
-        var player = new Player(move, inventory);
-        var cmd = CommandFactory.createInteractItemCommand(player);
-        var msg = cmd.execute();
-        assertEquals(TypeMessage.ITEM_ERROR_FOUND, msg);
-    }
-
-    @Test
     public void valid() {
         this.map.addItem(this.item);
         var move = new Move("", ICoordinate.getInstance(47, 30), this.map);
         var inventory = new Inventory(0, 0);
         var player = new Player(move, inventory);
-        var cmd = CommandFactory.createInteractItemCommand(player);
+        var cmd = CommandFactory.createInteractCommand(player);
         var msg = cmd.execute();
         assertNull(this.map.getItem(ICoordinate.getInstance(48, 30)));
         assertEquals(this.item, inventory.getItem(this.item.getId()));

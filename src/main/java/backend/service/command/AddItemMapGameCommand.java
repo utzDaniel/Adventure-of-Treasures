@@ -4,7 +4,6 @@ import backend.controller.enums.TypeMessage;
 import backend.service.CalculateCoordinate;
 import backend.service.interfaces.ICommand;
 import backend.service.interfaces.ICoordinate;
-import backend.service.interfaces.IHandler;
 import backend.service.model.Item;
 import backend.service.model.MapGame;
 
@@ -12,12 +11,10 @@ public final class AddItemMapGameCommand implements ICommand {
 
     private final Item item;
     private final MapGame mapGame;
-    private final IHandler<Integer> handler;
 
-    public AddItemMapGameCommand(Item item, MapGame mapGame, IHandler<Integer> handler) {
+    public AddItemMapGameCommand(Item item, MapGame mapGame) {
         this.item = item;
         this.mapGame = mapGame;
-        this.handler = handler;
     }
 
     @Override
@@ -28,8 +25,8 @@ public final class AddItemMapGameCommand implements ICommand {
             CalculateCoordinate.next(coordinate);
             areaTraveled++;
 
-            var msg = this.handler.handle(areaTraveled);
-            if (msg.isPresent()) return msg.get();
+            if (areaTraveled >= this.mapGame.areaSize())
+                return TypeMessage.MAP_ADD_ERROR_FULL;
 
         } while (this.mapGame.invalidCoordinate(coordinate));
 

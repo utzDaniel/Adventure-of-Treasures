@@ -1,13 +1,14 @@
 package backend.service.model;
 
 import backend.controller.enums.TypeMessage;
+import backend.controller.interfaces.IInteract;
 import backend.repository.interfaces.INPCEntity;
 import backend.service.interfaces.ICoordinate;
 
 import java.util.List;
 import java.util.Optional;
 
-public final class NPC {
+public final class NPC implements IInteract {
 
     private final INPCEntity entity;
 

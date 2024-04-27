@@ -42,8 +42,8 @@ public final class CommandFactory {
     }
 
     public static ICommand createCombinationCommand(Inventory inventory, List<Item> items) {
-        var combinableHandler = new CombinableEmptyHandler();
-        combinableHandler
+        var handler = new CombinableEmptyHandler();
+        handler
                 .setNextHandler(new CombinableSizeHandler())
                 .setNextHandler(new CombinableIncompleteHandler())
                 .setNextHandler(new CombinableInvalidHandler())
@@ -51,8 +51,9 @@ public final class CommandFactory {
 
         var commands = new MacroCommand();
         items.forEach(v -> commands.add(createRemoveItemInventoryCommand(inventory, v)));
+        var command = new CombinationCommand(items, commands);
 
-        return new CombinationCommand(items, combinableHandler, commands);
+        return new CommandDecorator<>(items, command, handler);
     }
 
     public static ICommand createUsableCommand(Player player, List<Item> items) {
@@ -69,23 +70,30 @@ public final class CommandFactory {
         var commands = new MacroCommand();
         commands.add(createRemoveItemInventoryCommand(player.getInventory(), items.get(0)));
 
-        return new UsableCommand(items.get(0), handler, commands);
+        var command = new UsableCommand(items.get(0), commands);
+
+        return new CommandDecorator<>(items.get(0), command, handler);
     }
 
     public static ICommand createEquippableCommand(Inventory inventory, List<Item> items) {
         var handler = new ItemsSizeHandler(items);
         handler.setNextHandler(new SpecializationHandler(TypeItem.EQUIPPABLE));
 
-        return new EquippableCommand(items.get(0), inventory, handler);
+        var command = new EquippableCommand(items.get(0), inventory);
+
+        return new CommandDecorator<>(items.get(0), command, handler);
     }
 
     public static ICommand createDropItemCommand(Player player, List<Item> items) {
-        var commands = new MacroCommand();
         var handler = new ItemsSizeHandler(items);
+
+        var commands = new MacroCommand();
         commands.add(createRemoveItemInventoryCommand(player.getInventory(), items.get(0)));
         commands.add(createAddItemMapGameCommand(player.getCurrentMap(), items.get(0)));
 
-        return new DropItemCommand(items.get(0), player, handler, commands);
+        var command = new DropItemCommand(items.get(0), player, commands);
+
+        return new CommandDecorator<>(items.get(0), command, handler);
     }
 
 
@@ -95,7 +103,9 @@ public final class CommandFactory {
                 .setNextHandler(new RemoveItemInventoryEquipHandler())
                 .setNextHandler(new RemoveItemInventoryFoundHandler(inventory));
 
-        return new RemoveItemInventoryCommand(item, inventory, handler);
+        var command = new RemoveItemInventoryCommand(item, inventory);
+
+        return new CommandDecorator<>(item, command, handler);
     }
 
     public static ICommand createRemoveItemMapGameCommand(MapGame mapGame, Item item) {
@@ -103,28 +113,30 @@ public final class CommandFactory {
     }
 
     public static ICommand createAddItemMapGameCommand(MapGame mapGame, Item item) {
-        var handler = new AddItemMapGameFullHandler(mapGame);
-
-        return new AddItemMapGameCommand(item, mapGame, handler);
+        return new AddItemMapGameCommand(item, mapGame);
     }
 
     public static ICommand createAddItemInventoryCommand(Inventory inventory, Item item) {
         var handler = new AddItemInventoryFullHandler(inventory);
-
-        return new AddItemInventoryCommand(item, inventory, handler);
+        var command = new AddItemInventoryCommand(item, inventory);
+        return new CommandDecorator<>(item, command, handler);
     }
 
     public static ICommand createEquipCommand(Inventory inventory, IEquippable equippable) {
         var handler = new EquippableErroHandler(false);
 
-        return new EquipCommand(equippable, inventory, handler);
+        var command = new EquipCommand(equippable, inventory);
+
+        return new CommandDecorator<>(equippable, command, handler);
     }
 
     public static ICommand createUnequipCommand(Inventory inventory, IEquippable equippable) {
         var handler = new EquippableErroHandler(true);
         handler.setNextHandler(new UnequipCapacityHandler(inventory));
 
-        return new UnequipCommand(equippable, inventory, handler);
+        var command = new UnequipCommand(equippable, inventory);
+
+        return new CommandDecorator<>(equippable, command, handler);
     }
 
     public static ICommand createInteractCommand(Player player) {
@@ -133,26 +145,32 @@ public final class CommandFactory {
         return new InteractCommand(player, handler);
     }
 
-    public static ICommand createInteractDoorCommand(Player player) {
+    public static ICommand createInteractCommand(Door door, Player player) {
         var handler = new FoundHandler<Door>(TypeObject.DOOR);
         handler.setNextHandler(new InteractDoorClosedHandler())
                 .setNextHandler(new InteractDoorMapFoundHandler());
 
-        return new InteractDoorCommand(player, handler);
+        var command = new InteractDoorCommand(door, player);
+
+        return new CommandDecorator<>(door, command, handler);
     }
 
-    public static ICommand createInteractItemCommand(Player player) {
+    public static ICommand createInteractCommand(Item item, Player player) {
         var handler = new FoundHandler<Item>(TypeObject.ITEM);
 
-        return new InteractItemCommand(player, handler);
+        var command = new InteractItemCommand(item, player);
+
+        return new CommandDecorator<>(item, command, handler);
     }
 
-    public static ICommand createInteractNPCCommand(Player player) {
+    public static ICommand createInteractCommand(NPC npc, Player player) {
         var handler = new FoundHandler<NPC>(TypeObject.NPC);
         handler.setNextHandler(new InteractNPCDoorFoundHandler())
                 .setNextHandler(new InteractNPCMapFoundHandler());
 
-        return new InteractNPCCommand(player, handler);
+        var command = new InteractNPCCommand(npc, player);
+
+        return new CommandDecorator<>(npc, command, handler);
     }
 
     public static ICommand createMoveNextSceneryCommand(IMove person, Direction direction) {

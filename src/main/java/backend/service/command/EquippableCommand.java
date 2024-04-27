@@ -2,7 +2,6 @@ package backend.service.command;
 
 import backend.controller.enums.TypeMessage;
 import backend.service.enums.TypeItem;
-import backend.service.handler.Handler;
 import backend.service.interfaces.ICommand;
 import backend.service.interfaces.IEquippable;
 import backend.service.model.Inventory;
@@ -12,19 +11,14 @@ public final class EquippableCommand implements ICommand {
 
     private final Item item;
     private final Inventory inventory;
-    private final Handler<Item> handler;
 
-    public EquippableCommand(Item item, Inventory inventory, Handler<Item> handler) {
+    public EquippableCommand(Item item, Inventory inventory) {
         this.item = item;
         this.inventory = inventory;
-        this.handler = handler;
     }
 
     @Override
     public TypeMessage execute() {
-        var msg = this.handler.handle(this.item);
-        if (msg.isPresent()) return msg.get();
-
         var equippable = (IEquippable) this.item.getSpecialization(TypeItem.EQUIPPABLE).orElse(null);
 
         assert equippable != null;

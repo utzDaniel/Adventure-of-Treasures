@@ -1,5 +1,6 @@
 package backend.service.model;
 
+import backend.controller.interfaces.IInteract;
 import backend.service.interfaces.ICoordinate;
 
 import java.util.List;
@@ -22,16 +23,17 @@ public final class InteractMapGame {
         return this.doors.containsKey(coordinate) || this.items.containsKey(coordinate) || this.npcs.containsKey(coordinate);
     }
 
-    public Optional<Door> getDoor(ICoordinate coordinate) {
-        return this.doors.values().stream()
-                .filter(o -> o.isDoor(coordinate))
-                .findFirst();
-    }
-
-    public Optional<Door> getDoorByMap(int idMapGame) {
-        return this.doors.values().stream()
-                .filter(o -> o.isMap(idMapGame))
-                .findFirst();
+    public Optional<IInteract> get(ICoordinate coordinate) {
+        if (this.npcs.containsKey(coordinate)) {
+            return Optional.of(this.npcs.get(coordinate));
+        }
+        if (this.doors.containsKey(coordinate)) {
+            return Optional.of(this.doors.get(coordinate));
+        }
+        if (this.items.containsKey(coordinate)) {
+            return Optional.of(this.items.get(coordinate));
+        }
+        return Optional.empty();
     }
 
     public Optional<Door> getDoor(int idDoor) {
@@ -54,10 +56,6 @@ public final class InteractMapGame {
 
     public List<Item> getItems() {
         return this.items.values().stream().toList();
-    }
-
-    public Optional<NPC> getNPC(ICoordinate coordinate) {
-        return Optional.ofNullable(this.npcs.get(coordinate));
     }
 
     public void clear() {

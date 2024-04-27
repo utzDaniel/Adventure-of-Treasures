@@ -25,21 +25,11 @@ public class InteractDoorCommandTest {
     }
 
     @Test
-    public void validError1() {
-        var move = new Move("", ICoordinate.getInstance(47, 30), this.mapGame.get(2));
-        var inventory = new Inventory(0, 10);
-        var player = new Player(move, inventory);
-        var cmd = CommandFactory.createInteractDoorCommand(player);
-        var msg = cmd.execute();
-        assertEquals(TypeMessage.DOOR_ERROR_FOUND, msg);
-    }
-
-    @Test
     public void validError2() {
         var move = new Move("", ICoordinate.getInstance(13, 38), this.mapGame.get(6));
         var inventory = new Inventory(0, 10);
         var player = new Player(move, inventory);
-        var cmd = CommandFactory.createInteractDoorCommand(player);
+        var cmd = CommandFactory.createInteractCommand(player);
         var msg = cmd.execute();
         assertEquals(TypeMessage.DOOR_ERROR_CLOSED, msg);
     }
@@ -49,7 +39,7 @@ public class InteractDoorCommandTest {
         var move = new Move("", ICoordinate.getInstance(29, 72), this.mapGame.get(6));
         var inventory = new Inventory(0, 10);
         var player = new Player(move, inventory);
-        var cmd = CommandFactory.createInteractDoorCommand(player);
+        var cmd = CommandFactory.createInteractCommand(player);
         var msg = cmd.execute();
         assertEquals(TypeMessage.DOOR_OPEN, msg);
         assertEquals(ICoordinate.getInstance(51, 37), player.getCoordinate());

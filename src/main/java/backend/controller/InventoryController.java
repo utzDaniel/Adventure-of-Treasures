@@ -33,7 +33,7 @@ public final class InventoryController implements IInventoryController {
 
     @Override
     public IResponse equip(String idItem) {
-        var rsp = this.inventoryService.equip(Integer.parseInt("10"));
+        var rsp = this.inventoryService.equip(Integer.parseInt(idItem));
         return ResponseFactory.create(rsp);
     }
 

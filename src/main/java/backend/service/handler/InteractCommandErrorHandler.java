@@ -9,10 +9,7 @@ public final class InteractCommandErrorHandler extends Handler<IMove> {
 
     @Override
     protected Optional<TypeMessage> hook(IMove move) {
-        var coordinate = move.getCoordinate();
-        coordinate.move(move.getDirection().getMove());
-
-        var valid = move.getCurrentMap().isInteract(coordinate);
+        var valid = move.getCurrentMap().isInteract(move.getCoordinate(), move.getDirection());
 
         return valid
                 ? Optional.empty() : Optional.of(TypeMessage.INTERACT_ERROR);

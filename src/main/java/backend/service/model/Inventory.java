@@ -39,13 +39,12 @@ public final class Inventory implements IBackup<InventoryMemento> {
         return this.maxCapacity;
     }
 
-    public boolean updateMaxCapacity(int update) {
+    public void updateMaxCapacity(int update) {
         if (update < 0) {
             var newCapacity = this.getMaxCapacity() + update;
-            if (this.getCapacity() > newCapacity) return false;
+            if (this.getCapacity() > newCapacity) return;
         }
         this.maxCapacity += update;
-        return true;
     }
 
     public Item getItem(int id) {

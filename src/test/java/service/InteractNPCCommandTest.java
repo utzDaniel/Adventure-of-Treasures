@@ -33,22 +33,12 @@ public class InteractNPCCommandTest {
     }
 
     @Test
-    public void validError1() {
-        var move = new Move("", ICoordinate.getInstance(47, 30), this.mapGame.get(1));
-        var inventory = new Inventory(0, 10);
-        var player = new Player(move, inventory);
-        var cmd = CommandFactory.createInteractNPCCommand(player);
-        var msg = cmd.execute();
-        assertEquals(TypeMessage.NPC_ERROR_FOUND, msg);
-    }
-
-    @Test
     public void valid1() {
         var move = new Move("", ICoordinate.getInstance(27, 70), this.mapGame.get(12));
         var inventory = new Inventory(0, 10);
         inventory.addItem(this.items.get(15));
         var player = new Player(move, inventory);
-        var cmd = CommandFactory.createInteractNPCCommand(player);
+        var cmd = CommandFactory.createInteractCommand(player);
         var msg = cmd.execute();
         assertEquals(TypeMessage.GAME_FINISH, msg);
     }
@@ -58,7 +48,7 @@ public class InteractNPCCommandTest {
         var move = new Move("", ICoordinate.getInstance(51, 31), this.mapGame.get(1));
         var inventory = new Inventory(0, 10);
         var player = new Player(move, inventory);
-        var cmd = CommandFactory.createInteractNPCCommand(player);
+        var cmd = CommandFactory.createInteractCommand(player);
         var msg = cmd.execute();
         assertEquals(TypeMessage.NPC_INTERACT, msg);
         assertEquals(ICoordinate.getInstance(32, 7), player.getCoordinate());

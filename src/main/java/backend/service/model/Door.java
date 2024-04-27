@@ -1,12 +1,13 @@
 package backend.service.model;
 
+import backend.controller.interfaces.IInteract;
 import backend.repository.interfaces.IDoorEntity;
 import backend.repository.interfaces.IEntity;
 import backend.service.interfaces.IBackup;
 import backend.service.interfaces.ICoordinate;
 import backend.service.memento.DoorMemento;
 
-public final class Door implements IEntity, IBackup<DoorMemento> {
+public final class Door implements IEntity, IBackup<DoorMemento>, IInteract {
     private final IDoorEntity entity;
     private boolean open;
 
@@ -38,14 +39,6 @@ public final class Door implements IEntity, IBackup<DoorMemento> {
 
     public boolean isOpen() {
         return this.open;
-    }
-
-    public boolean isDoor(ICoordinate coordinate) {
-        return ICoordinate.getInstance(this.entity.insideX(), this.entity.insideY()).equals(coordinate);
-    }
-
-    public boolean isMap(int idMapGame) {
-        return this.entity.idMapOutside() == idMapGame;
     }
 
     @Override
