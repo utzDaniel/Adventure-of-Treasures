@@ -9,9 +9,9 @@ public final class DropItemCommand implements ICommand {
 
     private final Player player;
     private final Item item;
-    private final MacroCommand commands;
+    private final CommandComposite commands;
 
-    public DropItemCommand(Item item, Player player, MacroCommand commands) {
+    public DropItemCommand(Item item, Player player, CommandComposite commands) {
         this.player = player;
         this.item = item;
         this.commands = commands;

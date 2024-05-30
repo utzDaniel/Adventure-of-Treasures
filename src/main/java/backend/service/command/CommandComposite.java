@@ -2,32 +2,29 @@ package backend.service.command;
 
 import backend.controller.enums.TypeMessage;
 import backend.service.interfaces.ICommand;
+import backend.service.interfaces.ICommandComposite;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class MacroCommand implements ICommand {
+public final class CommandComposite implements ICommandComposite {
 
-    private final List<ICommand> commands;
-    private final ArrayDeque<ICommand> stack;
+    private final List<ICommand> children;
 
-    public MacroCommand() {
-        this.commands = new ArrayList<>();
-        this.stack = new ArrayDeque<>();
+    public CommandComposite() {
+        this.children = new ArrayList<>();
     }
 
+    @Override
     public void add(ICommand command) {
-        this.commands.add(command);
+        this.children.add(command);
     }
 
     @Override
     public TypeMessage execute() {
-        this.stack.clear();
         TypeMessage temp = TypeMessage.COMMAND_ERROR;
-        for (ICommand cmd : this.commands) {
+        for (ICommand cmd : this.children) {
             temp = cmd.execute();
-            this.stack.add(cmd);
             if (!temp.isSuccess()) {
                 break;
             }

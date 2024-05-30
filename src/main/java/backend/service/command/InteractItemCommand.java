@@ -9,12 +9,12 @@ public final class InteractItemCommand implements ICommand {
 
     private final Item item;
     private final Player player;
-    private final MacroCommand commands;
+    private final CommandComposite commands;
 
     public InteractItemCommand(Item item, Player player) {
         this.item = item;
         this.player = player;
-        this.commands = new MacroCommand();
+        this.commands = new CommandComposite();
     }
 
     @Override

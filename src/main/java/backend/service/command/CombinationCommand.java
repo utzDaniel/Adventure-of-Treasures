@@ -2,6 +2,7 @@ package backend.service.command;
 
 import backend.controller.enums.TypeMessage;
 import backend.service.interfaces.ICommand;
+import backend.service.interfaces.ICommandComposite;
 import backend.service.model.Item;
 
 import java.util.List;
@@ -10,9 +11,9 @@ import java.util.stream.Collectors;
 public final class CombinationCommand implements ICommand {
 
     private final List<Item> items;
-    private final MacroCommand commands;
+    private final ICommandComposite commands;
 
-    public CombinationCommand(List<Item> items, MacroCommand commands) {
+    public CombinationCommand(List<Item> items, ICommandComposite commands) {
         this.items = items;
         this.commands = commands;
     }

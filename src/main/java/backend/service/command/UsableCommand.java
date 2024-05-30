@@ -7,9 +7,9 @@ import backend.service.model.Item;
 public final class UsableCommand implements ICommand {
 
     private final Item item;
-    private final MacroCommand commands;
+    private final CommandComposite commands;
 
-    public UsableCommand(Item item, MacroCommand commands) {
+    public UsableCommand(Item item, CommandComposite commands) {
         this.item = item;
         this.commands = commands;
     }

@@ -49,7 +49,7 @@ public final class CommandFactory {
                 .setNextHandler(new CombinableInvalidHandler())
                 .setNextHandler(new CombinableErrorHandler());
 
-        var commands = new MacroCommand();
+        var commands = new CommandComposite();
         items.forEach(v -> commands.add(createRemoveItemInventoryCommand(inventory, v)));
         var command = new CombinationCommand(items, commands);
 
@@ -67,7 +67,7 @@ public final class CommandFactory {
                 .setNextHandler(new UsableCoordinateHandler(coordinate))
                 .setNextHandler(new UsableEnableHandler());
 
-        var commands = new MacroCommand();
+        var commands = new CommandComposite();
         commands.add(createRemoveItemInventoryCommand(player.getInventory(), items.get(0)));
 
         var command = new UsableCommand(items.get(0), commands);
@@ -87,7 +87,7 @@ public final class CommandFactory {
     public static ICommand createDropItemCommand(Player player, List<Item> items) {
         var handler = new ItemsSizeHandler(items);
 
-        var commands = new MacroCommand();
+        var commands = new CommandComposite();
         commands.add(createRemoveItemInventoryCommand(player.getInventory(), items.get(0)));
         commands.add(createAddItemMapGameCommand(player.getCurrentMap(), items.get(0)));
 
