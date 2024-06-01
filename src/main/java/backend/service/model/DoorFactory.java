@@ -7,7 +7,7 @@ import backend.service.interfaces.IFactory;
 
 import java.util.Optional;
 
-public final class DoorFactory implements IFactory<Door> {
+public final class DoorFactory implements IFactory<Door, IDoorEntity> {
 
     @Override
     public Optional<Door> create(int id) {
@@ -15,11 +15,8 @@ public final class DoorFactory implements IFactory<Door> {
     }
 
     @Override
-    public Door create(IEntity entity) {
-        if (entity instanceof IDoorEntity doorEntity) {
-            return new Door(doorEntity);
-        }
-        return null;
+    public Door create(IDoorEntity entity) {
+        return new Door(entity);
     }
 
     private Optional<IDoorEntity> getEntity(int id) {

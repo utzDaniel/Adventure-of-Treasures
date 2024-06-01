@@ -6,12 +6,12 @@ import backend.service.interfaces.IFactory;
 
 import java.util.*;
 
-public final class Cache<T extends IEntity> implements ICache<T> {
+public final class Cache<T extends IEntity, U extends IEntity> implements ICache<T> {
 
     private final Map<Integer, T> memory = new HashMap<>();
-    private final IFactory<T> factory;
+    private final IFactory<T, U> factory;
 
-    public Cache(IFactory<T> factory) {
+    public Cache(IFactory<T, U > factory) {
         this.factory = factory;
     }
 

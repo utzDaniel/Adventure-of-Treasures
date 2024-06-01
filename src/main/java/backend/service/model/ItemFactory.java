@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public final class ItemFactory implements IFactory<Item> {
+public final class ItemFactory implements IFactory<Item, IItemEntity> {
 
     @Override
     public Optional<Item> create(int id) {
@@ -21,11 +21,8 @@ public final class ItemFactory implements IFactory<Item> {
     }
 
     @Override
-    public Item create(IEntity entity) {
-        if(entity instanceof IItemEntity itemEntity){
-            return new Item(itemEntity, getSpecializationComposite(entity.id()), getObservers(entity.id()));
-        }
-        return null;
+    public Item create(IItemEntity entity) {
+        return new Item(entity, getSpecializationComposite(entity.id()), getObservers(entity.id()));
     }
 
     private SpecializationComposite getSpecializationComposite(int id) {

@@ -14,7 +14,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public final class MapGameFactory implements IFactory<MapGame> {
+public final class MapGameFactory implements IFactory<MapGame, IMapGameEntity> {
 
     @Override
     public Optional<MapGame> create(int id) {
@@ -22,14 +22,11 @@ public final class MapGameFactory implements IFactory<MapGame> {
     }
 
     @Override
-    public MapGame create(IEntity entity) {
-        if (entity instanceof IMapGameEntity mapGameEntity) {
-            return new MapGame(
-                    mapGameEntity,
-                    getExits(mapGameEntity),
-                    getInteractMapGame(mapGameEntity));
-        }
-        return null;
+    public MapGame create(IMapGameEntity entity) {
+        return new MapGame(
+                entity,
+                getExits(entity),
+                getInteractMapGame(entity));
     }
 
     private static Optional<IMapGameEntity> getEntity(int id) {
