@@ -1,19 +1,15 @@
 package backend.service.model;
 
 import backend.service.enums.TypeItem;
-import backend.service.interfaces.IEquippable;
-import backend.service.interfaces.IRemovable;
-import backend.service.interfaces.ISpecialization;
-import backend.service.interfaces.IUsable;
-import backend.service.interfaces.IBackup;
-import backend.service.memento.SpecializationCompositeMemento;
+import backend.service.interfaces.*;
+import backend.service.memento.SpecializationMemento;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public final class SpecializationComposite implements ISpecialization, IBackup<SpecializationCompositeMemento> {
+public final class SpecializationComposite implements ISpecialization, IMemento<SpecializationMemento> {
 
     private final List<ISpecialization> specializations;
 
@@ -27,6 +23,11 @@ public final class SpecializationComposite implements ISpecialization, IBackup<S
 
     public Optional<ISpecialization> getSpecialization(TypeItem type) {
         return this.specializations.stream().filter(s -> s.isType(type)).findFirst();
+    }
+
+    @Override
+    public int id() {
+        return this.specializations.isEmpty() ? -1 : this.specializations.get(0).id();
     }
 
     @Override
@@ -51,7 +52,7 @@ public final class SpecializationComposite implements ISpecialization, IBackup<S
     }
 
     @Override
-    public SpecializationCompositeMemento save() {
+    public SpecializationMemento save() {
         Boolean equip = null;
         var equippable = getSpecialization(TypeItem.EQUIPPABLE);
         if (equippable.isPresent()) {
@@ -64,11 +65,11 @@ public final class SpecializationComposite implements ISpecialization, IBackup<S
             enabled = ((IUsable) usable.get()).isEnabled();
         }
 
-        return new SpecializationCompositeMemento(equip, enabled);
+        return new SpecializationMemento(equip, enabled);
     }
 
     @Override
-    public void restore(SpecializationCompositeMemento memento) {
+    public void restore(SpecializationMemento memento) {
         getSpecialization(TypeItem.EQUIPPABLE)
                 .ifPresent(s -> ((IEquippable) s).setEquip(memento.equip()));
 

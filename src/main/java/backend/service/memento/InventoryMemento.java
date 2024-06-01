@@ -1,12 +1,14 @@
 package backend.service.memento;
 
+import backend.service.interfaces.IFlyweight;
+
 import java.util.Set;
 
 public record InventoryMemento(
         int capacity,
         int maxCapacity,
         boolean isInventory,
-        Set<Integer> idItems) implements IMemento {
+        Set<Integer> idItems) implements IFlyweight {
 
     @Override
     public String extrinsic() {

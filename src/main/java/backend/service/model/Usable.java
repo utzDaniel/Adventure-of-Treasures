@@ -16,6 +16,11 @@ public final class Usable implements IUsable {
     }
 
     @Override
+    public int id() {
+        return this.entity.idItem();
+    }
+
+    @Override
     public boolean isType(TypeItem type) {
         return TypeItem.USABLE == type;
     }

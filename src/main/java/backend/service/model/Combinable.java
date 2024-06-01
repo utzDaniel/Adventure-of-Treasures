@@ -3,7 +3,7 @@ package backend.service.model;
 import backend.service.enums.TypeItem;
 import backend.service.interfaces.ICombinable;
 
-public record Combinable(int combination, int sizeCombination) implements ICombinable {
+public record Combinable(int id, int combination, int sizeCombination) implements ICombinable {
 
     @Override
     public boolean isType(TypeItem type) {

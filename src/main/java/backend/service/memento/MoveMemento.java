@@ -1,12 +1,14 @@
 package backend.service.memento;
 
+import backend.service.interfaces.IFlyweight;
+
 public record MoveMemento(
         String movementImage,
         int idMapGame,
         String direction,
         int x,
         int y,
-        String path) implements IMemento {
+        String path) implements IFlyweight {
 
     @Override
     public String extrinsic() {

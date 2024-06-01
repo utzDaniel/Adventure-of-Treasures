@@ -1,11 +1,13 @@
 package backend.service.memento;
 
+import backend.service.interfaces.IFlyweight;
+
 import java.util.Set;
 
 public record MapGameMemento(
         int id,
         int idDecoration,
-        Set<Integer> idItems) implements IMemento, Comparable<MapGameMemento> {
+        Set<Integer> idItems) implements IFlyweight, Comparable<MapGameMemento> {
 
     @Override
     public String extrinsic() {

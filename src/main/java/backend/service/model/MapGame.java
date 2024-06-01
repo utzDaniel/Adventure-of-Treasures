@@ -8,7 +8,7 @@ import backend.repository.interfaces.IMapGameEntity;
 import backend.repository.singleton.DecorationRepository;
 import backend.service.enums.Direction;
 import backend.service.infra.CacheService;
-import backend.service.interfaces.IBackup;
+import backend.service.interfaces.IMemento;
 import backend.service.interfaces.ICoordinate;
 import backend.service.interfaces.IImage;
 import backend.service.memento.MapGameMemento;
@@ -19,7 +19,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public final class MapGame implements IImage, IEntity, IBackup<MapGameMemento> {
+public final class MapGame implements IImage, IEntity, IMemento<MapGameMemento> {
     private final IMapGameEntity entity;
     private final Area area;
     private final InteractMapGame interact;

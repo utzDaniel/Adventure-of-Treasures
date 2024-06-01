@@ -1,13 +1,13 @@
 package backend.service.model;
 
 import backend.repository.interfaces.IDoorEntity;
-import backend.repository.interfaces.IEntity;
 import backend.repository.singleton.DoorRepository;
 import backend.service.interfaces.IFactory;
+import backend.service.memento.DoorMemento;
 
 import java.util.Optional;
 
-public final class DoorFactory implements IFactory<Door, IDoorEntity> {
+public final class DoorFactory implements IFactory<Door, IDoorEntity, DoorMemento> {
 
     @Override
     public Optional<Door> create(int id) {

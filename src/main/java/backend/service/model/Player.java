@@ -2,12 +2,11 @@ package backend.service.model;
 
 import backend.service.enums.Direction;
 import backend.service.interfaces.ICoordinate;
+import backend.service.interfaces.IMemento;
 import backend.service.interfaces.IMove;
-import backend.service.interfaces.IBackup;
 import backend.service.memento.PlayerMemento;
 
-
-public final class Player implements IMove, IBackup<PlayerMemento> {
+public final class Player implements IMove, IMemento<PlayerMemento> {
 
     private final IMove move;
     private final Inventory inventory;
@@ -15,6 +14,11 @@ public final class Player implements IMove, IBackup<PlayerMemento> {
     public Player(IMove move, Inventory inventory) {
         this.move = move;
         this.inventory = inventory;
+    }
+
+    @Override
+    public int id() {
+        return 0;
     }
 
     public Inventory getInventory() {

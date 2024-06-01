@@ -5,10 +5,11 @@ import backend.service.enums.MovementImage;
 import backend.service.infra.CacheService;
 import backend.service.interfaces.ICoordinate;
 import backend.service.interfaces.IMove;
-import backend.service.interfaces.IBackup;
+import backend.service.interfaces.IMemento;
 import backend.service.memento.MoveMemento;
 
-public final class Move implements IMove, IBackup<MoveMemento> {
+public final class Move implements IMove, IMemento<MoveMemento> {
+
     private MovementImage movementImage;
     private MapGame currentMapGame;
     private Direction direction;
@@ -21,6 +22,11 @@ public final class Move implements IMove, IBackup<MoveMemento> {
         this.direction = Direction.SOUTH;
         this.coordinate = coordinate;
         this.currentMapGame = mapGame;
+    }
+
+    @Override
+    public int id() {
+        return 0;
     }
 
     @Override
@@ -69,5 +75,6 @@ public final class Move implements IMove, IBackup<MoveMemento> {
         this.coordinate = ICoordinate.getInstance(memento.x(), memento.y());
         this.currentMapGame = CacheService.getMapGame(memento.idMapGame()).orElse(null);
     }
+
 }
 

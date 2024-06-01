@@ -37,7 +37,7 @@ public class SaveCommandTest {
     public void valid02() {
         var filename = "src/test/resources/save/test_save_02.txt";
         var itemMemento = new ArrayList<ItemMemento>();
-        itemMemento.add(new ItemMemento(10, 22, 65, new SpecializationCompositeMemento(true, false)));
+        itemMemento.add(new ItemMemento(10, 22, 65, new SpecializationMemento(true, false)));
         var doorMemento = new ArrayList<DoorMemento>();
         doorMemento.add(new DoorMemento(1, false));
         doorMemento.add(new DoorMemento(14, true));
@@ -60,11 +60,11 @@ public class SaveCommandTest {
     public void valid03() {
         var filename = "src/test/resources/save/test_save_03.txt";
         var itemMemento = new ArrayList<ItemMemento>();
-        itemMemento.add(new ItemMemento(4, 31, 28, new SpecializationCompositeMemento(false, false)));
-        itemMemento.add(new ItemMemento(7, 8, 64, new SpecializationCompositeMemento(false, false)));
-        itemMemento.add(new ItemMemento(8, 20, 41, new SpecializationCompositeMemento(false, false)));
-        itemMemento.add(new ItemMemento(9, 32, 16, new SpecializationCompositeMemento(false, false)));
-        itemMemento.add(new ItemMemento(11, 28, 20, new SpecializationCompositeMemento(false, true)));
+        itemMemento.add(new ItemMemento(4, 31, 28, new SpecializationMemento(false, false)));
+        itemMemento.add(new ItemMemento(7, 8, 64, new SpecializationMemento(false, false)));
+        itemMemento.add(new ItemMemento(8, 20, 41, new SpecializationMemento(false, false)));
+        itemMemento.add(new ItemMemento(9, 32, 16, new SpecializationMemento(false, false)));
+        itemMemento.add(new ItemMemento(11, 28, 20, new SpecializationMemento(false, true)));
         var doorMemento = new ArrayList<DoorMemento>();
         doorMemento.add(new DoorMemento(1, false));
         doorMemento.add(new DoorMemento(2, true));
@@ -96,11 +96,11 @@ public class SaveCommandTest {
     public void valid04() {
         var filename = "src/test/resources/save/test_save_04.txt";
         var itemMemento = new ArrayList<ItemMemento>();
-        itemMemento.add(new ItemMemento(4, 31, 28, new SpecializationCompositeMemento(false, false)));
-        itemMemento.add(new ItemMemento(6, 20, 41, new SpecializationCompositeMemento(false, false)));
-        itemMemento.add(new ItemMemento(7, 8, 64, new SpecializationCompositeMemento(false, false)));
-        itemMemento.add(new ItemMemento(8, 20, 41, new SpecializationCompositeMemento(false, false)));
-        itemMemento.add(new ItemMemento(9, 32, 16, new SpecializationCompositeMemento(false, false)));
+        itemMemento.add(new ItemMemento(4, 31, 28, new SpecializationMemento(false, false)));
+        itemMemento.add(new ItemMemento(6, 20, 41, new SpecializationMemento(false, false)));
+        itemMemento.add(new ItemMemento(7, 8, 64, new SpecializationMemento(false, false)));
+        itemMemento.add(new ItemMemento(8, 20, 41, new SpecializationMemento(false, false)));
+        itemMemento.add(new ItemMemento(9, 32, 16, new SpecializationMemento(false, false)));
         var doorMemento = new ArrayList<DoorMemento>();
         doorMemento.add(new DoorMemento(1, false));
         doorMemento.add(new DoorMemento(2, true));

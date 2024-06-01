@@ -1,12 +1,14 @@
 package backend.service.memento;
 
+import backend.service.interfaces.IFlyweight;
+
 import java.util.List;
 
 public record BackupMemento(
         List<ItemMemento> itemMementos,
         List<DoorMemento> doorMemento,
         PlayerMemento playerMemento,
-        List<MapGameMemento> mapGameMemento) implements IMemento {
+        List<MapGameMemento> mapGameMemento) implements IFlyweight {
 
     @Override
     public String extrinsic() {

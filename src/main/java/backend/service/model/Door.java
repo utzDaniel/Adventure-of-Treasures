@@ -3,11 +3,11 @@ package backend.service.model;
 import backend.controller.interfaces.IInteract;
 import backend.repository.interfaces.IDoorEntity;
 import backend.repository.interfaces.IEntity;
-import backend.service.interfaces.IBackup;
+import backend.service.interfaces.IMemento;
 import backend.service.interfaces.ICoordinate;
 import backend.service.memento.DoorMemento;
 
-public final class Door implements IEntity, IBackup<DoorMemento>, IInteract {
+public final class Door implements IEntity, IMemento<DoorMemento>, IInteract {
     private final IDoorEntity entity;
     private boolean open;
 

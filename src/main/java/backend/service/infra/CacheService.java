@@ -1,15 +1,19 @@
 package backend.service.infra;
 
 import backend.service.interfaces.ICache;
+import backend.service.memento.DoorMemento;
+import backend.service.memento.ItemMemento;
+import backend.service.memento.MapGameMemento;
 import backend.service.model.*;
 
 import java.util.List;
 import java.util.Optional;
 
 public final class CacheService {
-    public static final ICache<Item> itemICache = new Cache<>(new ItemFactory());
-    public static final ICache<Door> doorICache = new Cache<>(new DoorFactory());
-    public static final ICache<MapGame> mapGameICache = new Cache<>(new MapGameFactory());
+
+    public static final ICache<Item, ItemMemento> itemICache = new Cache<>(new ItemFactory());
+    public static final ICache<Door, DoorMemento> doorICache = new Cache<>(new DoorFactory());
+    public static final ICache<MapGame, MapGameMemento> mapGameICache = new Cache<>(new MapGameFactory());
 
     private CacheService() {
     }

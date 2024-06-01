@@ -10,7 +10,7 @@ import backend.service.memento.ItemMemento;
 import java.util.List;
 import java.util.Optional;
 
-public final class Item implements IObservable, IImage, IEntity, IBackup<ItemMemento>, IInteract {
+public final class Item implements IObservable, IImage, IEntity, IMemento<ItemMemento>, IInteract {
 
     private final IItemEntity entity;
     private final SpecializationComposite specialization;
@@ -96,6 +96,6 @@ public final class Item implements IObservable, IImage, IEntity, IBackup<ItemMem
     @Override
     public void restore(ItemMemento memento) {
         this.coordinate = ICoordinate.getInstance(memento.x(), memento.y());
-        this.specialization.restore(memento.specializationCompositeMemento());
+        this.specialization.restore(memento.specializationMemento());
     }
 }

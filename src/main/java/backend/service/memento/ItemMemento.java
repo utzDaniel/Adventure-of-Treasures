@@ -1,10 +1,12 @@
 package backend.service.memento;
 
+import backend.service.interfaces.IFlyweight;
+
 public record ItemMemento(
         int id,
         int x,
         int y,
-        SpecializationCompositeMemento specializationCompositeMemento) implements IMemento, Comparable<ItemMemento> {
+        SpecializationMemento specializationMemento) implements IFlyweight, Comparable<ItemMemento> {
 
     @Override
     public String extrinsic() {
@@ -16,7 +18,7 @@ public record ItemMemento(
                 """.formatted(this.id, Separator.FIELD,
                         this.x, Separator.FIELD,
                         this.y, Separator.FIELD,
-                        this.specializationCompositeMemento.extrinsic(), Separator.ITEM)
+                        this.specializationMemento.extrinsic(), Separator.ITEM)
                 .replace("\n", "");
     }
 

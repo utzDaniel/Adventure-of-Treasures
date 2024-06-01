@@ -1,11 +1,9 @@
 package backend.service.interfaces;
 
-import backend.repository.interfaces.IEntity;
-
 import java.util.Collection;
 import java.util.Optional;
 
-public interface ICache<T extends IEntity> {
+public interface ICache<T extends IMemento<K>, K extends IFlyweight> {
 
     Optional<T> get(int id);
 

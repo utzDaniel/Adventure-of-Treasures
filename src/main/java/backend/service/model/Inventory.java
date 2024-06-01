@@ -1,7 +1,7 @@
 package backend.service.model;
 
 import backend.service.infra.CacheService;
-import backend.service.interfaces.IBackup;
+import backend.service.interfaces.IMemento;
 import backend.service.memento.InventoryMemento;
 
 import java.util.HashMap;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public final class Inventory implements IBackup<InventoryMemento> {
+public final class Inventory implements IMemento<InventoryMemento> {
 
     private int capacity;
     private int maxCapacity;
@@ -21,6 +21,11 @@ public final class Inventory implements IBackup<InventoryMemento> {
         this.maxCapacity = maxCapacity;
         this.isInventory = false;
         this.items = new HashMap<>();
+    }
+
+    @Override
+    public int id() {
+        return 0;
     }
 
     public int getCapacity() {

@@ -3,15 +3,17 @@ package backend.service.infra;
 import backend.repository.interfaces.IEntity;
 import backend.service.interfaces.ICache;
 import backend.service.interfaces.IFactory;
+import backend.service.interfaces.IFlyweight;
+import backend.service.interfaces.IMemento;
 
 import java.util.*;
 
-public final class Cache<T extends IEntity, U extends IEntity> implements ICache<T> {
+public final class Cache<T extends IMemento<K>, U extends IEntity, K extends IFlyweight> implements ICache<T, K> {
 
     private final Map<Integer, T> memory = new HashMap<>();
-    private final IFactory<T, U> factory;
+    private final IFactory<T, U, K> factory;
 
-    public Cache(IFactory<T, U > factory) {
+    public Cache(IFactory<T, U, K> factory) {
         this.factory = factory;
     }
 

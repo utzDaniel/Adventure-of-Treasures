@@ -8,12 +8,13 @@ import backend.service.event.EventItem;
 import backend.service.event.EventMap;
 import backend.service.interfaces.IFactory;
 import backend.service.interfaces.IObserver;
+import backend.service.memento.ItemMemento;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public final class ItemFactory implements IFactory<Item, IItemEntity> {
+public final class ItemFactory implements IFactory<Item, IItemEntity, ItemMemento> {
 
     @Override
     public Optional<Item> create(int id) {
@@ -30,14 +31,14 @@ public final class ItemFactory implements IFactory<Item, IItemEntity> {
 
         var comb = getCombinable(id);
         if (!comb.isEmpty()) {
-            composite.add(new Combinable(comb.get(0).combination(), comb.size()));
+            composite.add(new Combinable(comb.get(0).idItem(), comb.get(0).combination(), comb.size()));
         }
 
         getEquippable(id).ifPresent(e -> composite.add(new Equippable(e)));
 
         getUsable(id).ifPresent(e -> composite.add(new Usable(e)));
 
-        getMission(id).ifPresent(e -> composite.add(new Mission()));
+        getMission(id).ifPresent(e -> composite.add(new Mission(e)));
 
         return composite;
     }

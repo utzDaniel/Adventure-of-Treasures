@@ -1,6 +1,5 @@
 package backend.service.model;
 
-import backend.repository.interfaces.IEntity;
 import backend.repository.interfaces.IExitEntity;
 import backend.repository.interfaces.IMapGameEntity;
 import backend.repository.singleton.*;
@@ -8,13 +7,14 @@ import backend.service.enums.Direction;
 import backend.service.infra.CacheService;
 import backend.service.interfaces.ICoordinate;
 import backend.service.interfaces.IFactory;
+import backend.service.memento.MapGameMemento;
 
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public final class MapGameFactory implements IFactory<MapGame, IMapGameEntity> {
+public final class MapGameFactory implements IFactory<MapGame, IMapGameEntity, MapGameMemento> {
 
     @Override
     public Optional<MapGame> create(int id) {

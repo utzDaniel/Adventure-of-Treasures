@@ -29,7 +29,7 @@ public final class BackupMementoMapper implements Function<String, BackupMemento
     }
 
     private ItemMemento createItem(String[] data) {
-        var spe = new SpecializationCompositeMemento(Boolean.parseBoolean(data[3]), Boolean.parseBoolean(data[4]));
+        var spe = new SpecializationMemento(Boolean.parseBoolean(data[3]), Boolean.parseBoolean(data[4]));
         return new ItemMemento(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]), spe);
     }
 

@@ -1,8 +1,10 @@
 package backend.service.memento;
 
-public record SpecializationCompositeMemento(
+import backend.service.interfaces.IFlyweight;
+
+public record SpecializationMemento(
         Boolean equip,
-        Boolean enabled) implements IMemento {
+        Boolean enabled) implements IFlyweight {
 
     @Override
     public String extrinsic() {

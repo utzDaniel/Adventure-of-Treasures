@@ -1,8 +1,10 @@
 package backend.service.memento;
 
+import backend.service.interfaces.IFlyweight;
+
 public record PlayerMemento(
         MoveMemento move,
-        InventoryMemento inventory) implements IMemento {
+        InventoryMemento inventory) implements IFlyweight {
 
     @Override
     public String extrinsic() {

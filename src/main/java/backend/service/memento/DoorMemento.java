@@ -1,8 +1,10 @@
 package backend.service.memento;
 
+import backend.service.interfaces.IFlyweight;
+
 public record DoorMemento(
         int id,
-        boolean open) implements IMemento, Comparable<DoorMemento> {
+        boolean open) implements IFlyweight, Comparable<DoorMemento> {
 
     @Override
     public String extrinsic() {
